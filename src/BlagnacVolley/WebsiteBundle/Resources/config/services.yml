@@ -1,0 +1,4 @@
+services:
+#    blagnac_volley_website.example:
+#        class: BlagnacVolley\WebsiteBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
