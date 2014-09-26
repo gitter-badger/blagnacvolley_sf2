@@ -1,3 +1,7 @@
+blagnac_volley_user:
+    resource: "@BlagnacVolleyUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 blagnac_volley_website:
     resource: "@BlagnacVolleyWebsiteBundle/Resources/config/routing.yml"
     prefix:   /
