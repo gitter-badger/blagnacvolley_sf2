@@ -1,25 +1,29 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        <div>
-            <h1>{{ title }}</h1>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
-            {% else %}
-                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-            {% endif %}
-        </div>
+{% extends 'BlagnacVolleyWebsiteBundle::base.html.twig' %}
 
-        <div>
-            {% block content %}
-            {% endblock content %}
-        </div>
-    </body>
-</html>
+{% block head_style %}
+    {{ parent() }}
+    {% stylesheets
+    '@BlagnacVolleyWebsiteBundle/Resources/public/less/styles.less'
+    filter='lessphp'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+{% endblock head_style %}
+
+{% block body_start %}
+<div id="wrap">
+{% endblock body_start %}
+
+{% block footer_tag_start %}{% endblock %}
+{% block footer_tag_end %}{% endblock %}
+
+{% block body_end_before_js %}
+    <div id="push"></div>
+</div>
+<div id="footer">
+    <div class="container">
+        <p class="muted credit">Pour toute demande d'information, contactez nous à l'adresse <a target="_blank" href="mailto:blagnacvolley@free.fr">blagnacvolley@free.fr</a></p>
+    </div>
+</div>
+{% endblock body_end_before_js %}
+

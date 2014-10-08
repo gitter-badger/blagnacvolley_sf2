@@ -10,3 +10,7 @@
 /bin/
 /composer.phar
 /.idea
+/web/css/*
+/web/js/*
+/web/uploads/*
+!web/uploads/media/.gitkeep

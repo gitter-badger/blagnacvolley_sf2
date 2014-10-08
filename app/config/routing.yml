@@ -1,8 +1,18 @@
-blagnac_volley_user:
-    resource: "@BlagnacVolleyUserBundle/Resources/config/routing.yml"
-    prefix:   /
+home:
+    path:     /
+    defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:index }
 
-blagnac_volley_website:
-    resource: "@BlagnacVolleyWebsiteBundle/Resources/config/routing.yml"
-    prefix:   /
+gallery:
+    resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
+    prefix: /media/gallery
 
+media:
+    resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
+    prefix: /media
+
+application_sonata_user:
+    resource: "@ApplicationSonataUserBundle/Resources/config/routing.yml"
+
+static:
+    path:     /{page}
+    defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:static }

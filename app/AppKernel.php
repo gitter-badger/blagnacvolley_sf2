@@ -17,9 +17,27 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+
+            new Sonata\MediaBundle\SonataMediaBundle(),
+            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+//            new Sonata\NewsBundle\SonataNewsBundle(),
+
+            new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
+
             new FOS\UserBundle\FOSUserBundle(),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+
             new BlagnacVolley\WebsiteBundle\BlagnacVolleyWebsiteBundle(),
-            new BlagnacVolley\UserBundle\BlagnacVolleyUserBundle(),
+//            new BlagnacVolley\UserBundle\BlagnacVolleyUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

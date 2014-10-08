@@ -1,3 +1,0 @@
-blagnac_volley_website_homepage:
-    path:     /
-    defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:index }
