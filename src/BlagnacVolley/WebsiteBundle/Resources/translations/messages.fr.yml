@@ -1,0 +1,9 @@
+# messages.fr.yml
+header:
+  navbar:
+    login: Connexion
+    logout: Deconnexion
+    register: Créer un compte
+
+homepage:
+  welcome: Bienvenue sur le site officiel du Blagnac Volley-Ball

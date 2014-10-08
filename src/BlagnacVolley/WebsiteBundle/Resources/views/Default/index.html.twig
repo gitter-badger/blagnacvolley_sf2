@@ -2,13 +2,8 @@
 
 {% block title %}{{ parent() }} - Accueil{% endblock %}
 
-{% block page_header %}
-    {{ parent() }}
-    {{ sonata_block_render({ 'type': 'sonata.user.block.account' }) }}
-{% endblock %}
-
 {% block content %}
     <div class="col-sm-12">
-    Bienvenue sur le site officiel du Blagnac Volley-Ball
+        {{ 'homepage.welcome'|trans() }}
     </div>
 {% endblock content %}

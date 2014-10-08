@@ -10,6 +10,16 @@
     {% endstylesheets %}
 {% endblock head_style %}
 
+{% block bv_head_top_connexion %}
+    {% if app.user %}
+        <li><a href="{{ path('sonata_user_profile_show') }}">{{ app.user.username }}</a> |</li>
+        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'header.navbar.logout' | trans() }}</a></li>
+    {% else %}
+        <li><a href="{{ path('fos_user_registration_register') }}">{{ 'header.navbar.register'|trans() }}</a></li>
+        <li><a href="{{ path('fos_user_security_login') }}">{{ 'header.navbar.login'|trans() }}</a></li>
+    {% endif %}
+{% endblock %}
+
 {% block body_start %}
 <div id="wrap">
 {% endblock body_start %}
