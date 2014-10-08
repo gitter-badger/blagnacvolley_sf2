@@ -1,0 +1,20 @@
+{
+  "name": "blagnacvolley_sf2",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ylastapis/blagnacvolley_sf2",
+  "authors": [
+    "y.lastapis <y.lastapis@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "modernizr": "~2.8.3"
+  }
+}
