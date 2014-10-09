@@ -13,20 +13,14 @@
 
         {% block head_style %}
 
-            {% stylesheets
-            '%kernel.root_dir%/../bower_components/bootstrap/less/bootstrap.less'
-            filter='lessphp'
-            %}
-            <link rel="stylesheet" href="{{ asset_url }}">
-            {% endstylesheets %}
+            <link rel="stylesheet" href="/css/bootstrap.css">
+            <link rel="stylesheet" href="/css/styles.css">
 
             {% stylesheets
             '%kernel.root_dir%/../bower_components/bootstrap/dist/css/bootstrap-theme.min.css'
             %}
             <link rel="stylesheet" href="{{ asset_url }}">
             {% endstylesheets %}
-
-
 
         {% endblock head_style %}
 
@@ -64,64 +58,90 @@
 {% block body %}
 
 {% block bv_head %}
-{% block bv_head_top %}
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Brand</a>
-            </div>
+    <header class="expanded no-hover">
+        <a href="#" class="nav-logo"></a>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    {% block bv_head_top_current_user %}
-                    {% endblock bv_head_top_current_user %}
-                    {% block bv_head_top_connexion %}
-                    {% endblock bv_head_top_connexion %}
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-{% endblock bv_head_top %}
-    {% block bv_head_content %}
-    {% endblock bv_head_content %}
-    {% block bv_head_bottom %}
-    {% endblock bv_head_bottom %}
+        {% block bv_head_top %}
+        <div class="bar">
+            <div class="sharing-left">
+                <a href="#" class="label social">Acc&egrave;s Administrateur</a>
+            </div>
+            <div class="sharing">
+                <a href="" target="_blank" class="header-icon twitter">Twitter</a>
+                <a href="" target="_blank" class="header-icon facebook">Facebook</a>
+                <span class="label social">Retrouvez-nous sur </span>
+            </div>
+        </div>
+        {% endblock bv_head_top %}
+
+        {% block bv_head_content %}
+        <div class="nav-mask">
+            <nav>
+                <div class="nav-container">
+                    <ul class="nav left">
+                        <li class="home">
+                            <a href="#">Accueil</a>
+                        </li>
+                        <li class="alana">
+                            <a href="#alana">
+                                <span class="name"><br>Calendrier</span>
+                            </a>
+                        </li>
+                        <li class="billy">
+                            <a href="#billy">
+                                <span class="name"><br>Addresses</span>
+                            </a>
+                        </li>
+                        <li class="dan">
+                            <a href="#dan">
+                                <span class="name"><br>Horaires</span>
+                            </a>
+                        </li>
+                        <li class="erin">
+                            <a href="#erin">
+                                <span class="name"><br>Ecole de Volley</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav right">
+                        <li class="ted">
+                            <a href="#ted">
+                                <span class="name"><br>Connexion</span>
+                            </a>
+                        </li>
+                        <li class="rico">
+                            <a href="#rico">
+                                <span class="name"><br>Inscription</span>
+                            </a>
+                        </li>
+                        <li class="picabo">
+                            <a href="#picabo">
+                                <span class="name"><br>Contact</span>
+                            </a>
+                        </li>
+                        <li class="julie">
+                            <a href="#julie">
+                                <span class="name"><br>Equipes</span>
+                            </a>
+                        </li>
+                        <li class="evan">
+                            <a href="#evan">
+                                <span class="name"><br>Jeu Libre</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        {% endblock bv_head_content %}
+
+        {% block bv_head_bottom %}
+        {% endblock bv_head_bottom %}
+
+    </header>
 {% endblock bv_head %}
 
-    {% block navbar %}
-        <!-- No navbar included here to reduce dependencies, see https://github.com/phiamo/MopaBootstrapSandboxBundle/blob/master/Resources/views/base.html.twig for howto include it -->
-    {% endblock navbar %}
-
+<div class="body_content">
 {% block container %}
 {% block container_div_start %}<div class="{% block container_class %}container{% endblock container_class %}">{% endblock container_div_start %}
     {% block header %}
@@ -176,6 +196,7 @@
 {% endblock footer_tag_end %}
 {% block container_div_end %}</div><!-- /container -->{% endblock container_div_end %}
 {% endblock container %}
+</div> <!-- END body_content -->
 
     {% block body_end_before_js %}
     {% endblock body_end_before_js %}
@@ -185,16 +206,16 @@
     To speed up page loads save a copy of jQuery in your project and override this block to include the correct path
     Otherwise the regeneration is done on every load in dev more with use_controller: true
      #}
-{% block foot_script_assetic %}
-    {#% javascripts
-    '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
-    '@MopaBootstrapBundle/Resources/public/bootstrap/js/*.js'
-    '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
-    '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %#}
-{% endblock foot_script_assetic %}
+    {% block foot_script_assetic %}
+        {#% javascripts
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/*.js'
+        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
+        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %#}
+    {% endblock foot_script_assetic %}
 
     <script type="text/javascript">
         $(document).ready(function () {

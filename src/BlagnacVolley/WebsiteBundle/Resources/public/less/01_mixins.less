@@ -1,0 +1,59 @@
+.fontface(@fontname, @fontfile) {
+  font-family: '@{fontname}';
+  src: url("@{fonts-path}/@{fontfile}.eot");
+  src: url("@{fonts-path}/@{fontfile}.eot?#iefix") format('embedded-opentype'),
+  url("@{fonts-path}/@{fontfile}.woff") format('woff'),
+  url("@{fonts-path}/@{fontfile}.ttf") format('truetype'),
+  url("@{fonts-path}/@{fontfile}.svg#@{fontname}") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.box-shadow (@string) {
+  -webkit-box-shadow: @string;
+  -moz-box-shadow:    @string;
+  box-shadow:         @string;
+}
+
+.gradient-horizontal(@startColor: #555, @endColor: #333) {
+  background: rgba(red(@endColor), green(@endColor), blue(@endColor), 1);
+  background-color: @endColor;
+  background-repeat: no-repeat;
+  background-image: -webkit-gradient(linear, left top, right top, from(@startColor), to(@endColor));
+  background-image: -webkit-linear-gradient(right center, @startColor, @endColor);
+  background-image: -moz-linear-gradient(right center, @startColor, @endColor);
+  background-image: -o-linear-gradient(left,  @startColor,  @endColor);
+  background-image: -khtml-gradient(linear, left top, right top, from(@startColor), to(@endColor));
+  -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorStr='%d', EndColorStr='%d', GradientType=1))",@startColor,@endColor);
+}
+
+.gradient-vertical(@color1, @color2, @color3, @color4) {
+  background: rgba(red(@color2), green(@color2), blue(@color2), 1);
+  background-color: @color2; /* Old browsers */
+  background: -moz-linear-gradient(top,  @color1 0%, @color2 0%, @color3 100%, @color4 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@color1), color-stop(0%,@color2), color-stop(100%,@color3), color-stop(100%,@color4)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  @color1 0%,@color2 0%,@color3 100%,@color4 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  @color1 0%,@color2 0%,@color3 100%,@color4 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  @color1 0%,@color2 0%,@color3 100%,@color4 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  @color1 0%,@color2 0%,@color3 100%,@color4 100%); /* W3C */
+  -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorStr='%d', EndColorStr='%d', GradientType=0))",@color1,@color4);
+}
+
+.border-radiuses(@border) {
+  .border-radius(@border, @border, @border, @border);
+}
+.border-radius (@radius-top-left: 1px, @radius-top-right: 1px, @radius-bottom-right: 1px, @radius-bottom-left: 1px) {
+  -webkit-border-radius: @radius-top-left @radius-top-right @radius-bottom-right @radius-bottom-left;
+  -moz-border-radius: @radius-top-left @radius-top-right @radius-bottom-right @radius-bottom-left;
+  -ms-border-radius: @radius-top-left @radius-top-right @radius-bottom-right @radius-bottom-left;
+  -o-border-radius: @radius-top-left @radius-top-right @radius-bottom-right @radius-bottom-left;
+  border-radius: @radius-top-left @radius-top-right @radius-bottom-right @radius-bottom-left;
+}
+
+.transition(@value) {
+  -webkit-transition: @value;
+  -moz-transition: @value;
+  -ms-transition: @value;
+  -o-transition: @value;
+  transition: @value;
+}

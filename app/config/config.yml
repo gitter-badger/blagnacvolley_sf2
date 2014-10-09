@@ -47,7 +47,7 @@ assetic:
         #yui_css:
         #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
         lessphp:
-            apply_to: "\.less"
+            apply_to: "\.less$"
             file: "%kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php"
 
 # Doctrine Configuration
