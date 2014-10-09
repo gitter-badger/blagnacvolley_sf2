@@ -1,0 +1,9 @@
+#!/bin/sh
+
+ROOT=$OPENSHIFT_HOMEDIR/app-root/runtime/repo
+ln -s `which composer.phar` $ROOT/composer.phar
+sed -e "s/\(database_host:     \)127.0.0.1$/\1"$OPENSHIFT_MYSQL_DB_HOST"/" -e "s/\(database_user:     \)root$/\1"$OPENSHIFT_MYSQL_DB_PASSWORD"/" -e "s/\(database_password: \)~$/\1"$OPENSHIFT_MYSQL_DB_USERNAME"/" $ROOT/app/config/parameters.yml.dist >$ROOT/app/config/parameters.yml
+cd $ROOT && composer install --no-dev --no-progress --optimize-autoloader
+cd $ROOT && php app/console doctrine:migrations:migrate --no-interaction
+cd $ROOT && php app/console cache:clear --env=prod --no-debug
+cd $ROOT && php app/console assetic:dump --env=prod --no-debug
