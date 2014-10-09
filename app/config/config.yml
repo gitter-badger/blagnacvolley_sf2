@@ -2,8 +2,9 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: sonata_core.yml }
+    - { resource: sonata_formatter.yml }
     - { resource: sonata_media.yml }
-#    - { resource: sonata_news.yml }
+    - { resource: sonata_news.yml }
 
 framework:
     #esi:             ~
@@ -76,13 +77,8 @@ doctrine:
                     ApplicationSonataMediaBundle: ~
                     SonataMediaBundle: ~
                     FOSUserBundle: ~
-
-#doctrine_phpcr:
-#    odm:
-#        auto_mapping: true
-#        mappings:
-#            SonataMediaBundle:
-#                prefix: Sonata\MediaBundle\PHPCR
+                    ApplicationSonataClassificationBundle: ~
+                    SonataClassificationBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -92,25 +88,19 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-mopa_bootstrap:
-    icons:
-        icon_set: fontawesome4
-        shortcut: icon
-    form:
-
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        # Enable the SonataAdminBundle block
-        sonata.admin.block.admin_list:
-            contexts:   [admin]
-
-        sonata.user.block.menu:    # used to display the menu in profile pages
-        sonata.user.block.account: # used to display menu option (login option)
-
-        sonata.block.service.action:
-        sonata.block.service.text:
-        sonata.block.service.rss:
+braincrafted_bootstrap:
+    output_dir:
+    assets_dir:      %kernel.root_dir%/../bower_components/bootstrap
+    fontawesome_dir: %kernel.root_dir%/../bower_components/font-awesome
+    jquery_path:     %kernel.root_dir%/../bower_components/jquery/dist/jquery.min.js
+    fonts_dir:       %kernel.root_dir%/../web/fonts
+    less_filter:     lessphp # "less", "lessphp", "sass" or "none"
+    icon_prefix:     fa
+    auto_configure:
+        assetic:       false
+        twig:          true
+        knp_menu:      true
+        knp_paginator: true
 
 sonata_user:
     security_acl: true
@@ -131,3 +121,21 @@ fos_user:
 
     service:
         user_manager: sonata.user.orm.user_manager
+
+sonata_intl:
+    timezone:
+        default: Europe/Paris
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        # Enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+
+        sonata.user.block.menu:    # used to display the menu in profile pages
+        sonata.user.block.account: # used to display menu option (login option)
+
+        sonata.block.service.action:
+        sonata.block.service.text:
+        sonata.block.service.rss:

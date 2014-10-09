@@ -1,8 +1,0 @@
-BlagnacVolley\UserBundle\Entity\User:
-    type:  entity
-    table: bv_user
-    id:
-        id:
-            type: integer
-            generator:
-                strategy: AUTO

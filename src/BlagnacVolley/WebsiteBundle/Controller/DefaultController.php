@@ -13,7 +13,7 @@ class DefaultController extends Controller
 
     public function staticAction($page)
     {
-        $tpl = ':static:'.$page.'.html.twig';
+        $tpl = '    :static:'.$page.'.html.twig';
         if ($this->container->get('templating')->exists($tpl)) {
             $response = $this->render($tpl, array());
         } else {

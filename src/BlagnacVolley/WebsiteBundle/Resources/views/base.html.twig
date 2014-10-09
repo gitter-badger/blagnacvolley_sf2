@@ -1,5 +1,3 @@
-{% from 'MopaBootstrapBundle::flash.html.twig' import session_flash %}
-
 <!DOCTYPE html>
 {% block html_tag %}
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ app.request.locale }}"> <![endif]-->
@@ -136,7 +134,8 @@
         </div>
     {% endblock page_header %}
 
-    {% block flashes %}
+    {# was defined by Mopa Bootstrap Bundle #}
+    {#% block flashes %}
         {% if app.session.flashbag.peekAll|length > 0 %}
             <div class="row">
                 <div class="col-sm-12">
@@ -144,7 +143,7 @@
                 </div>
             </div>
         {% endif %}
-    {% endblock flashes %}
+    {% endblock flashes %#}
 
     {% block content_row %}
         <div class="row">
@@ -187,14 +186,14 @@
     Otherwise the regeneration is done on every load in dev more with use_controller: true
      #}
 {% block foot_script_assetic %}
-    {% javascripts
+    {#% javascripts
     '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
     '@MopaBootstrapBundle/Resources/public/bootstrap/js/*.js'
     '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
     '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {% endjavascripts %#}
 {% endblock foot_script_assetic %}
 
     <script type="text/javascript">
