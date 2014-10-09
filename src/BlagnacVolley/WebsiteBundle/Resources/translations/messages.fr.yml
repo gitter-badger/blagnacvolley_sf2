@@ -3,7 +3,7 @@ header:
   navbar:
     login: Connexion
     logout: Deconnexion
-    register: Créer un compte
+    register: S'inscrire
 
 homepage:
   welcome: Bienvenue sur le site officiel du Blagnac Volley-Ball
