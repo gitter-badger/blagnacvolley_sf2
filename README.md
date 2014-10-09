@@ -47,3 +47,18 @@ Install node, then bower, then install dependencies
 npm install
 bower install
 ```
+
+## Update
+
+Install vendors:
+
+```
+php composer.phar install
+```
+
+Install dependencies:
+
+```
+npm install
+bower install
+```
