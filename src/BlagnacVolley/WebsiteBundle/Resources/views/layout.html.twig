@@ -165,11 +165,11 @@
     </header>
 {% endblock bv_head %}
 
-    <div class="body_content">
-        {% block container %}
-            {% block container_div_start %}<div class="{% block container_class %}container{% endblock container_class %}">{% endblock container_div_start %}
-            {% block header %}
-            {% endblock header %}
+<div class="body_content">
+    {% block container %}
+        {% block container_div_start %}
+        <div class="{% block container_class %}container{% endblock container_class %}">
+        {% endblock container_div_start %}
 
         {% block content_div_start %}<div class="content">{% endblock content_div_start %}
             {% block page_header %}
@@ -178,7 +178,6 @@
                 </div>
             {% endblock page_header %}
 
-            {# was defined by Mopa Bootstrap Bundle #}
             {#% block flashes %}
                 {% if app.session.flashbag.peekAll|length > 0 %}
                     <div class="row">
@@ -206,60 +205,51 @@
                 </div>
             {% endblock content_row %}
 
-        {% block content_div_end %}</div>{% endblock content_div_end %}
-
-        {% block footer_tag_start %}
-            <footer>
-        {% endblock footer_tag_start %}
-
-            {% block footer %}
-            {% endblock footer %}
-
-        {% block footer_tag_end %}
-            </footer>
-        {% endblock footer_tag_end %}
-            {% block container_div_end %}</div><!-- /container -->{% endblock container_div_end %}
-        {% endblock container %}
-    </div> <!-- END body_content -->
-
-{% block body_end_before_js %}
-    <div id="push"></div>
-    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-        <div id="footer">
-            <div class="container">
-                <p class="muted credit">Pour toute demande d'information, contactez nous à l'adresse <a target="_blank" href="mailto:blagnacvolley@free.fr">blagnacvolley@free.fr</a></p>
-            </div>
+        {% block content_div_end %}
         </div>
-    </nav>
-{% endblock body_end_before_js %}
+        {% endblock content_div_end %}
 
-{% block foot_script %}
-    {# To only use a subset or add more js overwrite and copy paste this block
-    To speed up page loads save a copy of jQuery in your project and override this block to include the correct path
-    Otherwise the regeneration is done on every load in dev more with use_controller: true
-     #}
-    {% block foot_script_assetic %}
-        {#% javascripts
-        '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
-        '@MopaBootstrapBundle/Resources/public/bootstrap/js/*.js'
-        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
-        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %#}
-    {% endblock foot_script_assetic %}
+    {% endblock container %}
+</div> <!-- END body_content -->
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            $('[data-toggle="popover"]').popover();
-        });
-    </script>
-{% endblock foot_script %}
-{% endblock body %}
+    {% block body_end_before_js %}
+        <div id="push"></div>
+        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+            <div id="footer">
+                <div class="container">
+                    <p class="muted credit">Pour toute demande d'information, contactez nous à l'adresse <a target="_blank" href="mailto:blagnacvolley@free.fr">blagnacvolley@free.fr</a></p>
+                </div>
+            </div>
+        </nav>
+    {% endblock body_end_before_js %}
 
-{% block body_end %}
-{% endblock body_end %}
+    {% block foot_script %}
+        {# To only use a subset or add more js overwrite and copy paste this block
+        To speed up page loads save a copy of jQuery in your project and override this block to include the correct path
+        Otherwise the regeneration is done on every load in dev more with use_controller: true
+         #}
+        {% block foot_script_assetic %}
+            {#% javascripts
+            '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
+            '@MopaBootstrapBundle/Resources/public/bootstrap/js/*.js'
+            '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
+            '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
+            %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %#}
+        {% endblock foot_script_assetic %}
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="popover"]').popover();
+            });
+        </script>
+    {% endblock foot_script %}
+    {% endblock body %}
+
+    {% block body_end %}
+    {% endblock body_end %}
 </body>
 </html>
 

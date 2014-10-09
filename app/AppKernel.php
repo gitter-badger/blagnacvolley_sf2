@@ -43,8 +43,9 @@ class AppKernel extends Kernel
             new Application\Sonata\NewsBundle\ApplicationSonataNewsBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
 
-            new BlagnacVolley\WebsiteBundle\BlagnacVolleyWebsiteBundle(),
+            // new Genemu\Bundle\FormBundle\GenemuFormBundle(),
 
+            new BlagnacVolley\WebsiteBundle\BlagnacVolleyWebsiteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
