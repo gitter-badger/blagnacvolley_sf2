@@ -31,13 +31,22 @@ if [ ! -e $NPM_CONFIG_USERCONFIG ]; then
     npm set production true
 fi
 
-npm install
+(
+    cd $OPENSHIFT_REPO_DIR
+    npm install
+)
 
 ### BOWER ###
-bower install
+(
+    cd $OPENSHIFT_REPO_DIR
+    bower install
+)
 
 ### COMPILE LESS ###
-grunt less
+(
+    cd $OPENSHIFT_REPO_DIR
+    grunt less
+)
 
 ### COMPOSER ###
 (
