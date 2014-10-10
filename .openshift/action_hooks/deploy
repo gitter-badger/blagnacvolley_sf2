@@ -1,10 +1,5 @@
 #!/bin/bash
 
-export BV_DB_HOST=$OPENSHIFT_MYSQL_DB_HOST
-export BV_DB_USERNAME=$OPENSHIFT_MYSQL_DB_USERNAME
-export BV_DB_PASSWORD=$OPENSHIFT_MYSQL_DB_PASSWORD
-export BV_SECRET=$OPENSHIFT_GEAR_UUID
-
 ### COMPOSER ###
 
 # set the location for composer home to the data dir
@@ -31,6 +26,12 @@ fi
 # use composer install
 (
     unset GIT_DIR
+
+    export BV_DB_HOST=$OPENSHIFT_MYSQL_DB_HOST
+    export BV_DB_USERNAME=$OPENSHIFT_MYSQL_DB_USERNAME
+    export BV_DB_PASSWORD=$OPENSHIFT_MYSQL_DB_PASSWORD
+    export BV_SECRET=$OPENSHIFT_GEAR_UUID
+
     cd $OPENSHIFT_REPO_DIR
     php $OPENSHIFT_DATA_DIR/composer.phar install --no-dev --no-progress --optimize-autoloader
 )
