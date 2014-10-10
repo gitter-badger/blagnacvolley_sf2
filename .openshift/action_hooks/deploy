@@ -4,6 +4,13 @@
 export COMPOSER_HOME="$OPENSHIFT_DATA_DIR/.composer"
 export NPM_CONFIG_USERCONFIG="$OPENSHIFT_DATA_DIR/.npmrc"
 
+if [ ! -e $NPM_CONFIG_USERCONFIG ]; then
+    npm set production true
+    npm set cache $OPENSHIFT_DATA_DIR/.npm
+    npm set init-module $OPENSHIFT_DATA_DIR/.npm-init.js
+    npm set userignorefile $OPENSHIFT_DATA_DIR/.npmignore
+fi
+
 # DB config (used by Composer Incenteev/ParameterHandler buildParameters hook)
 export BV_DB_NAME=$OPENSHIFT_APP_NAME
 export BV_DB_HOST=$OPENSHIFT_MYSQL_DB_HOST
@@ -26,39 +33,23 @@ for DIR in $LINKED_DIRS; do
     fi
 done
 
-### NPM ###
-if [ ! -e $NPM_CONFIG_USERCONFIG ]; then
-    npm set production true
-fi
-
 (
     cd $OPENSHIFT_REPO_DIR
+
+    ### NPM ###
     npm install
-)
 
-### BOWER ###
-(
-    cd $OPENSHIFT_REPO_DIR
+    ### BOWER ###
     bower install
-)
 
-### COMPILE LESS ###
-(
-    cd $OPENSHIFT_REPO_DIR
+    ### COMPILE LESS ###
     grunt less
-)
 
-### COMPOSER ###
-(
+    ### COMPOSER ###
     unset GIT_DIR
-    cd $OPENSHIFT_REPO_DIR
     php $OPENSHIFT_DATA_DIR/composer.phar install --no-dev --no-progress --optimize-autoloader
-)
 
-
-### SYMFONY ###
-(
-    cd $OPENSHIFT_REPO_DIR
+    ### SYMFONY ###
     # Database
     php app/console doctrine:migrations:migrate --no-interaction
     # Cache
