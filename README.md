@@ -8,6 +8,14 @@ http://bvb-tle.rhcloud.com/
 
 ## Installation
 
+Install node, then install dependencies and compile less files
+
+```
+npm install
+bower install
+grunt less
+```
+
 Install Composer:
 
 ```
@@ -41,24 +49,12 @@ Create super user:
 php app/console fos:user:create --super-admin
 ```
 
-Install node, then bower, then install dependencies
-
-```
-npm install
-bower install
-```
-
 ## Update
 
-Install vendors:
-
-```
-php composer.phar install
-```
-
-Install dependencies:
-
 ```
 npm install
 bower install
+grunt less
+php composer.phar install
+php app/console doctrine:migrations:migrate
 ```

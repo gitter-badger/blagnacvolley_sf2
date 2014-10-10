@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# Setting environment variables
-# These will be used by Composer Incenteev/ParameterHandler buildParamerts hook
-
-export BV_DB_HOST=$OPENSHIFT_MYSQL_DB_HOST
-export BV_DB_USERNAME=$OPENSHIFT_MYSQL_DB_USERNAME
-export BV_DB_PASSWORD=$OPENSHIFT_MYSQL_DB_PASSWORD
-export BV_SECRET=$OPENSHIFT_GEAR_UUID
