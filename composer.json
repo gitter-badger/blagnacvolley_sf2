@@ -66,7 +66,13 @@
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "app/config/parameters.yml",
+            "env-map": {
+                "database_host": "BV_DB_HOST",
+                "database_user": "BV_DB_USERNAME",
+                "database_password": "BV_DB_PASSWORD",
+                "secret": "BV_SECRET"
+            }
         },
         "branch-alias": {
             "dev-master": "2.5-dev"
