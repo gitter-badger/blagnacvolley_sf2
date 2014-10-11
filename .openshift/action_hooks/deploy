@@ -36,13 +36,15 @@ done
 (
     cd $OPENSHIFT_REPO_DIR
 
-    ### NPM ###
+    ### NODE ###
+    # Require NodeJS 0.10
+    . /opt/rh/v8314/enable
+    . /opt/rh/nodejs010/enable
+    # Dependencies
     npm install
-
-    ### BOWER ###
+    # Front libraries
     bower install
-
-    ### COMPILE LESS ###
+    # Compile Less files
     grunt less
 
     ### COMPOSER ###
