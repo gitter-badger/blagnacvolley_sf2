@@ -1,0 +1,33 @@
+#!/bin/bash
+
+ENVDIR=~/.env/user_vars
+DATADIR=${OPENSHIFT_DATA_DIR%/}
+
+echo ${OPENSHIFT_DATA_DIR}.composer > $ENVDIR/COMPOSER_HOME
+echo ${OPENSHIFT_DATA_DIR}.npmrc > $ENVDIR/NPM_CONFIG_USERCONFIG
+
+if [ ! -e $NPM_CONFIG_USERCONFIG ]; then
+    npm set production true
+    npm set cache $DATADIR/.npm
+    npm set init-module $DATADIR/.npm-init.js
+    npm set userignorefile $DATADIR/.npmignore
+fi
+
+echo ${OPENSHIFT_APP_NAME} > $ENVDIR/BV_DB_NAME
+echo ${OPENSHIFT_MYSQL_DB_HOST} > $ENVDIR/BV_DB_HOST
+echo ${OPENSHIFT_MYSQL_DB_USERNAME} > $ENVDIR/BV_DB_USERNAME
+echo ${OPENSHIFT_MYSQL_DB_PASSWORD} > $ENVDIR/BV_DB_PASSWORD
+echo ${OPENSHIFT_SECRET_TOKEN} > $ENVDIR/BV_SECRET
+
+. /opt/rh/v8314/enable
+. /opt/rh/nodejs010/enable
+
+export PATH=`npm bin`${PATH:+:${PATH}}
+
+echo $PATH > $ENVDIR/PATH
+echo $LD_LIBRARY_PATH > $ENVDIR/LD_LIBRARY_PATH
+echo $PYTHONPATH > $ENVDIR/PYTHONPATH
+echo $MANPATH > $ENVDIR/MANPATH
+echo $PKG_CONFIG_PATH > $ENVDIR/PKG_CONFIG_PATH
+echo $CPATH > $ENVDIR/CPATH
+echo $LIBRARY_PATH > $ENVDIR/LIBRARY_PATH
