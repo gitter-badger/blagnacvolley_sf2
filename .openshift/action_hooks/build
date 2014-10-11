@@ -3,31 +3,36 @@
 ENVDIR=~/.env/user_vars
 DATADIR=${OPENSHIFT_DATA_DIR%/}
 
-echo ${OPENSHIFT_DATA_DIR}.composer > $ENVDIR/COMPOSER_HOME
-echo ${OPENSHIFT_DATA_DIR}.npmrc > $ENVDIR/NPM_CONFIG_USERCONFIG
+echo $DATADIR/.composer > $ENVDIR/COMPOSER_HOME
+echo $DATADIR/.npmrc    > $ENVDIR/NPM_CONFIG_USERCONFIG
 
 if [ ! -e $NPM_CONFIG_USERCONFIG ]; then
-    npm set production true
-    npm set cache $DATADIR/.npm
-    npm set init-module $DATADIR/.npm-init.js
+    npm set production     true
+    npm set cache          $DATADIR/.npm
+    npm set init-module    $DATADIR/.npm-init.js
     npm set userignorefile $DATADIR/.npmignore
 fi
 
-echo ${OPENSHIFT_APP_NAME} > $ENVDIR/BV_DB_NAME
-echo ${OPENSHIFT_MYSQL_DB_HOST} > $ENVDIR/BV_DB_HOST
+echo ${OPENSHIFT_APP_NAME}          > $ENVDIR/BV_DB_NAME
+echo ${OPENSHIFT_MYSQL_DB_HOST}     > $ENVDIR/BV_DB_HOST
 echo ${OPENSHIFT_MYSQL_DB_USERNAME} > $ENVDIR/BV_DB_USERNAME
 echo ${OPENSHIFT_MYSQL_DB_PASSWORD} > $ENVDIR/BV_DB_PASSWORD
-echo ${OPENSHIFT_SECRET_TOKEN} > $ENVDIR/BV_SECRET
+echo ${OPENSHIFT_SECRET_TOKEN}      > $ENVDIR/BV_SECRET
 
-. /opt/rh/v8314/enable
-. /opt/rh/nodejs010/enable
+# Hack to enable NodeJS 0.10
 
-export PATH=`npm bin`${PATH:+:${PATH}}
+. scl_source enable nodejs010
 
-echo $PATH > $ENVDIR/PATH
+export PATH=`cd $OPENSHIFT_REPO_DIR ; npm bin`${PATH:+:${PATH}}
+
+echo $PATH            > $ENVDIR/PATH
 echo $LD_LIBRARY_PATH > $ENVDIR/LD_LIBRARY_PATH
-echo $PYTHONPATH > $ENVDIR/PYTHONPATH
-echo $MANPATH > $ENVDIR/MANPATH
+echo $PYTHONPATH      > $ENVDIR/PYTHONPATH
+echo $MANPATH         > $ENVDIR/MANPATH
 echo $PKG_CONFIG_PATH > $ENVDIR/PKG_CONFIG_PATH
-echo $CPATH > $ENVDIR/CPATH
-echo $LIBRARY_PATH > $ENVDIR/LIBRARY_PATH
+echo $CPATH           > $ENVDIR/CPATH
+echo $LIBRARY_PATH    > $ENVDIR/LIBRARY_PATH
+
+# Hack around yeoman/configstore (dependency of bower)
+
+echo ${OPENSHIFT_DATA_DIR} > $ENVDIR/XDG_CONFIG_HOME

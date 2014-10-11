@@ -1,23 +1,5 @@
 #!/bin/bash
 
-### ENVIRONMENT ###
-export COMPOSER_HOME="$OPENSHIFT_DATA_DIR/.composer"
-export NPM_CONFIG_USERCONFIG="$OPENSHIFT_DATA_DIR/.npmrc"
-
-if [ ! -e $NPM_CONFIG_USERCONFIG ]; then
-    npm set production true
-    npm set cache $OPENSHIFT_DATA_DIR/.npm
-    npm set init-module $OPENSHIFT_DATA_DIR/.npm-init.js
-    npm set userignorefile $OPENSHIFT_DATA_DIR/.npmignore
-fi
-
-# DB config (used by Composer Incenteev/ParameterHandler buildParameters hook)
-export BV_DB_NAME=$OPENSHIFT_APP_NAME
-export BV_DB_HOST=$OPENSHIFT_MYSQL_DB_HOST
-export BV_DB_USERNAME=$OPENSHIFT_MYSQL_DB_USERNAME
-export BV_DB_PASSWORD=$OPENSHIFT_MYSQL_DB_PASSWORD
-export BV_SECRET=$OPENSHIFT_SECRET_TOKEN
-
 ### DIRECTORIES ###
 LINKED_DIRS="vendor node_modules bower_components"
 
@@ -37,11 +19,6 @@ done
     cd $OPENSHIFT_REPO_DIR
 
     ### NODE ###
-    # Require NodeJS 0.10
-    . /opt/rh/v8314/enable
-    . /opt/rh/nodejs010/enable
-    # Add node_modules binaries to PATH
-    export PATH=`npm bin`${PATH:+:${PATH}}
     # Dependencies
     npm install
     # Front libraries
