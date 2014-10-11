@@ -40,6 +40,8 @@ done
     # Require NodeJS 0.10
     . /opt/rh/v8314/enable
     . /opt/rh/nodejs010/enable
+    # Add node_modules binaries to PATH
+    export PATH=`npm bin`${PATH:+:${PATH}}
     # Dependencies
     npm install
     # Front libraries
