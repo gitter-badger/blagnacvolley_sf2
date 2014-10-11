@@ -32,7 +32,3 @@ echo $MANPATH         > $ENVDIR/MANPATH
 echo $PKG_CONFIG_PATH > $ENVDIR/PKG_CONFIG_PATH
 echo $CPATH           > $ENVDIR/CPATH
 echo $LIBRARY_PATH    > $ENVDIR/LIBRARY_PATH
-
-# Hack around yeoman/configstore (dependency of bower)
-
-echo ${OPENSHIFT_DATA_DIR} > $ENVDIR/XDG_CONFIG_HOME
