@@ -28,7 +28,7 @@ done
     # Dependencies
     npm install
     # Front libraries
-    bower install
+    HOME=$OPENSHIFT_DATA_DIR bower install
     # Compile Less files
     grunt less
 
