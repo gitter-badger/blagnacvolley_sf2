@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# load custom env
+for VAR in `ls ~/.env/user_vars`; do
+    declare "$VAR=`cat ~/.env/user_vars/$VAR`"
+    export $VAR
+done
+
 ### DIRECTORIES ###
 LINKED_DIRS="vendor node_modules bower_components"
 
