@@ -39,8 +39,9 @@ done
     ### SYMFONY ###
     # Database
     php app/console doctrine:migrations:migrate --no-interaction
+    php app/console doctrine:fixtures:load --env=prod --no-debug --no-interaction
     # Cache
-    php app/console cache:clear --env=prod --no-debug
+    #php app/console cache:clear --env=prod --no-debug
     # Assetic assets
     php app/console assetic:dump --env=prod --no-debug
 )
