@@ -59,7 +59,7 @@
 
 {% block bv_head %}
     <header class="expanded no-hover">
-        <a href="#" class="nav-logo"></a>
+        <a href="{{ url('home') }}" class="nav-logo"></a>
 
         {% block bv_head_top %}
             <div class="bar">
@@ -80,7 +80,7 @@
                     <div class="nav-container">
                         <ul class="nav left">
                             <li class="home">
-                                <a href="#">Accueil</a>
+                                <a href="{{ url('home') }}">Accueil</a>
                             </li>
                             <li class="alana">
                                 <a href="#alana">
@@ -139,7 +139,7 @@
                                 {% endblock %}
                             </li>
                             <li class="picabo">
-                                <a href="#picabo">
+                                <a href="{{  url('contact') }}">
                                     <span class="name"><br>Contact</span>
                                 </a>
                             </li>
@@ -172,13 +172,16 @@
         {% endblock container_div_start %}
 
         {% block content_div_start %}<div class="content">{% endblock content_div_start %}
+{#
             {% block page_header %}
                 <div class="page-header">
                     <h1>{% block headline %}<a href="{{ url('home') }}">BLAGNAC Volley-Ball</a>{% endblock headline %}</h1>
                 </div>
             {% endblock page_header %}
+#}
 
-            {#% block flashes %}
+{#
+            {% block flashes %}
                 {% if app.session.flashbag.peekAll|length > 0 %}
                     <div class="row">
                         <div class="col-sm-12">
@@ -186,7 +189,8 @@
                         </div>
                     </div>
                 {% endif %}
-            {% endblock flashes %#}
+            {% endblock flashes %}
+#}
 
             {% block content_row %}
                 <div class="row">
