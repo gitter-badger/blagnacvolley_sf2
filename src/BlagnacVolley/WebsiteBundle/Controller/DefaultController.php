@@ -2,7 +2,7 @@
 
 namespace BlagnacVolley\WebsiteBundle\Controller;
 
-use BlagnacVolley\WebsiteBundle\Form\Type;
+use BlagnacVolley\WebsiteBundle\Form\Type\ContactFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,7 +28,7 @@ class DefaultController extends Controller
      */
     public function contactAction(Request $request)
     {
-        $form = $this->createForm(new ContactType());
+        $form = $this->createForm(new ContactFormType());
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -57,8 +57,8 @@ class DefaultController extends Controller
             }
         }
 
-        return array(
-            'form' => $form->createView()
-        );
+        return $this->render('BlagnacVolleyWebsiteBundle:Default:contact.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }
