@@ -5,12 +5,14 @@
 {% endblock title_content %}
 
 {% block mail_content %}
-    Nouveau message depuis le formulaire de contacts
 
-    Nom : {{ name }}
-    Email : {{ email }}
+    Nouveau message depuis le formulaire de contacts<br/><br/>
 
-    Contenu du message :
+    Nom : {{ name }}<br/>
+    Email : {{ email }}<br/><br/>
 
-    {{ message|raw }}
+    Contenu du message :<br/><br/>
+
+    {{ message|raw }}<br/><br/>
+
 {% endblock mail_content %}
