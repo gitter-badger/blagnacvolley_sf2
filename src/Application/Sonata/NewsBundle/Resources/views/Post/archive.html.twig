@@ -1,4 +1,4 @@
-{% extends "@BlagnacVolleyWebsite/layout.html.twig" %}
+{% extends "@ApplicationSonataNews/layout.html.twig" %}
 {% block sonata_page_breadcrumb %}
     <div class="row-fluid clearfix">
         {{ sonata_block_render_event('breadcrumb', { 'context': 'news_archive', 'collection': collection, 'tag': tag, 'current_uri': app.request.requestUri }) }}
