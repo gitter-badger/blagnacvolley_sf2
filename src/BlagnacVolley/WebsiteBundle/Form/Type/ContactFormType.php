@@ -18,27 +18,27 @@ class ContactFormType extends AbstractType
         $builder
             ->add('name', 'text', array(
                 'attr' => array(
-                    'placeholder' => 'What\'s your name?',
+                    'placeholder' => 'Votre nom',
                     'pattern'     => '.{2,}' //minlength
-                )
+                ),
+                'label'  => 'Nom',
             ))
             ->add('email', 'email', array(
                 'attr' => array(
-                    'placeholder' => 'So I can get back to you.'
-                )
-            ))
-            ->add('subject', 'text', array(
-                'attr' => array(
-                    'placeholder' => 'The subject of your message.',
-                    'pattern'     => '.{3,}' //minlength
-                )
+                    'placeholder' => 'Votre email'
+                ),
+                'label'  => 'Email',
             ))
             ->add('message', 'textarea', array(
                 'attr' => array(
                     'cols' => 90,
                     'rows' => 10,
-                    'placeholder' => 'And your message to me...'
-                )
+                    'placeholder' => 'Votre message'
+                ),
+                'label'  => 'Message',
+            ))
+            ->add('save', 'submit', array(
+                'label'  => 'Valider',
             ));
     }
 
@@ -46,19 +46,15 @@ class ContactFormType extends AbstractType
     {
         $collectionConstraint = new Collection(array(
             'name' => array(
-                new NotBlank(array('message' => 'Name should not be blank.')),
+                new NotBlank(array('message' => 'Le nom ne doit pas être vide.')),
                 new Length(array('min' => 2))
             ),
             'email' => array(
-                new NotBlank(array('message' => 'Email should not be blank.')),
-                new Email(array('message' => 'Invalid email address.'))
-            ),
-            'subject' => array(
-                new NotBlank(array('message' => 'Subject should not be blank.')),
-                new Length(array('min' => 3))
+                new NotBlank(array('message' => 'l\'email ne doit pas être vide.')),
+                new Email(array('message' => 'Adresse email invalide.'))
             ),
             'message' => array(
-                new NotBlank(array('message' => 'Message should not be blank.')),
+                new NotBlank(array('message' => 'Le message ne doit pas être vide.')),
                 new Length(array('min' => 5))
             )
         ));

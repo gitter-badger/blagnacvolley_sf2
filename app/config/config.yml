@@ -139,3 +139,6 @@ sonata_block:
         sonata.block.service.action:
         sonata.block.service.text:
         sonata.block.service.rss:
+
+# lexik_mailer:
+#     admin_email: y.lastapis@gmail.com

@@ -15,12 +15,7 @@
 
             <link rel="stylesheet" href="/css/bootstrap.css">
             <link rel="stylesheet" href="/css/styles.css">
-
-            {% stylesheets
-            '%kernel.root_dir%/../bower_components/bootstrap/dist/css/bootstrap-theme.min.css'
-            %}
-            <link rel="stylesheet" href="{{ asset_url }}">
-            {% endstylesheets %}
+            <link rel="stylesheet" href="%kernel.root_dir%/../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 
         {% endblock head_style %}
 
@@ -244,10 +239,10 @@
         {% endblock foot_script_assetic %}
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-                $('[data-toggle="popover"]').popover();
-            });
+//            $(document).ready(function () {
+//                $('[data-toggle="tooltip"]').tooltip();
+//                $('[data-toggle="popover"]').popover();
+//            });
         </script>
     {% endblock foot_script %}
     {% endblock body %}

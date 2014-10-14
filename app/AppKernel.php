@@ -44,7 +44,10 @@ class AppKernel extends Kernel
             new Application\Sonata\NewsBundle\ApplicationSonataNewsBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
 
-            // new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+//            new Craue\ConfigBundle\CraueConfigBundle(),
+//            new Lexik\Bundle\MailerBundle\LexikMailerBundle(),
+
+//             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
 
             new BlagnacVolley\WebsiteBundle\BlagnacVolleyWebsiteBundle(),
         );

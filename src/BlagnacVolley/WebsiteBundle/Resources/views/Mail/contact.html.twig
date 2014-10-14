@@ -1,5 +1,16 @@
-New message from {{ name }}
-Sent from courot.com/contact
-IP: {{ ip }}
+{% extends "BlagnacVolleyWebsiteBundle:Mail:layout.html.twig" %}
 
-{{ message|raw }}
+{% block title_content %}
+    [BlagnacVolley] Nouveau message depuis le formulaire de contacts
+{% endblock title_content %}
+
+{% block mail_content %}
+    Nouveau message depuis le formulaire de contacts
+
+    Nom : {{ name }}
+    Email : {{ email }}
+
+    Contenu du message :
+
+    {{ message|raw }}
+{% endblock mail_content %}

@@ -31,27 +31,31 @@ class DefaultController extends Controller
         $form = $this->createForm(new ContactFormType());
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
+            //$form->submit($request->request->get($form->getName()));
 
             if ($form->isValid()) {
+
                 $message = \Swift_Message::newInstance()
-                    ->setSubject($form->get('subject')->getData())
+                    ->setSubject("[BlagnacVolley] Nouveau message depuis le formulaire de contacts")
                     ->setFrom($form->get('email')->getData())
-                    ->setTo('contact@example.com')
+                    ->setTo('y.lastapis@gmail.com')
+                    ->setContentType('text/html')
                     ->setBody(
                         $this->renderView(
                             'BlagnacVolleyWebsiteBundle:Mail:contact.html.twig',
                             array(
-                                'ip' => $request->getClientIp(),
                                 'name' => $form->get('name')->getData(),
+                                'email' => $form->get('email')->getData(),
                                 'message' => $form->get('message')->getData()
                             )
-                        )
+                        ),
+                        'text/html'
                     );
 
                 $this->get('mailer')->send($message);
 
-                $request->getSession()->getFlashBag()->add('success', 'Your email has been sent! Thanks!');
+                $request->getSession()->getFlashBag()->add('success', 'Votre email a bien été envoyé ! Merci !');
 
                 return $this->redirect($this->generateUrl('contact'));
             }
