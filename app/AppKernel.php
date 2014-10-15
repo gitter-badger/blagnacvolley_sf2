@@ -20,36 +20,15 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
             new FOS\UserBundle\FOSUserBundle(),
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
-
-            new Sonata\AdminBundle\SonataAdminBundle(),
-            new Sonata\BlockBundle\SonataBlockBundle(),
-            new Sonata\ClassificationBundle\SonataClassificationBundle(),
-            new Sonata\CoreBundle\SonataCoreBundle(),
-            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new Sonata\FormatterBundle\SonataFormatterBundle(),
-            new Sonata\IntlBundle\SonataIntlBundle(),
-            new Sonata\MediaBundle\SonataMediaBundle(),
-            new Sonata\NewsBundle\SonataNewsBundle(),
-            new Sonata\SeoBundle\SonataSeoBundle(),
-            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
-
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
-
-            new Application\Sonata\ClassificationBundle\ApplicationSonataClassificationBundle(),
-            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
-            new Application\Sonata\NewsBundle\ApplicationSonataNewsBundle(),
-            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
 
 //            new Craue\ConfigBundle\CraueConfigBundle(),
 //            new Lexik\Bundle\MailerBundle\LexikMailerBundle(),
 
 //             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
 
+            new BlagnacVolley\UserBundle\BlagnacVolleyUserBundle(),
             new BlagnacVolley\WebsiteBundle\BlagnacVolleyWebsiteBundle(),
         );
 

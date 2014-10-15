@@ -1,8 +1,8 @@
-{% extends 'BlagnacVolleyWebsiteBundle::base.html.twig' %}
+{% extends 'BlagnacVolleyWebsiteBundle::layout.html.twig' %}
 
 {% block title %}{{ parent() }} - 404{% endblock %}
 
-{% block content_content %}
+{% block content %}
     <h1>Oops! An Error Occurred</h1>
     <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
 

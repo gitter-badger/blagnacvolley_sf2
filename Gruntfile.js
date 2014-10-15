@@ -17,6 +17,18 @@ module.exports = function(grunt) {
         }
       }
     },
+    copy: {
+      css: {
+        files: [
+          {src: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css', dest: 'web/css/bootstrap-theme.min.css'}
+        ]
+      },
+      javascript: {
+        files: [
+          {src: 'bower_components/modernizr/modernizr.js', dest: 'web/js/modernizr.js'}
+        ]
+      }
+    },
     watch: {
       styles: {
         files: ['src/**/*.less'], // which files to watch
@@ -30,9 +42,11 @@ module.exports = function(grunt) {
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
   grunt.registerTask('default', ['watch']);
+  grunt.registerTask('build', ['less', 'copy']);
 
 };

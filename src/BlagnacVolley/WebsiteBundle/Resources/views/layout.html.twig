@@ -15,7 +15,7 @@
 
             <link rel="stylesheet" href="/css/bootstrap.css">
             <link rel="stylesheet" href="/css/styles.css">
-            <link rel="stylesheet" href="%kernel.root_dir%/../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+            <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 
         {% endblock head_style %}
 
@@ -23,11 +23,7 @@
         <meta name="description" content="">
 
         {% block head_script %}
-            {% javascripts
-            '%kernel.root_dir%/../bower_components/modernizr/modernizr.js'
-            %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            <script type="text/javascript" src="/js/modernizr.js"></script>
         {% endblock head_script %}
 
         <title>{% block title %}BLAGNAC Volley-Ball{% endblock title %}</title>
@@ -59,7 +55,7 @@
         {% block bv_head_top %}
             <div class="bar">
                 <div class="sharing-left">
-                    <a href="{{ path('sonata_admin_redirect') }}" class="label social">Acc&egrave;s Administrateur</a>
+                    <a href="{{ path('home') }}" class="label social">Acc&egrave;s Administrateur</a>
                 </div>
                 <div class="sharing">
                     <a href="" target="_blank" class="header-icon twitter">Twitter</a>
@@ -119,7 +115,7 @@
                             <li class="rico">
                                 {% block bv_head_top_registration %}
                                     {% if app.user %}
-                                        <a href="{{ path('sonata_user_profile_show') }}">
+                                        <a href="{{ path('fos_user_profile_show') }}">
                                             <span class="name"><br>
                                                 {{ app.user.username }}
                                             </span>
@@ -228,14 +224,6 @@
         Otherwise the regeneration is done on every load in dev more with use_controller: true
          #}
         {% block foot_script_assetic %}
-            {#% javascripts
-            '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
-            '@MopaBootstrapBundle/Resources/public/bootstrap/js/*.js'
-            '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
-            '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
-            %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %#}
         {% endblock foot_script_assetic %}
 
         <script type="text/javascript">

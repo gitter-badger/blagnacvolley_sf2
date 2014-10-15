@@ -1,10 +1,6 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: sonata_core.yml }
-    - { resource: sonata_formatter.yml }
-    - { resource: sonata_media.yml }
-    - { resource: sonata_news.yml }
 
 framework:
     #esi:             ~
@@ -33,10 +29,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-
-    form:
-        resources:
-            - 'SonataFormatterBundle:Form:formatter.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -67,22 +59,10 @@ doctrine:
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: "%kernel.root_dir%/data/data.db3"
         # path:     "%database_path%"
-        types:
-            json: Sonata\Doctrine\Types\JsonType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        #auto_mapping: true
-        entity_managers:
-            default:
-                mappings:
-                    ApplicationSonataUserBundle: ~
-                    SonataUserBundle: ~
-                    ApplicationSonataMediaBundle: ~
-                    SonataMediaBundle: ~
-                    FOSUserBundle: ~
-                    ApplicationSonataClassificationBundle: ~
-                    SonataClassificationBundle: ~
+        auto_mapping: true
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -106,48 +86,10 @@ braincrafted_bootstrap:
         knp_menu:      true
         knp_paginator: true
 
-sonata_user:
-    security_acl: true
-    manager_type: orm
-
-sonata_admin:
-    title:      Blagnac Volley
-    #title_logo:
-    templates:
-        # default global templates
-        layout:  SonataAdminBundle::layout.html.twig
-
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Application\Sonata\UserBundle\Entity\User
-
-    group:
-        group_class:   Application\Sonata\UserBundle\Entity\Group
-        group_manager: sonata.user.orm.group_manager
-
-    service:
-        user_manager: sonata.user.orm.user_manager
-
-sonata_intl:
-    timezone:
-        default: Europe/Paris
-
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        # Enable the SonataAdminBundle block
-        sonata.admin.block.admin_list:
-            contexts:   [admin]
-
-        sonata.user.block.menu:    # used to display the menu in profile pages
-        sonata.user.block.account: # used to display menu option (login option)
-
-        sonata.block.service.action:
-        sonata.block.service.text:
-        sonata.block.service.rss:
-
-        sonata.formatter.block.formatter:
+    user_class: BlagnacVolley\UserBundle\Entity\User
 
 # lexik_mailer:
 #     admin_email: y.lastapis@gmail.com
