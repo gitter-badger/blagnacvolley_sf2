@@ -34,6 +34,10 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
+    form:
+        resources:
+            - 'SonataFormatterBundle:Form:formatter.html.twig'
+
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
@@ -109,6 +113,9 @@ sonata_user:
 sonata_admin:
     title:      Blagnac Volley
     #title_logo:
+    templates:
+        # default global templates
+        layout:  SonataAdminBundle::layout.html.twig
 
 fos_user:
     db_driver: orm
@@ -139,6 +146,8 @@ sonata_block:
         sonata.block.service.action:
         sonata.block.service.text:
         sonata.block.service.rss:
+
+        sonata.formatter.block.formatter:
 
 # lexik_mailer:
 #     admin_email: y.lastapis@gmail.com
