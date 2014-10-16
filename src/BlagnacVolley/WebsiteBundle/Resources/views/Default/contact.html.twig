@@ -11,6 +11,35 @@
     {% endspaceless %}
 {% endblock %}
 
+{% block head_style %}
+    {{ parent() }}
+    {{ form_stylesheet(form) }}
+{% endblock %}
+
+{% block head_script %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+{% endblock %}
+
+{% block genemu_recaptcha_javascript %}
+    {% spaceless %}
+        <script type="text/javascript" src="{{ asset("http://www.google.com/recaptcha/api/js/recaptcha_ajax.js") }}"></script>
+        <script type="text/javascript">
+            function genemu_recaptcha_load()
+            {
+                Recaptcha.create('{{ public_key }}', '{{ id }}_div', {{ configs|json_encode|raw }});
+            }
+            if (window.addEventListener) {
+                window.addEventListener('load', genemu_recaptcha_load, false);
+            } else if (window.attachEvent) {
+                window.attachEvent('onload', genemu_recaptcha_load);
+            } else {
+                window.onload = genemu_recaptcha_load;
+            }
+        </script>
+    {% endspaceless %}
+{% endblock genemu_recaptcha_javascript %}
+
 {% block content_row %}
     {% for label, flashes in app.session.flashbag.all %}
         {% for flash in flashes %}
@@ -20,7 +49,7 @@
         {% endfor %}
     {% endfor %}
 
-    <form action="#" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('contactPost')}}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
     </form>
 

@@ -29,8 +29,8 @@
         "braincrafted/bootstrap-bundle": "~2.1",
         "genemu/form-bundle": "2.2.*",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
-        "excelwebzone/recaptcha-bundle": "dev-master",
-        "sensio/generator-bundle": "~2.4"
+        "sensio/generator-bundle": "~2.4",
+        "recaptcha-lib/recaptcha": "~0.1"
     },
     "require-dev": {
     },

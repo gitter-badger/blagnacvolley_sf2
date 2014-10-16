@@ -5,14 +5,13 @@ namespace BlagnacVolley\WebsiteBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Collection;
 
-class ContactFormType extends AbstractType
+class ContactType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -40,17 +39,10 @@ class ContactFormType extends AbstractType
                 ),
                 'label'  => 'Message',
             ))
-            ->add('captcha', 'ewz_recaptcha',  array(
-                'attr'          => array(
-                    'options' => array(
-                        'theme' => 'clean'
-                    )
-                ),
-                'mapped' => false,
-                'constraints'   => array(
-                    new True()
+            ->add('captcha', 'genemu_recaptcha', array(
+                    'mapped' => false,
                 )
-            ))
+            )
             ->add('save', 'submit', array(
                 'label'  => 'Valider',
             ));

@@ -5,6 +5,9 @@ home:
 contact:
     path:     /contact
     defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:contact }
+contactPost:
+    path:     /contactPost
+    defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:contactPost }
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

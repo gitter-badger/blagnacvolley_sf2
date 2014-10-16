@@ -91,12 +91,15 @@ fos_user:
     firewall_name: main
     user_class: BlagnacVolley\UserBundle\Entity\User
 
-# genemu_form:
-#     recaptcha:
-#         public_key:  '6LdvE_wSAAAAAKsOM5rX6zaJObOJno-P1feKYBi4'
-#         private_key: '6LdvE_wSAAAAADhggGrFHNRNMShNr1kplZdg_kOq'
-
-ewz_recaptcha:
-    public_key:  '6LeTHfwSAAAAAET_S2v5iO5QkYZrSqJbP1ZPHnTJ'
-    private_key: '6LeTHfwSAAAAAHl-UnCNJw-OJVv2wYy-37XXxI8N'
-    locale_key:   %kernel.default_locale%
+genemu_form:
+    recaptcha:
+        public_key:  '6LeTHfwSAAAAAET_S2v5iO5QkYZrSqJbP1ZPHnTJ'
+        private_key: '6LeTHfwSAAAAAHl-UnCNJw-OJVv2wYy-37XXxI8N'
+        enabled:              true
+        validation:
+            host:                 www.google.com
+            port:                 80
+            path:                 /recaptcha/api/verify
+            timeout:              10
+            code:                 ~
+        configs:              []
