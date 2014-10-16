@@ -6,14 +6,6 @@ contact:
     path:     /contact
     defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:contact }
 
-#craue_config_settings:
-#    resource: "@CraueConfigBundle/Resources/config/routing/settings.xml"
-#    prefix: /settings
-#
-#LexikMailerBundle:
-#    resource: "@LexikMailerBundle/Resources/config/routing.xml"
-#    prefix:   /emails
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

@@ -1,6 +1,15 @@
 {% extends 'BlagnacVolleyWebsiteBundle::layout.html.twig' %}
 
+{% form_theme form _self %}
+
 {% block title %}Contact{% endblock%}
+
+{% block genemu_captcha_widget %}
+    {% spaceless %}
+        <img src="{{ src }}" width="{{ width }}" height="{{ height }}" title="{{ name|trans }}" alt="{{ name|trans }}" />
+        {{ block("form_widget_simple") }}
+    {% endspaceless %}
+{% endblock %}
 
 {% block content_row %}
     {% for label, flashes in app.session.flashbag.all %}
@@ -11,6 +20,8 @@
         {% endfor %}
     {% endfor %}
 
-    {{ form(form) }}
-{% endblock %}
+    <form action="#" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+    </form>
 
+{% endblock %}

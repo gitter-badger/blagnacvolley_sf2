@@ -32,7 +32,6 @@ class DefaultController extends Controller
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            //$form->submit($request->request->get($form->getName()));
 
             if ($form->isValid()) {
 

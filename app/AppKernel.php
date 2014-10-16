@@ -23,10 +23,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
 
-//            new Craue\ConfigBundle\CraueConfigBundle(),
-//            new Lexik\Bundle\MailerBundle\LexikMailerBundle(),
-
-//             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            //new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
 
             new BlagnacVolley\UserBundle\BlagnacVolleyUserBundle(),
             new BlagnacVolley\WebsiteBundle\BlagnacVolleyWebsiteBundle(),
