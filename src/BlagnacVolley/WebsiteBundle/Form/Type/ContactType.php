@@ -63,9 +63,6 @@ class ContactType extends AbstractType
                 new NotBlank(array('message' => 'Le message ne doit pas être vide.')),
                 new Length(array('min' => 5))
             ),
-            'captcha' => array(
-                new NotBlank(array('message' => 'Le captcha ne doit pas être vide.')),
-            ),
         ));
 
         $resolver->setDefaults(array(

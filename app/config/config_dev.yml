@@ -30,8 +30,13 @@ monolog:
         #    level:  info
 
 assetic:
-    # use_controller: "%use_assetic_controller%"
-    use_controller: false
+    use_controller: "%use_assetic_controller%"
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+genemu_form:
+    recaptcha:
+        validation:
+            # use it to fast form submit in dev
+            #code: 1234

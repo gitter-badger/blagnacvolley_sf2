@@ -41,18 +41,6 @@ class DefaultController extends Controller
         $form = $this->createForm(new ContactType());
 
         if ($request->isMethod('POST')) {
-            $captcha = new Captcha();
-            $captcha->setPublicKey($this->container->getParameter('genemu_form.recaptcha.public_key'));
-            $captcha->setPrivateKey($this->container->getParameter('genemu_form.recaptcha.private_key'));
-
-            if ( !$captcha->isValid() ) {
-                $request->getSession()->getFlashBag()->add('error', 'Captcha invalide !');
-
-                return $this->render('BlagnacVolleyWebsiteBundle:Default:contact.html.twig', array(
-                    'form' => $form->createView(),
-                ));
-            }
-
             $form->handleRequest($request);
 
             if ($form->isValid()) {
