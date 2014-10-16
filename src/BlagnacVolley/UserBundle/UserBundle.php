@@ -4,7 +4,7 @@ namespace BlagnacVolley\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class BlagnacVolleyUserBundle extends Bundle
+class UserBundle extends Bundle
 {
     public function getParent()
     {

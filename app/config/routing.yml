@@ -1,3 +1,12 @@
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+team:
+    resource: "@TeamBundle/Resources/config/routing.yml"
+    prefix:   /
+
 home:
     path:     /
     defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:index }

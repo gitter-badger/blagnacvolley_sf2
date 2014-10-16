@@ -25,8 +25,11 @@ class AppKernel extends Kernel
 
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
 
-            new BlagnacVolley\UserBundle\BlagnacVolleyUserBundle(),
+            //new BlagnacVolley\UserBundle\BlagnacVolleyUserBundle(),
+
             new BlagnacVolley\WebsiteBundle\BlagnacVolleyWebsiteBundle(),
+            new BlagnacVolley\TeamBundle\TeamBundle(),
+            new BlagnacVolley\UserBundle\UserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
