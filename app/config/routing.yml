@@ -11,6 +11,9 @@ home:
     path:     /
     defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:index }
 
+news:
+    resource: "@BlagnacVolleyWebsiteBundle/Resources/config/routing.yml"
+
 contact:
     path:     /contact
     defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:contact }

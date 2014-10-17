@@ -4,6 +4,9 @@
 
 {% block content %}
     <div class="col-sm-12">
-        {{ 'homepage.welcome'|trans() }}
+        <p>{{ 'homepage.welcome'|trans() }}</p>
     </div>
+
+    {{ render(controller('BlagnacVolleyWebsiteBundle:News:displayActives')) }}
+
 {% endblock content %}
