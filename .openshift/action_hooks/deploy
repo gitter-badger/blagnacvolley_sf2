@@ -37,12 +37,18 @@ done
     php $OPENSHIFT_DATA_DIR/composer.phar install --no-dev --no-progress --optimize-autoloader
 
     ### SYMFONY ###
-    SF_OPTS="--env=${BV_ENV:-test} --no-debug --no-interaction"
+    ENV=${BV_ENV:-test}
+    SF_OPTS="--env=$ENV --no-debug --no-interaction"
     # Database
     php app/console doctrine:migrations:migrate $SF_OPTS
     php app/console doctrine:fixtures:load $SF_OPTS
     # Cache
-    #php app/console cache:clear $SF_OPTS
+    php app/console cache:clear $SF_OPTS
     # Assetic assets
     php app/console assetic:dump $SF_OPTS
+    # Hack controller
+    if [ "${ENV}" == "test" ]; then
+        rm -f web/app.php
+        mv web/app_test.php web/app.php
+    fi
 )
