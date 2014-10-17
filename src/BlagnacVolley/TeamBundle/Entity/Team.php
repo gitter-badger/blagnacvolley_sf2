@@ -3,7 +3,6 @@
 namespace BlagnacVolley\TeamBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Team
@@ -25,14 +24,16 @@ class Team
     /**
      * @var integer
      *
-     * @ORM\Column(name="captain_id", type="integer")
+     * @ORM\OneToOne(targetEntity="BlagnacVolley\UserBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="captain_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $captainId;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="sub_captain_id", type="integer")
+     * @ORM\OneToOne(targetEntity="BlagnacVolley\UserBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="sub_captain_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $subCaptainId;
 
@@ -63,11 +64,6 @@ class Team
      * @ORM\Column(name="slot", type="string", length=255)
      */
     private $slot;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="BlagnacVolley\UserBundle\Entity\User", mappedBy="teams")
-     **/
-    private $users;
 
     /**
      * Get id
@@ -219,6 +215,6 @@ class Team
 
     function __construct()
     {
-        $this->groups = new ArrayCollection();
+
     }
 }

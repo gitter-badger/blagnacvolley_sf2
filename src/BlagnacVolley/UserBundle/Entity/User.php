@@ -4,7 +4,7 @@ namespace BlagnacVolley\UserBundle\Entity;
 
 use FOS\UserBundle\Entity\User as EntityUser;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use BlagnacVolley\TeamBundle\Entity\Team;
 
 /**
  * User
@@ -68,23 +68,26 @@ class User extends EntityUser
     /**
      * @var integer
      *
-     * @ORM\Column(name="msc_team_id", type="integer")
+     * @ORM\OneToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="msc_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    protected $mscTeamId;
+    protected $mscTeam;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="fem_team_id", type="integer")
+     * @ORM\OneToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="fem_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    protected $femTeamId;
+    protected $femTeam;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="mix_team_id", type="integer")
+     * @ORM\OneToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="mix_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    protected $mixTeamId;
+    protected $mixTeam;
 
     /**
      * @var boolean
@@ -148,12 +151,6 @@ class User extends EntityUser
      * @ORM\Column(name="date_shirt_delivered", type="datetime")
      */
     protected $dateShirtDelivered;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", inversedBy="users")
-     * @ORM\JoinTable(name="bv_users_teams")
-     **/
-    protected $teams;
 
     /**
      * Get id
@@ -304,37 +301,37 @@ class User extends EntityUser
     }
 
     /**
-     * Set mscTeamId
+     * Set mscTeam
      *
-     * @param integer $mscTeamId
-     * @return User
+     * @param Team $mscTeam
+     * @return $this
      */
-    public function setMscTeamId($mscTeamId)
+    public function setMscTeam($mscTeam)
     {
-        $this->mscTeamId = $mscTeamId;
+        $this->mscTeam = $mscTeam;
 
         return $this;
     }
 
     /**
-     * Get mscTeamId
+     * Get mscTeam
      *
-     * @return integer 
+     * @return Team
      */
-    public function getMscTeamId()
+    public function getMscTeam()
     {
-        return $this->mscTeamId;
+        return $this->mscTeam;
     }
 
     /**
      * Set femTeamId
      *
-     * @param integer $femTeamId
-     * @return User
+     * @param Team $femTeam
+     * @return $this
      */
-    public function setFemTeamId($femTeamId)
+    public function setFemTeam($femTeam)
     {
-        $this->femTeamId = $femTeamId;
+        $this->femTeam = $femTeam;
 
         return $this;
     }
@@ -342,22 +339,22 @@ class User extends EntityUser
     /**
      * Get femTeamId
      *
-     * @return integer 
+     * @return Team
      */
-    public function getFemTeamId()
+    public function getFemTeam()
     {
-        return $this->femTeamId;
+        return $this->femTeam;
     }
 
     /**
      * Set mixTeamId
      *
-     * @param integer $mixTeamId
-     * @return User
+     * @param Team $mixTeam
+     * @return $this
      */
-    public function setMixTeamId($mixTeamId)
+    public function setMixTeam($mixTeam)
     {
-        $this->mixTeamId = $mixTeamId;
+        $this->mixTeam = $mixTeam;
 
         return $this;
     }
@@ -365,11 +362,11 @@ class User extends EntityUser
     /**
      * Get mixTeamId
      *
-     * @return integer 
+     * @return Team
      */
-    public function getMixTeamId()
+    public function getMixTeam()
     {
-        return $this->mixTeamId;
+        return $this->mixTeam;
     }
 
     /**
@@ -581,6 +578,6 @@ class User extends EntityUser
 
     function __construct()
     {
-        $this->teams = new ArrayCollection();
+        parent::__construct();
     }
 }

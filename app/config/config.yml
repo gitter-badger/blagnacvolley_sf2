@@ -4,7 +4,6 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
     translator: ~
     secret:          "%secret%"
     router:
@@ -86,11 +85,13 @@ braincrafted_bootstrap:
         knp_menu:      true
         knp_paginator: true
 
+# FOS User Bundle
 fos_user:
     db_driver: orm
     firewall_name: main
     user_class: BlagnacVolley\UserBundle\Entity\User
 
+# Genemu Form Bundle
 genemu_form:
     recaptcha:
         public_key:  '6LeTHfwSAAAAAET_S2v5iO5QkYZrSqJbP1ZPHnTJ'
