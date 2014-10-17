@@ -27,7 +27,7 @@ class Team
      * @ORM\OneToOne(targetEntity="BlagnacVolley\UserBundle\Entity\User", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="captain_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    private $captainId;
+    private $captain;
 
     /**
      * @var integer
@@ -35,7 +35,7 @@ class Team
      * @ORM\OneToOne(targetEntity="BlagnacVolley\UserBundle\Entity\User", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="sub_captain_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    private $subCaptainId;
+    private $subCaptain;
 
     /**
      * @var string
@@ -76,49 +76,49 @@ class Team
     }
 
     /**
-     * Set captainId
+     * Set captain
      *
-     * @param integer $captainId
+     * @param integer $captain
      * @return Team
      */
-    public function setCaptainId($captainId)
+    public function setCaptain($captain)
     {
-        $this->captainId = $captainId;
+        $this->captain = $captain;
 
         return $this;
     }
 
     /**
-     * Get captainId
+     * Get captain
      *
      * @return integer 
      */
-    public function getCaptainId()
+    public function getCaptain()
     {
-        return $this->captainId;
+        return $this->captain;
     }
 
     /**
-     * Set subCaptainId
+     * Set subCaptain
      *
-     * @param integer $subCaptainId
+     * @param integer $subCaptain
      * @return Team
      */
-    public function setSubCaptainId($subCaptainId)
+    public function setSubCaptain($subCaptain)
     {
-        $this->subCaptainId = $subCaptainId;
+        $this->subCaptain = $subCaptain;
 
         return $this;
     }
 
     /**
-     * Get subCaptainId
+     * Get subCaptain
      *
      * @return integer 
      */
-    public function getSubCaptainId()
+    public function getSubCaptain()
     {
-        return $this->subCaptainId;
+        return $this->subCaptain;
     }
 
     /**

@@ -68,7 +68,7 @@ class User extends EntityUser
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="msc_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $mscTeam;
@@ -76,7 +76,7 @@ class User extends EntityUser
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="fem_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $femTeam;
@@ -84,7 +84,7 @@ class User extends EntityUser
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="mix_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $mixTeam;

@@ -69,18 +69,19 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_seb->setEmail('s.fastrez@gmail.com');
         $user_seb->setEnabled(true);
 
-        $teamMsc1 = $this->getReference('teamMsc1');
-        $user_yann->setMscTeam($teamMsc1);
-        $user_seb->setMscTeam($teamMsc1);
-
         /* @var $teamMsc1 Team */
+        $teamMsc1 = $this->getReference('teamMsc1');
+
+        $user_yann->setMscTeam($teamMsc1);
+        $teamMsc1->setCaptain($user_yann);
+
+        $user_seb->setMscTeam($teamMsc1);
+        $teamMsc1->setSubCaptain($user_seb);
 
         $manager->persist($user_yann);
-//        $manager->persist($user_seb);
+        $manager->persist($user_seb);
         $manager->flush();
 
-        $teamMsc1->setCaptainId($user_yann);
-//        $teamMsc1->setSubCaptainId($user_seb);
         $manager->flush();
     }
 
