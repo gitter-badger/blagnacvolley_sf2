@@ -21,7 +21,7 @@ class ContactType extends AbstractType
             ->add('name', 'text', array(
                 'attr' => array(
                     'placeholder' => 'Votre nom',
-                    'pattern'     => '.{2,}' //minlength
+                    'pattern'     => '.{2,}', //minlength
                 ),
                 'label'  => 'Nom',
             ))
@@ -44,7 +44,7 @@ class ContactType extends AbstractType
                 )
             )
             ->add('save', 'submit', array(
-                'label'  => 'Valider',
+                'label'  => 'Envoyer le message',
             ));
     }
 
