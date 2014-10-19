@@ -9,6 +9,45 @@ use BlagnacVolley\TeamBundle\Entity\Team;
 /**
  * User
  *
+ * Requis pour la création de compte :
+ *
+ * - Identifiant (Unique sur le site, qui sert à s'authentifier)
+ * - Genre, (gender)
+ * - Nom, (lastname)
+ * - Prénom, (firstname)
+ * - Date de naissance, (dob)
+ * - Adresse, (address)
+ * - Code postal, (zip)
+ * - Ville, (city)
+ * - Tel portable, (phone)
+ * - Email, (mail)
+ * - Photo, (picture)
+ * - Mot de passe. (password)
+ *
+ * A Saisir par l'utilisateur par la suite :
+ *
+ * - Taille Maillot (shirt_size)
+ * - Facture requise (is_required_bill)
+ * - Equipe garçon (msc_team) avec l'équipe choisie.
+ * - Equipe fille (fem_team) avec l'équipe choisie.
+ * - Equipe mixte (mix_team) avec l'équipe choisie.
+ * - Recherche une équipe (is_looking_for_team)
+ * - Niveau (level) variant du plus faible au plus fort : (Promotion B, Promotion A, Honneur C, Honneur B, Honneur A, Excellence C, Excellence B, Excellence A)
+ *
+ * Calculées automatiquement à la création du compte :
+ *
+ * - Coordonnées GPS, calculées à partir de l'adresse (See google maps field)
+ * - Statut (à passer à ACTIF_NON_LICENCIE à la création de compte) Autre statuts disponibles : INACTIF, ACTIF_LICENCIE.
+ *
+ * Entré par l'administrateur du club par la suite :
+ *
+ * - Numéro de License (licence_number)
+ * - Montant Cotisation (fee_amount)
+ * - Date paiement Cotisation (date_payment_fee)
+ * - Date livraison maillot (date_shirt_delivered)
+ * - Est capitaine (is_captain)
+ * - Est suppléant (is_sub_captain)
+ *
  * @ORM\Table(name="bv_user")
  * @ORM\Entity(repositoryClass="BlagnacVolley\UserBundle\Entity\UserRepository")
  */
@@ -54,19 +93,19 @@ class User extends EntityUser
     /**
      * @var string
      *
-     * @ORM\Column(name="shirt_size", type="string", length=5)
+     * @ORM\Column(name="shirt_size", type="string", length=5, nullable=true)
      */
     protected $shirtSize;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_required_bill", type="boolean")
+     * @ORM\Column(name="is_required_bill", type="boolean", options={"default": false})
      */
-    protected $isRequiredBill;
+    protected $isRequiredBill = false;
 
     /**
-     * @var integer
+     * @var Team
      *
      * @ORM\ManyToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="msc_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
@@ -74,7 +113,7 @@ class User extends EntityUser
     protected $mscTeam;
 
     /**
-     * @var integer
+     * @var Team
      *
      * @ORM\ManyToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="fem_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
@@ -82,7 +121,7 @@ class User extends EntityUser
     protected $femTeam;
 
     /**
-     * @var integer
+     * @var Team
      *
      * @ORM\ManyToOne(targetEntity="BlagnacVolley\TeamBundle\Entity\Team", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="mix_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
@@ -92,14 +131,14 @@ class User extends EntityUser
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_looking_for_team", type="boolean")
+     * @ORM\Column(name="is_looking_for_team", type="boolean", options={"default": false})
      */
-    protected $isLookingForTeam;
+    protected $isLookingForTeam = false;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="level", type="string", length=255)
+     * @ORM\Column(name="level", type="string", length=255, nullable=true)
      */
     protected $level;
 
@@ -120,35 +159,35 @@ class User extends EntityUser
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, options={"default": "ACTIF_NON_LICENCIE"})
      */
-    protected $status;
+    protected $status = "ACTIF_NON_LICENCIE";
 
     /**
      * @var string
      *
-     * @ORM\Column(name="licence_number", type="string", length=255)
+     * @ORM\Column(name="licence_number", type="string", length=255, nullable=true)
      */
     protected $licenceNumber;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="fee_amount", type="float")
+     * @ORM\Column(name="fee_amount", type="float", nullable=true)
      */
     protected $feeAmount;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_payment", type="datetime")
+     * @ORM\Column(name="date_payment", type="datetime", nullable=true)
      */
     protected $datePayment;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_shirt_delivered", type="datetime")
+     * @ORM\Column(name="date_shirt_delivered", type="datetime", nullable=true)
      */
     protected $dateShirtDelivered;
 
