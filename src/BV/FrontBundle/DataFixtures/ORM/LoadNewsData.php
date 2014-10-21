@@ -7,7 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use BV\FrontBundle\Entity\News;
 
-class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
+class LoadNewsData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
