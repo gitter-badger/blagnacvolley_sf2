@@ -1,6 +1,6 @@
 <?php
 
-namespace BlagnacVolley\WebsiteBundle\Tests\Controller;
+namespace BV\FrontBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
