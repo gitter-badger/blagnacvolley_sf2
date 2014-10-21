@@ -6,6 +6,9 @@ front_fos_user:
     resource: "@FrontBundle/Resources/config/routing/user.yml"
     prefix:   /
 
+front_news:
+    resource: "@FrontBundle/Resources/config/routing/news.yml"
+
 front_homepage:
     path:     /hello/{name}
     defaults: { _controller: FrontBundle:Default:index }
