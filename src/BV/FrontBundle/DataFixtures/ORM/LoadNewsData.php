@@ -5,7 +5,7 @@ namespace BV\FrontBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BlagnacVolley\WebsiteBundle\Entity\News;
+use BV\FrontBundle\Entity\News;
 
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {

@@ -36,7 +36,7 @@ class ContactController extends Controller
                     ->setContentType('text/html')
                     ->setBody(
                         $this->renderView(
-                            'BlagnacVolleyWebsiteBundle:Mail:contact.html.twig',
+                            'FrontBundle:Contact:contact.html.twig',
                             array(
                                 'name' => $form->get('name')->getData(),
                                 'email' => $form->get('email')->getData(),
