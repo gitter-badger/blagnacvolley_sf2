@@ -1,0 +1,28 @@
+{% block autocomplete_widget %}
+    {% spaceless %}
+
+        {{ block("form_widget_simple") }}
+
+        <input type="hidden" name="fos_user_registration_form[geo_lat]" id="specific_geo_lat" value="" />
+        <input type="hidden" name="fos_user_registration_form[geo_lng]" id="specific_geo_lng" value="" />
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script type="application/javascript">
+            function initialize() {
+                var autocomplete = new google.maps.places.Autocomplete(
+                        (document.getElementById('fos_user_registration_form_address')), {
+                            types: ['geocode']
+                        });
+
+                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                    var place = autocomplete.getPlace();
+                    document.getElementById('specific_geo_lat').value = place.geometry.location.lat();
+                    document.getElementById('specific_geo_lng').value = place.geometry.location.lng();
+                });
+            }
+            initialize();
+
+        </script>
+
+    {% endspaceless %}
+{% endblock autocomplete_widget %}

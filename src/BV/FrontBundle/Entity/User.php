@@ -12,17 +12,15 @@ use BV\FrontBundle\Entity\Team;
  * Requis pour la création de compte :
  *
  * - Identifiant (Unique sur le site, qui sert à s'authentifier)
+ * - Email, (mail)
+ * - Mot de passe. (password)
  * - Genre, (gender)
  * - Nom, (lastname)
  * - Prénom, (firstname)
  * - Date de naissance, (dob)
  * - Adresse, (address)
- * - Code postal, (zip)
- * - Ville, (city)
  * - Tel portable, (phone)
- * - Email, (mail)
  * - Photo, (picture)
- * - Mot de passe. (password)
  *
  * A Saisir par l'utilisateur par la suite :
  *
@@ -204,6 +202,13 @@ class User extends EntityUser
      * @ORM\Column(name="date_shirt_delivered", type="datetime", nullable=true)
      */
     protected $dateShirtDelivered;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
+     */
+    protected $phone;
 
     /**
      * Get id
@@ -678,5 +683,28 @@ class User extends EntityUser
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 }

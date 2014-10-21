@@ -2,6 +2,7 @@
 
 namespace BV\FrontBundle\Form\Type;
 
+use BV\FrontBundle\Form\Type\AutocompleteType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -15,13 +16,19 @@ class RegistrationFormType extends AbstractType
             ->add('gender', 'choice', array(
                 'empty_value' => 'Choisissez une valeur',
                 'required' => true,
+                'label'=>'Genre',
                 'choices' => array('m' => 'Masculin', 'f' => 'Féminin')
             ))
-            ->add('firstname')
-            ->add('lastname')
+            ->add('firstname', 'text', array(
+                'label'=>'Prénom',
+            ))
+            ->add('lastname', 'text', array(
+                'label'=>'Nom',
+            ))
             ->add('level', 'choice', array(
                 'empty_value' => 'Choisissez une valeur',
                 'required' => true,
+                'label'=>'Niveau de jeu',
                 'choices' => array(
                     'exc_a' => 'Excellence A',
                     'exc_b' => 'Excellence B',
@@ -34,7 +41,18 @@ class RegistrationFormType extends AbstractType
                     'prom_c' => 'Promotion C',
                 )
             ))
-            ->add('picture')
+            ->add('dob', 'birthday', array(
+                'label'=>'Date de naissance',
+            ))
+            ->add('address', new AutocompleteType(), array(
+                'label'=>'Adresse',
+            ))
+            ->add('phone', 'text', array(
+                'label'=>'Portable',
+            ))
+            ->add('picture', 'file', array(
+                'label'=>'Photo',
+            ))
         ;
     }
 
