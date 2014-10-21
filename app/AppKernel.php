@@ -24,6 +24,11 @@ class AppKernel extends Kernel
 
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
 
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+
             new BV\FrontBundle\FrontBundle(),
             new BV\AdminBundle\AdminBundle(),
 

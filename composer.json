@@ -29,7 +29,12 @@
         "genemu/form-bundle": "2.2.*",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "sensio/generator-bundle": "~2.4",
-        "recaptcha-lib/recaptcha": "~0.1"
+        "recaptcha-lib/recaptcha": "~0.1",
+        "sonata-project/core-bundle": "~2.3",
+        "sonata-project/block-bundle": "~2.2",
+        "sonata-project/intl-bundle": "~2.2",
+        "sonata-project/admin-bundle": "~2.3",
+        "sonata-project/doctrine-orm-admin-bundle": "~2.3"
     },
     "require-dev": {
     },
