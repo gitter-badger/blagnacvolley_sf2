@@ -13,7 +13,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            //new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
@@ -25,11 +24,12 @@ class AppKernel extends Kernel
 
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
 
-            //new BlagnacVolley\UserBundle\BlagnacVolleyUserBundle(),
-
             new BlagnacVolley\WebsiteBundle\BlagnacVolleyWebsiteBundle(),
             new BlagnacVolley\TeamBundle\TeamBundle(),
             new BlagnacVolley\UserBundle\UserBundle(),
+
+            new BV\FrontBundle\FrontBundle(),
+            new BV\AdminBundle\AdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
