@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         },
         files: {
           // target.css file: source.less file
-          "web/css/styles.css": "src/BlagnacVolley/WebsiteBundle/Resources/public/less/styles.less",
+          "web/css/styles.css": "src/BV/FrontBundle/Resources/public/less/styles.less",
           "web/css/bootstrap.css": "bower_components/bootstrap/less/bootstrap.less"
         }
       }

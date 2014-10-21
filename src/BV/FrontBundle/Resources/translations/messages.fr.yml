@@ -4,6 +4,8 @@ header:
     login: Connexion
     logout: Deconnexion
     register: S'inscrire
+    my_account: Mon compte
+    logged_user: Utilisateur connecté :
 
 homepage:
   welcome: Bienvenue sur le site officiel du Blagnac Volley-Ball

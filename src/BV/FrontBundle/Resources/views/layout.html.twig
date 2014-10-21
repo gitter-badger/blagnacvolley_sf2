@@ -57,6 +57,13 @@
                 <div class="sharing-left">
                     <a href="{{ path('home') }}" class="label social">Acc&egrave;s Administrateur</a>
                 </div>
+                {% if app.user %}
+                    <div class="sharing-left">
+                        <span class="label">
+                            |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'header.navbar.logged_user' | trans() }} {{ app.user.username }}
+                        </span>
+                    </div>
+                {% endif %}
                 <div class="sharing">
                     <a href="" target="_blank" class="header-icon twitter">Twitter</a>
                     <a href="" target="_blank" class="header-icon facebook">Facebook</a>
@@ -117,7 +124,7 @@
                                     {% if app.user %}
                                         <a href="{{ path('fos_user_profile_show') }}">
                                             <span class="name"><br>
-                                                {{ app.user.username }}
+                                                {{ 'header.navbar.my_account' | trans() }}
                                             </span>
                                         </a>
                                     {% else %}
