@@ -1,0 +1,10 @@
+team:
+    path:     /
+    defaults: { _controller: "FrontBundle:Team:index" }
+
+team_show:
+    path:     /{id}/show
+    defaults: { _controller: "FrontBundle:Team:show" }
+
+
+

@@ -1,3 +1,7 @@
+front_team:
+    resource: "@FrontBundle/Resources/config/routing/team.yml"
+    prefix:   /team
+
 front_homepage:
     path:     /hello/{name}
     defaults: { _controller: FrontBundle:Default:index }
