@@ -1,4 +1,4 @@
-{% extends 'BlagnacVolleyWebsiteBundle::layout.html.twig' %}
+{% extends 'FrontBundle::layout.html.twig' %}
 
 {% form_theme form _self %}
 
@@ -50,6 +50,8 @@
     {% endfor %}
 
     <form action="{{ path('contactPost')}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        {{ form_widget(form._token) }}
+
         <div id="contact">
             <div class="col-sm-6">
                 <div class="form-group">
