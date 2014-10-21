@@ -68,6 +68,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: BV\FrontBundle\Entity\User
+    registration:
+        form:
+            type: bv_user_registration
 
 # Genemu Form Bundle
 genemu_form:

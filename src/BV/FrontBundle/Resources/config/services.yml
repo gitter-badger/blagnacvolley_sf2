@@ -1,4 +1,5 @@
 services:
-#    front.example:
-#        class: BV\FrontBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    acme_user.registration.form.type:
+        class: BV\FrontBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: bv_user_registration }
