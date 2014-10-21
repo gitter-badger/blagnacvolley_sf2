@@ -49,7 +49,7 @@ use BV\FrontBundle\Entity\Team;
  * - Est suppléant (is_sub_captain)
  *
  * @ORM\Table(name="bv_user")
- * @ORM\Entity(repositoryClass="BlagnacVolley\UserBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\UserRepository")
  */
 class User extends EntityUser
 {

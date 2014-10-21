@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Team
  *
  * @ORM\Table(name="bv_team")
- * @ORM\Entity(repositoryClass="BlagnacVolley\TeamBundle\Entity\TeamRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\TeamRepository")
  */
 class Team
 {
@@ -24,7 +24,7 @@ class Team
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="BlagnacVolley\UserBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="captain_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $captain;
@@ -32,7 +32,7 @@ class Team
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="BlagnacVolley\UserBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="sub_captain_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $subCaptain;
