@@ -1,5 +1,5 @@
 imports:
-    - { resource: @UserBundle/Resources/config/security.yml }
+    - { resource: @FrontBundle/Resources/config/security.yml }
 
 security:
     acl:
