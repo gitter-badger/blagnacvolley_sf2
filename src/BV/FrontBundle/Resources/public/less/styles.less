@@ -46,26 +46,27 @@ body > header { background: url("../images/header_bg.png"); position: fixed; top
             &.left { float: left; }
             &.right { float: right; }
             li { display: block; float: left; text-transform: uppercase; height: 60px;
-              a { margin-top: 1px; display: block; width: 100%; height: 60px; border-left: 1px solid #325A79; padding: 7px 30px 0 16px; color: #FFF; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA8CAIAAAAok0etAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Q0Y2NzYxODY0RkJBMTFFNEEwNkVCQzI0RjY0MkYwMDMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6Q0Y2NzYxODc0RkJBMTFFNEEwNkVCQzI0RjY0MkYwMDMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDRjY3NjE4NDRGQkExMUU0QTA2RUJDMjRGNjQyRjAwMyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDRjY3NjE4NTRGQkExMUU0QTA2RUJDMjRGNjQyRjAwMyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pvbn2hYAAABnSURBVHjaVE25EYQwEJPkiOwaoCMKoXQiZqjAaJ+BI9BqrWcNbbtIJiCZX0AsjtG7p4ChVNha92OfmXh7jz+K8a/XVR3nJWK67B8B+8X0G8H2Up9mlv7NlR8eMtd694zxW9bwbgEGAJS2EKrP9R0gAAAAAElFTkSuQmCC); }
+              a { margin-top: 1px; display: block; width: 100%; height: 60px; border-left: 1px solid #325A79; padding: 7px 0 0 0; text-align: center; color: #FFF; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA8CAIAAAAok0etAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Q0Y2NzYxODY0RkJBMTFFNEEwNkVCQzI0RjY0MkYwMDMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6Q0Y2NzYxODc0RkJBMTFFNEEwNkVCQzI0RjY0MkYwMDMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDRjY3NjE4NDRGQkExMUU0QTA2RUJDMjRGNjQyRjAwMyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDRjY3NjE4NTRGQkExMUU0QTA2RUJDMjRGNjQyRjAwMyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pvbn2hYAAABnSURBVHjaVE25EYQwEJPkiOwaoCMKoXQiZqjAaJ+BI9BqrWcNbbtIJiCZX0AsjtG7p4ChVNha92OfmXh7jz+K8a/XVR3nJWK67B8B+8X0G8H2Up9mlv7NlR8eMtd694zxW9bwbgEGAJS2EKrP9R0gAAAAAElFTkSuQmCC); }
               &:hover a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA8CAIAAAAok0etAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RENCQzM0NEY0RkJBMTFFNDg4QzJDMDlGMkM5MkRDREIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RENCQzM0NTA0RkJBMTFFNDg4QzJDMDlGMkM5MkRDREIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpEQ0JDMzQ0RDRGQkExMUU0ODhDMkMwOUYyQzkyRENEQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpEQ0JDMzQ0RTRGQkExMUU0ODhDMkMwOUYyQzkyRENEQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pk+riC0AAABvSURBVHjaVI4xDoAwDANjp4jn8koG3sDEH1hYKE6IUFGGk53Yrc3LSjoJGtlEh3Qo0FtRGl57BFvxzbnyFpTuX4/9ezXMvsGfPHv27SKsM1qA/r5vNzOVVKr2Nt5FC8rH4CP8OwlR/3c/TmXtEWAARckUCAoY438AAAAASUVORK5CYII=); }
               &.home { width: 14%; -webkit-transition-delay: 0.8s; -moz-transition-delay: 0.8s; -o-transition-delay: 0.8s; transition-delay: 0.8s;
-                a { text-align: center; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8); padding: 24px 0 0 0; font-size: 16px; }
+                a { text-align: center; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8); padding: 24px 0 0 0; font-size: 14px; }
               }
             }
           }
         }
         ul.nav li .name, ul.nav li.home { text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8); font-size: 14px; line-height: 17px; display: block; white-space: nowrap; font-family: Interstate, Arial, sans-serif; }
         ul.nav li .sport { color: #5BCFFE; font-style: italic; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75); margin-top: 4px; font-size: 10px; display: block; white-space: nowrap; }
-
-        ul.nav li.alana { width: 18%; }
-        ul.nav li.billy { width: 18%; }
-        ul.nav li.dan { width: 17%; }
-        ul.nav li.erin { width: 33%; }
-        ul.nav li.ted { width: 22%; border-right: 1px solid #325A79; }
-        ul.nav li.rico { width: 19%; }
-        ul.nav li.picabo { width: 16%; }
-        ul.nav li.julie { width: 15%; }
-        ul.nav li.evan { width: 28%;
+        ul.nav li.calendar { width: 18%; }
+        ul.nav li.addresses { width: 18%; }
+        ul.nav li.horaires { width: 17%; }
+        ul.nav li.school { width: 33%;
+          a { padding-right: 50px; }
+        }
+        ul.nav li.connexion { width: 22%; border-right: 1px solid #325A79; }
+        ul.nav li.myaccount { width: 19%; }
+        ul.nav li.contact { width: 16%; }
+        ul.nav li.teams { width: 15%; }
+        ul.nav li.freeplay { width: 28%;
           a { padding-left: 80px; }
         }
         ul.nav.right li { float: right; }

@@ -79,29 +79,29 @@
                             <li class="home">
                                 <a href="{{ url('home') }}">Accueil</a>
                             </li>
-                            <li class="alana">
+                            <li class="calendar">
                                 <a href="#alana">
                                     <span class="name"><br>Calendrier</span>
                                 </a>
                             </li>
-                            <li class="billy">
+                            <li class="addresses">
                                 <a href="#billy">
                                     <span class="name"><br>Addresses</span>
                                 </a>
                             </li>
-                            <li class="dan">
+                            <li class="horaires">
                                 <a href="#dan">
                                     <span class="name"><br>Horaires</span>
                                 </a>
                             </li>
-                            <li class="erin">
+                            <li class="school">
                                 <a href="#erin">
                                     <span class="name"><br>Ecole de Volley</span>
                                 </a>
                             </li>
                         </ul>
                         <ul class="nav right">
-                            <li class="ted">
+                            <li class="connexion">
                                 {% block bv_head_top_connexion %}
                                     {% if app.user %}
                                         <a href="{{ path('fos_user_security_logout') }}">
@@ -118,7 +118,7 @@
                                     {% endif %}
                                 {% endblock %}
                             </li>
-                            <li class="rico">
+                            <li class="myaccount">
                                 {% block bv_head_top_registration %}
                                     {% if app.user %}
                                         <a href="{{ path('fos_user_profile_show') }}">
@@ -135,17 +135,17 @@
                                     {% endif %}
                                 {% endblock %}
                             </li>
-                            <li class="picabo">
+                            <li class="contact">
                                 <a href="{{  url('contact') }}">
                                     <span class="name"><br>Contact</span>
                                 </a>
                             </li>
-                            <li class="julie">
+                            <li class="teams">
                                 <a href="{{ path('teams') }}">
                                     <span class="name"><br>Equipes</span>
                                 </a>
                             </li>
-                            <li class="evan">
+                            <li class="freeplay">
                                 <a href="#evan">
                                     <span class="name"><br>Jeu Libre</span>
                                 </a>

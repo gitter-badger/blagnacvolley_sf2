@@ -7,5 +7,24 @@ header:
     my_account: Mon compte
     logged_user: Utilisateur connecté :
 
+profile:
+  show:
+    connexion_data:
+      title:  Informations de connexion
+    address_data:
+      title:  Coordonnées
+      dob: Date de naissance
+      phone: Portable
+      address: Adresse
+      gender: Genre
+    club_data:
+      title: Données club
+      level: Niveau
+      shirt_size: Taille maillot
+      licence: Licence
+      mscteam: Equipe masculine
+      mixteam: Equipe mixte
+      femteam: Equipe féminine
+
 homepage:
   welcome: Bienvenue sur le site officiel du Blagnac Volley-Ball

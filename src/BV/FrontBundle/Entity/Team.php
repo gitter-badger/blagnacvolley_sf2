@@ -217,4 +217,9 @@ class Team
     {
 
     }
+
+    function __toString()
+    {
+        return $this->getName().' ('.$this->getLevel().')';
+    }
 }
