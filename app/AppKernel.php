@@ -31,10 +31,6 @@ class AppKernel extends Kernel
 
             new BV\FrontBundle\FrontBundle(),
             new BV\AdminBundle\AdminBundle(),
-
-//            new BlagnacVolley\WebsiteBundle\BlagnacVolleyWebsiteBundle(),
-//            new BlagnacVolley\TeamBundle\TeamBundle(),
-//            new BlagnacVolley\UserBundle\UserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

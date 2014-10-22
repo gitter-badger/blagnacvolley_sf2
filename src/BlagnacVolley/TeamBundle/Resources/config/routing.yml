@@ -1,6 +1,0 @@
-team_homepage:
-    path:     /team/{name}
-    defaults: { _controller: TeamBundle:Default:index }
-team_list:
-    path:     /teams
-    defaults: { _controller: TeamBundle:Default:list }

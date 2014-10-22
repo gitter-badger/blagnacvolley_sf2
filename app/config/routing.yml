@@ -6,11 +6,6 @@ front:
     resource: "@FrontBundle/Resources/config/routing.yml"
     prefix:   /
 
-#user:
-#    resource: "@UserBundle/Controller/"
-#    type:     annotation
-#    prefix:   /
-
 ########################
 ####  STATIC PAGES  ####
 ########################
@@ -26,7 +21,3 @@ contact:
 contactPost:
     path:     /contactPost
     defaults: { _controller: FrontBundle:Contact:contactPost }
-
-#static:
-#    path:     /{page}
-#    defaults: { _controller: BlagnacVolleyWebsiteBundle:Default:static }

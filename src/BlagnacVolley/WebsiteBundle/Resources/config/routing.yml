@@ -1,4 +1,0 @@
-
-display_active_news:
-    path:     /displayActiveNews
-    defaults: { _controller: BlagnacVolleyWebsiteBundle:News:displayActiveNews }
