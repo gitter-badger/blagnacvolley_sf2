@@ -6,11 +6,10 @@
         <input type="hidden" name="fos_user_registration_form[geo_lat]" id="specific_geo_lat" value="" />
         <input type="hidden" name="fos_user_registration_form[geo_lng]" id="specific_geo_lng" value="" />
 
-        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
         <script type="application/javascript">
             function initialize() {
                 var autocomplete = new google.maps.places.Autocomplete(
-                        (document.getElementById('fos_user_registration_form_address')), {
+                        (document.getElementById('{{ id }}')), {
                             types: ['geocode']
                         });
 
@@ -35,18 +34,12 @@
             <input type="text" class="form-control" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
         </div>
 
-        {% set attr = attr|merge({'class': ((attr.class|default('') ~ ' acmeDatePicker')|trim)}) %}
-        {% set  id = id ~ "_datepicker" %}
-        {% set  full_name = "datepicker_" ~ full_name  %}
-
         <script type="text/javascript">
-        //<![CDATA[
-        jQuery('.input-group.date').datepicker({
+        jQuery('#{{ id }}').datepicker({
             startView: 2,
             language: "fr",
             autoclose: true
         });
-        //]]>
         </script>
 
     {% endspaceless %}
