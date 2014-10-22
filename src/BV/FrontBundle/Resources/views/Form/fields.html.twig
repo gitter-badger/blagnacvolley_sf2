@@ -26,3 +26,28 @@
 
     {% endspaceless %}
 {% endblock autocomplete_widget %}
+
+{% block datePicker_widget  %}
+
+    {% spaceless %}
+
+        <div class="input-group date">
+            <input type="text" class="form-control" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        </div>
+
+        {% set attr = attr|merge({'class': ((attr.class|default('') ~ ' acmeDatePicker')|trim)}) %}
+        {% set  id = id ~ "_datepicker" %}
+        {% set  full_name = "datepicker_" ~ full_name  %}
+
+        <script type="text/javascript">
+        //<![CDATA[
+        jQuery('.input-group.date').datepicker({
+            startView: 2,
+            language: "fr",
+            autoclose: true
+        });
+        //]]>
+        </script>
+
+    {% endspaceless %}
+{% endblock datePicker_widget  %}

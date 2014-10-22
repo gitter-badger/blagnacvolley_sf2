@@ -20,12 +20,17 @@ module.exports = function(grunt) {
     copy: {
       css: {
         files: [
-          {src: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css', dest: 'web/css/bootstrap-theme.min.css'}
+          {src: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css', dest: 'web/css/bootstrap-theme.min.css'},
+          {src: 'bower_components/bootstrap-3-datepicker/css/datepicker3.css', dest: 'web/css/datepicker3.css'}
         ]
       },
       javascript: {
         files: [
-          {src: 'bower_components/modernizr/modernizr.js', dest: 'web/js/modernizr.js'}
+          { src: 'bower_components/modernizr/modernizr.js', dest: 'web/js/modernizr.js' },
+          { src: 'bower_components/bootstrap-3-datepicker/js/bootstrap-datepicker.js', dest: 'web/js/bootstrap-datepicker.js' },
+          { src: 'bower_components/bootstrap-3-datepicker/js/locales/bootstrap-datepicker.fr.js', dest: 'web/js/bootstrap-datepicker.fr.js' },
+          { src: 'bower_components/jquery/dist/jquery.min.js', dest: 'web/js/jquery.min.js' },
+          { src: 'bower_components/jquery/dist/jquery.min.map', dest: 'web/js/jquery.min.map' }
         ]
       }
     },

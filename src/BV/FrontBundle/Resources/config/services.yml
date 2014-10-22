@@ -3,3 +3,11 @@ services:
         class: BV\FrontBundle\Form\Type\RegistrationFormType
         tags:
             - { name: form.type, alias: bv_user_registration }
+    form.type.autocomplete:
+            class: BV\FrontBundle\Form\Type\AutocompleteType
+            tags:
+              - { name: form.type, alias: autocomplete }
+    form.type.datePicker:
+        class: BV\FrontBundle\Form\Type\DatePickerType
+        tags:
+          - { name: form.type, alias: datePicker }
