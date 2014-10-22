@@ -3,6 +3,7 @@
 {% block head_style %}
     {{ parent() }}
     <link rel="stylesheet" href="/css/datepicker3.css">
+    <link rel="stylesheet" href="/css/dropzone.css">
 {% endblock head_style %}
 
 {% block head_script %}
@@ -11,8 +12,9 @@
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="/js/bootstrap-datepicker.fr.js"></script>
+    <script type="text/javascript" src="/js/dropzone.min.js"></script>
 {% endblock head_script %}
 
 {% block fos_user_content %}
-{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+    {% include "FOSUserBundle:Registration:register_content.html.twig" %}
 {% endblock fos_user_content %}

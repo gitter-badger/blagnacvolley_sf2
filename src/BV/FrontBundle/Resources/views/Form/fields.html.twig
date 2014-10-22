@@ -3,8 +3,9 @@
 
         {{ block("form_widget_simple") }}
 
-        <input type="hidden" name="fos_user_registration_form[geo_lat]" id="specific_geo_lat" value="" />
-        <input type="hidden" name="fos_user_registration_form[geo_lng]" id="specific_geo_lng" value="" />
+        {#Added on Form#}
+        {#<input type="hidden" name="{{ id|replace({'_address':''}) }}[geo_lat]" id="{{ id|replace({'_address':''}) }}_geo_lat" value="" />#}
+        {#<input type="hidden" name="{{ id|replace({'_address':''}) }}[geo_lng]" id="{{ id|replace({'_address':''}) }}_geo_lng" value="" />#}
 
         <script type="application/javascript">
             function initialize() {
@@ -15,8 +16,8 @@
 
                 google.maps.event.addListener(autocomplete, 'place_changed', function () {
                     var place = autocomplete.getPlace();
-                    document.getElementById('specific_geo_lat').value = place.geometry.location.lat();
-                    document.getElementById('specific_geo_lng').value = place.geometry.location.lng();
+                    document.getElementById('{{ id|replace({'_address':'_geo_lat'}) }}').value = place.geometry.location.lat();
+                    document.getElementById('{{ id|replace({'_address':'_geo_lng'}) }}').value = place.geometry.location.lng();
                 });
             }
             initialize();

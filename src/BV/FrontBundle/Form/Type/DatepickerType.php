@@ -16,7 +16,7 @@ class DatePickerType extends AbstractType
 
     public function getParent()
     {
-        return 'date';
+        return 'text';
     }
 
     public function getName()

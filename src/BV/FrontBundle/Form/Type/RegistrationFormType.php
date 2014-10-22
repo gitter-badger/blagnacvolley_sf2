@@ -42,12 +42,14 @@ class RegistrationFormType extends AbstractType
                     'prom_c' => 'Promotion C',
                 )
             ))
-            ->add('dob', 'datePicker', array(
+            ->add('dob', 'birthday', array(
                 'label'=>'Date de naissance',
             ))
             ->add('address', 'autocomplete', array(
                 'label'=>'Adresse',
             ))
+            ->add("geo_lat","hidden")
+            ->add("geo_lng","hidden")
             ->add('phone', 'text', array(
                 'label'=>'Portable',
             ))

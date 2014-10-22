@@ -21,7 +21,8 @@ module.exports = function(grunt) {
       css: {
         files: [
           {src: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css', dest: 'web/css/bootstrap-theme.min.css'},
-          {src: 'bower_components/bootstrap-3-datepicker/css/datepicker3.css', dest: 'web/css/datepicker3.css'}
+          {src: 'bower_components/bootstrap-3-datepicker/css/datepicker3.css', dest: 'web/css/datepicker3.css'},
+          {src: 'bower_components/dropzone/downloads/css/dropzone.css', dest: 'web/css/dropzone.css'}
         ]
       },
       javascript: {
@@ -30,7 +31,18 @@ module.exports = function(grunt) {
           { src: 'bower_components/bootstrap-3-datepicker/js/bootstrap-datepicker.js', dest: 'web/js/bootstrap-datepicker.js' },
           { src: 'bower_components/bootstrap-3-datepicker/js/locales/bootstrap-datepicker.fr.js', dest: 'web/js/bootstrap-datepicker.fr.js' },
           { src: 'bower_components/jquery/dist/jquery.min.js', dest: 'web/js/jquery.min.js' },
-          { src: 'bower_components/jquery/dist/jquery.min.map', dest: 'web/js/jquery.min.map' }
+          { src: 'bower_components/jquery/dist/jquery.min.map', dest: 'web/js/jquery.min.map' },
+          { src: 'bower_components/dropzone/downloads/dropzone.min.js', dest: 'web/js/dropzone.min.js' }
+        ]
+      },
+      images: {
+        files: [
+          {
+            cwd: 'bower_components/dropzone/downloads/images/',  // set working folder / root to copy
+            src: '**/*',           // copy all files and subfolders
+            dest: 'web/images/',    // destination folder
+            expand: true           // required when using cwd
+          }
         ]
       }
     },

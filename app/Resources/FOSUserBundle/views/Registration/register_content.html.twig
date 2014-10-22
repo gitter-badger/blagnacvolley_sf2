@@ -1,5 +1,7 @@
 {% form_theme form 'FrontBundle:Form:fields.html.twig' %}
 
+{#<form action="{{ path('bv_user_upload_picture') }}" class="dropzone"></form>#}
+
 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register form-horizontal row" role="form">
     <div class="col-sm-6">
         <div class="form-group">
