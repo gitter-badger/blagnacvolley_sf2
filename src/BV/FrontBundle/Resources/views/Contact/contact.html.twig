@@ -41,14 +41,6 @@
 {% endblock genemu_recaptcha_javascript %}
 
 {% block content_row %}
-    {% for label, flashes in app.session.flashbag.all %}
-        {% for flash in flashes %}
-            <div class="alert alert-{{ label }}">
-                {{ flash }}
-            </div>
-        {% endfor %}
-    {% endfor %}
-
     <form action="{{ path('contactPost')}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
         {{ form_widget(form._token) }}
 
