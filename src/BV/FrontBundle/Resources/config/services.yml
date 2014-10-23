@@ -4,14 +4,19 @@ services:
         tags:
             - { name: form.type, alias: bv_user_registration }
     bv_user.profile.form.type:
-            class: BV\FrontBundle\Form\Type\ProfileFormType
-            tags:
-                - { name: form.type, alias: bv_user_profile }
+        class: BV\FrontBundle\Form\Type\ProfileFormType
+        tags:
+            - { name: form.type, alias: bv_user_profile }
     form.type.autocomplete:
-            class: BV\FrontBundle\Form\Type\AutocompleteType
-            tags:
-              - { name: form.type, alias: autocomplete }
+        class: BV\FrontBundle\Form\Type\AutocompleteType
+        tags:
+          - { name: form.type, alias: autocomplete }
     form.type.datePicker:
         class: BV\FrontBundle\Form\Type\DatePickerType
         tags:
           - { name: form.type, alias: datePicker }
+    bv_user.form.handler.profile:
+        class: BV\FrontBundle\Form\Handler\ProfileFormHandler
+        arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer"]
+        scope: request
+        public: false

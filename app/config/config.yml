@@ -78,6 +78,7 @@ fos_user:
     profile:
         form:
             type: bv_user_profile
+            handler: bv_user.form.handler.profile
 
 # Genemu Form Bundle
 genemu_form:

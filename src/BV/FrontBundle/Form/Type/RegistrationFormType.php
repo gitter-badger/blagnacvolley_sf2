@@ -55,6 +55,7 @@ class RegistrationFormType extends AbstractType
             ))
             ->add('picture', 'file', array(
                 'label'=>'Photo',
+                'data_class' => null
             ))
         ;
     }
