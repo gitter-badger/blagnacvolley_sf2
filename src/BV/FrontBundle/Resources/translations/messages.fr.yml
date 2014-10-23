@@ -17,6 +17,8 @@ profile:
       phone: Portable
       address: Adresse
       gender: Genre
+      firstname: Prénom
+      lastname: Nom
     club_data:
       title: Données club
       level: Niveau
@@ -25,6 +27,10 @@ profile:
       mscteam: Equipe masculine
       mixteam: Equipe mixte
       femteam: Equipe féminine
+  edit:
+    title:  Modifications des informations
+    message: Seules certaines informations sont modifiables directement. Pour modifier les autres, merci d'adresser une demande auprès du responsable du club (voir plus bas).
+    update:  Informations modifiables par le club
 
 team:
   index:
@@ -54,3 +60,6 @@ constants:
       ACTIVE_LICENSED: Actif licencié
       ACTIVE_NOT_LICENSED: Actif non licencié
       INACTIVE: Inactif
+    gender:
+      MALE: Homme
+      FEMALE: Femme

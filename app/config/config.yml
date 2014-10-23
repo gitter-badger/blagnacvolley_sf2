@@ -75,6 +75,9 @@ fos_user:
     registration:
         form:
             type: bv_user_registration
+    profile:
+        form:
+            type: bv_user_profile
 
 # Genemu Form Bundle
 genemu_form:

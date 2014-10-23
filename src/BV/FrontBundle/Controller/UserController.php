@@ -52,6 +52,8 @@ class UserController extends BaseController
         ));
     }
 
+
+
 //    public function uploadPictureAction(Request $request)
 //    {
 //        $file = new File();

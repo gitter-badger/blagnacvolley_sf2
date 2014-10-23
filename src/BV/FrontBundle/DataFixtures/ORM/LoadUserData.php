@@ -28,7 +28,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_yann->setFemTeam(null);
         $user_yann->setMscTeam(null);
         $user_yann->setMixTeam(null);
-        $user_yann->setGender('H');
+        $user_yann->setGender(User::GENDER_MALE);
         $user_yann->setGeoLat('43.587638');
         $user_yann->setGeoLng('1.448412');
         $user_yann->setPicture('uploads/images/users/15.jpg');
@@ -58,7 +58,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_seb->setFemTeam(null);
         $user_seb->setMscTeam(null);
         $user_seb->setMixTeam(null);
-        $user_seb->setGender('H');
+        $user_seb->setGender(User::GENDER_MALE);
         $user_seb->setGeoLat('43.662233');
         $user_seb->setGeoLng('1.476035');
         $user_seb->setPicture('EMPTY');

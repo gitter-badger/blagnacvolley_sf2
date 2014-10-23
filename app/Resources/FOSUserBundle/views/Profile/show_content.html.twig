@@ -80,7 +80,7 @@
                     <tbody>
                     <tr>
                         <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
-                        <td>{{ user.gender }}</td>
+                        <td>{{ ('constants.user.gender.' ~ user.gender) |trans()}}</td>
                     </tr>
                     <tr>
                         <th>{{ 'profile.show.address_data.dob'|trans()}}</th>

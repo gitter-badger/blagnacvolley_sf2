@@ -1,8 +1,12 @@
 services:
-    acme_user.registration.form.type:
+    bv_user.registration.form.type:
         class: BV\FrontBundle\Form\Type\RegistrationFormType
         tags:
             - { name: form.type, alias: bv_user_registration }
+    bv_user.profile.form.type:
+            class: BV\FrontBundle\Form\Type\ProfileFormType
+            tags:
+                - { name: form.type, alias: bv_user_profile }
     form.type.autocomplete:
             class: BV\FrontBundle\Form\Type\AutocompleteType
             tags:

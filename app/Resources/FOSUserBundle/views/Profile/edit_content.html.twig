@@ -1,6 +1,138 @@
-<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+<h1>{{ 'profile.edit.title'|trans() }}</h1>
+
+<div class="well well-sm">{{ 'profile.edit.message'|trans() }}</div>
+
+<form autocomplete="off" action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit form-horizontal row-fluid" role="form">
+
+    <div class="form-group">
+        <div class="col-sm-2">
+            {{ form_label(form.email) }}
+        </div>
+        <div class="col-sm-10">
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email, { 'attr': {'autocomplete': 'off'} }) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2">
+            {{ form_label(form.current_password) }}
+        </div>
+        <div class="col-sm-10">
+            {{ form_errors(form.current_password) }}
+            {{ form_widget(form.current_password) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-10">
+            <input class="btn btn-success" type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+        </div>
+    </div>
+
+    {{ form_rest(form) }}
+
+</form>
+<hr/>
+<br/>
+<h1>{{ 'profile.edit.update'|trans() }}</h1>
+
+<form action="{{ path('bv_user_update_informations_request') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal row-fluid" role="form">
+    <div class="col-sm-2">
+        <img src="/{{ user.picture }}" class="img-circle" style="max-height: 150px;max-width: 150px;" />
+        <br/>
+        <br/>
+        <span class="text-center">
+            {% if user.status == constant('STATUS_ACTIVE_NOT_LICENCED', user) %}
+                <span class="dblock w100p label label-warning">{{ 'constants.user.status.ACTIVE_NOT_LICENSED'|trans()}}</span>
+            {% elseif user.status == constant('STATUS_ACTIVE_LICENCED', user) %}
+                <span class="dblock w100p label label-primary">{{ 'constants.user.status.ACTIVE_LICENSED'|trans()}}</span>
+            {% else %}
+                <span class="dblock w100p label label-danger">{{ 'constants.user.status.INACTIVE'|trans()}}</span>
+            {% endif %}
+        </span>
+    </div>
+    <div class="col-sm-10">
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ 'profile.show.club_data.title'|trans()}}
+                </div>
+                <table class="table table-hover table-striped table-condensed">
+                    <tbody>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.level'|trans() }}</th>
+                        <td>{{ user.level }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.mscteam'|trans() }}</th>
+                        <td>{{ user.getMscTeam }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.mixteam'|trans() }}</th>
+                        <td>{{ user.getMixTeam }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.femteam'|trans() }}</th>
+                        <td>{{ user.getFemTeam }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.shirt_size'|trans() }}</th>
+                        <td>{{ user.shirtSize }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.licence'|trans() }}</th>
+                        <td>{{ user.licenceNumber }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ 'profile.show.address_data.title'|trans()}}
+                </div>
+                <table class="table table-hover table-striped table-condensed">
+                    <tbody>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.firstname'|trans()}}</th>
+                        <td>{{ user.firstname }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.lastname'|trans()}}</th>
+                        <td>{{ user.lastname }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
+                        <td>{{ ('constants.user.gender.' ~ user.gender) |trans()}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
+                        <td>{{ user.dob|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.address'|trans()}}</th>
+                        <td>{{ user.address }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.phone'|trans()}}</th>
+                        <td>{{ user.phone }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <label class="control-label required" for="fos_user_profile_form_message">Votre message</label>
+            <br/>
+            <br/>
+            <textarea class="form-control" id="fos_user_profile_form_message" name="fos_user_profile_form[message]" rows="3"></textarea>
+            <br/>
+            <input class="btn btn-success" type="submit" value="Envoyer" />
+        </div>
     </div>
 </form>

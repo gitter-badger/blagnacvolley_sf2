@@ -55,6 +55,9 @@ class User extends EntityUser
     const STATUS_ACTIVE_NOT_LICENCED = 'ACTIVE_NOT_LICENSED';
     const STATUS_INACTIVE = 'INACTIVE';
 
+    const GENDER_MALE = 'MALE';
+    const GENDER_FEMALE = 'FEMALE';
+
     /**
      * @var integer
      *

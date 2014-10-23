@@ -13,10 +13,12 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
-bv_user_upload_picture:
-    defaults: { _controller: "FrontBundle:User:uploadPicture" }
-    path:     /uploadPicture
-
 fos_user_registration_register:
     defaults: { _controller: "FrontBundle:User:register" }
     path:     /register
+fos_user_profile_edit:
+    defaults: { _controller: "FrontBundle:Profile:edit" }
+    path:     /profile/edit
+bv_user_update_informations_request:
+    defaults: { _controller: "FrontBundle:Profile:updateRequest" }
+    path:     /profile/edit
