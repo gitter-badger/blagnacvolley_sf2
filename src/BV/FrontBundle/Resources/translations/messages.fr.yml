@@ -37,6 +37,13 @@ team:
     level: Niveau
     type: Type
     slot: Créneau attribué
+  show:
+    h1: Equipe : %team_name%
+    name: Nom
+    level: Niveau
+    type: Type
+    slot: Créneau attribué
+    list: Retour à la liste des équipes
 
 homepage:
   welcome: Bienvenue sur le site officiel du Blagnac Volley-Ball

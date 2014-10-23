@@ -3,7 +3,7 @@ teams:
     defaults: { _controller: "FrontBundle:Team:index" }
 
 team_show:
-    path:     /{id}/show
+    path:     /{id}
     defaults: { _controller: "FrontBundle:Team:show" }
 
 

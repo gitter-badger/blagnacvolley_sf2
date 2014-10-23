@@ -1,16 +1,10 @@
 {% for entity in entities %}
     <tr>
-        {#<td><a href="{{ path('team_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>#}
         <td>{{ entity.type }}</td>
-        <td>{{ entity.name }}</td>
+        <td>
+            <a href="{{ path('team_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+        </td>
         <td>{{ entity.level }}</td>
         <td>{{ entity.slot }}</td>
-        <td>
-            <ul>
-                <li>
-                    <a href="{{ path('team_show', { 'id': entity.id }) }}">show</a>
-                </li>
-            </ul>
-        </td>
     </tr>
 {% endfor %}
