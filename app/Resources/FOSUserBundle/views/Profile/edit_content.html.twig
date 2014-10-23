@@ -76,7 +76,7 @@
 
 <form action="{{ path('bv_user_update_informations_request') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal row-fluid" role="form">
     <div class="col-sm-2">
-        <img src="/{{ user.picture }}" class="img-circle" style="max-height: 150px;max-width: 150px;" />
+        <img src="{{ user.picture }}" class="img-circle" style="max-height: 150px;max-width: 150px;" />
         <br/>
         <br/>
         <span class="text-center">

@@ -5,6 +5,7 @@ namespace BV\FrontBundle\Entity;
 use FOS\UserBundle\Entity\User as EntityUser;
 use Doctrine\ORM\Mapping as ORM;
 use BV\FrontBundle\Entity\Team;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -108,6 +109,17 @@ class User extends EntityUser
      * @ORM\Column(name="picture", type="string", length=255)
      */
     protected $picture;
+
+    /**
+     * @var File
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff"},
+     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     * )
+     */
+    public $pictureFile;
 
     /**
      * @var string

@@ -22,6 +22,9 @@ class FrontExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('front.web_dir', $config['web_dir']);
+        $container->setParameter('front.profile.pictures_path', $config['profile']['pictures_path']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

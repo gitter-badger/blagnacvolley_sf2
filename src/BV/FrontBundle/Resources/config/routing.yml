@@ -12,7 +12,3 @@ front_news:
 front_homepage:
     path:     /hello/{name}
     defaults: { _controller: FrontBundle:Default:index }
-
-register:
-    path:     /register
-    defaults: { _controller: FrontBundle:User:register }

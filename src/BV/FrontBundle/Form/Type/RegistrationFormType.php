@@ -7,6 +7,7 @@ use BV\FrontBundle\Form\Type\AutocompleteType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use BV\FrontBundle\Entity\User;
 
 class RegistrationFormType extends AbstractType
 {
@@ -18,7 +19,10 @@ class RegistrationFormType extends AbstractType
                 'empty_value' => 'Choisissez une valeur',
                 'required' => true,
                 'label'=>'Genre',
-                'choices' => array('m' => 'Masculin', 'f' => 'Féminin')
+                'choices' => array(
+                    User::GENDER_MALE => 'constants.user.gender.'.User::GENDER_MALE,
+                    User::GENDER_FEMALE => 'constants.user.gender.'.User::GENDER_FEMALE
+                )
             ))
             ->add('firstname', 'text', array(
                 'label'=>'Prénom',
@@ -53,11 +57,17 @@ class RegistrationFormType extends AbstractType
             ->add('phone', 'text', array(
                 'label'=>'Portable',
             ))
-            ->add('picture', 'file', array(
+            ->add('pictureFile', 'file', array(
                 'label'=>'Photo',
-                'data_class' => null
             ))
         ;
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'BV\FrontBundle\Entity\User',
+        ));
     }
 
     public function getParent()

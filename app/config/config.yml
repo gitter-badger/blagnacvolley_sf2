@@ -75,6 +75,7 @@ fos_user:
     registration:
         form:
             type: bv_user_registration
+            handler: bv_user.form.handler.registration
     profile:
         form:
             type: bv_user_profile
@@ -93,3 +94,7 @@ genemu_form:
             timeout:              10
             code:                 ~
         configs:              []
+
+front:
+    profile:
+        pictures_path: /uploads/users
