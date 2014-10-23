@@ -28,35 +28,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ 'profile.show.address_data.title'|trans()}}
-                </div>
-                <table class="table table-hover table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
-                        <td>{{ user.gender }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
-                        <td>{{ user.dob|date('d/m/Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.address'|trans()}}</th>
-                        <td>{{ user.address }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.phone'|trans()}}</th>
-                        <td>{{ user.phone }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     {{ 'profile.show.club_data.title'|trans()}}
@@ -89,6 +60,57 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ 'profile.show.address_data.title'|trans()}}
+                </div>
+                <table class="table table-hover table-striped table-condensed">
+                    <tbody>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
+                        <td>{{ user.gender }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
+                        <td>{{ user.dob|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.address'|trans()}}</th>
+                        <td>{{ user.address }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.phone'|trans()}}</th>
+                        <td>{{ user.phone }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="panel-footer">
+                    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+                    <script type="text/javascript">
+                        function initializeGmaps() {
+                            var mapOptions = { center: new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }}),zoom: 16 };
+                            var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                            var myLatlng = new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }});
+                            var marker = new google.maps.Marker({
+                                position: myLatlng,
+                                draggable:false,
+                                map: map,
+                                title:"{{ user.username }}"
+                            });
+                            var infowindow = new google.maps.InfoWindow({
+                                content: "{{ user.username }}"
+                            });
+                            google.maps.event.addListener(marker, 'click', function() {
+                                infowindow.open(map,marker);
+                            });
+                        }
+                        google.maps.event.addDomListener(window, 'load', initializeGmaps);
+                    </script>
+                    <div id="map-canvas" style="height:300px;width:398px;"/>
+                </div>
             </div>
         </div>
     </div>
