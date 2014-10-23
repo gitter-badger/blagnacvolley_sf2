@@ -26,5 +26,17 @@ profile:
       mixteam: Equipe mixte
       femteam: Equipe féminine
 
+team:
+  index:
+    h1: Liste des équipes
+    h2:
+      fem: Equipes féminines
+      msc: Equipes masculines
+      mix: Equipes mixtes
+    name: Nom
+    level: Niveau
+    type: Type
+    slot: Créneau attribué
+
 homepage:
   welcome: Bienvenue sur le site officiel du Blagnac Volley-Ball

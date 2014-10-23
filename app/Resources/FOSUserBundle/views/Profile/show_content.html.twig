@@ -11,85 +11,85 @@
     </div>
     <div class="col-sm-10">
         <div class="col-sm-6">
-            <table class="table table-hover table-striped table-condensed">
-                <thead>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ 'profile.show.connexion_data.title'|trans()}}
+                </div>
+                <table class="table table-hover table-striped table-condensed">
+                    <tbody>
                     <tr>
-                        <th colspan="2">{{ 'profile.show.connexion_data.title'|trans()}}</th>
+                        <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
+                        <td>{{ user.username }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
-                    <td>{{ user.username }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
-                    <td>{{ user.email }}</td>
-                </tr>
-                </tbody>
-            </table>
+                    <tr>
+                        <th>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-sm-6">
-            <table class="table table-hover table-striped table-condensed">
-                <thead>
-                <tr>
-                    <th colspan="2">{{ 'profile.show.address_data.title'|trans()}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
-                    <td>{{ user.gender }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
-                    <td>{{ user.dob|date('d/m/Y') }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.address_data.address'|trans()}}</th>
-                    <td>{{ user.address }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.address_data.phone'|trans()}}</th>
-                    <td>{{ user.phone }}</td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ 'profile.show.address_data.title'|trans()}}
+                </div>
+                <table class="table table-hover table-striped table-condensed">
+                    <tbody>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
+                        <td>{{ user.gender }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
+                        <td>{{ user.dob|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.address'|trans()}}</th>
+                        <td>{{ user.address }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.phone'|trans()}}</th>
+                        <td>{{ user.phone }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-sm-6">
-            <table class="table table-hover table-striped table-condensed">
-                <thead>
-                <tr>
-                    <th colspan="2">{{ 'profile.show.club_data.title'|trans()}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th>{{ 'profile.show.club_data.level'|trans() }}</th>
-                    <td>{{ user.level }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.club_data.mscteam'|trans() }}</th>
-                    <td>{{ user.getMscTeam }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.club_data.mixteam'|trans() }}</th>
-                    <td>{{ user.getMixTeam }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.club_data.femteam'|trans() }}</th>
-                    <td>{{ user.getFemTeam }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.club_data.shirt_size'|trans() }}</th>
-                    <td>{{ user.shirtSize }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'profile.show.club_data.licence'|trans() }}</th>
-                    <td>{{ user.licenceNumber }}</td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ 'profile.show.club_data.title'|trans()}}
+                </div>
+                <table class="table table-hover table-striped table-condensed">
+                    <tbody>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.level'|trans() }}</th>
+                        <td>{{ user.level }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.mscteam'|trans() }}</th>
+                        <td>{{ user.getMscTeam }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.mixteam'|trans() }}</th>
+                        <td>{{ user.getMixTeam }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.femteam'|trans() }}</th>
+                        <td>{{ user.getFemTeam }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.shirt_size'|trans() }}</th>
+                        <td>{{ user.shirtSize }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.club_data.licence'|trans() }}</th>
+                        <td>{{ user.licenceNumber }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

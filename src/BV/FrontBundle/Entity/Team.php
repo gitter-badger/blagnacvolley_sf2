@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Team
 {
+    const TYPE_FEM = 'Feminin';
+    const TYPE_MSC = 'Masculin';
+    const TYPE_MIX = 'Mixte';
+
     /**
      * @var integer
      *

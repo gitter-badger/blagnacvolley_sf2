@@ -22,7 +22,10 @@ class TeamController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FrontBundle:Team')->findAll();
+        $entities = array();
+        $entities['fem'] = $em->getRepository('FrontBundle:Team')->findBy(array('type' => Team::TYPE_FEM));
+        $entities['msc'] = $em->getRepository('FrontBundle:Team')->findBy(array('type' => Team::TYPE_MSC));
+        $entities['mix'] = $em->getRepository('FrontBundle:Team')->findBy(array('type' => Team::TYPE_MIX));
 
         return $this->render('FrontBundle:Team:index.html.twig', array(
             'entities' => $entities,

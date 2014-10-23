@@ -1,37 +1,23 @@
 {% extends 'FrontBundle::layout.html.twig' %}
 
 {% block content_row -%}
-    <h1>Team list</h1>
+    <h1>{{ 'team.index.h1'|trans() }}</h1>
 
-    <table class="records_list">
+    <table class="table table-hover table-striped">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Level</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Slot</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>{{ 'team.index.type'|trans() }}</th>
+            <th>{{ 'team.index.name'|trans() }}</th>
+            <th>{{ 'team.index.level'|trans() }}</th>
+            <th>{{ 'team.index.slot'|trans() }}</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('team_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.level }}</td>
-                <td>{{ entity.name }}</td>
-                <td>{{ entity.type }}</td>
-                <td>{{ entity.slot }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('team_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
+        {{ include ( 'FrontBundle:Team:team_block.html.twig', {title: 'team.index.h2.fem'|trans(),entities: entities['fem'] }, with_context = false ) }}
+        {{ include ( 'FrontBundle:Team:team_block.html.twig', {title: 'team.index.h2.msc'|trans(),entities: entities['msc'] }, with_context = false ) }}
+        {{ include ( 'FrontBundle:Team:team_block.html.twig', {title: 'team.index.h2.mix'|trans(),entities: entities['mix'] }, with_context = false ) }}
         </tbody>
     </table>
 
-    {% endblock %}
+{% endblock %}
