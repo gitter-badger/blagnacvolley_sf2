@@ -31,11 +31,11 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_yann->setGender('H');
         $user_yann->setGeoLat('43.587638');
         $user_yann->setGeoLng('1.448412');
-        $user_yann->setPicture('EMPTY');
+        $user_yann->setPicture('uploads/images/users/15.jpg');
         $user_yann->setShirtSize('L');
         $user_yann->setIsRequiredBill(false);
         $user_yann->setIsLookingForTeam(false);
-        $user_yann->setStatus('ACTIVE_LICENCED');
+        $user_yann->setStatus(USER::STATUS_ACTIVE_LICENCED);
         $user_yann->setLicenceNumber('3216613211681');
         // base User implementation
         $user_yann->setUsername('shazim');
@@ -65,7 +65,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_seb->setShirtSize('L');
         $user_seb->setIsRequiredBill(false);
         $user_seb->setIsLookingForTeam(false);
-        $user_seb->setStatus('ACTIVE_LICENCED');
+        $user_seb->setStatus(USER::STATUS_ACTIVE_LICENCED);
         $user_seb->setLicenceNumber('132132151');
         // base User implementation
         $user_seb->setUsername('perko');

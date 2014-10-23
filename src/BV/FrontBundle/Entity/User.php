@@ -51,6 +51,10 @@ use BV\FrontBundle\Entity\Team;
  */
 class User extends EntityUser
 {
+    const STATUS_ACTIVE_LICENCED = 'ACTIVE_LICENSED';
+    const STATUS_ACTIVE_NOT_LICENCED = 'ACTIVE_NOT_LICENSED';
+    const STATUS_INACTIVE = 'INACTIVE';
+
     /**
      * @var integer
      *
@@ -171,9 +175,9 @@ class User extends EntityUser
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255, options={"default": "ACTIF_NON_LICENCIE"})
+     * @ORM\Column(name="status", type="string", length=255, options={"default": "ACTIVE_NOT_LICENSED"})
      */
-    protected $status = "ACTIF_NON_LICENCIE";
+    protected $status = USER::STATUS_ACTIVE_NOT_LICENCED;
 
     /**
      * @var string

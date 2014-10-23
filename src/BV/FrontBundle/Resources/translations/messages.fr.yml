@@ -47,3 +47,10 @@ team:
 
 homepage:
   welcome: Bienvenue sur le site officiel du Blagnac Volley-Ball
+
+constants:
+  user:
+    status:
+      ACTIVE_LICENSED: Actif licencié
+      ACTIVE_NOT_LICENSED: Actif non licencié
+      INACTIVE: Inactif
