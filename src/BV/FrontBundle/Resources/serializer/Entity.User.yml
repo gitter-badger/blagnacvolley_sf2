@@ -1,0 +1,29 @@
+BV\FrontBundle\Entity\User:
+    exclusion_policy: ALL
+    xml-root-name: user
+    properties:
+        dob:
+            type: DateTime
+            expose: true
+            since_version: 1.0
+            groups: [sonata_api_read, sonata_api_write, sonata_search]
+        firstname:
+            type: string
+            expose: true
+            since_version: 1.0
+            groups: [sonata_api_read, sonata_api_write, sonata_search]
+        lastname:
+            type: string
+            expose: true
+            since_version: 1.0
+            groups: [sonata_api_read, sonata_api_write, sonata_search]
+        gender:
+            type: string
+            expose: true
+            since_version: 1.0
+            groups: [sonata_api_read, sonata_api_write, sonata_search]
+        phone:
+            type: string
+            expose: true
+            since_version: 1.0
+            groups: [sonata_api_read, sonata_api_write, sonata_search]

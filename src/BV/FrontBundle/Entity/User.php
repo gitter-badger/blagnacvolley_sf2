@@ -726,4 +726,59 @@ class User extends EntityUser
     {
         return $this->phone;
     }
+
+    // ********************************************
+    // Forgotten in FOSUser
+
+    /**
+     * Returns the expiration date
+     *
+     * @return \DateTime|null
+     */
+    public function getExpiresAt()
+    {
+        return $this->expiresAt;
+    }
+
+    /**
+     * Returns the credentials expiration date
+     *
+     * @return \DateTime
+     */
+    public function getCredentialsExpireAt()
+    {
+        return $this->credentialsExpireAt;
+    }
+
+    /**
+     * Sets the credentials expiration date
+     *
+     * @param \DateTime|null $date
+     */
+    public function setCredentialsExpireAt(\DateTime $date = null)
+    {
+        $this->credentialsExpireAt = $date;
+    }
+
+    /**
+     * Returns a string representation
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUsername() ?: '-';
+    }
+
+    /**
+     * Sets the user groups
+     *
+     * @param array $groups
+     */
+    public function setGroups($groups)
+    {
+        foreach ($groups as $group) {
+            $this->addGroup($group);
+        }
+    }
 }

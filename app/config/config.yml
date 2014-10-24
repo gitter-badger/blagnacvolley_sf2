@@ -83,6 +83,9 @@ fos_user:
               - Default
     service:
         user_manager: bv.user_manager
+    group:
+        group_class:   BV\FrontBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager
 
 # Genemu Form Bundle
 genemu_form:

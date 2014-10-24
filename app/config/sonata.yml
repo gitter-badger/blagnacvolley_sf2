@@ -4,6 +4,17 @@ sonata_admin:
     security:
         handler: sonata.admin.security.handler.role
 
+sonata_user:
+    manager_type: orm
+    class:
+        user:  BV\FrontBundle\Entity\User
+        group: BV\FrontBundle\Entity\Group
+    table:
+        user_group: bv_user_group
+    admin:
+        user:
+            class: BV\AdminBundle\Admin\UserAdmin
+
 sonata_block:
     default_contexts: [sonata_page_bundle]
     blocks:
@@ -15,6 +26,9 @@ sonata_block:
 
         sonata.block.service.text:
         sonata.block.service.rss:
+
+        sonata.user.block.menu:    # used to display the menu in profile pages
+        sonata.user.block.account: # used to display menu option (login option)
 
         # Some specific block from the SonataMediaBundle
         #sonata.media.block.media:
