@@ -80,6 +80,8 @@ fos_user:
         form:
             type: bv_user_profile
             handler: bv_user.form.handler.profile
+            validation_groups:
+              - Default
 
 # Genemu Form Bundle
 genemu_form:

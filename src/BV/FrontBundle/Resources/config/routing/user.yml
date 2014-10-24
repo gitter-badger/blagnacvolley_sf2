@@ -18,4 +18,4 @@ fos_user_profile_edit:
     path:     /profile/edit
 bv_user_update_informations_request:
     defaults: { _controller: "FrontBundle:Profile:updateRequest" }
-    path:     /profile/edit
+    path:     /profile/updateRequest

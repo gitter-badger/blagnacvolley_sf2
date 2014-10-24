@@ -31,7 +31,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_yann->setGender(User::GENDER_MALE);
         $user_yann->setGeoLat('43.587638');
         $user_yann->setGeoLng('1.448412');
-        $user_yann->setPicture('uploads/images/users/15.jpg');
+        $user_yann->setPicture('/uploads/users/15.jpg');
         $user_yann->setShirtSize('L');
         $user_yann->setIsRequiredBill(false);
         $user_yann->setIsLookingForTeam(false);

@@ -1,0 +1,17 @@
+{% extends "FrontBundle:Mail:layout.html.twig" %}
+
+{% block title_content %}
+    [BlagnacVolley] Les informations d'un utilisateur ont changé
+{% endblock title_content %}
+
+{% block mail_content %}
+
+    Les informations d'un utilisateur ont changé<br/><br/>
+
+    Utilisateur : #{{ user.id }} / {{ user.firstname|capitalize }} {{ user.lastname|upper }}<br/>
+
+    Contenu du message :<br/><br/>
+
+    {{ message|raw }}<br/><br/>
+
+{% endblock mail_content %}

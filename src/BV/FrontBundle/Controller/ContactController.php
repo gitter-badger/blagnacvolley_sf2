@@ -29,24 +29,11 @@ class ContactController extends Controller
             if ($form->isValid()) {
                 $registration = $form->getData();
 
-                $message = \Swift_Message::newInstance()
-                    ->setSubject("[BlagnacVolley] Nouveau message depuis le formulaire de contacts")
-                    ->setFrom($form->get('email')->getData())
-                    ->setTo('y.lastapis@gmail.com')
-                    ->setContentType('text/html')
-                    ->setBody(
-                        $this->renderView(
-                            'FrontBundle:Mail:contact.html.twig',
-                            array(
-                                'name' => $form->get('name')->getData(),
-                                'email' => $form->get('email')->getData(),
-                                'message' => $form->get('message')->getData()
-                            )
-                        ),
-                        'text/html'
-                    );
-
-                $this->get('mailer')->send($message);
+                $this->get('bv_mailer')->sendContactEmail(
+                    $form->get('name')->getData(),
+                    $form->get('email')->getData(),
+                    $form->get('message')->getData()
+                );
 
                 $request->getSession()->getFlashBag()->add('success', 'Votre email a bien été envoyé ! Merci !');
 
