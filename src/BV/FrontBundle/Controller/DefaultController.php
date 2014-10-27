@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('FrontBundle:Default:index.html.twig', array());
     }
+
+    public function volleySchoolAction()
+    {
+        return $this->render('FrontBundle:Default:volleyschool.html.twig', array());
+    }
 }

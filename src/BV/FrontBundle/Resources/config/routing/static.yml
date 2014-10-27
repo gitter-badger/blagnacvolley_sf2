@@ -1,0 +1,3 @@
+bv_static_volley_school:
+    path:     /volleyschool
+    defaults: { _controller: FrontBundle:Default:volleySchool }

@@ -54,6 +54,9 @@ team:
 homepage:
   welcome: Bienvenue sur le site officiel du Blagnac Volley-Ball
 
+volleyschool:
+  welcome: Ecole de volley
+
 constants:
   user:
     status:
