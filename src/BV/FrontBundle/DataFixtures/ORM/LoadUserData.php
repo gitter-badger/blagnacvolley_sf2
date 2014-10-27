@@ -35,8 +35,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_yann->setShirtSize('L');
         $user_yann->setIsRequiredBill(false);
         $user_yann->setIsLookingForTeam(false);
-        $user_yann->setStatus(USER::STATUS_ACTIVE_LICENCED);
-        $user_yann->setLicenceNumber('3216613211681');
+        $user_yann->setStatus(USER::STATUS_ACTIVE_LICENSED);
+        $user_yann->setLicenseNumber('3216613211681');
         // base User implementation
         $user_yann->setUsername('shazim');
         $user_yann->setPlainPassword('pass4bv');
@@ -65,8 +65,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_seb->setShirtSize('L');
         $user_seb->setIsRequiredBill(false);
         $user_seb->setIsLookingForTeam(false);
-        $user_seb->setStatus(USER::STATUS_ACTIVE_LICENCED);
-        $user_seb->setLicenceNumber('132132151');
+        $user_seb->setStatus(USER::STATUS_ACTIVE_LICENSED);
+        $user_seb->setLicenseNumber('132132151');
         // base User implementation
         $user_seb->setUsername('perko');
         $user_seb->setPlainPassword('pass4bv');

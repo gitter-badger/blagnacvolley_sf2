@@ -23,7 +23,7 @@ profile:
       title: Données club
       level: Niveau
       shirt_size: Taille maillot
-      licence: Licence
+      license: License
       mscteam: Equipe masculine
       mixteam: Equipe mixte
       femteam: Equipe féminine

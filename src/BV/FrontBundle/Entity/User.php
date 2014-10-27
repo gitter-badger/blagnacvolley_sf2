@@ -4,7 +4,7 @@ namespace BV\FrontBundle\Entity;
 
 use FOS\UserBundle\Entity\User as EntityUser;
 use Doctrine\ORM\Mapping as ORM;
-use BV\FrontBundle\Entity\Team;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -40,7 +40,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * Entré par l'administrateur du club par la suite :
  *
- * - Numéro de License (licence_number)
+ * - Numéro de License (license_number)
  * - Montant Cotisation (fee_amount)
  * - Date paiement Cotisation (date_payment_fee)
  * - Date livraison maillot (date_shirt_delivered)
@@ -52,8 +52,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends EntityUser
 {
-    const STATUS_ACTIVE_LICENCED = 'ACTIVE_LICENSED';
-    const STATUS_ACTIVE_NOT_LICENCED = 'ACTIVE_NOT_LICENSED';
+    const STATUS_ACTIVE_LICENSED = 'ACTIVE_LICENSED';
+    const STATUS_ACTIVE_NOT_LICENSED = 'ACTIVE_NOT_LICENSED';
     const STATUS_INACTIVE = 'INACTIVE';
 
     const GENDER_MALE = 'MALE';
@@ -133,7 +133,7 @@ class User extends EntityUser
      *
      * @ORM\Column(name="is_required_bill", type="boolean", options={"default": false})
      */
-    protected $isRequiredBill = false;
+    protected $isRequiredBill;
 
     /**
      * @var Team
@@ -164,7 +164,7 @@ class User extends EntityUser
      *
      * @ORM\Column(name="is_looking_for_team", type="boolean", options={"default": false})
      */
-    protected $isLookingForTeam = false;
+    protected $isLookingForTeam;
 
     /**
      * @var string
@@ -192,14 +192,14 @@ class User extends EntityUser
      *
      * @ORM\Column(name="status", type="string", length=255, options={"default": "ACTIVE_NOT_LICENSED"})
      */
-    protected $status = USER::STATUS_ACTIVE_NOT_LICENCED;
+    protected $status;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="licence_number", type="string", length=255, nullable=true)
+     * @ORM\Column(name="license_number", type="string", length=255, nullable=true)
      */
-    protected $licenceNumber;
+    protected $licenseNumber;
 
     /**
      * @var float
@@ -229,6 +229,16 @@ class User extends EntityUser
      */
     protected $phone;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->isRequiredBill = false;
+        $this->isLookingForTeam = false;
+        $this->status = static::STATUS_ACTIVE_NOT_LICENSED;
+    }
+
     /**
      * Get id
      *
@@ -237,6 +247,19 @@ class User extends EntityUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Returns the gender list
+     *
+     * @return array
+     */
+    public static function getGenderList()
+    {
+        return array(
+            self::GENDER_MALE    => 'constants.user.gender.'.self::GENDER_MALE,
+            self::GENDER_FEMALE  => 'constants.user.gender.'.self::GENDER_FEMALE,
+        );
     }
 
     /**
@@ -562,26 +585,26 @@ class User extends EntityUser
     }
 
     /**
-     * Set licenceNumber
+     * Set licenseNumber
      *
-     * @param string $licenceNumber
+     * @param string $licenseNumber
      * @return User
      */
-    public function setLicenceNumber($licenceNumber)
+    public function setLicenseNumber($licenseNumber)
     {
-        $this->licenceNumber = $licenceNumber;
+        $this->licenseNumber = $licenseNumber;
 
         return $this;
     }
 
     /**
-     * Get licenceNumber
+     * Get licenseNumber
      *
      * @return string
      */
-    public function getLicenceNumber()
+    public function getLicenseNumber()
     {
-        return $this->licenceNumber;
+        return $this->licenseNumber;
     }
 
     /**
@@ -651,11 +674,6 @@ class User extends EntityUser
     public function getDateShirtDelivered()
     {
         return $this->dateShirtDelivered;
-    }
-
-    function __construct()
-    {
-        parent::__construct();
     }
 
     /**
@@ -754,10 +772,13 @@ class User extends EntityUser
      * Sets the credentials expiration date
      *
      * @param \DateTime|null $date
+     * @return User
      */
     public function setCredentialsExpireAt(\DateTime $date = null)
     {
         $this->credentialsExpireAt = $date;
+
+        return $this;
     }
 
     /**
