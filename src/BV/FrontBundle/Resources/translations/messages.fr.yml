@@ -66,3 +66,13 @@ constants:
     gender:
       MALE: Homme
       FEMALE: Femme
+    level:
+      EXC_A: Excellence A
+      EXC_B: Excellence B
+      EXC_C: Excellence C
+      HON_A: Honneur A
+      HON_B: Honneur B
+      HON_C: Honneur C
+      PROM_A: Promotion A
+      PROM_B: Promotion B
+      PROM_C: Promotion C

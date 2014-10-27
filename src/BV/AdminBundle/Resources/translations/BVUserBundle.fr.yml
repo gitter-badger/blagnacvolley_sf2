@@ -1,0 +1,154 @@
+# Loco yaml export: Symfony YAML object
+# Project: SonataUserBundle.fr.xlf conversion
+# Release: Working copy
+# Locale: fr_FR, French
+# Exported at: Mon, 27 Oct 2014 09:32:27 +0000
+
+title_user_registration: Inscription
+title_user_account: Profil utilisateur
+title_user_edit_profile: Éditer
+title_user_authentication: Identification
+sonata_user_submit: Envoyer
+breadcrumb:
+  link_user_list: Utilisateurs
+  link_user_create: Ajouter
+  link_user_edit: Éditer
+  link_user_delete: Supprimer
+  link_group_list: Groupes
+  link_group_create: Ajouter
+  link_group_edit: Éditer
+  link_user_show: Voir
+users: Utilisateurs
+groups: Groupes
+switch_user_exit: Quitter l'identité
+switch_user: Changer d'identité
+user_block_logout: Déconnexion
+form:
+  label_username: Nom d'utilisateur
+  label_email: Email
+  label_plain_password: Mot de passe
+  label_groups: Groupes
+  label_roles: Rôles
+  label_locked: Verrouillé
+  label_expired: Expiré
+  label_enabled: Activé
+  label_credentials_expired: Droits expirés
+  label_last_login: Dernière connexion
+  label_dob: Date de naissance
+  label_firstname: Prénom
+  label_lastname: Nom
+  label_gender: Genre
+  label_phone: Portable
+  label_locked: Verrouillé
+  label_enabled: Activé
+  label_expired: Expiré
+  label_address: Adresse
+  label_picture: Photo
+  label_level: Niveau
+  label_shirt_size: Taille maillot
+  label_date_shirt_delivered: Date livraison maillot
+  label_license: License
+  label_msc_team: Equipe masculine
+  label_mix_team: Equipe mixte
+  label_fem_team: Equipe féminine
+  label_status: Statut
+  label_is_looking_for_team: Recherche une équipe
+  label_license_number: Numéro de License
+  label_fee_amount: Montant Cotisation
+  label_date_payment: Date paiement Cotisation
+filter:
+  label_username: Nom d'utilisateur
+  label_name: Nom
+  label_email: Email
+  label_locked: Verrouillé
+  label_id: ID
+  label_groups: Groupes
+  label_created_at: Créé le
+  label_last_login: Dernière connexion
+  label_firstname: Prénom
+  label_lastname: Nom
+list:
+  label_username: Nom d'utilisateur
+  label_name: Nom
+  label_email: Adresse email
+  label_groups: Groupes
+  label_locked: Verrouillé
+  label_enabled: Activé
+  label_created_at: Créé le
+  label_last_login: Dernière connexion
+  label_impersonating: Changer d'identité
+  label_roles: Rôles
+  label_firstname: Prénom
+  label_lastname: Nom
+label_two_step_code: Validation en deux étapes
+message_two_step_code_help: Rentrer votre code de validation provenant de votre téléphone
+label_two_step_code_error: Le code de validation est invalide
+sonata_user: Utilisateurs
+form_general: Général
+form_groups: Groupes
+form_management: Gestion
+form_profile: Profil
+form_social: Social
+form_security: Sécurité
+field:
+  label_roles_editable: Rôles
+show:
+  label_username: Nom d'utilisateur
+  label_email: Email
+  label_groups: Groupes
+  label_dob: Date de naissance
+  label_firstname: Prénom
+  label_lastname: Nom
+  label_website: Site web
+  label_biography: Biographie
+  label_gender: Civilité
+  label_locale: Langue
+  label_timezone: Fuseau horaire
+  label_phone: Téléphone
+  label_facebook_uid: Uid Facebook
+  label_facebook_name: Nom Facebook
+  label_twitter_uid: Uid Twitter
+  label_twitter_name: Nom Twitter
+  label_gplus_uid: Uid Google+
+  label_gplus_name: Nom Google+
+  label_token: Jeton
+  label_two_step_verification_code: Code de validation en deux étapes
+  label_created_at: Créé le
+  label_last_login: Dernière connexion
+sonata_profile_title: Mon tableau de bord
+link_show_profile: Mon tableau de bord
+link_edit_profile: Mon profil
+title_user_edit_authentication: Informations de connexion
+link_edit_authentication: Informations de connexion
+label_profile_gender: Civilité
+label_profile_firstname: Prénom
+label_profile_lastname: Nom
+label_profile_website: Site web
+label_profile_dob: Date de naissance
+label_profile_biography: Biographie
+label_profile_locale: Langue
+label_profile_timezone: Fuseau horaire
+label_profile_phone: Téléphone
+profile:
+  flash:
+    updated: Votre profil a été mis à jour.
+sonata_change_password_link: Changer votre mot de passe
+link_register: S'inscrire
+link_login: S'identifier
+link_logout: Se déconnecter
+registration:
+  flash:
+    user_created: Votre compte est créé avec succès !
+forgotten_password: Mot de passe oublié ?
+sonata_user_profile_breadcrumb_index: Tableau de bord
+sonata_user_profile_breadcrumb_edit: Éditer votre profil
+sonata_user_already_authenticated: Vous êtes déjà identifié
+constants:
+  user:
+    status:
+      ACTIVE_LICENSED: Actif licencié
+      ACTIVE_NOT_LICENSED: Actif non licencié
+      INACTIVE: Inactif
+    gender:
+      MALE: Homme
+      FEMALE: Femme

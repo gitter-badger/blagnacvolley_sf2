@@ -16,7 +16,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_yann = new User();
         $user_yann->setFirstname('Yann');
         $user_yann->setLastname('Lastapis');
-        $user_yann->setLevel('Excellence C');
+        $user_yann->setLevel(User::LEVEL_EXC_C);
         $user_yann->setAddress('5 rue du gorp, apt 26, 31400 Toulouse');
         $date = new \DateTime('2014-09-30');
         $user_yann->setDatePayment($date);
@@ -46,7 +46,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_seb = new User();
         $user_seb->setFirstname('Sébastien');
         $user_seb->setLastname('Fastrez');
-        $user_seb->setLevel('Excellence C');
+        $user_seb->setLevel(User::LEVEL_EXC_C);
         $user_seb->setAddress('14 impasse de Cornaudric , 31240 l\'Union');
         $date = new \DateTime('2014-09-30');
         $user_seb->setDatePayment($date);

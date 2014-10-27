@@ -59,6 +59,16 @@ class User extends EntityUser
     const GENDER_MALE = 'MALE';
     const GENDER_FEMALE = 'FEMALE';
 
+    const LEVEL_EXC_A = 'EXC_A';
+    const LEVEL_EXC_B = 'EXC_B';
+    const LEVEL_EXC_C = 'EXC_C';
+    const LEVEL_HON_A = 'HON_A';
+    const LEVEL_HON_B = 'HON_B';
+    const LEVEL_HON_C = 'HON_C';
+    const LEVEL_PROM_A = 'PROM_A';
+    const LEVEL_PROM_B = 'PROM_B';
+    const LEVEL_PROM_C = 'PROM_C';
+
     /**
      * @var integer
      *
@@ -493,6 +503,26 @@ class User extends EntityUser
     }
 
     /**
+     * Returns the level list
+     *
+     * @return array
+     */
+    public static function getLevelList()
+    {
+        return array(
+            self::LEVEL_EXC_A => 'constants.user.level.'.self::LEVEL_EXC_A,
+            self::LEVEL_EXC_B => 'constants.user.level.'.self::LEVEL_EXC_B,
+            self::LEVEL_EXC_C => 'constants.user.level.'.self::LEVEL_EXC_C,
+            self::LEVEL_HON_A => 'constants.user.level.'.self::LEVEL_HON_A,
+            self::LEVEL_HON_B => 'constants.user.level.'.self::LEVEL_HON_B,
+            self::LEVEL_HON_C => 'constants.user.level.'.self::LEVEL_HON_C,
+            self::LEVEL_PROM_A => 'constants.user.level.'.self::LEVEL_PROM_A,
+            self::LEVEL_PROM_B => 'constants.user.level.'.self::LEVEL_PROM_B,
+            self::LEVEL_PROM_C => 'constants.user.level.'.self::LEVEL_PROM_C,
+        );
+    }
+
+    /**
      * Set level
      *
      * @param string $level
@@ -559,6 +589,20 @@ class User extends EntityUser
     public function getGeoLng()
     {
         return $this->geoLng;
+    }
+
+    /**
+     * Returns the status list
+     *
+     * @return array
+     */
+    public static function getStatusList()
+    {
+        return array(
+            self::STATUS_ACTIVE_LICENSED => 'constants.user.status.'.self::STATUS_ACTIVE_LICENSED,
+            self::STATUS_ACTIVE_NOT_LICENSED => 'constants.user.status.'.self::STATUS_ACTIVE_NOT_LICENSED,
+            self::STATUS_INACTIVE => 'constants.user.status.'.self::STATUS_INACTIVE,
+        );
     }
 
     /**

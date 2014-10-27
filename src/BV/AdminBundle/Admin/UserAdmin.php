@@ -13,7 +13,6 @@ use FOS\UserBundle\Model\UserManagerInterface;
 
 class UserAdmin extends Admin
 {
-
     /**
      * {@inheritdoc}
      */
@@ -56,11 +55,13 @@ class UserAdmin extends Admin
 //            ->add('createdAt')
         ;
 
+        /*
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
             $listMapper
                 ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
             ;
         }
+        */
     }
 
     /**
@@ -105,13 +106,51 @@ class UserAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        /*
+         * $groups
+         * $roles (array)
+         */
         $formMapper
-            ->with('General')
-                ->add('username')
-                ->add('email')
-                ->add('plainPassword', 'text', array(
-                    'required' => (!$this->getSubject() || is_null($this->getSubject()->getId()))
-                ))
+            ->tab('General')
+                ->with('User')
+                    ->add('username')
+                    ->add('email')
+                    ->add('plainPassword', 'text', array(
+                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId()))
+                    ))
+                ->end()
+                ->with('Profile')
+                    ->add('gender', 'sonata_user_gender', array(
+                        'required' => true,
+                    ))
+                    ->add('firstname', null, array('required' => false))
+                    ->add('lastname', null, array('required' => false))
+                    ->add('dob', 'birthday', array('required' => false))
+                    ->add('address')
+                    ->add('phone', null, array('required' => false))
+                    ->add('picture')
+                ->end()
+            ->end()
+            ->tab('Club')
+                ->with('License')
+                    ->add('status', 'bv_user_status', array(
+                        'required' => true,
+                    ))
+                    ->add('licenseNumber', 'text')
+                    ->add('feeAmount')
+                    ->add('datePayment')
+                ->end()
+                ->with('Shirt')
+                    ->add('shirtSize')
+                    ->add('dateShirtDelivered')
+                ->end()
+                ->with('Teams')
+                    ->add('level', 'bv_user_level')
+                    ->add('mscTeam')
+                    ->add('femTeam')
+                    ->add('mixTeam')
+                    ->add('isLookingForTeam')
+                ->end()
             ->end()
 //            ->with('Groups')
 //                ->add('groups', 'sonata_type_model', array(
@@ -120,20 +159,11 @@ class UserAdmin extends Admin
 //                    'multiple' => true
 //                ))
 //            ->end()
-            ->with('Profile')
-                ->add('dob', 'birthday', array('required' => false))
-                ->add('firstname', null, array('required' => false))
-                ->add('lastname', null, array('required' => false))
-//                ->add('gender', 'sonata_user_gender', array(
-//                    'required' => true,
-//                    'translation_domain' => $this->getTranslationDomain()
-//                ))
-                ->add('phone', null, array('required' => false))
-            ->end()
         ;
 
 //        if ($this->getSubject() && !$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
             $formMapper
+                ->tab('Management')
                 ->with('Management')
 //                    ->add('realRoles', 'sonata_security_roles', array(
 //                        'label'    => 'form.label_roles',
@@ -146,15 +176,10 @@ class UserAdmin extends Admin
                     ->add('enabled', null, array('required' => false))
                     ->add('credentialsExpired', null, array('required' => false))
                 ->end()
+                ->end()
             ;
 //        }
 
-//        $formMapper
-//            ->with('Security')
-//            ->add('token', null, array('required' => false))
-//            ->add('twoStepVerificationCode', null, array('required' => false))
-//            ->end()
-//        ;
     }
 
     /**

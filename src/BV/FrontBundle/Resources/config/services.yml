@@ -27,3 +27,13 @@ services:
         class: BV\FrontBundle\Doctrine\UserManager
         arguments: [ "@security.encoder_factory", "@fos_user.util.username_canonicalizer", "@fos_user.util.email_canonicalizer", "@fos_user.entity_manager", "%fos_user.model.user.class%" ]
         public: false
+    bv_user.form.status_list:
+        class: Sonata\CoreBundle\Form\Type\StatusType
+        arguments: [ "%fos_user.model.user.class%", "getStatusList", "bv_user_status" ]
+        tags:
+            - { name: form.type, alias: bv_user_status }
+    bv_user.form.level_list:
+        class: Sonata\CoreBundle\Form\Type\StatusType
+        arguments: [ "%fos_user.model.user.class%", "getLevelList", "bv_user_level" ]
+        tags:
+            - { name: form.type, alias: bv_user_level }

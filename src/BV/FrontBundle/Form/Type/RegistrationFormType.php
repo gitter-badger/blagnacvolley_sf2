@@ -15,14 +15,10 @@ class RegistrationFormType extends AbstractType
     {
         // add your custom field
         $builder
-            ->add('gender', 'choice', array(
+            ->add('gender', 'sonata_user_gender', array(
                 'empty_value' => 'Choisissez une valeur',
                 'required' => true,
                 'label'=>'Genre',
-                'choices' => array(
-                    User::GENDER_MALE => 'constants.user.gender.'.User::GENDER_MALE,
-                    User::GENDER_FEMALE => 'constants.user.gender.'.User::GENDER_FEMALE
-                )
             ))
             ->add('firstname', 'text', array(
                 'label'=>'Prénom',
@@ -30,21 +26,10 @@ class RegistrationFormType extends AbstractType
             ->add('lastname', 'text', array(
                 'label'=>'Nom',
             ))
-            ->add('level', 'choice', array(
+            ->add('level', 'bv_user_level', array(
                 'empty_value' => 'Choisissez une valeur',
                 'required' => true,
                 'label'=>'Niveau de jeu',
-                'choices' => array(
-                    'exc_a' => 'Excellence A',
-                    'exc_b' => 'Excellence B',
-                    'exc_c' => 'Excellence C',
-                    'hon_a' => 'Honneur A',
-                    'hon_b' => 'Honneur B',
-                    'hon_c' => 'Honneur C',
-                    'prom_a' => 'Promotion A',
-                    'prom_b' => 'Promotion B',
-                    'prom_c' => 'Promotion C',
-                )
             ))
             ->add('dob', 'birthday', array(
                 'label'=>'Date de naissance',
