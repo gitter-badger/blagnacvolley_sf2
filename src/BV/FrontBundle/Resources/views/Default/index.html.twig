@@ -3,9 +3,7 @@
 {% block title %}{{ parent() }} - Accueil{% endblock %}
 
 {% block content %}
-    <div class="col-sm-12">
-        <p>{{ 'homepage.welcome'|trans() }}</p>
-    </div>
+    <h1>{{ 'homepage.welcome'|trans() }}</h1>
 
     {{ render(controller('FrontBundle:News:displayActives')) }}
 
