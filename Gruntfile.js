@@ -22,7 +22,8 @@ module.exports = function(grunt) {
         files: [
           {src: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css', dest: 'web/css/bootstrap-theme.min.css'},
           {src: 'bower_components/bootstrap-3-datepicker/css/datepicker3.css', dest: 'web/css/datepicker3.css'},
-          {src: 'bower_components/dropzone/downloads/css/dropzone.css', dest: 'web/css/dropzone.css'}
+          {src: 'bower_components/dropzone/downloads/css/dropzone.css', dest: 'web/css/dropzone.css'},
+          {src: 'bower_components/scheduler/codebase/dhtmlxscheduler.css', dest: 'web/css/scheduler/dhtmlxscheduler.css'}
         ]
       },
       javascript: {
@@ -30,9 +31,14 @@ module.exports = function(grunt) {
           { src: 'bower_components/modernizr/modernizr.js', dest: 'web/js/modernizr.js' },
           { src: 'bower_components/bootstrap-3-datepicker/js/bootstrap-datepicker.js', dest: 'web/js/bootstrap-datepicker.js' },
           { src: 'bower_components/bootstrap-3-datepicker/js/locales/bootstrap-datepicker.fr.js', dest: 'web/js/bootstrap-datepicker.fr.js' },
-          { src: 'bower_components/jquery/dist/jquery.min.js', dest: 'web/js/jquery.min.js' },
-          { src: 'bower_components/jquery/dist/jquery.min.map', dest: 'web/js/jquery.min.map' },
-          { src: 'bower_components/dropzone/downloads/dropzone.min.js', dest: 'web/js/dropzone.min.js' }
+          { src: 'bower_components/jquery/dist/jquery.min.js',              dest: 'web/js/jquery.min.js' },
+          { src: 'bower_components/jquery/dist/jquery.min.map',             dest: 'web/js/jquery.min.map' },
+          { src: 'bower_components/dropzone/downloads/dropzone.min.js',     dest: 'web/js/dropzone.min.js' },
+          { src: 'bower_components/scheduler/codebase/dhtmlxscheduler.js',  dest: 'web/js/scheduler/dhtmlxscheduler.js' },
+          { src: 'bower_components/scheduler/codebase/sources/dhtmlxscheduler.js.map',  dest: 'web/js/scheduler/sources/dhtmlxscheduler.js.map' },
+          { src: 'bower_components/scheduler/codebase/locale/locale_fr.js', dest: 'web/js/scheduler/locale_fr.js' },
+          { src: 'bower_components/moment/min/moment.min.js',               dest: 'web/js/moment/moment.min.js' },
+          { src: 'bower_components/moment/min/locales.min.js',              dest: 'web/js/moment/locales.min.js' }
         ]
       },
       images: {
@@ -41,6 +47,18 @@ module.exports = function(grunt) {
             cwd: 'bower_components/dropzone/downloads/images/',  // set working folder / root to copy
             src: '**/*',           // copy all files and subfolders
             dest: 'web/images/',    // destination folder
+            expand: true           // required when using cwd
+          },
+          {
+            cwd: 'bower_components/scheduler/codebase/imgs/',  // set working folder / root to copy
+            src: '**/*',           // copy all files and subfolders
+            dest: 'web/css/scheduler/imgs/',    // destination folder
+            expand: true           // required when using cwd
+          },
+          {
+            cwd: 'bower_components/scheduler/codebase/imgs_dhx_terrace/',  // set working folder / root to copy
+            src: '**/*',           // copy all files and subfolders
+            dest: 'web/css/scheduler/imgs_dhx_terrace/',    // destination folder
             expand: true           // required when using cwd
           }
         ]

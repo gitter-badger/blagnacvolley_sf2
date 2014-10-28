@@ -1,0 +1,10 @@
+bv_calendar_index:
+    defaults: { _controller: "FrontBundle:Calendar:index" }
+    path:     /calendar
+bv_calendar_getEvents:
+    defaults: { _controller: "FrontBundle:Calendar:getEvents" }
+    path:     /calendar/getEvents
+bv_calendar_saveEvents:
+    defaults: { _controller: "FrontBundle:Calendar:saveEvents" }
+    path:     /calendar/saveEvents
+

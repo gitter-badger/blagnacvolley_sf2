@@ -9,6 +9,9 @@ front_fos_user:
 front_news:
     resource: "@FrontBundle/Resources/config/routing/news.yml"
 
+front_calendar:
+    resource: "@FrontBundle/Resources/config/routing/calendar.yml"
+
 front_static:
     resource: "@FrontBundle/Resources/config/routing/static.yml"
 
