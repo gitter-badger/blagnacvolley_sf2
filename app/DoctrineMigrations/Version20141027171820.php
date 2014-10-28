@@ -15,7 +15,7 @@ class Version20141027171820 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
         
-        $this->addSql('CREATE TABLE Events (id INT AUTO_INCREMENT NOT NULL, start_date DATETIME NOT NULL, end_date DATETIME NOT NULL, text VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE events (id INT AUTO_INCREMENT NOT NULL, start_date DATETIME NOT NULL, end_date DATETIME NOT NULL, text VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE bv_group (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', UNIQUE INDEX UNIQ_2E6E94445E237E06 (name), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE bv_news (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, content LONGTEXT NOT NULL, raw_content LONGTEXT NOT NULL, content_formatter VARCHAR(32) NOT NULL, enabled TINYINT(1) NOT NULL, slug TINYTEXT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE bv_team (id INT AUTO_INCREMENT NOT NULL, captain_id INT DEFAULT NULL, sub_captain_id INT DEFAULT NULL, level VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, slot VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_3D94D773346729B (captain_id), UNIQUE INDEX UNIQ_3D94D771F8DE156 (sub_captain_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
@@ -37,7 +37,7 @@ class Version20141027171820 extends AbstractMigration
         $this->addSql('ALTER TABLE bv_user DROP FOREIGN KEY FK_4AAA3D21AE48C21E');
         $this->addSql('ALTER TABLE bv_team DROP FOREIGN KEY FK_3D94D773346729B');
         $this->addSql('ALTER TABLE bv_team DROP FOREIGN KEY FK_3D94D771F8DE156');
-        $this->addSql('DROP TABLE Events');
+        $this->addSql('DROP TABLE events');
         $this->addSql('DROP TABLE bv_group');
         $this->addSql('DROP TABLE bv_news');
         $this->addSql('DROP TABLE bv_team');

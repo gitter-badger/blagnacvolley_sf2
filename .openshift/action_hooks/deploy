@@ -44,8 +44,6 @@ done
     php app/console doctrine:fixtures:load $SF_OPTS
     # Cache
     php app/console cache:clear $SF_OPTS
-    # Assetic assets
-    php app/console assetic:dump $SF_OPTS
     # Hack controller
     if [ "${ENV}" == "test" ]; then
         rm -f web/app.php

@@ -25,8 +25,8 @@ class Version20141027174344 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
         
-        $this->addSql('ALTER TABLE Events DROP FOREIGN KEY FK_542B527C296CD8AE');
-        $this->addSql('DROP INDEX IDX_542B527C296CD8AE ON Events');
-        $this->addSql('ALTER TABLE Events DROP team_id, DROP type');
+        $this->addSql('ALTER TABLE events DROP FOREIGN KEY FK_542B527C296CD8AE');
+        $this->addSql('DROP INDEX IDX_542B527C296CD8AE ON events');
+        $this->addSql('ALTER TABLE events DROP team_id, DROP type');
     }
 }
