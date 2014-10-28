@@ -18,8 +18,7 @@ class LoadEventsData extends AbstractFixture implements OrderedFixtureInterface
         $events->setEndDate(new \DateTime('2014-11-02 23:59:59'));
         $events->setType(Events::TYPE_CLOSED);
         $events->setText("Vacances Toussaint");
-
-        $manager->persist($events);
+        $events->setSchedulerId("1");
 
         $teamMsc1 = $this->getReference('teamMsc1');
         $teamMix1 = $this->getReference('teamMix1');
@@ -31,18 +30,21 @@ class LoadEventsData extends AbstractFixture implements OrderedFixtureInterface
         $eventsMsc1->setEndDate(new \DateTime('2014-10-14 23:00:00'));
         $eventsMsc1->setType(Events::TYPE_TRAINING);
         $eventsMsc1->setTeam($teamMsc1);
+        $eventsMsc1->setSchedulerId("2");
 
         $eventsMix1 = new Events();
         $eventsMix1->setStartDate(new \DateTime('2014-10-14 20:30:00'));
         $eventsMix1->setEndDate(new \DateTime('2014-10-14 23:00:00'));
         $eventsMix1->setType(Events::TYPE_TRAINING);
         $eventsMix1->setTeam($teamMix1);
+        $eventsMix1->setSchedulerId("3");
 
         $eventsFem1 = new Events();
         $eventsFem1->setStartDate(new \DateTime('2014-10-14 20:30:00'));
         $eventsFem1->setEndDate(new \DateTime('2014-10-14 23:00:00'));
         $eventsFem1->setType(Events::TYPE_TRAINING);
         $eventsFem1->setTeam($teamFem1);
+        $eventsFem1->setSchedulerId("4");
 
         $manager->persist($events);
         $manager->persist($eventsMsc1);

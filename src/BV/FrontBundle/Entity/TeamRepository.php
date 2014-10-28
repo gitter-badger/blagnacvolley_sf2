@@ -3,6 +3,7 @@
 namespace BV\FrontBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * TeamRepository
@@ -12,4 +13,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class TeamRepository extends EntityRepository
 {
+    public function findAllByUserId($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+            SELECT p.id, p.name FROM FrontBundle:Team p
+            WHERE p.captain = :id
+            OR p.subCaptain = :id'
+            )->setParameter('id', $id);
+
+        try {
+            return $query->getArrayResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }

@@ -36,6 +36,7 @@ module.exports = function(grunt) {
           { src: 'bower_components/dropzone/downloads/dropzone.min.js',     dest: 'web/js/dropzone.min.js' },
           { src: 'bower_components/scheduler/codebase/dhtmlxscheduler.js',  dest: 'web/js/scheduler/dhtmlxscheduler.js' },
           { src: 'bower_components/scheduler/codebase/sources/ext/dhtmlxscheduler_readonly.js',  dest: 'web/js/scheduler/dhtmlxscheduler_readonly.js' },
+          { src: 'bower_components/scheduler/codebase/sources/ext/dhtmlxscheduler_editors.js',  dest: 'web/js/scheduler/dhtmlxscheduler_editors.js' },
           { src: 'bower_components/scheduler/codebase/sources/ext/dhtmlxscheduler_readonly.js.map',  dest: 'web/js/scheduler/dhtmlxscheduler_readonly.js.map' },
           { src: 'bower_components/scheduler/codebase/sources/dhtmlxscheduler.js.map',  dest: 'web/js/scheduler/sources/dhtmlxscheduler.js.map' },
           { src: 'bower_components/scheduler/codebase/locale/locale_fr.js', dest: 'web/js/scheduler/locale_fr.js' },

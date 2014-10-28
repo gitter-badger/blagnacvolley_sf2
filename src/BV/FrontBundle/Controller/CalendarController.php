@@ -14,11 +14,36 @@ class CalendarController extends Controller
 {
     public function indexAction(Request $request)
     {
+        /* @var User $user */
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $form = $this->createForm(new ContactType());
+
+        $alertOptsTeamsJson = "";
+        if ($user instanceof User) {
+            $res = array();
+            foreach ($this->getDoctrine()->getRepository('FrontBundle:Team')->findAllByUserId($user->getId()) as $team)
+            {
+                $res[] = array(
+                    'key' => $team['id'],
+                    'label' => $team['name']
+                );
+            }
+            $alertOptsTeamsJson = json_encode($res);
+        }
 
         return $this->render('FrontBundle:Calendar:index.html.twig', array(
             'form' => $form->createView(),
-            'calendarid' => 1,
+            'alert_opts_teams_json' => $alertOptsTeamsJson,
+            'alert_opts_types_json' => json_encode(array(
+                0 => array(
+                    'key' => Events::TYPE_TRAINING,
+                    'label' => $this->get('translator')->trans('constants.events.type.'.Events::TYPE_TRAINING),
+                ),
+                1 => array(
+                    'key' => Events::TYPE_MATCH,
+                    'label' => $this->get('translator')->trans('constants.events.type.'.Events::TYPE_MATCH),
+                ),
+            )),
         ));
     }
 
@@ -71,82 +96,88 @@ class CalendarController extends Controller
         return $response;
     }
 
-    public function saveEventsAction(sfWebRequest $request) {
-        $process = ProcessPeer::retrieveByPK($request->getParameter('rpId'));
-
-        $this->setLayout(false);
-
-        if ((!$process instanceof Process) || (!$process->isValid($this->getUser()->getId()))) {
-            return;
+    public function saveEventsAction(Request $request) {
+        if (!$request->isXmlHttpRequest())
+        {
+            $response = new Response("");
+            $response->headers->set('Content-Type', 'text/xml');
+            $response->headers->set('Content-Disposition', 'data.xml');
+            return $response;
         }
 
-        $theId = $request->getPostParameter('ids');
-        $status = $request->getPostParameter($theId . "_!nativeeditor_status");
+        $theId = $request->request->get('ids');
+        $status = $request->request->get($theId . "_!nativeeditor_status");
+
         if ($status == "inserted") {
-            $event = new Event();
-            $event->setProcess($process);
-            $event->setDateBegin($request->getPostParameter($theId . "_start_date"));
-            $event->setDateEnd($request->getPostParameter($theId . "_end_date"));
+            $event = new Events();
+            $event->setStartDate(new \DateTime($request->request->get($theId . "_start_date")));
+            $event->setEndDate(new \DateTime($request->request->get($theId . "_end_date")));
+            $event->setType(Events::TYPE_TRAINING);
             $event->setSchedulerId($theId);
-            $event->save();
 
-            if ($process->getStep() > 1 && !$process->getIsDirt()) {
-                $process->setIsDirt(true);
-                $process->save();
-            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($event);
+            $em->flush();
 
-            header("Content-Type:text/xml");
-            header('Content-Disposition: attachment; filename="data.xml"');
+            $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+            $msg .="<data>\n";
+            $msg .='	<action type="inserted" sid="'.$theId.'" tid="'.$theId.'"/>\n';
+            $msg .="</data>\n";
 
-            echo $this->_buildMessage('inserted', $theId);
-        } elseif ($status == "updated") {
-            $event = EventPeer::retrieveBySchedulerId($theId);
-            if (! $event instanceof Event)
-                return;
+            $response = new Response($msg);
+            $response->headers->set('Content-Type', 'text/xml');
+            $response->headers->set('Content-Disposition', 'data.xml');
 
-            $event->setDateBegin($request->getPostParameter($theId . "_start_date"));
-            $event->setDateEnd($request->getPostParameter($theId . "_end_date"));
-            $event->setSchedulerId($theId);
-            $event->save();
-
-            $pms = ProcessMemberAvailabilityPeer::retrieveByEventId($event->getId());
-            foreach ($pms as $pm) /* @var $pm ProcessMemberAvailability */
-            {
-                $pm->setIsRead(false);
-                $pm->setIsAvailable(false);
-                $pm->save();
-            }
-
-            // Tag current process as Dirt to process again mail sending
-            if (!$process->getIsDirt()) {
-                $process->setIsDirt(true);
-                $process->save();
-            }
-
-            header("Content-Type:text/xml");
-            header('Content-Disposition: attachment; filename="data.xml"');
-
-            echo $this->_buildMessage('updated', $theId);
-        } elseif ($status == "deleted") {
-            $event = EventPeer::retrieveBySchedulerId($theId);
-            if (! $event instanceof Event)
-                return;
-
-            $event->delete();
-
-            if (count(EventPeer::retrieveByProcessIds($process->getId())) == 0 && $process->getStep() != 1)
-            {
-                $process->resetProcess();
-                $process->setStep(1);
-                $process->setIsDirt(false);
-                $process->save();
-            }
-
-            header("Content-Type:text/xml");
-            header('Content-Disposition: attachment; filename="data.xml"');
-
-            echo $this->_buildMessage('deleted', $theId);
+            return $response;
         }
+//        elseif ($status == "updated") {
+//            $event = EventPeer::retrieveBySchedulerId($theId);
+//            if (! $event instanceof Event)
+//                return;
+//
+//            $event->setDateBegin($request->getPostParameter($theId . "_start_date"));
+//            $event->setDateEnd($request->getPostParameter($theId . "_end_date"));
+//            $event->setSchedulerId($theId);
+//            $event->save();
+//
+//            $pms = ProcessMemberAvailabilityPeer::retrieveByEventId($event->getId());
+//            foreach ($pms as $pm) /* @var $pm ProcessMemberAvailability */
+//            {
+//                $pm->setIsRead(false);
+//                $pm->setIsAvailable(false);
+//                $pm->save();
+//            }
+//
+//            // Tag current process as Dirt to process again mail sending
+//            if (!$process->getIsDirt()) {
+//                $process->setIsDirt(true);
+//                $process->save();
+//            }
+//
+//            header("Content-Type:text/xml");
+//            header('Content-Disposition: attachment; filename="data.xml"');
+//
+//            echo $this->_buildMessage('updated', $theId);
+//        } elseif ($status == "deleted") {
+//            $event = EventPeer::retrieveBySchedulerId($theId);
+//            if (! $event instanceof Event)
+//                return;
+//
+//            $event->delete();
+//
+//            if (count(EventPeer::retrieveByProcessIds($process->getId())) == 0 && $process->getStep() != 1)
+//            {
+//                $process->resetProcess();
+//                $process->setStep(1);
+//                $process->setIsDirt(false);
+//                $process->save();
+//            }
+//
+//            header("Content-Type:text/xml");
+//            header('Content-Disposition: attachment; filename="data.xml"');
+//
+//            echo $this->_buildMessage('deleted', $theId);
+//        }
         exit;
     }
 }

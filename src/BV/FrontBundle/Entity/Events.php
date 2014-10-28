@@ -64,6 +64,13 @@ class Events
     protected $type;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="scheduler_id", type="string", length=255)
+     */
+    protected $schedulerId;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -207,5 +214,28 @@ class Events
             self::TYPE_VOLLEYSCHOOL_YOUTH   => 'constants.events.type.'.self::TYPE_VOLLEYSCHOOL_YOUTH,
             self::TYPE_CLOSED               => 'constants.events.type.'.self::TYPE_CLOSED,
         );
+    }
+
+    /**
+     * Set schedulerId
+     *
+     * @param string $schedulerId
+     * @return Events
+     */
+    public function setSchedulerId($schedulerId)
+    {
+        $this->schedulerId = $schedulerId;
+    
+        return $this;
+    }
+
+    /**
+     * Get schedulerId
+     *
+     * @return string 
+     */
+    public function getSchedulerId()
+    {
+        return $this->schedulerId;
     }
 }
