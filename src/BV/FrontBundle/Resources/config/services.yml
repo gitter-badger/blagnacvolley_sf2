@@ -37,3 +37,8 @@ services:
         arguments: [ "%fos_user.model.user.class%", "getLevelList", "bv_user_level" ]
         tags:
             - { name: form.type, alias: bv_user_level }
+    bv_calendar.form.bv_events_type:
+        class: Sonata\CoreBundle\Form\Type\StatusType
+        arguments: [ "BV\FrontBundle\Entity\Events", "getEventsType", "bv_events_type" ]
+        tags:
+            - { name: form.type, alias: bv_events_type }

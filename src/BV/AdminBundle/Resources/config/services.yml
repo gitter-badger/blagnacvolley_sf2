@@ -9,3 +9,24 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
+    sonata.admin.events:
+        class: BV\AdminBundle\Admin\EventsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Calendrier", label: "Event" }
+        arguments:
+            - ~
+            - BV\FrontBundle\Entity\Events
+            - ~
+        calls:
+            - [ setTranslationDomain, [FrontBundle] ]
+            - [ setTemplate, [list, AdminBundle:Calendar:list.html.twig]]
+    sonata.admin.vacation:
+        class: BV\AdminBundle\Admin\VacationAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Calendrier", label: "Vacances" }
+        arguments:
+            - ~
+            - BV\FrontBundle\Entity\Vacations
+            - ~
+        calls:
+            - [ setTranslationDomain, [FrontBundle] ]

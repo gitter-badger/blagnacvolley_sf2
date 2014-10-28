@@ -1,0 +1,109 @@
+{% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="/css/scheduler/dhtmlxscheduler.css" >
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="/js/moment/moment.min.js"></script>
+    <script type="text/javascript" src="/js/moment/locales.min.js"></script>
+
+    <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler.js"></script>
+    <script type="text/javascript" src="/js/scheduler/locale_fr.js"></script>
+{% endblock javascripts %}
+
+{% block list_table %}
+
+    <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:400px;'>
+        <div class="dhx_cal_navline">
+            <div class="dhx_cal_prev_button">&nbsp;</div>
+            <div class="dhx_cal_next_button">&nbsp;</div>
+            <div class="dhx_cal_today_button"></div>
+            <div class="dhx_cal_date"></div>
+            <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+            <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+            <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+        </div>
+        <div class="dhx_cal_header"></div>
+        <div class="dhx_cal_data"></div>
+    </div>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        jQuery( document ).ready(function() {
+            scheduler.config.xml_date="%Y-%m-%d %H:%i";
+            scheduler.config.show_loading=true;
+            scheduler.config.edit_on_create = false;
+            scheduler.config.start_on_monday = true;
+            scheduler.config.first_hour = 6;
+            scheduler.config.last_hour = 24;
+            scheduler.config.time_step = 15;
+            scheduler.config.event_duration = 60;
+            scheduler.config.multi_day = false;
+
+            scheduler.attachEvent("onTemplatesReady", function(){
+                scheduler.templates.event_text = function(start,end,event){ return ""; }
+                scheduler.templates.event_bar_text = function(start,end,event){
+                    if (event.image) {
+                        return "<img src=\"" + event.image + "\"> <strong>"+event.team+"</strong> ("+scheduler.templates.event_date(start)+")";
+                    } else {
+                        return "<strong>"+event.team+"</strong> ("+scheduler.templates.event_date(start)+")";
+                    }
+                };
+
+                scheduler.templates.event_class = function(start,end,ev){ return "bv_event bv_event_"+ev.type; };
+                scheduler.templates.event_bar_date = function(start,end,ev){ return ""; };
+            });
+
+            scheduler.init('scheduler_here', new Date(),"month");
+
+            scheduler.setCurrentView(scheduler._date, scheduler._mode);
+
+//        scheduler.attachEvent("onEventAdded", function(id,ev){
+//            var m1 = moment(ev.start_date);
+//            m1.locale('fr')
+//            var m2 = moment(ev.end_date);
+//            /*jQuery('#your_resa .content').append('<li data-id="'+ev.id+'">'+m1.format("ddd DD MMM HH:mm")+'<span class="glyphicon glyphicon-play"></span>'+m2.format("HH:mm")+'<span class="glyphicon glyphicon-ban-circle pull-right delete-resa"></span></li>');
+//
+//             jQuery('#your_resa .content li').last().children('.delete-resa').click(function(){
+//             var eventId = jQuery(this).parent('li').data('id');
+//             scheduler.deleteEvent(eventId);
+//             jQuery(this).parent('li').remove();
+//             });*/
+//
+//            /*checkState();*/
+//        });
+
+//        scheduler.attachEvent("onEventDeleted", function(id,ev){ /*checkState();*/ });
+
+            // Block edition / deletion from calendar
+//        scheduler.attachEvent("onClick",function(id){ return false; })
+//        scheduler.attachEvent("onDblClick",function(id){ return false; })
+
+            scheduler.load("{{ path('bv_calendar_getEvents', { 'rpId': '1' }) }}", 'xml', function(){ /*checkState();*/ });
+
+            //var dp = new dataProcessor("{{ path('bv_calendar_saveEvents', { 'rpId': '1' }) }}");
+
+            //dp.init(scheduler);
+
+//        jQuery( ".delete-resa" ).each(function() {
+//            jQuery( this ).click(function(){
+//                console.log('delete catched');
+//                var eventId = jQuery(this).parent('li').data('id');
+//                scheduler.deleteEvent(eventId);
+//                jQuery(this).parent('li').remove();
+//            });
+//        });
+        });
+        //]]>
+    </script>
+
+{% endblock list_table %}
+
+{% block list_filters %}
+
+{% endblock list_filters %}

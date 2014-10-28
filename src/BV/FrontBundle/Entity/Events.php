@@ -16,6 +16,7 @@ class Events
     const TYPE_MATCH = 'MATCH';
     const TYPE_VOLLEYSCHOOL_ADULT = 'VOLLEYSCHOOL_ADULT';
     const TYPE_VOLLEYSCHOOL_YOUTH = 'VOLLEYSCHOOL_YOUTH';
+    const TYPE_CLOSED = 'CLOSED';
 
     /**
      * @var integer
@@ -190,5 +191,21 @@ class Events
     public function getImageFromType()
     {
         return '/images/icons/'.$this->getType().'.png';
+    }
+
+    /**
+     * Returns the level list
+     *
+     * @return array
+     */
+    public static function getEventsType()
+    {
+        return array(
+            self::TYPE_TRAINING             => 'constants.events.type.'.self::TYPE_TRAINING,
+            self::TYPE_MATCH                => 'constants.events.type.'.self::TYPE_MATCH,
+            self::TYPE_VOLLEYSCHOOL_ADULT   => 'constants.events.type.'.self::TYPE_VOLLEYSCHOOL_ADULT,
+            self::TYPE_VOLLEYSCHOOL_YOUTH   => 'constants.events.type.'.self::TYPE_VOLLEYSCHOOL_YOUTH,
+            self::TYPE_CLOSED               => 'constants.events.type.'.self::TYPE_CLOSED,
+        );
     }
 }

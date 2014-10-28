@@ -76,3 +76,11 @@ constants:
       PROM_A: Promotion A
       PROM_B: Promotion B
       PROM_C: Promotion C
+  events:
+    type:
+      TRAINING: Entraînement
+      MATCH: Match
+      VOLLEYSCHOOL_ADULT: Ecole de Volley Adultes
+      VOLLEYSCHOOL_YOUTH: Ecole de Volley Jeunes
+      CLOSED: Fermeture
+
