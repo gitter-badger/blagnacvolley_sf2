@@ -35,9 +35,9 @@
     <br/>
     <br/>
     <span class="text-center">
-        {% if user.status == constant('STATUS_ACTIVE_NOT_LICENCED', user) %}
+        {% if user.status == constant('STATUS_ACTIVE_NOT_LISENCED', user) %}
             <span class="dblock w100p label label-warning">{{ 'constants.user.status.ACTIVE_NOT_LICENSED'|trans()}}</span>
-        {% elseif user.status == constant('STATUS_ACTIVE_LICENCED', user) %}
+        {% elseif user.status == constant('STATUS_ACTIVE_LICENSED', user) %}
             <span class="dblock w100p label label-primary">{{ 'constants.user.status.ACTIVE_LICENSED'|trans()}}</span>
         {% else %}
             <span class="dblock w100p label label-danger">{{ 'constants.user.status.INACTIVE'|trans()}}</span>
@@ -74,7 +74,7 @@
                 </tr>
                 <tr>
                     <th>{{ 'profile.show.club_data.licence'|trans() }}</th>
-                    <td>{{ user.licenceNumber }}</td>
+                    <td>{{ user.licenseNumber }}</td>
                 </tr>
                 </tbody>
             </table>
