@@ -82,7 +82,7 @@ class Team
     /**
      * Set captain
      *
-     * @param integer $captain
+     * @param User $captain
      * @return Team
      */
     public function setCaptain($captain)
@@ -95,7 +95,7 @@ class Team
     /**
      * Get captain
      *
-     * @return integer
+     * @return User
      */
     public function getCaptain()
     {
@@ -105,7 +105,7 @@ class Team
     /**
      * Set subCaptain
      *
-     * @param integer $subCaptain
+     * @param User $subCaptain
      * @return Team
      */
     public function setSubCaptain($subCaptain)
@@ -118,7 +118,7 @@ class Team
     /**
      * Get subCaptain
      *
-     * @return integer
+     * @return User
      */
     public function getSubCaptain()
     {
@@ -169,6 +169,20 @@ class Team
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Returns the type list
+     *
+     * @return array
+     */
+    public static function getTypeList()
+    {
+        return array(
+            self::TYPE_FEM => self::TYPE_FEM,
+            self::TYPE_MSC => self::TYPE_MSC,
+            self::TYPE_MIX => self::TYPE_MIX
+        );
     }
 
     /**

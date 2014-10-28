@@ -42,3 +42,8 @@ services:
         arguments: [ "BV\FrontBundle\Entity\Events", "getEventsType", "bv_events_type" ]
         tags:
             - { name: form.type, alias: bv_events_type }
+    bv_team.form.type_list:
+        class: Sonata\CoreBundle\Form\Type\StatusType
+        arguments: [ "BV\FrontBundle\Entity\Team", "getTypeList", "bv_team_type" ]
+        tags:
+            - { name: form.type, alias: bv_team_type }

@@ -1,10 +1,10 @@
-{% for entity in entities %}
+{% for entity in entities %}{% set level = "constants.user.level." ~ entity.level %}
     <tr>
         <td>{{ entity.type }}</td>
         <td>
             <a href="{{ path('team_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
         </td>
-        <td>{{ entity.level }}</td>
+        <td>{{ level | trans }}</td>
         <td>{{ entity.slot }}</td>
     </tr>
 {% endfor %}

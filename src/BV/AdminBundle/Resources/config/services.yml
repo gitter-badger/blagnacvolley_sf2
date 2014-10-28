@@ -30,3 +30,13 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
+    sonata.admin.team:
+        class: BV\AdminBundle\Admin\TeamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "%sonata.user.admin.groupname%", label: "Team" }
+        arguments:
+            - ~
+            - BV\FrontBundle\Entity\Team
+            - ~
+        calls:
+            - [ setTranslationDomain, [FrontBundle] ]
