@@ -35,7 +35,7 @@
     <br/>
     <br/>
     <span class="text-center">
-        {% if user.status == constant('STATUS_ACTIVE_NOT_LISENCED', user) %}
+        {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
             <span class="dblock w100p label label-warning">{{ 'constants.user.status.ACTIVE_NOT_LICENSED'|trans()}}</span>
         {% elseif user.status == constant('STATUS_ACTIVE_LICENSED', user) %}
             <span class="dblock w100p label label-primary">{{ 'constants.user.status.ACTIVE_LICENSED'|trans()}}</span>
@@ -73,7 +73,7 @@
                     <td>{{ user.shirtSize }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'profile.show.club_data.licence'|trans() }}</th>
+                    <th>{{ 'profile.show.club_data.license'|trans() }}</th>
                     <td>{{ user.licenseNumber }}</td>
                 </tr>
                 </tbody>
