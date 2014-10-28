@@ -84,10 +84,13 @@ body > header { background: url("../images/header_bg.png"); position: fixed; top
 /*
  * CALENDAR
  */
-.dhx_cal_event_clear.bv_event { height: 20px; line-height: 20px; color: #FFF; .border-radiuses(4px);
-  &.bv_event_TRAINING { background-color: #3498db }
-  &.bv_event_MATCH { background-color: #27AE60 }
-  &.bv_event_VOLLEYSCHOOL_ADULT { background-color: #9b59b6 }
-  &.bv_event_VOLLEYSCHOOL_YOUTH { background-color: #e67e22 }
-  img { max-width:16px; }
+.dhx_cal_event_clear, .dhx_cal_event_line {
+  &.bv_event { height: 20px; line-height: 20px; color: #FFF; .border-radiuses(4px);
+    &.bv_event_TRAINING { background-color: #3498db; }
+    &.bv_event_MATCH { background-color: #27AE60; }
+    &.bv_event_VOLLEYSCHOOL_ADULT { background-color: #9b59b6; }
+    &.bv_event_VOLLEYSCHOOL_YOUTH { background-color: #e67e22; }
+    &.bv_event_CLOSED { background-color: #34495e; }
+    img { max-width:16px; }
+  }
 }

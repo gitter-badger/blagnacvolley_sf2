@@ -44,7 +44,7 @@ class Events
     /**
      * @var string
      *
-     * @ORM\Column(name="text", type="string", length=255)
+     * @ORM\Column(name="text", type="string", length=255, nullable=true)
      */
     private $text;
 

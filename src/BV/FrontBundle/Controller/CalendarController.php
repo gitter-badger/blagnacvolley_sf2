@@ -2,6 +2,9 @@
 
 namespace BV\FrontBundle\Controller;
 
+use BV\FrontBundle\Entity\Team;
+use BV\FrontBundle\Entity\Events;
+use BV\FrontBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BV\FrontBundle\Form\Type\ContactType;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +24,8 @@ class CalendarController extends Controller
 
     public function getEventsAction(Request $request)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
         $events = $this->getDoctrine()->getRepository('FrontBundle:Events')->findAll();
 
         $msg = "<?xml version='1.0' encoding='utf-8' ?>\n";
@@ -32,7 +37,30 @@ class CalendarController extends Controller
             $msg .="		<end_date>" . $event->getEndDate()->format('Y-m-d H:i') . "</end_date>\n";
             $msg .="		<type>" . $event->getType() . "</type>\n";
             $msg .="		<image>" . $event->getImageFromType() . "</image>\n";
-            $msg .="		<team>" . $event->getTeam()->getName() . "</team>\n";
+            if ($event->getTeam() instanceof Team) {
+                $msg .="		<team>" . $event->getTeam()->getName() . "</team>\n";
+            }
+            // It's a vacation, always readonly
+            if ($event->getType() == Events::TYPE_CLOSED) {
+                $msg .="		<readonly>true</readonly>\n";
+            } else {
+                // Only editable if associated to current User's team && user is captain or subcaptain
+                if ($user instanceof User &&
+                    $event->getTeam() != null && (
+                        (
+                            $event->getTeam()->getCaptain() instanceof User &&
+                            $event->getTeam()->getCaptain()->getId() == $user->getId()
+                        ) ||
+                        (
+                            $event->getTeam()->getSubCaptain() instanceof User &&
+                            $event->getTeam()->getSubCaptain()->getId() == $user->getId()
+                        )
+                    )) {
+                    $msg .="		<readonly>false</readonly>\n";
+                } else {
+                    $msg .="		<readonly>true</readonly>\n";
+                }
+            }
             $msg .="	</event>\n";
         }
         $msg .="</data>\n";

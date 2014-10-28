@@ -15,6 +15,7 @@
     <script type="text/javascript" src="/js/jquery.min.js"></script>
 
     <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler.js"></script>
+    <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler_readonly.js"></script>
     <script type="text/javascript" src="/js/scheduler/locale_fr.js"></script>
 
     {#<script type="text/javascript" src="/js/dhtmlxScheduler_v4.1.0/codebase/dhtmlxscheduler.js"></script>#}
@@ -22,7 +23,7 @@
 {% endblock %}
 
 {% block content_row %}
-    <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:400px;'>
+    <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:500px;'>
         <div class="dhx_cal_navline">
             <div class="dhx_cal_prev_button">&nbsp;</div>
             <div class="dhx_cal_next_button">&nbsp;</div>
@@ -41,23 +42,48 @@
     jQuery( document ).ready(function() {
         scheduler.config.xml_date="%Y-%m-%d %H:%i";
         scheduler.config.show_loading=true;
-        scheduler.config.edit_on_create = false;
+        scheduler.config.edit_on_create = true;
         scheduler.config.start_on_monday = true;
         scheduler.config.first_hour = 6;
         scheduler.config.last_hour = 24;
         scheduler.config.time_step = 15;
         scheduler.config.event_duration = 60;
         scheduler.config.multi_day = false;
-        scheduler.config.readonly = true;
+
+        // Hide Satursday & Sunday
+        scheduler.ignore_month = function(date){
+            if (date.getDay() == 6 || date.getDay() == 0) //hides Saturdays and Sundays
+                return true;
+        };
+
+        scheduler.attachEvent("onClick", function(id){
+            return !(scheduler.getEvent(id).readonly === 'true');
+        });
+        scheduler.attachEvent("onDblClick", function(id){
+            return !(scheduler.getEvent(id).readonly === 'true');
+        });
+        scheduler.attachEvent("onBeforeDrag", function(id, mode, e){
+            return !(scheduler.getEvent(id).readonly === 'true');
+        });
 
         scheduler.attachEvent("onTemplatesReady", function(){
             scheduler.templates.event_text = function(start,end,event){ return ""; }
             scheduler.templates.event_bar_text = function(start,end,event){
-                return "<img src=\"" + event.image + "\"> <strong>"+event.team+"</strong> ("+scheduler.templates.event_date(start)+")";
+                if (event.type != 'CLOSED') {
+                    return "<div class=\"relative\"><img src=\"" + event.image + "\"> <strong>"+event.team+"</strong> ("+scheduler.templates.event_date(start)+")</div>";
+                } else {
+                    return "<div class=\"relative\"><img src=\"" + event.image + "\"> <strong>Fermé : </strong> "+event.text+"</div>";
+                }
             };
 
             scheduler.templates.event_class = function(start,end,ev){ return "bv_event bv_event_"+ev.type; };
             scheduler.templates.event_bar_date = function(start,end,ev){ return ""; };
+
+            scheduler.attachEvent("onMouseOver", function (event_id, native_event_object){
+                console.log('mouseOver');
+                console.log(event_id);
+                console.log(native_event_object);
+            });
         });
 
         scheduler.init('scheduler_here', new Date(),"month");
