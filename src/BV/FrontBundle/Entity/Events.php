@@ -52,7 +52,7 @@ class Events
     /**
      * @var Team
      *
-     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\Team", cascade={"persist"})
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $team;
@@ -283,28 +283,21 @@ class Events
 
         if ($this->getTeam()->getSubCaptain() instanceof User && $this->getTeam()->getSubCaptain()->getId() == $user->getId())
             return false;
+
+        return true;
     }
 
-    public function isAllowedToInsert($user)
+    public function isValidForInsert()
     {
-        if (!$user instanceof User)
+        $now = new \DateTime();
+        if ($now > $this->getStartDate() || $now > $this->getEndDate())
             return false;
 
-        if ($user->isSuperAdmin())
-            return true;
+        return true;
+    }
 
-        if (!self::isTypeValid($this->getType()))
-            return false;
-
-        if ($this->getType() == Events::TYPE_CLOSED || $this->getType() == Events::TYPE_VOLLEYSCHOOL_ADULT || $this->getType() == Events::TYPE_VOLLEYSCHOOL_YOUTH)
-            return false;
-
-        if ($this->getTeam()->getCaptain()->getId() == $user->getId())
-            return true;
-
-        if ($this->getTeam()->getSubCaptain()->getId() == $user->getId())
-            return true;
-
-        return false;
+    public function isValidForUpdate()
+    {
+        return $this->isValidForInsert();
     }
 }

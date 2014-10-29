@@ -18,7 +18,7 @@ class CalendarController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         $form = $this->createForm(new ContactType());
 
-        $alertOptsTeamsJson = "";
+        $isAllowedToEdit = false;
         if ($user instanceof User) {
             $res = array();
             foreach ($this->getDoctrine()->getRepository('FrontBundle:Team')->findAllByUserId($user->getId()) as $team)
@@ -27,8 +27,12 @@ class CalendarController extends Controller
                     'key' => $team['id'],
                     'label' => $team['name']
                 );
+                $isAllowedToEdit = true;
             }
+            $isAllowedToEdit = $isAllowedToEdit || $user->isSuperAdmin();
             $alertOptsTeamsJson = json_encode($res);
+        } else {
+            $alertOptsTeamsJson = '[]';
         }
 
         return $this->render('FrontBundle:Calendar:index.html.twig', array(
@@ -45,6 +49,7 @@ class CalendarController extends Controller
                 ),
             )),
             'img_paths_json' => json_encode(Events::getImagePaths()),
+            'is_allowed_to_edit' => json_encode($isAllowedToEdit),
         ));
     }
 
@@ -59,7 +64,7 @@ class CalendarController extends Controller
 
         foreach($events as $event) {
             $res[$i] = array(
-                "id" => $event->getId(),
+                "id" => $event->getSchedulerId(),
                 "text" => $event->getText(),
                 "start_date" => $event->getStartDate()->format('Y-m-d H:i'),
                 "end_date" => $event->getEndDate()->format('Y-m-d H:i'),
@@ -101,7 +106,13 @@ class CalendarController extends Controller
 
         if (!$request->isXmlHttpRequest() || !$user instanceof User)
         {
-            $response = new Response("");
+            $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+            $msg .="<data>\n";
+            $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
+            $msg .='	<message><![CDATA[Action invalide.]]></message>'."\n";
+            $msg .="</data>\n";
+
+            $response = new Response($msg);
             $response->headers->set('Content-Type', 'text/xml');
             $response->headers->set('Content-Disposition', 'data.xml');
             return $response;
@@ -124,7 +135,7 @@ class CalendarController extends Controller
             $event->setSchedulerId($theId);
             $event->setTeam($team);
 
-            if ($event->isAllowedToInsert($user))
+            if ($user->isAllowedToInsert($event) && $event->isValidForInsert())
             {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($event);
@@ -151,54 +162,95 @@ class CalendarController extends Controller
 
             return $response;
         }
-//        elseif ($status == "updated") {
-//            $event = EventPeer::retrieveBySchedulerId($theId);
-//            if (! $event instanceof Event)
-//                return;
-//
-//            $event->setDateBegin($request->getPostParameter($theId . "_start_date"));
-//            $event->setDateEnd($request->getPostParameter($theId . "_end_date"));
-//            $event->setSchedulerId($theId);
-//            $event->save();
-//
-//            $pms = ProcessMemberAvailabilityPeer::retrieveByEventId($event->getId());
-//            foreach ($pms as $pm) /* @var $pm ProcessMemberAvailability */
-//            {
-//                $pm->setIsRead(false);
-//                $pm->setIsAvailable(false);
-//                $pm->save();
-//            }
-//
-//            // Tag current process as Dirt to process again mail sending
-//            if (!$process->getIsDirt()) {
-//                $process->setIsDirt(true);
-//                $process->save();
-//            }
-//
-//            header("Content-Type:text/xml");
-//            header('Content-Disposition: attachment; filename="data.xml"');
-//
-//            echo $this->_buildMessage('updated', $theId);
-//        } elseif ($status == "deleted") {
-//            $event = EventPeer::retrieveBySchedulerId($theId);
-//            if (! $event instanceof Event)
-//                return;
-//
-//            $event->delete();
-//
-//            if (count(EventPeer::retrieveByProcessIds($process->getId())) == 0 && $process->getStep() != 1)
-//            {
-//                $process->resetProcess();
-//                $process->setStep(1);
-//                $process->setIsDirt(false);
-//                $process->save();
-//            }
-//
-//            header("Content-Type:text/xml");
-//            header('Content-Disposition: attachment; filename="data.xml"');
-//
-//            echo $this->_buildMessage('deleted', $theId);
-//        }
+        elseif ($status == "updated") {
+            $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->findSingleBySchedulerId($theId);
+            if (! $event instanceof Events) {
+                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+                $msg .="<data>\n";
+                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
+                $msg .='	<message><![CDATA[Evènement invalide.]]></message>'."\n";
+                $msg .="</data>\n";
+
+                $response = new Response($msg);
+                $response->headers->set('Content-Type', 'text/xml');
+                $response->headers->set('Content-Disposition', 'data.xml');
+                return $response;
+            }
+
+            $event->setStartDate(new \DateTime($request->request->get($theId . "_start_date")));
+            $event->setEndDate(new \DateTime($request->request->get($theId . "_end_date")));
+            $event->setType($request->request->get($theId . "_type"));
+            $event->setTeam($team);
+
+            if ($user->isAllowedToUpdate($event) && $event->isValidForUpdate())
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($event);
+                $em->flush();
+
+                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+                $msg .="<data>\n";
+                $msg .='	<action type="updated" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
+                $msg .='	<message><![CDATA[Evènement sauvegardé avec succès.]]></message>'."\n";
+                $msg .="</data>\n";
+            }
+            else
+            {
+                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+                $msg .="<data>\n";
+                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
+                $msg .='	<message><![CDATA[Vous ne pouvez pas effectuer cette action.]]></message>'."\n";
+                $msg .="</data>\n";
+            }
+
+            $response = new Response($msg);
+            $response->headers->set('Content-Type', 'text/xml');
+            $response->headers->set('Content-Disposition', 'data.xml');
+
+            return $response;
+        } elseif ($status == "deleted") {
+            $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->findSingleBySchedulerId($theId);
+
+            if (! $event instanceof Events) {
+                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+                $msg .="<data>\n";
+                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
+                $msg .='	<message><![CDATA[Evènement invalide.]]></message>'."\n";
+                $msg .="</data>\n";
+
+                $response = new Response($msg);
+                $response->headers->set('Content-Type', 'text/xml');
+                $response->headers->set('Content-Disposition', 'data.xml');
+                return $response;
+            }
+
+            if ($user->isAllowedToUpdate($event))
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($event);
+                $em->flush();
+
+                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+                $msg .="<data>\n";
+                $msg .='	<action type="deleted" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
+                $msg .='	<message><![CDATA[Evènement supprimé avec succès.]]></message>'."\n";
+                $msg .="</data>\n";
+            }
+            else
+            {
+                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+                $msg .="<data>\n";
+                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
+                $msg .='	<message><![CDATA[Vous ne pouvez pas effectuer cette action.]]></message>'."\n";
+                $msg .="</data>\n";
+            }
+
+            $response = new Response($msg);
+            $response->headers->set('Content-Type', 'text/xml');
+            $response->headers->set('Content-Disposition', 'data.xml');
+
+            return $response;
+        }
         exit;
     }
 }

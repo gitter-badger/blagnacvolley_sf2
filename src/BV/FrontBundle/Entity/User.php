@@ -2,10 +2,12 @@
 
 namespace BV\FrontBundle\Entity;
 
+use Composer\EventDispatcher\Event;
 use FOS\UserBundle\Entity\User as EntityUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use BV\FrontBundle\Entity\Events;
 
 /**
  * User
@@ -845,5 +847,56 @@ class User extends EntityUser
         foreach ($groups as $group) {
             $this->addGroup($group);
         }
+    }
+
+    /**
+     * Check if current user is allowed to insert $event Event
+     *
+     * @param Events $event
+     * @return bool
+     */
+    public function isAllowedToInsert(Events $event)
+    {
+        if (!$this instanceof User)
+            return false;
+
+        if ($this->isSuperAdmin())
+            return true;
+
+        if (!Events::isTypeValid($event->getType()))
+            return false;
+
+        if ($event->getType() == Events::TYPE_CLOSED || $event->getType() == Events::TYPE_VOLLEYSCHOOL_ADULT || $event->getType() == Events::TYPE_VOLLEYSCHOOL_YOUTH)
+            return false;
+
+        if ($event->getTeam()->getCaptain()->getId() == $this->getId())
+            return true;
+
+        if ($event->getTeam()->getSubCaptain()->getId() == $this->getId())
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Same as Insert
+     *
+     * @param Events $event
+     * @return bool
+     */
+    public function isAllowedToUpdate(Events $event)
+    {
+        return $this->isAllowedToInsert($event);
+    }
+
+    /**
+     * Same as Insert
+     *
+     * @param Events $event
+     * @return bool
+     */
+    public function isAllowedToDelete(Events $event)
+    {
+        return $this->isAllowedToInsert($event);
     }
 }

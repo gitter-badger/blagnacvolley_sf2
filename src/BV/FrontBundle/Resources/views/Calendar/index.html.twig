@@ -18,9 +18,6 @@
     <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler_readonly.js"></script>
     <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler_editors.js"></script>
     <script type="text/javascript" src="/js/scheduler/locale_fr.js"></script>
-
-    {#<script type="text/javascript" src="/js/dhtmlxScheduler_v4.1.0/codebase/dhtmlxscheduler.js"></script>#}
-    {#<script type="text/javascript" src="/js/dhtmlxScheduler_v4.1.0/codebase/locale/locale_fr.js"></script>#}
 {% endblock %}
 
 {% block content_row %}
@@ -41,9 +38,11 @@
     <script type="text/javascript">
     //<![CDATA[
 
+    var config = {};
     var alert_opts_teams = {{ alert_opts_teams_json|raw }};
     var alert_opts_types = {{ alert_opts_types_json|raw }};
     var img_paths_json = {{ img_paths_json|raw }};
+    config.is_allowed_to_edit = {{ is_allowed_to_edit|raw }};
 
     jQuery( document ).ready(function() {
 
@@ -84,8 +83,16 @@
                 return true;
         };
 
-        // Disable Drag & Resize
-        scheduler.attachEvent("onBeforeDrag", function(id, mode, e){ return false; });
+        if (!config.is_allowed_to_edit) {
+            scheduler.config.readonly = true;
+            scheduler.config.readonly_form = true;
+        } else {
+            // Always Disable Drag & Resize
+            scheduler.attachEvent("onBeforeDrag",   function(id, mode, e){ return false; });
+            // On single click on event : act as Dble click
+            scheduler.attachEvent("onClick",        function(id, mode, e){ scheduler.showLightbox(id); });
+            scheduler.attachEvent("onDblClick",     function(id, mode, e){ return ((id == null) || (!(scheduler.getEvent(id).readonly === 'true'))); });
+        }
 
         // Initializes Lightbox
         scheduler.config.lightbox.sections=[
@@ -108,11 +115,6 @@
             date_end.locale('fr')
             return '<h1><strong>' + ev.type_name + '</strong> / ' + ev.team_name + ' ( ' + date_start.format("HH:mm") + ' à ' + date_end.format("HH:mm") + ')</h1>';
         };
-
-//        scheduler.attachEvent("onLightbox", function (id){
-//            var time = scheduler.formSection('time');
-//            time.setValue(null,{start_date:new Date(2009,03,10,20,30),end_date:new Date(2012,03,10,23,00)});
-//        });
 
         scheduler.attachEvent("onTemplatesReady", function(){
             scheduler.templates.event_class = function(start,end,ev){ return "bv_event bv_event_"+ev.type; };
@@ -141,7 +143,6 @@
         scheduler.setCurrentView(scheduler._date, scheduler._mode);
 
         scheduler.load("{{ path('bv_calendar_getEvents') }}", 'json', function(){ /*checkState();*/ });
-
         var dp = new dataProcessor("{{ path('bv_calendar_saveEvents') }}");
 
         // Catch error response from server

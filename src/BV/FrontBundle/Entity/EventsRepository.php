@@ -3,6 +3,7 @@
 namespace BV\FrontBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * EventsRepository
@@ -12,4 +13,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class EventsRepository extends EntityRepository
 {
+    public function findSingleBySchedulerId($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT p FROM FrontBundle:Events p WHERE p.schedulerId = :id')
+            ->setParameter('id', $id);
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }
