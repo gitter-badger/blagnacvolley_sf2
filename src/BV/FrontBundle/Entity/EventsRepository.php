@@ -24,4 +24,74 @@ class EventsRepository extends EntityRepository
             return null;
         }
     }
+
+    /**
+     * @param Events $event
+     * @param $user
+     * @return bool
+     */
+    public function isReadonly(Events $event, $user)
+    {
+        if (!$user instanceof User)
+            return true;
+
+        if ($event->getTeam() == null)
+            return true;
+
+        if ($user->isSuperAdmin())
+            return false;
+
+        if ($event->getTeam()->getCaptain() instanceof User && $event->getTeam()->getCaptain()->getId() == $user->getId())
+            return false;
+
+        if ($event->getTeam()->getSubCaptain() instanceof User && $event->getTeam()->getSubCaptain()->getId() == $user->getId())
+            return false;
+
+        return true;
+    }
+
+    public function isValidForInsert(Events $event)
+    {
+        $messages = array();
+        $now = new \DateTime();
+        if ($now > $event->getStartDate() || $now > $event->getEndDate())
+            $messages[] = "Vous ne pouvez pas ajouter des évènements à une date passée";
+
+        return $messages;
+    }
+
+    public function isValidForUpdate(Events $event)
+    {
+        return $this->isValidForInsert($event);
+    }
+
+    public function findEventsByTypeAfter($type, \Datetime $date)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(' SELECT p FROM FrontBundle:Events p '.
+                          ' WHERE p.type = :type '.
+                          ' AND p.startDate >= :date')
+            ->setParameter('type', $type)
+            ->setParameter('date', $date->format('Y-m-d'));
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findEventsByTypeForDate($type, \Datetime $date)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(' SELECT p FROM FrontBundle:Events p '.
+                ' WHERE p.type = :type '.
+                ' AND p.startDate = :date')
+            ->setParameter('type', $type)
+            ->setParameter('date', $date->format('Y-m-d H:i'));
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }

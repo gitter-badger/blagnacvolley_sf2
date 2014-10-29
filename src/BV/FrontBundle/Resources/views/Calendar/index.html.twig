@@ -150,7 +150,9 @@
             jQuery('ul.flash-messages').hide();
             jQuery('ul.flash-messages').html('<li class="bg-danger">'+ response.nextElementSibling.firstChild.nodeValue +'</li>');
             jQuery('ul.flash-messages').fadeIn(500).delay(5000).fadeOut(500);
-            scheduler.deleteEvent(response.getAttribute('sid'));
+            if (response.getAttribute('delete') == true) {
+                scheduler.deleteEvent(response.getAttribute('sid'));
+            }
         });
 
         dp.init(scheduler);

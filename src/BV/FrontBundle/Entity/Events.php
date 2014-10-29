@@ -262,42 +262,4 @@ class Events
     {
         return array_key_exists($type, self::getEventsType());
     }
-
-    /**
-     * @param $user
-     * @return bool
-     */
-    public function isReadonly($user)
-    {
-        if (!$user instanceof User)
-            return true;
-
-        if ($this->getTeam() == null)
-            return true;
-
-        if ($user->isSuperAdmin())
-            return false;
-
-        if ($this->getTeam()->getCaptain() instanceof User && $this->getTeam()->getCaptain()->getId() == $user->getId())
-            return false;
-
-        if ($this->getTeam()->getSubCaptain() instanceof User && $this->getTeam()->getSubCaptain()->getId() == $user->getId())
-            return false;
-
-        return true;
-    }
-
-    public function isValidForInsert()
-    {
-        $now = new \DateTime();
-        if ($now > $this->getStartDate() || $now > $this->getEndDate())
-            return false;
-
-        return true;
-    }
-
-    public function isValidForUpdate()
-    {
-        return $this->isValidForInsert();
-    }
 }

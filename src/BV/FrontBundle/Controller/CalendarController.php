@@ -83,7 +83,7 @@ class CalendarController extends Controller
                 $res[$i]["readonly"] = true;
                 $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> Fermé : </strong> " . $event->getText() . "</div>";
             } else {
-                $res[$i]["readonly"] = $event->isReadonly($user);
+                $res[$i]["readonly"] = $this->getDoctrine()->getRepository('FrontBundle:Events')->isReadonly($event, $user);
                 $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> " . $event->getTeam()->getName() . "</strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
             }
 
@@ -106,11 +106,7 @@ class CalendarController extends Controller
 
         if (!$request->isXmlHttpRequest() || !$user instanceof User)
         {
-            $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-            $msg .="<data>\n";
-            $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
-            $msg .='	<message><![CDATA[Action invalide.]]></message>'."\n";
-            $msg .="</data>\n";
+            $msg = $this->_renderMessage('error', array('Evènement invalide.'), $theId);
 
             $response = new Response($msg);
             $response->headers->set('Content-Type', 'text/xml');
@@ -135,25 +131,19 @@ class CalendarController extends Controller
             $event->setSchedulerId($theId);
             $event->setTeam($team);
 
-            if ($user->isAllowedToInsert($event) && $event->isValidForInsert())
+            $messages = $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToInsert($user, $event);
+            $messages = array_merge($messages, $this->getDoctrine()->getRepository('FrontBundle:Events')->isValidForInsert($event));
+            if (count($messages) == 0)
             {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($event);
                 $em->flush();
 
-                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-                $msg .="<data>\n";
-                $msg .='	<action type="inserted" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
-                $msg .='	<message><![CDATA[Evènement sauvegardé avec succès.]]></message>'."\n";
-                $msg .="</data>\n";
+                $msg = $this->_renderMessage('inserted', array('Evènement sauvegardé avec succès.'), $theId);
             }
             else
             {
-                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-                $msg .="<data>\n";
-                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
-                $msg .='	<message><![CDATA[Vous ne pouvez pas effectuer cette action.]]></message>'."\n";
-                $msg .="</data>\n";
+                $msg = $this->_renderMessage('error', $messages, $theId, true);
             }
 
             $response = new Response($msg);
@@ -165,11 +155,7 @@ class CalendarController extends Controller
         elseif ($status == "updated") {
             $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->findSingleBySchedulerId($theId);
             if (! $event instanceof Events) {
-                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-                $msg .="<data>\n";
-                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
-                $msg .='	<message><![CDATA[Evènement invalide.]]></message>'."\n";
-                $msg .="</data>\n";
+                $msg = $this->_renderMessage('error', array('Evènement invalide.'), $theId);
 
                 $response = new Response($msg);
                 $response->headers->set('Content-Type', 'text/xml');
@@ -182,25 +168,19 @@ class CalendarController extends Controller
             $event->setType($request->request->get($theId . "_type"));
             $event->setTeam($team);
 
-            if ($user->isAllowedToUpdate($event) && $event->isValidForUpdate())
+            $messages = $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToUpdate($user, $event);
+            $messages = array_merge($messages, $this->getDoctrine()->getRepository('FrontBundle:Events')->isValidForUpdate($event));
+            if (count($messages) == 0)
             {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($event);
                 $em->flush();
 
-                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-                $msg .="<data>\n";
-                $msg .='	<action type="updated" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
-                $msg .='	<message><![CDATA[Evènement sauvegardé avec succès.]]></message>'."\n";
-                $msg .="</data>\n";
+                $msg = $this->_renderMessage('updated', array('Evènement sauvegardé avec succès.'), $theId);
             }
             else
             {
-                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-                $msg .="<data>\n";
-                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
-                $msg .='	<message><![CDATA[Vous ne pouvez pas effectuer cette action.]]></message>'."\n";
-                $msg .="</data>\n";
+                $msg = $this->_renderMessage('error', $messages, $theId);
             }
 
             $response = new Response($msg);
@@ -212,11 +192,7 @@ class CalendarController extends Controller
             $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->findSingleBySchedulerId($theId);
 
             if (! $event instanceof Events) {
-                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-                $msg .="<data>\n";
-                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
-                $msg .='	<message><![CDATA[Evènement invalide.]]></message>'."\n";
-                $msg .="</data>\n";
+                $msg = $this->_renderMessage('error', array('Evènement invalide.'), $theId);
 
                 $response = new Response($msg);
                 $response->headers->set('Content-Type', 'text/xml');
@@ -224,25 +200,18 @@ class CalendarController extends Controller
                 return $response;
             }
 
-            if ($user->isAllowedToUpdate($event))
+            $messages = $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToDelete($user, $event);
+            if (count($messages) == 0)
             {
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($event);
                 $em->flush();
 
-                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-                $msg .="<data>\n";
-                $msg .='	<action type="deleted" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
-                $msg .='	<message><![CDATA[Evènement supprimé avec succès.]]></message>'."\n";
-                $msg .="</data>\n";
+                $msg = $this->_renderMessage('deleted', array('Evènement supprimé avec succès.'), $theId);
             }
             else
             {
-                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-                $msg .="<data>\n";
-                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
-                $msg .='	<message><![CDATA[Vous ne pouvez pas effectuer cette action.]]></message>'."\n";
-                $msg .="</data>\n";
+                $msg = $this->_renderMessage('error', $messages, $theId);
             }
 
             $response = new Response($msg);
@@ -252,5 +221,30 @@ class CalendarController extends Controller
             return $response;
         }
         exit;
+    }
+
+    /**
+     * Render XML Responses
+     *
+     * @param $type
+     * @param $messages
+     * @param $theId
+     * @param $toDelete
+     * @return string
+     */
+    private function _renderMessage($type, $messages, $theId, $toDelete = false)
+    {
+        $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+        $msg .="<data>\n";
+        $msg .='	<action type="'. $type .'" sid="'.$theId.'" tid="'.$theId.'" delete="'.$toDelete.'" />'."\n";
+        $msg .='	<message><![CDATA[';
+        foreach ($messages as $message)
+        {
+            $msg .= "$message\n";
+        }
+        $msg .='    ]]></message>'."\n";
+        $msg .="</data>\n";
+
+        return $msg;
     }
 }
