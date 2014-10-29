@@ -46,19 +46,18 @@ class UserRepository extends EntityRepository
                     $events = $this->getEntityManager()->getRepository('FrontBundle:Events')->findEventsByTypeAfter(Events::TYPE_TRAINING, new \DateTime());
                     if (count($events) >= self::NB_ALLOWED_TRAINING_RESERVATIONS)
                         $messages[] = "Vous ne pouvez réserver que deux créneaux d'entrainements à l'avance.";
+                }
 
-                    // Check that there is not a Match of this team this day
-                    if (count($this->getEntityManager()->getRepository('FrontBundle:Events')->findEventsByTypeForDate(Events::TYPE_MATCH, $event->getStartDate())) > 0) {
-                        $messages[] = "Vous ne pouvez réserver ce créneau, vous avez déjà un match de planifié ce jour là.";
-                    }
+                // Check that there is not a training of this team this day
+                if (count($this->getEntityManager()->getRepository('FrontBundle:Events')->findEventsByTeamForDate($event->getTeam(), $event->getStartDate())) > 0) {
+                    $messages[] = "Vous ne pouvez réserver ce créneau, vous avez déjà un évènement de planifié ce jour là.";
                 }
-                elseif ($event->getType() == Events::TYPE_MATCH)
-                {
-                    // Check that there is not a training of this team this day
-                    if (count($this->getEntityManager()->getRepository('FrontBundle:Events')->findEventsByTypeForDate(Events::TYPE_TRAINING, $event->getStartDate())) > 0) {
-                        $messages[] = "Vous ne pouvez réserver ce créneau, vous avez déjà un entraînement de planifié ce jour là.";
-                    }
+
+                // Check that there is not already 3 teams this night
+                if (count($this->getEntityManager()->getRepository('FrontBundle:Events')->findEventsForDate($event->getStartDate())) == 3) {
+                    $messages[] = "Vous ne pouvez réserver ce créneau, il y a déjà trois équipes présentes.";
                 }
+
             } else {
                 $messages[] = "Seuls les capitaines et sous-capitaines peuvent créer des évènements.";
             }
@@ -88,6 +87,21 @@ class UserRepository extends EntityRepository
      */
     public function isAllowedToDelete(User $user, Events $event)
     {
-        return $this->isAllowedToInsert($user, $event);
+        $messages = array();
+
+        if (!$user instanceof User) {
+            $messages[] = "Vous devez vous connecter pour effectuer cette action.";
+        } else {
+            if ($user->isSuperAdmin())
+                return array();
+
+            // Current User is Captain or Subcaptain of this Team
+            if  ( $event->getTeam()->getCaptain() != $user && $event->getTeam()->getSubCaptain() != $user  )
+            {
+                $messages[] = "Seuls les capitaines et sous-capitaines peuvent créer des évènements.";
+            }
+        }
+
+        return $messages;
     }
 }
