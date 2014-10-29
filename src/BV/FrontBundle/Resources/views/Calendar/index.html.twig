@@ -24,15 +24,15 @@
 {% endblock %}
 
 {% block content_row %}
-    <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:500px;'>
+    <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:600px;'>
         <div class="dhx_cal_navline">
             <div class="dhx_cal_prev_button">&nbsp;</div>
             <div class="dhx_cal_next_button">&nbsp;</div>
             <div class="dhx_cal_today_button"></div>
             <div class="dhx_cal_date"></div>
-            <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
-            <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
-            <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+            {#<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>#}
+            {#<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>#}
+            {#<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>#}
         </div>
         <div class="dhx_cal_header"></div>
         <div class="dhx_cal_data"></div>
@@ -40,9 +40,10 @@
 
     <script type="text/javascript">
     //<![CDATA[
-    var alert_opts_teams = {{ alert_opts_teams_json|raw }};
 
+    var alert_opts_teams = {{ alert_opts_teams_json|raw }};
     var alert_opts_types = {{ alert_opts_types_json|raw }};
+    var img_paths_json = {{ img_paths_json|raw }};
 
     jQuery( document ).ready(function() {
 
@@ -50,13 +51,32 @@
         scheduler.config.show_loading=true;
         scheduler.config.edit_on_create = true;
         scheduler.config.start_on_monday = true;
-        scheduler.config.first_hour = 6;
-        scheduler.config.last_hour = 24;
-        scheduler.config.time_step = 15;
-        scheduler.config.event_duration = 60;
+        scheduler.config.event_duration = 150;
+        scheduler.config.auto_end_date = true;
         scheduler.config.multi_day = false;
         scheduler.locale.labels.section_team = "Equipe";
         scheduler.locale.labels.section_type = "Type";
+        scheduler.form_blocks.select.set_value = function(node,value,ev){
+            node.firstChild.value = value||alert_opts_teams[0].key;
+        };
+        scheduler.form_blocks.radio.set_value = function(node,value,ev){
+            jQuery(node).children('input').each(function(){
+                if (jQuery(this).val() == value) {
+                    jQuery(this).attr('checked', true);
+                }
+            });
+        };
+
+        // used to initialize time begin & time end
+        var setter = scheduler.form_blocks.time.set_value;
+        scheduler.form_blocks.time.set_value=function(node,value,ev){
+            var sels = node.getElementsByTagName("SELECT");
+            setter.apply(this,arguments);
+            if(scheduler._new_event&&scheduler._mode=="month"){
+                sels[0].value = (value.start.h * 60) + (value.start.m * 1);
+                sels[4].value = (value.end.h * 60) + (value.end.m * 1);
+            }
+        }
 
         // Hide Satursday & Sunday
         scheduler.ignore_month = function(date){
@@ -64,88 +84,75 @@
                 return true;
         };
 
-        scheduler.attachEvent("onClick", function(id){
-            if (id == null)
-                return true;
-            return !(scheduler.getEvent(id).readonly === 'true');
-        });
-        scheduler.attachEvent("onDblClick", function(id){
-            if (id == null)
-                return false;
-            return !(scheduler.getEvent(id).readonly === 'true');
-        });
-        scheduler.attachEvent("onBeforeDrag", function(id, mode, e){
-            if (id == null)
-                return true;
-            return !(scheduler.getEvent(id).readonly === 'true');
-        });
+        // Disable Drag & Resize
+        scheduler.attachEvent("onBeforeDrag", function(id, mode, e){ return false; });
 
+        // Initializes Lightbox
         scheduler.config.lightbox.sections=[
             { name:"team", height:40, map_to:"team", type:"select", options:alert_opts_teams},
-            { name:"type", height:58, options:alert_opts_types, map_to:"type", type:"radio", vertical:false},
+            { name:"type", height:58, options:alert_opts_types, map_to:"type", type:"radio", vertical:false, default_value:'TRAINING'},
             { name:"description", height:200, map_to:"text", type:"textarea" , focus:true},
-            { name:"time", height:72, type:"time", map_to:"auto"}
+            { name:"time", height:72, type:"time", map_to:"auto", default_value:{'start':{'h':'20', 'm':'30'}, 'end':{'h':'23', 'm':'00'}}}
         ];
+
+        // Customize Lightbox Header
+        scheduler.templates.lightbox_header = function(start,end,ev){
+            // Creation
+            if (ev.type_name == undefined)
+                return '<h1>' + ev.text + '</h1>';
+
+            // Edition
+            var date_start = moment(ev.start_date);
+            date_start.locale('fr')
+            var date_end = moment(ev.end_date);
+            date_end.locale('fr')
+            return '<h1><strong>' + ev.type_name + '</strong> / ' + ev.team_name + ' ( ' + date_start.format("HH:mm") + ' à ' + date_end.format("HH:mm") + ')</h1>';
+        };
+
+//        scheduler.attachEvent("onLightbox", function (id){
+//            var time = scheduler.formSection('time');
+//            time.setValue(null,{start_date:new Date(2009,03,10,20,30),end_date:new Date(2012,03,10,23,00)});
+//        });
 
         scheduler.attachEvent("onTemplatesReady", function(){
             scheduler.templates.event_class = function(start,end,ev){ return "bv_event bv_event_"+ev.type; };
             scheduler.templates.event_bar_date = function(start,end,ev){ return ""; };
             scheduler.templates.event_text = function(start,end,event){ return ""; }
             scheduler.templates.event_bar_text = function(start,end,event){
-                var html = '<div class="relative">';
-                if (typeof(event.image) != 'undefined') {
-                    html += "<img src=\"" + event.image + "\"> ";
-                }
-                if (event.type != 'CLOSED') {
-                    html += "<strong>"+event.team+"</strong> ("+scheduler.templates.event_date(start)+")";
-                } else {
-                    html += "<strong>Fermé : </strong> "+event.text;
-                }
-                html += "</div>";
-                return html;
+                // Load data from server
+                if (event.event_bar_text)
+                    return event.event_bar_text;
+
+                // New event
+                if (event.team == undefined)
+                    return '';
+
+                var team_lbl = '';
+                alert_opts_teams.forEach(function(e){if (e.key == event.team) { team_lbl = e.label }});
+
+                return      '<div class="relative">' +
+                            '   <img src="' + img_paths_json[event.type] + '"> ' +
+                            '   <strong>' + team_lbl + '</strong> (' + scheduler.templates.event_date(start) + ' à ' + scheduler.templates.event_date(end) + ')' +
+                            '</div>';
             };
-
-
         });
 
         scheduler.init('scheduler_here', new Date(),"month");
-
         scheduler.setCurrentView(scheduler._date, scheduler._mode);
 
-//        scheduler.attachEvent("onEventAdded", function(id,ev){
-//            var m1 = moment(ev.start_date);
-//            m1.locale('fr')
-//            var m2 = moment(ev.end_date);
-//            /*jQuery('#your_resa .content').append('<li data-id="'+ev.id+'">'+m1.format("ddd DD MMM HH:mm")+'<span class="glyphicon glyphicon-play"></span>'+m2.format("HH:mm")+'<span class="glyphicon glyphicon-ban-circle pull-right delete-resa"></span></li>');
-//
-//             jQuery('#your_resa .content li').last().children('.delete-resa').click(function(){
-//             var eventId = jQuery(this).parent('li').data('id');
-//             scheduler.deleteEvent(eventId);
-//             jQuery(this).parent('li').remove();
-//             });*/
-//
-//            /*checkState();*/
-//        });
-
-//        scheduler.attachEvent("onEventDeleted", function(id,ev){ /*checkState();*/ });
-
-        // Block edition / deletion from calendar
-//        scheduler.attachEvent("onClick",function(id){ return false; })
-//        scheduler.attachEvent("onDblClick",function(id){ return false; })
-
-        scheduler.load("{{ path('bv_calendar_getEvents') }}", 'xml', function(){ /*checkState();*/ });
+        scheduler.load("{{ path('bv_calendar_getEvents') }}", 'json', function(){ /*checkState();*/ });
 
         var dp = new dataProcessor("{{ path('bv_calendar_saveEvents') }}");
-        dp.init(scheduler);
 
-//        jQuery( ".delete-resa" ).each(function() {
-//            jQuery( this ).click(function(){
-//                console.log('delete catched');
-//                var eventId = jQuery(this).parent('li').data('id');
-//                scheduler.deleteEvent(eventId);
-//                jQuery(this).parent('li').remove();
-//            });
-//        });
+        // Catch error response from server
+        dp.defineAction("error",function(response){
+            jQuery('ul.flash-messages').hide();
+            jQuery('ul.flash-messages').html('<li class="bg-danger">'+ response.nextElementSibling.firstChild.nodeValue +'</li>');
+            jQuery('ul.flash-messages').fadeIn(500).delay(5000).fadeOut(500);
+            scheduler.deleteEvent(response.getAttribute('sid'));
+        });
+
+        dp.init(scheduler);
     });
     //]]>
     </script>

@@ -231,11 +231,6 @@ class Team
         return $this->slot;
     }
 
-    function __construct()
-    {
-
-    }
-
     function __toString()
     {
         return $this->getName().' ('.$this->getLevel().')';

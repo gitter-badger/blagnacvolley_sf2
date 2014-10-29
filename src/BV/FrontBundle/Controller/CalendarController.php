@@ -44,60 +44,62 @@ class CalendarController extends Controller
                     'label' => $this->get('translator')->trans('constants.events.type.'.Events::TYPE_MATCH),
                 ),
             )),
+            'img_paths_json' => json_encode(Events::getImagePaths()),
         ));
     }
 
     public function getEventsAction(Request $request)
     {
+        /* @var $user User */
         $user = $this->container->get('security.context')->getToken()->getUser();
 
         $events = $this->getDoctrine()->getRepository('FrontBundle:Events')->findAll();
+        $res = array();
+        $i=0;
 
-        $msg = "<?xml version='1.0' encoding='utf-8' ?>\n";
-        $msg .="<data>\n";
         foreach($events as $event) {
-            $msg .="	<event id=\"" . $event->getId() . "\">\n";
-            $msg .="		<text>" . $event->getText() . "</text>\n";
-            $msg .="		<start_date>" . $event->getStartDate()->format('Y-m-d H:i') . "</start_date>\n";
-            $msg .="		<end_date>" . $event->getEndDate()->format('Y-m-d H:i') . "</end_date>\n";
-            $msg .="		<type>" . $event->getType() . "</type>\n";
-            $msg .="		<image>" . $event->getImageFromType() . "</image>\n";
+            $res[$i] = array(
+                "id" => $event->getId(),
+                "text" => $event->getText(),
+                "start_date" => $event->getStartDate()->format('Y-m-d H:i'),
+                "end_date" => $event->getEndDate()->format('Y-m-d H:i'),
+                "type" => $event->getType(),
+                "type_name" => $this->get('translator')->trans('constants.events.type.'.$event->getType()),
+                "image" => $event->getImageFromType(),
+            );
+
             if ($event->getTeam() instanceof Team) {
-                $msg .="		<team>" . $event->getTeam()->getName() . "</team>\n";
+                $res[$i]["team"] = $event->getTeam()->getId();
+                $res[$i]["team_name"] = $event->getTeam()->getName();
             }
+
             // It's a vacation, always readonly
             if ($event->getType() == Events::TYPE_CLOSED) {
-                $msg .="		<readonly>true</readonly>\n";
+                $res[$i]["readonly"] = true;
+                $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> Fermé : </strong> " . $event->getText() . "</div>";
             } else {
-                // Only editable if associated to current User's team && user is captain or subcaptain
-                if ($user instanceof User &&
-                    $event->getTeam() != null && (
-                        (
-                            $event->getTeam()->getCaptain() instanceof User &&
-                            $event->getTeam()->getCaptain()->getId() == $user->getId()
-                        ) ||
-                        (
-                            $event->getTeam()->getSubCaptain() instanceof User &&
-                            $event->getTeam()->getSubCaptain()->getId() == $user->getId()
-                        )
-                    )) {
-                    $msg .="		<readonly>false</readonly>\n";
-                } else {
-                    $msg .="		<readonly>true</readonly>\n";
-                }
+                $res[$i]["readonly"] = $event->isReadonly($user);
+                $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> " . $event->getTeam()->getName() . "</strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
             }
-            $msg .="	</event>\n";
+
+            $i++;
         }
-        $msg .="</data>\n";
-        $response = new Response($msg);
-        $response->headers->set('Content-Type', 'text/xml');
-        $response->headers->set('Content-Disposition', 'data.xml');
+
+        $response = new Response(json_encode($res));
+        $response->headers->set('Content-Type', 'application/json');
 
         return $response;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function saveEventsAction(Request $request) {
-        if (!$request->isXmlHttpRequest())
+        /* @var $user User */
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        if (!$request->isXmlHttpRequest() || !$user instanceof User)
         {
             $response = new Response("");
             $response->headers->set('Content-Type', 'text/xml');
@@ -108,21 +110,40 @@ class CalendarController extends Controller
         $theId = $request->request->get('ids');
         $status = $request->request->get($theId . "_!nativeeditor_status");
 
+        $team = null;
+        if ($request->request->get($theId . "_team") != null) {
+            $team = $this->getDoctrine()->getRepository('FrontBundle:Team')->find($request->request->get($theId . "_team"));
+        }
+
+        // Ajout d'un évènement
         if ($status == "inserted") {
             $event = new Events();
             $event->setStartDate(new \DateTime($request->request->get($theId . "_start_date")));
             $event->setEndDate(new \DateTime($request->request->get($theId . "_end_date")));
-            $event->setType(Events::TYPE_TRAINING);
+            $event->setType($request->request->get($theId . "_type"));
             $event->setSchedulerId($theId);
+            $event->setTeam($team);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($event);
-            $em->flush();
+            if ($event->isAllowedToInsert($user))
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($event);
+                $em->flush();
 
-            $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
-            $msg .="<data>\n";
-            $msg .='	<action type="inserted" sid="'.$theId.'" tid="'.$theId.'"/>\n';
-            $msg .="</data>\n";
+                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+                $msg .="<data>\n";
+                $msg .='	<action type="inserted" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
+                $msg .='	<message><![CDATA[Evènement sauvegardé avec succès.]]></message>'."\n";
+                $msg .="</data>\n";
+            }
+            else
+            {
+                $msg ="<?xml version='1.0' encoding='utf-8' ?>\n";
+                $msg .="<data>\n";
+                $msg .='	<action type="error" sid="'.$theId.'" tid="'.$theId.'"/>'."\n";
+                $msg .='	<message><![CDATA[Vous ne pouvez pas effectuer cette action.]]></message>'."\n";
+                $msg .="</data>\n";
+            }
 
             $response = new Response($msg);
             $response->headers->set('Content-Type', 'text/xml');

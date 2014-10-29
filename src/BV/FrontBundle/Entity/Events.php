@@ -3,6 +3,7 @@
 namespace BV\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use BV\FrontBundle\Entity\User;
 
 /**
  * Events
@@ -217,6 +218,20 @@ class Events
     }
 
     /**
+     * @return array
+     */
+    public static function getImagePaths()
+    {
+        return array(
+            self::TYPE_TRAINING             => '/images/icons/'.self::TYPE_TRAINING.'.png',
+            self::TYPE_MATCH                => '/images/icons/'.self::TYPE_MATCH.'.png',
+            self::TYPE_VOLLEYSCHOOL_ADULT   => '/images/icons/'.self::TYPE_VOLLEYSCHOOL_ADULT.'.png',
+            self::TYPE_VOLLEYSCHOOL_YOUTH   => '/images/icons/'.self::TYPE_VOLLEYSCHOOL_YOUTH.'.png',
+            self::TYPE_CLOSED               => '/images/icons/'.self::TYPE_CLOSED.'.png',
+        );
+    }
+
+    /**
      * Set schedulerId
      *
      * @param string $schedulerId
@@ -237,5 +252,59 @@ class Events
     public function getSchedulerId()
     {
         return $this->schedulerId;
+    }
+
+    /**
+     * @param $type
+     * @return bool
+     */
+    public static function isTypeValid($type)
+    {
+        return array_key_exists($type, self::getEventsType());
+    }
+
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function isReadonly($user)
+    {
+        if (!$user instanceof User)
+            return true;
+
+        if ($this->getTeam() == null)
+            return true;
+
+        if ($user->isSuperAdmin())
+            return false;
+
+        if ($this->getTeam()->getCaptain() instanceof User && $this->getTeam()->getCaptain()->getId() == $user->getId())
+            return false;
+
+        if ($this->getTeam()->getSubCaptain() instanceof User && $this->getTeam()->getSubCaptain()->getId() == $user->getId())
+            return false;
+    }
+
+    public function isAllowedToInsert($user)
+    {
+        if (!$user instanceof User)
+            return false;
+
+        if ($user->isSuperAdmin())
+            return true;
+
+        if (!self::isTypeValid($this->getType()))
+            return false;
+
+        if ($this->getType() == Events::TYPE_CLOSED || $this->getType() == Events::TYPE_VOLLEYSCHOOL_ADULT || $this->getType() == Events::TYPE_VOLLEYSCHOOL_YOUTH)
+            return false;
+
+        if ($this->getTeam()->getCaptain()->getId() == $user->getId())
+            return true;
+
+        if ($this->getTeam()->getSubCaptain()->getId() == $user->getId())
+            return true;
+
+        return false;
     }
 }
