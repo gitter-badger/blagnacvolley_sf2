@@ -29,6 +29,7 @@ twig:
     form:
         resources:
             - 'FrontBundle:Form:fields.html.twig'
+            - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 # Doctrine Configuration
 doctrine:
