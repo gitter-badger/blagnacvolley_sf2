@@ -20,16 +20,19 @@
                 <span class="label label-danger">{{ 'constants.user.status.INACTIVE'|trans()}}</span>
             {% endif %}
         </span>
+
         {% if user.getCertif %}
-            <a href="" class="mt10 fa fa-file-pdf-o color-text-green"></a> Certificat médical
+            <div class="mt10"><a href="{{ asset(user.getCertif) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Certificat médical</a></div>
         {% else %}
             <div class="mt10"><span class="fa fa-file-pdf-o color-text-red"></span> Certificat médical</div>
         {% endif %}
+
         {% if user.getAttestation %}
-            <a href="" class="mt10 fa fa-file-pdf-o color-text-green"></a> Attestation pôle emploi
+            <div class="mt10"><a href="{{ asset(user.getAttestation) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Attestation pôle emploi</a></div>
         {% else %}
             <div class="mt10"><span class="fa fa-file-pdf-o color-text-red"></span> Attestation pôle emploi</div>
         {% endif %}
+
         <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block mt10" >Modifier</a>
     </div>
     <div class="col-sm-9">
