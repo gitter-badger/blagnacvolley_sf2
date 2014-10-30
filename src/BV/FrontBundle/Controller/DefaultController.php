@@ -57,14 +57,60 @@ class DefaultController extends Controller
 
                 $request->getSession()->getFlashBag()->add('success', 'Modifications sauvegardées avec succès' );
 
-                return $this->render('FrontBundle:Default:volleyschool.html.twig', array(
-                    'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
-                    'content' => $cmsPage->getContent(),
-                ));
+                return $this->redirect($this->generateUrl('bv_static_volley_school'), 302);
             }
         }
 
         return $this->render('FrontBundle:Default:volleyschool_edit.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function jeuLibreAction()
+    {
+        /* @var User $user */
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        /* @var CmsPage $cmsPage */
+        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_FREE_GAME);
+
+        return $this->render('FrontBundle:Default:jeulibre.html.twig', array(
+            'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
+            'content' => $cmsPage->getContent(),
+        ));
+    }
+
+    public function jeuLibreEditAction(Request $request)
+    {
+        /* @var User $user */
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        // Redirect to consultation if not logged or not allowed to edit
+        if (!$user instanceof User || !$user->isSuperAdmin())
+        {
+            return $this->redirect($this->generateUrl('bv_static_jeu_libre'), 401);
+        }
+
+        /* @var CmsPage $cmsPage */
+        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_FREE_GAME);
+        $form = $this->createForm(new CmsPageFormType(), $cmsPage);
+
+        if ('POST' === $request->getMethod())
+        {
+            $form->handleRequest($request);
+            if ($form->isValid())
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($cmsPage);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add('success', 'Modifications sauvegardées avec succès' );
+
+                return $this->redirect($this->generateUrl('bv_static_jeu_libre'), 302);
+            }
+        }
+
+        return $this->render('FrontBundle:Default:jeulibre_edit.html.twig', array(
             'form' => $form->createView(),
         ));
     }

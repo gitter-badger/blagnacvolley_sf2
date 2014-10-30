@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CmsPage
 {
     const STATIC_PAGE_VOLLEYSCHOOL = 'PAGE_VOLLEYSCHOOL';
+    const STATIC_PAGE_FREE_GAME = 'PAGE_FREE_GAME';
 
     /**
      * @var integer

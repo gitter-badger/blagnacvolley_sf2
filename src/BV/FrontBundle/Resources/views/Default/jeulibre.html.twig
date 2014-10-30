@@ -1,0 +1,10 @@
+{% extends "FrontBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'jeulibre.welcome'|trans() }} {% endblock %}
+
+{% block content_row %}
+    <h1>{{ 'jeulibre.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_jeu_libre_edit') }}">{{ 'jeulibre.edit'|trans() }}</a> {% endif %} </h1>
+
+    {{ content|raw }}
+
+{% endblock content_row %}

@@ -18,7 +18,15 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
         $cmsPageVS->setCreatedAt(new \DateTime());
         $cmsPageVS->setUpdatedAt(null);
 
+        // Jeu libre
+        $cmsPageFG = new CmsPage();
+        $cmsPageFG->setContent('');
+        $cmsPageFG->setName(CmsPage::STATIC_PAGE_FREE_GAME);
+        $cmsPageFG->setCreatedAt(new \DateTime());
+        $cmsPageFG->setUpdatedAt(null);
+
         $manager->persist($cmsPageVS);
+        $manager->persist($cmsPageFG);
 
         $manager->flush();
     }

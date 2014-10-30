@@ -1,6 +1,6 @@
 {% extends "FrontBundle::layout.html.twig" %}
 
-{% block title %}{{ parent() }} - Ecole de volley{% endblock %}
+{% block title %}{{ parent() }} - {{ 'volleyschool.welcome'|trans() }} {% endblock %}
 
 {% block content_row %}
     <h1>{{ 'volleyschool.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_volley_school_edit') }}">{{ 'volleyschool.edit'|trans() }}</a> {% endif %} </h1>

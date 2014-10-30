@@ -60,6 +60,12 @@ volleyschool:
   form:
     submit: Valider
 
+jeulibre:
+  welcome: Jeu Libre
+  edit: Editer
+  form:
+    submit: Valider
+
 constants:
   user:
     status:

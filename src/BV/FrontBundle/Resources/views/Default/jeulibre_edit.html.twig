@@ -16,18 +16,18 @@
 
 {% endblock head_script %}
 
-{% block title %}{{ parent() }} - {{ 'volleyschool.welcome'|trans() }} {% endblock %}
+{% block title %}{{ parent() }} - {{ 'jeulibre.welcome'|trans() }} {% endblock %}
 
 {% block content_row %}
-    <h1>{{ 'volleyschool.welcome'|trans() }}</h1>
+    <h1>{{ 'jeulibre.welcome'|trans() }}</h1>
 
-    <form action="{{ path('bv_static_volley_school_edit') }}" {{ form_enctype(form) }} method="POST">
+    <form action="{{ path('bv_static_jeu_libre_edit') }}" {{ form_enctype(form) }} method="POST">
 
         {{ form_widget(form.content) }}
 
         <br/>
         <div>
-            <input class="btn btn-success" type="submit" value="{{ 'volleyschool.form.submit'|trans() }}" />
+            <input class="btn btn-success" type="submit" value="{{ 'jeulibre.form.submit'|trans() }}" />
         </div>
 
         {{ form_rest(form) }}
