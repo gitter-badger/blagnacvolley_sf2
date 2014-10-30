@@ -118,7 +118,7 @@ class User extends EntityUser
     /**
      * @var string
      *
-     * @ORM\Column(name="picture", type="string", length=255)
+     * @ORM\Column(name="picture", type="string", length=512)
      */
     protected $picture;
 
@@ -132,6 +132,42 @@ class User extends EntityUser
      * )
      */
     public $pictureFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="certif", type="string", length=512, nullable=true)
+     */
+    protected $certif;
+
+    /**
+     * @var File
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff", "application/pdf"},
+     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     * )
+     */
+    public $certifFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="attestation", type="string", length=512, nullable=true)
+     */
+    protected $attestation;
+
+    /**
+     * @var File
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff", "application/pdf"},
+     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     * )
+     */
+    public $attestationFile;
 
     /**
      * @var string
@@ -847,5 +883,51 @@ class User extends EntityUser
         foreach ($groups as $group) {
             $this->addGroup($group);
         }
+    }
+
+    /**
+     * Set certif
+     *
+     * @param string $certif
+     * @return User
+     */
+    public function setCertif($certif)
+    {
+        $this->certif = $certif;
+    
+        return $this;
+    }
+
+    /**
+     * Get certif
+     *
+     * @return string 
+     */
+    public function getCertif()
+    {
+        return $this->certif;
+    }
+
+    /**
+     * Set attestation
+     *
+     * @param string $attestation
+     * @return User
+     */
+    public function setAttestation($attestation)
+    {
+        $this->attestation = $attestation;
+    
+        return $this;
+    }
+
+    /**
+     * Get attestation
+     *
+     * @return string 
+     */
+    public function getAttestation()
+    {
+        return $this->attestation;
     }
 }

@@ -24,7 +24,9 @@ module.exports = function(grunt) {
           {src: 'bower_components/bootstrap-3-datepicker/css/datepicker3.css', dest: 'web/css/datepicker3.css'},
           {src: 'bower_components/dropzone/downloads/css/dropzone.css', dest: 'web/css/dropzone.css'},
           {src: 'bower_components/scheduler/codebase/dhtmlxscheduler.css', dest: 'web/css/scheduler/dhtmlxscheduler.css'},
-          {src: 'bower_components/redactor/redactor/redactor.css', dest: 'web/css/redactor/redactor/redactor.css'}
+          {src: 'bower_components/redactor/redactor/redactor.css', dest: 'web/css/redactor/redactor/redactor.css'},
+          {src: 'bower_components/font-awesome/css/font-awesome.min.css', dest: 'web/css/font-awesome/font-awesome.min.css'},
+          {cwd: 'bower_components/font-awesome/fonts/', src: '**/*', dest: 'web/css/fonts/', expand: true  }
         ]
       },
       javascript: {

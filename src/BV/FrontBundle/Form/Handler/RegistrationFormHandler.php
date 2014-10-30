@@ -23,7 +23,8 @@ class RegistrationFormHandler extends BaseHandler
     }
 
     /**
-     * @param boolean $confirmation
+     * @param UserInterface $user
+     * @param bool $confirmation
      */
     protected function onSuccess(UserInterface $user, $confirmation)
     {

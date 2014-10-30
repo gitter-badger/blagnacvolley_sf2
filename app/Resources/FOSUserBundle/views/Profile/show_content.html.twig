@@ -2,123 +2,151 @@
     <div class="col-sm-12">
         <h1>{{ user.firstname }} {{ user.lastname }}</h1>
     </div>
-    <div class="col-sm-2">
-        <img src="{{ user.picture }}" class="img-circle" style="max-height: 150px;max-width: 150px;" />
+
+    <div class="col-sm-12">
+        <div class="well well-sm">{{ 'profile.show.not_licensed'|trans() }}</div>
+    </div>
+
+    <div class="col-sm-3">
+        <img src="{{ user.picture }}" class="img-circle" style="max-height: 200px;max-width: 200px;margin: 0 auto;display: block;" />
         <br/>
-        <br/>
-        <span class="text-center">
+
+        <span class="user_status">
             {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
-                <span class="dblock w100p label label-warning">{{ 'constants.user.status.ACTIVE_NOT_LICENSED'|trans()}}</span>
+                <span class="label label-warning">{{ 'constants.user.status.ACTIVE_NOT_LICENSED'|trans()}}</span>
             {% elseif user.status == constant('STATUS_ACTIVE_LICENSED', user) %}
-                <span class="dblock w100p label label-primary">{{ 'constants.user.status.ACTIVE_LICENSED'|trans()}}</span>
+                <span class="label label-primary">{{ 'constants.user.status.ACTIVE_LICENSED'|trans()}}</span>
             {% else %}
-                <span class="dblock w100p label label-danger">{{ 'constants.user.status.INACTIVE'|trans()}}</span>
+                <span class="label label-danger">{{ 'constants.user.status.INACTIVE'|trans()}}</span>
             {% endif %}
         </span>
-        <br/>
-        <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block" >Modifier</a>
+        {% if user.getCertif %}
+            <a href="" class="mt10 fa fa-file-pdf-o color-text-green"></a> Certificat médical
+        {% else %}
+            <div class="mt10"><span class="fa fa-file-pdf-o color-text-red"></span> Certificat médical</div>
+        {% endif %}
+        {% if user.getAttestation %}
+            <a href="" class="mt10 fa fa-file-pdf-o color-text-green"></a> Attestation pôle emploi
+        {% else %}
+            <div class="mt10"><span class="fa fa-file-pdf-o color-text-red"></span> Attestation pôle emploi</div>
+        {% endif %}
+        <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block mt10" >Modifier</a>
     </div>
-    <div class="col-sm-10">
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ 'profile.show.connexion_data.title'|trans()}}
+    <div class="col-sm-9">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        {{ 'profile.show.connexion_data.title'|trans()}}
+                    </div>
+                    <table class="table table-hover table-striped table-condensed">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
+                            <td>{{ user.username }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table class="table table-hover table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
-                        <td>{{ user.username }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        {{ 'profile.show.club_data.title'|trans()}}
+                    </div>
+                    <table class="table table-hover table-striped table-condensed">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'profile.show.club_data.level'|trans() }}</th>
+                            <td>{{ user.level }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.club_data.mscteam'|trans() }}</th>
+                            <td>
+                                {% if user.getMscTeam %}
+                                    <a href="{{ path('team_show', {'id': user.getMscTeam.getId })  }}">{{ user.getMscTeam }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.club_data.mixteam'|trans() }}</th>
+                            <td>
+                                {% if user.getMixTeam %}
+                                    <a href="{{ path('team_show', {'id': user.getMixTeam.getId })  }}">{{ user.getMixTeam }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.club_data.femteam'|trans() }}</th>
+                            <td>
+                                {% if user.getFemTeam %}
+                                    <a href="{{ path('team_show', {'id': user.getFemTeam.getId })  }}">{{ user.getFemTeam }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.club_data.shirt_size'|trans() }}</th>
+                            <td>{{ user.shirtSize }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.club_data.license'|trans() }}</th>
+                            <td>{{ user.licenseNumber }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ 'profile.show.club_data.title'|trans()}}
-                </div>
-                <table class="table table-hover table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.level'|trans() }}</th>
-                        <td>{{ user.level }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.mscteam'|trans() }}</th>
-                        <td>{{ user.getMscTeam }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.mixteam'|trans() }}</th>
-                        <td>{{ user.getMixTeam }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.femteam'|trans() }}</th>
-                        <td>{{ user.getFemTeam }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.shirt_size'|trans() }}</th>
-                        <td>{{ user.shirtSize }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.license'|trans() }}</th>
-                        <td>{{ user.licenseNumber }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ 'profile.show.address_data.title'|trans()}}
-                </div>
-                <table class="table table-hover table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
-                        <td>{{ ('constants.user.gender.' ~ user.gender) |trans()}}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
-                        <td>{{ user.dob|date('d/m/Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.address'|trans()}}</th>
-                        <td>{{ user.address }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.phone'|trans()}}</th>
-                        <td>{{ user.phone }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="panel-footer">
-                    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-                    <script type="text/javascript">
-                        function initializeGmaps() {
-                            var mapOptions = { center: new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }}),zoom: 16 };
-                            var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-                            var myLatlng = new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }});
-                            var marker = new google.maps.Marker({
-                                position: myLatlng,
-                                draggable:false,
-                                map: map,
-                                title:"{{ user.username }}"
-                            });
-                            var infowindow = new google.maps.InfoWindow({
-                                content: "{{ user.username }}"
-                            });
-                            google.maps.event.addListener(marker, 'click', function() {
-                                infowindow.open(map,marker);
-                            });
-                        }
-                        google.maps.event.addDomListener(window, 'load', initializeGmaps);
-                    </script>
-                    <div id="map-canvas" style="height:300px;width:398px;"/>
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        {{ 'profile.show.address_data.title'|trans()}}
+                    </div>
+                    <table class="table table-hover table-striped table-condensed">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
+                            <td>{{ ('constants.user.gender.' ~ user.gender) |trans()}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
+                            <td>{{ user.dob|date('d/m/Y') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.address_data.address'|trans()}}</th>
+                            <td>{{ user.address }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.address_data.phone'|trans()}}</th>
+                            <td>{{ user.phone }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="panel-footer">
+                        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+                        <script type="text/javascript">
+                            function initializeGmaps() {
+                                var mapOptions = { center: new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }}),zoom: 16 };
+                                var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                                var myLatlng = new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }});
+                                var marker = new google.maps.Marker({
+                                    position: myLatlng,
+                                    draggable:false,
+                                    map: map,
+                                    title:"{{ user.username }}"
+                                });
+                                var infowindow = new google.maps.InfoWindow({
+                                    content: "{{ user.username }}"
+                                });
+                                google.maps.event.addListener(marker, 'click', function() {
+                                    infowindow.open(map,marker);
+                                });
+                            }
+                            google.maps.event.addDomListener(window, 'load', initializeGmaps);
+                        </script>
+                        <div id="map-canvas" style="height:300px;width:366px;"/>
+                    </div>
                 </div>
             </div>
         </div>

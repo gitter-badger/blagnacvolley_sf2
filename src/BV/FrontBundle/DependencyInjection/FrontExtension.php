@@ -24,6 +24,8 @@ class FrontExtension extends Extension
 
         $container->setParameter('front.web_dir', $config['web_dir']);
         $container->setParameter('front.profile.pictures_path', $config['profile']['pictures_path']);
+        $container->setParameter('front.profile.certif_path', $config['profile']['certif_path']);
+        $container->setParameter('front.profile.attestation_path', $config['profile']['attestation_path']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

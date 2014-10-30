@@ -1,5 +1,5 @@
 bv_static_cms_page_upload:
-    path:     /
+    path:     /cmspageupload
     defaults: { _controller: FrontBundle:Default:CmsPageUpload }
 bv_static_volley_school:
     path:     /volleyschool

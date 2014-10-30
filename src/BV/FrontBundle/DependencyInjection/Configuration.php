@@ -33,6 +33,8 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('pictures_path')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('certif_path')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('attestation_path')->isRequired()->cannotBeEmpty()->end()
                     ->end()
                 ->end()
             ->end()

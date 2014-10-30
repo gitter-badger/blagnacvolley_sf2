@@ -17,7 +17,8 @@ html, body { height: 100%; }
   * HEADER
   */
 body > header { background: url("../images/header_bg.png"); position: fixed; top: 0; left: 0; width: 100%; min-width: 1024px; z-index: 15; font-style: normal; -webkit-user-select: none; -moz-user-select: none; user-select: none;
-  &.expanded .nav-logo { width: 120px; height: 120px; margin-left: -60px; display: block; background: url("../images/logo.png") center bottom no-repeat; background-size: cover; z-index: 99; position: absolute; top: 11px; left: 50%; }
+  .nav-container { position: relative; margin: 0 auto; width: 1280px;}
+  &.expanded .nav-logo { width: 120px; height: 120px; margin-left: -60px; display: block; background: url("../images/logo.png") center bottom no-repeat; background-size: cover; z-index: 99; position: absolute; top: 11px; left: 650px; }
   .bar { .gradient-vertical(#0078AC, #0078AC, #0187BC, #0187BC); position: relative; width: 100%; height: 40px; font-size: 12px; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; z-index: 3; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;
     a { color: rgba(255, 255, 255, 0.7);text-decoration: none; }
     .sharing { float: right; margin-right: 12px;
@@ -100,3 +101,5 @@ body > header { background: url("../images/header_bg.png"); position: fixed; top
     h1 { padding: 0; margin: 0; border: 0; line-height: 35px; }
   }
 }
+
+.fos_user_user_show .user_status span { text-align:center;font-size: 16px;text-transform:Uppercase;padding: 5px;display: block;width: 100%; }

@@ -54,7 +54,9 @@ class ProfileController extends Controller
             'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
             array(
                 'form' => $form->createView(),
-                'user' => $user
+                'user' => $user,
+                'isRequiredCertif' => ($user->getCertif() == null),
+                'isRequiredAttestation' => ($user->getAttestation() == null)
             )
         );
     }

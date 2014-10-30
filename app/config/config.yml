@@ -107,3 +107,5 @@ genemu_form:
 front:
     profile:
         pictures_path: /uploads/users
+        certif_path:   /uploads/certif
+        attestation_path: /uploads/attestation

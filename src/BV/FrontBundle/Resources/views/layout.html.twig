@@ -51,7 +51,9 @@
 
 {% block bv_head %}
     <header class="expanded no-hover">
-        <a href="{{ url('home') }}" class="nav-logo"></a>
+        <div class="nav-container">
+            <a href="{{ url('home') }}" class="nav-logo"></a>
+        </div>
 
         {% block bv_head_top %}
             <div class="bar">
@@ -66,9 +68,14 @@
                     </div>
                 {% endif %}
                 <div class="sharing">
-                    <a href="" target="_blank" class="header-icon twitter">Twitter</a>
-                    <a href="" target="_blank" class="header-icon facebook">Facebook</a>
-                    <span class="label social">Retrouvez-nous sur </span>
+                    {% if app.user %}
+                        <a href="{{ path('fos_user_security_logout') }}" class="label social">{{ 'header.navbar.logout' | trans() }}</a>
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}" class="label social">{{ 'header.navbar.login'|trans() }}</a>
+                    {% endif %}
+                    {#<a href="" target="_blank" class="header-icon twitter">Twitter</a>#}
+                    {#<a href="" target="_blank" class="header-icon facebook">Facebook</a>#}
+                    {#<span class="label social">Retrouvez-nous sur </span>#}
                 </div>
             </div>
         {% endblock bv_head_top %}
@@ -104,21 +111,9 @@
                         </ul>
                         <ul class="nav right">
                             <li class="connexion">
-                                {% block bv_head_top_connexion %}
-                                    {% if app.user %}
-                                        <a href="{{ path('fos_user_security_logout') }}">
-                                            <span class="name"><br>
-                                                {{ 'header.navbar.logout' | trans() }}
-                                            </span>
-                                        </a>
-                                    {% else %}
-                                        <a href="{{ path('fos_user_security_login') }}">
-                                            <span class="name"><br>
-                                                {{ 'header.navbar.login'|trans() }}
-                                            </span>
-                                        </a>
-                                    {% endif %}
-                                {% endblock %}
+                                <a href="#">
+                                    <span class="name"><br>Bureau</span>
+                                </a>
                             </li>
                             <li class="myaccount">
                                 {% block bv_head_top_registration %}
