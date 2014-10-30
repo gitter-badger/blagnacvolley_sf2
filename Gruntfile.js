@@ -23,7 +23,8 @@ module.exports = function(grunt) {
           {src: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css', dest: 'web/css/bootstrap-theme.min.css'},
           {src: 'bower_components/bootstrap-3-datepicker/css/datepicker3.css', dest: 'web/css/datepicker3.css'},
           {src: 'bower_components/dropzone/downloads/css/dropzone.css', dest: 'web/css/dropzone.css'},
-          {src: 'bower_components/scheduler/codebase/dhtmlxscheduler.css', dest: 'web/css/scheduler/dhtmlxscheduler.css'}
+          {src: 'bower_components/scheduler/codebase/dhtmlxscheduler.css', dest: 'web/css/scheduler/dhtmlxscheduler.css'},
+          {src: 'bower_components/redactor/redactor/redactor.css', dest: 'web/css/redactor/redactor/redactor.css'}
         ]
       },
       javascript: {
@@ -41,7 +42,13 @@ module.exports = function(grunt) {
           { src: 'bower_components/scheduler/codebase/sources/dhtmlxscheduler.js.map',  dest: 'web/js/scheduler/sources/dhtmlxscheduler.js.map' },
           { src: 'bower_components/scheduler/codebase/locale/locale_fr.js', dest: 'web/js/scheduler/locale_fr.js' },
           { src: 'bower_components/moment/min/moment.min.js',               dest: 'web/js/moment/moment.min.js' },
-          { src: 'bower_components/moment/min/locales.min.js',              dest: 'web/js/moment/locales.min.js' }
+          { src: 'bower_components/moment/min/locales.min.js',              dest: 'web/js/moment/locales.min.js' },
+          { src: 'bower_components/redactor/redactor/redactor.js',          dest: 'web/js/redactor/redactor/redactor.js' },
+          { src: 'lib/redactor/locale/fr.js',                               dest: 'web/js/redactor/redactor/locale/fr.js' },
+          { src: 'lib/redactor/filemanager.js',                             dest: 'web/js/redactor/redactor/filemanager.js' },
+
+          // CKEDITOR
+          { cwd: 'bower_components/redactor/', src: '**/*', dest: 'web/js/redactor/', expand: true  }
         ]
       },
       images: {

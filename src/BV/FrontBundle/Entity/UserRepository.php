@@ -104,4 +104,21 @@ class UserRepository extends EntityRepository
 
         return $messages;
     }
+
+    /**
+     * For now, only super admin is allowed to edit CMS Pages
+     *
+     * @param $user
+     * @return bool
+     */
+    public static function isAllowedToEditCmsPages($user)
+    {
+        if (!$user instanceof User)
+            return false;
+
+        if ($user->isSuperAdmin())
+            return true;
+
+        return false;
+    }
 }

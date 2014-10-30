@@ -1,3 +1,9 @@
+bv_static_cms_page_upload:
+    path:     /
+    defaults: { _controller: FrontBundle:Default:CmsPageUpload }
 bv_static_volley_school:
     path:     /volleyschool
     defaults: { _controller: FrontBundle:Default:volleySchool }
+bv_static_volley_school_edit:
+    path:     /volleyschool/edit
+    defaults: { _controller: FrontBundle:Default:volleySchoolEdit }

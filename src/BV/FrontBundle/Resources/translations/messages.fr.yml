@@ -56,6 +56,9 @@ homepage:
 
 volleyschool:
   welcome: Ecole de volley
+  edit: Editer
+  form:
+    submit: Valider
 
 constants:
   user:

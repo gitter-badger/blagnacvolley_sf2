@@ -3,8 +3,8 @@
 {% block title %}{{ parent() }} - Ecole de volley{% endblock %}
 
 {% block content %}
-    <h1>{{ 'volleyschool.welcome'|trans() }}</h1>
+    <h1>{{ 'volleyschool.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_volley_school_edit') }}">{{ 'volleyschool.edit'|trans() }}</a> {% endif %} </h1>
 
-
+    {{ content|raw }}
 
 {% endblock content %}

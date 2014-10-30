@@ -23,7 +23,9 @@
         <meta name="description" content="">
 
         {% block head_script %}
+
             <script type="text/javascript" src="/js/modernizr.js"></script>
+
         {% endblock head_script %}
 
         <title>{% block title %}BLAGNAC Volley-Ball{% endblock title %}</title>
@@ -59,7 +61,7 @@
                 {% if app.user %}
                     <div class="sharing-left">
                         <span class="label">
-                            |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'header.navbar.logged_user' | trans() }} {{ app.user.username }}
+                            |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'header.navbar.logged_user' | trans() }} {{ app.user.firstname }} {{ app.user.lastname }}
                         </span>
                     </div>
                 {% endif %}

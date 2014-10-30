@@ -103,6 +103,7 @@ class CalendarController extends Controller
     public function saveEventsAction(Request $request) {
         /* @var $user User */
         $user = $this->container->get('security.context')->getToken()->getUser();
+        $theId = $request->request->get('ids');
 
         if (!$request->isXmlHttpRequest() || !$user instanceof User)
         {
@@ -114,7 +115,6 @@ class CalendarController extends Controller
             return $response;
         }
 
-        $theId = $request->request->get('ids');
         $status = $request->request->get($theId . "_!nativeeditor_status");
 
         $team = null;
