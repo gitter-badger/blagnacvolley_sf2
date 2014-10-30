@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="bv_cms_page")
  * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\CmsPageRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class CmsPage
 {
@@ -153,5 +154,23 @@ class CmsPage
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function onPrePersist()
+    {
+        $now = new \DateTime();
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }
