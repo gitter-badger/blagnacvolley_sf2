@@ -150,7 +150,7 @@ class User extends EntityUser
     /**
      * @var Team
      *
-     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\Team", cascade={"persist", "remove"}, inversedBy="membersMsc")
      * @ORM\JoinColumn(name="msc_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $mscTeam;
@@ -158,7 +158,7 @@ class User extends EntityUser
     /**
      * @var Team
      *
-     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\Team", cascade={"persist", "remove"}, inversedBy="membersFem")
      * @ORM\JoinColumn(name="fem_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $femTeam;
@@ -166,7 +166,7 @@ class User extends EntityUser
     /**
      * @var Team
      *
-     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\Team", cascade={"persist", "remove"}, inversedBy="membersMix")
      * @ORM\JoinColumn(name="mix_team_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $mixTeam;

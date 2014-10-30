@@ -2,7 +2,11 @@
 
 namespace BV\FrontBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Team
@@ -26,17 +30,17 @@ class Team
     private $id;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\OneToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="captain_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $captain;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\OneToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="sub_captain_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $subCaptain;
@@ -68,6 +72,34 @@ class Team
      * @ORM\Column(name="slot", type="string", length=255)
      */
     private $slot;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\User", mappedBy="femTeam", cascade={"persist"})
+     */
+    private $membersFem;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\User", mappedBy="mscTeam", cascade={"persist"})
+     */
+    private $membersMsc;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\User", mappedBy="mixTeam", cascade={"persist"})
+     */
+    private $membersMix;
+
+    public function __construct()
+    {
+        $this->membersFem = new ArrayCollection();
+        $this->membersMsc = new ArrayCollection();
+        $this->membersMix = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -231,7 +263,139 @@ class Team
         return $this->slot;
     }
 
-    function __toString()
+    /**
+     * @return ArrayCollection
+     */
+    public function getMembersFem()
+    {
+        return $this->membersFem;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function addMembersFem(User $user)
+    {
+        $this->membersFem->add($user);
+        $user->setFemTeam($this);
+
+        return $this;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function removeMembersFem(User $user)
+    {
+        $this->membersFem->remove($user->getId());
+        $user->setFemTeam(null);
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMembersMix()
+    {
+        return $this->membersMix;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function addMembersMix(User $user)
+    {
+        $this->membersMix->add($user);
+        $user->setMixTeam($this);
+
+        return $this;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function removeMembersMix(User $user)
+    {
+        $this->membersMix->remove($user->getId());
+        $user->setMixTeam(null);
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMembersMsc()
+    {
+        return $this->membersMsc;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function addMembersMsc(User $user)
+    {
+        $this->membersMsc->add($user);
+        $user->setMscTeam($this);
+
+        return $this;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function removeMembersMsc(User $user)
+    {
+        $this->membersMsc->remove($user->getId());
+        $user->setMscTeam(null);
+
+        return $this;
+    }
+
+    /**
+     * @Assert\Callback()
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        switch ($this->type) {
+            case self::TYPE_FEM:
+                $members = $this->membersFem;
+                break;
+            case self::TYPE_MIX:
+                $members = $this->membersMix;
+                break;
+            case self::TYPE_MSC:
+                $members = $this->membersMsc;
+                break;
+        }
+
+        if (!$members->contains($this->captain)) {
+            $context
+                ->buildViolation('The captain must be in the members list.')
+                ->atPath('captain')
+                ->addViolation()
+            ;
+        }
+        if (!$members->contains($this->subCaptain)) {
+            $context
+                ->buildViolation('The subCaptain must be in the members list.')
+                ->atPath('subCaptain')
+                ->addViolation()
+            ;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
     {
         return $this->getName().' ('.$this->getLevel().')';
     }

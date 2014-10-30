@@ -2,6 +2,9 @@
 
 namespace BV\AdminBundle\Admin;
 
+use BV\FrontBundle\Entity\Team;
+use BV\FrontBundle\Entity\User;
+use Doctrine\ORM\Query\Expr\Join;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -12,14 +15,106 @@ class TeamAdmin extends Admin
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $type = $this->getSubject()->getType();
+
         $formMapper
-            ->add('name')
-            ->add('type', 'bv_team_type')
-            ->add('level', 'bv_user_level')
-            ->add('slot')
-            ->add('captain')
-            ->add('subCaptain')
+            ->tab('Management')
+                ->with('Management')
+                    ->add('name')
+                    ->add('type', 'bv_team_type', array(
+                        'help' => "This field is required in order to add members.",
+                        'disabled' => !is_null($type),
+                    ))
+                    ->add('level', 'bv_user_level')
+                    ->add('slot')
+                ->end()
+            ->end()
         ;
+
+        if (!is_null($type)) {
+            switch ($this->getSubject()->getType()) {
+                case Team::TYPE_FEM:
+                    $members = 'membersFem';
+                    $gender = User::GENDER_FEMALE;
+                    break;
+                case Team::TYPE_MSC:
+                    $members = 'membersMsc';
+                    $gender = User::GENDER_MALE;
+                    break;
+                case Team::TYPE_MIX:
+                    $members = 'membersMix';
+                    $gender = null;
+                    break;
+            }
+
+            /* @var $em \Doctrine\ORM\EntityManager */
+            $em = $this->getModelManager()->getEntityManager($this->getClass());
+            $meta = $em->getClassMetadata($this->getClass());
+            $expr = $em->getExpressionBuilder();
+            $qbMember = $em->createQueryBuilder()
+                ->select('u')
+                ->from($meta->getAssociationMapping($members)['targetEntity'], 'u')
+                ->where($expr->orX(
+                    $expr->eq('u.' . $meta->getAssociationMapping($members)['mappedBy'], ':team'),
+                    $expr->isNull('u.' . $meta->getAssociationMapping($members)['mappedBy'])
+                ))
+                ->setParameter('team', $this->getSubject()->getId())
+            ;
+            if (!is_null($gender)) {
+                $qbMember
+                    ->andWhere($expr->eq('u.gender', ':gender'))
+                    ->setParameter('gender', $gender);
+            }
+
+            $qbCaptain = $em->createQueryBuilder()
+                ->select('u')
+                ->from($meta->getAssociationMapping($members)['targetEntity'], 'u')
+                ->where($expr->eq('u.' . $meta->getAssociationMapping($members)['mappedBy'], ':team'))
+                ->leftJoin($this->getClass(), 't', Join::WITH, $expr->andX(
+                    $expr->neq('t.id', ':team'),
+                    $expr->neq('t.captain', 'u.id')
+                ))
+                ->setParameter('team', $this->getSubject()->getId())
+            ;
+
+            $qbSubCaptain = $em->createQueryBuilder()
+                ->select('u')
+                ->from($meta->getAssociationMapping($members)['targetEntity'], 'u')
+                ->where($expr->eq('u.' . $meta->getAssociationMapping($members)['mappedBy'], ':team'))
+                ->leftJoin($this->getClass(), 't', Join::WITH, $expr->andX(
+                    $expr->neq('t.id', ':team'),
+                    $expr->neq('t.subCaptain', 'u.id')
+                ))
+                ->setParameter('team', $this->getSubject()->getId())
+            ;
+
+            $formMapper
+                ->tab('Members')
+                    ->with('Leaders')
+                        ->add('captain', 'sonata_type_model', array(
+                            'query' => $qbCaptain,
+                            'btn_add' => false,
+                            'required' => false,
+                        ))
+                        ->add('subCaptain', 'sonata_type_model', array(
+                            'query' => $qbSubCaptain,
+                            'btn_add' => false,
+                            'required' => false,
+                        ))
+                    ->end()
+                    ->with('Players')
+                        ->add($members, 'sonata_type_model', array(
+                            'by_reference' => false,
+                            'query' => $qbMember,
+                            'multiple' => true,
+                            'required' => false,
+                            'label' => 'Members',
+                            'btn_add' => false,
+                        ))
+                    ->end()
+                ->end()
+            ;
+        }
     }
 
     // Fields to be shown on filter forms

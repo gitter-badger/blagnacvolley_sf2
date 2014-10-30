@@ -149,7 +149,7 @@ class UserAdmin extends Admin
                     ->add('mscTeam')
                     ->add('femTeam')
                     ->add('mixTeam')
-                    ->add('isLookingForTeam')
+                    ->add('isLookingForTeam', null, array('is_required' => false))
                 ->end()
             ->end()
 //            ->with('Groups')
