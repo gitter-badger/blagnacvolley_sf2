@@ -56,6 +56,11 @@ class DefaultController extends Controller
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add('success', 'Modifications sauvegardées avec succès' );
+
+                return $this->render('FrontBundle:Default:volleyschool.html.twig', array(
+                    'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
+                    'content' => $cmsPage->getContent(),
+                ));
             }
         }
 
@@ -87,7 +92,6 @@ class DefaultController extends Controller
                 'filename' => $uploadedFile->getClientOriginalName()
             );
         }
-
 
         $response = new Response(json_encode($array));
         $response->headers->set('Content-Type', 'application/json');

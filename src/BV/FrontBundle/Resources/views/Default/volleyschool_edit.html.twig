@@ -18,7 +18,7 @@
 
 {% block title %}{{ parent() }} - Ecole de volley{% endblock %}
 
-{% block content %}
+{% block content_row %}
     <h1>{{ 'volleyschool.welcome'|trans() }}</h1>
 
     <form action="{{ path('bv_static_volley_school_edit') }}" {{ form_enctype(form) }} method="POST">
@@ -43,4 +43,4 @@
     //]]>
     </script>
 
-{% endblock content %}
+{% endblock content_row %}
