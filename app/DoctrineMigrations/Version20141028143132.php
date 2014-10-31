@@ -25,6 +25,6 @@ class Version20141028143132 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
         
         $this->addSql('ALTER TABLE Events CHANGE text text VARCHAR(255) NOT NULL');
-        $this->addSql('ALTER TABLE Vacations CHANGE text text VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE vacations CHANGE text text VARCHAR(255) NOT NULL');
     }
 }
