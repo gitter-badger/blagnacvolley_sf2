@@ -1,0 +1,5 @@
+services:
+    bv_team.leaders_validator:
+        class: BV\FrontBundle\Validator\TeamLeadersAreMembersValidator
+        tags:
+            - { name: validator.constraint_validator, alias: team_leaders_are_members }

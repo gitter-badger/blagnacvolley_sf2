@@ -6,10 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use BV\FrontBundle\Validator\TeamLeadersAreMembers;
 
 /**
  * Team
+ *
+ * @TeamLeadersAreMembers()
  *
  * @ORM\Table(name="bv_team")
  * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\TeamRepository")
@@ -359,9 +361,8 @@ class Team
         return $this;
     }
 
-    /**
-     * @Assert\Callback()
-     */
+    // @Assert\Callback()
+    /* exemple of validation in the class
     public function validate(ExecutionContextInterface $context)
     {
         switch ($this->type) {
@@ -391,6 +392,7 @@ class Team
             ;
         }
     }
+    */
 
     /**
      * @return string
