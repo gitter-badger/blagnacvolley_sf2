@@ -15,6 +15,8 @@ class CmsPage
 {
     const STATIC_PAGE_VOLLEYSCHOOL = 'PAGE_VOLLEYSCHOOL';
     const STATIC_PAGE_FREE_GAME = 'PAGE_FREE_GAME';
+    const STATIC_PAGE_SCHEDULE = 'PAGE_SCHEDULE';
+    const STATIC_PAGE_ADDRESSES = 'PAGE_ADDRESSES';
 
     /**
      * @var integer

@@ -67,6 +67,18 @@ jeulibre:
   form:
     submit: Valider
 
+addresses:
+  welcome: Adresses
+  edit: Editer
+  form:
+    submit: Valider
+
+schedule:
+  welcome: Horaires
+  edit: Editer
+  form:
+    submit: Valider
+
 constants:
   user:
     status:

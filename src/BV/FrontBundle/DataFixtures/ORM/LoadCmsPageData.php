@@ -27,8 +27,26 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
         $cmsPageFG->setUpdatedAt(null);
         $cmsPageFG->setDescription("Jeu libre");
 
+        // Horaires
+        $cmsPageS = new CmsPage();
+        $cmsPageS->setContent('');
+        $cmsPageS->setName(CmsPage::STATIC_PAGE_SCHEDULE);
+        $cmsPageS->setCreatedAt(new \DateTime());
+        $cmsPageS->setUpdatedAt(null);
+        $cmsPageS->setDescription("Horaires");
+
+        // Addresses
+        $cmsPageA = new CmsPage();
+        $cmsPageA->setContent('');
+        $cmsPageA->setName(CmsPage::STATIC_PAGE_ADDRESSES);
+        $cmsPageA->setCreatedAt(new \DateTime());
+        $cmsPageA->setUpdatedAt(null);
+        $cmsPageA->setDescription("Adresses");
+
         $manager->persist($cmsPageVS);
         $manager->persist($cmsPageFG);
+        $manager->persist($cmsPageS);
+        $manager->persist($cmsPageA);
 
         $manager->flush();
     }

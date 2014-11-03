@@ -13,3 +13,15 @@ bv_static_jeu_libre:
 bv_static_jeu_libre_edit:
     path:     /jeulibre/edit
     defaults: { _controller: FrontBundle:Default:jeuLibreEdit }
+bv_static_addresses:
+    path:     /addresses
+    defaults: { _controller: FrontBundle:Default:addresses }
+bv_static_addresses_edit:
+    path:     /addresses/edit
+    defaults: { _controller: FrontBundle:Default:addressesEdit }
+bv_static_schedule:
+    path:     /schedule
+    defaults: { _controller: FrontBundle:Default:schedule }
+bv_static_schedule_edit:
+    path:     /schedule/edit
+    defaults: { _controller: FrontBundle:Default:scheduleEdit }

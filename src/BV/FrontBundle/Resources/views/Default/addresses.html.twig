@@ -1,0 +1,10 @@
+{% extends "FrontBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'addresses.welcome'|trans() }} {% endblock %}
+
+{% block content_row %}
+    <h1>{{ 'addresses.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_addresses_edit') }}">{{ 'addresses.edit'|trans() }}</a> {% endif %} </h1>
+
+    {{ content|raw }}
+
+{% endblock content_row %}
