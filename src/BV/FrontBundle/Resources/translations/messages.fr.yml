@@ -46,11 +46,16 @@ team:
     slot: Créneau attribué
   show:
     h1: Equipe : %team_name%
+    h2: Effectif
     name: Nom
     level: Niveau
     type: Type
     slot: Créneau attribué
     list: Retour à la liste des équipes
+    captain: Capitaine
+    no_captain: Pas de capitaine défini
+    subcaptain: Suppléant
+    no_subcaptain: Pas de suppléant défini
 
 homepage:
   welcome: Bienvenue sur le site officiel du Blagnac Volley-Ball
@@ -85,6 +90,12 @@ constants:
       ACTIVE_LICENSED: Actif licencié
       ACTIVE_NOT_LICENSED: Actif non licencié
       INACTIVE: Inactif
+    postes:
+      CENTRAL: Central
+      LIBERO: Libéro
+      PASSEUR: Passeur
+      POINTU: Pointu
+      RECEP4: Récep 4
     gender:
       MALE: Homme
       FEMALE: Femme

@@ -1,36 +1,107 @@
 {% extends 'FrontBundle::layout.html.twig' %}
 
-{% block content_row -%}{% set level = "constants.user.level." ~ entity.level %}
-    <h1>{{ 'team.show.h1'|trans({'%team_name%': entity.name}) }}</h1>
+{% block content_row -%}
+    <h1>{{ 'team.show.h1'|trans({'%team_name%': team.name}) }}</h1>
 
     <table class="table table-striped table-hover">
         <tbody>
             <tr>
                 <th>{{ 'team.show.level'|trans() }}</th>
-                <td>{{ level|trans }}</td>
+                <td>
+                    {% set level = "constants.user.level." ~ team.level %}
+                    {{ level|trans }}
+                </td>
             </tr>
             <tr>
                 <th>{{ 'team.show.name'|trans() }}</th>
-                <td>{{ entity.name }}</td>
+                <td>{{ team.name }}</td>
             </tr>
             <tr>
                 <th>{{ 'team.show.type'|trans() }}</th>
-                <td>{{ entity.type }}</td>
+                <td>{{ team.type }}</td>
             </tr>
             <tr>
                 <th>{{ 'team.show.slot'|trans() }}</th>
-                <td>{{ entity.slot }}</td>
+                <td>{{ team.slot }}</td>
             </tr>
         </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="2">
-                    <a href="{{ path('teams') }}" class="btn btn-default">
-                        {{ 'team.show.list'|trans() }}
-                    </a>
-                </th>
-            </tr>
-        </tfoot>
     </table>
+
+    <h1>{{ 'team.show.h2'|trans() }}</h1>
+
+    <div class="col-sm-2">
+        {% if team.getCaptain %}
+            <div class="relative">
+                <img src="{{ team.getCaptain.picture }}" class="img-thumbnail" style="max-height: 150px;max-width: 150px;margin: 0 auto;display: block;" />
+                <div class="w100p label label-success dblock">{{ 'team.show.captain'|trans() }}</div>
+            </div>
+            <div class="text-center">
+                {{ team.getCaptain.firstname }} {{ team.getCaptain.lastname }}
+            </div>
+            <br/>
+
+        {% else %}
+            <div class="relative">
+                <img src="{{ asset('images/defaults/default.png') }}" class="img-circle" style="max-height: 150px;max-width: 150px;margin: 0 auto;display: block;" />
+                <div class="w100p label label-success dblock">{{ 'team.show.captain'|trans() }}</div>
+            </div>
+            <br/>
+
+            <div class="text-center">
+                <span>{{ 'team.show.no_captain'|trans() }}</span>
+            </div>
+        {% endif %}
+
+        {% if team.getSubCaptain %}
+            <div class="relative">
+                <img src="{{ team.getSubCaptain.picture }}" class="img-thumbnail" style="max-height: 150px;max-width: 150px;margin: 0 auto;display: block;" />
+                <div class="w100p label label-warning dblock">{{ 'team.show.subcaptain'|trans() }}</div>
+            </div>
+            <div class="text-center">
+                {{ team.getSubCaptain.firstname }} {{ team.getSubCaptain.lastname }}
+            </div>
+            <br/>
+
+        {% else %}
+            <div class="relative">
+                <img src="{{ asset('images/defaults/default.png') }}" class="img-circle" style="max-height: 150px;max-width: 150px;margin: 0 auto;display: block;" />
+                <div class="w100p label label-warning dblock">{{ 'team.show.subcaptain'|trans() }}</div>
+            </div>
+            <br/>
+
+            <div class="text-center">
+                <span>{{ 'team.show.no_subcaptain'|trans() }}</span>
+            </div>
+        {% endif %}
+    </div>
+    <div class="col-sm-10">
+        <div class="row">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Nom</th>
+                    <th>License</th>
+                    <th>Poste</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for player in users %}
+                        <tr>
+                            <td><img src="{{ player.picture }}" class="img" style="max-height: 50px;max-width: 50px;margin: 0 auto;display: block;" /></td>
+                            <td>{{ player.firstname }} {{ player.lastname }}</td>
+                            <td>{{ player.licenseNumber }}</td>
+                            <td>{{ ('constants.user.postes.' ~ player.poste) |trans()}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <br/>
+    <a href="{{ path('teams') }}" class="btn btn-primary">
+        {{ 'team.show.list'|trans() }}
+    </a>
 
 {% endblock %}

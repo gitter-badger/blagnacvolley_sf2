@@ -2,6 +2,7 @@
 
 namespace BV\FrontBundle\Entity;
 
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 

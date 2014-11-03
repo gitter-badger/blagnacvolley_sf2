@@ -58,6 +58,12 @@ class User extends EntityUser
     const STATUS_ACTIVE_NOT_LICENSED = 'ACTIVE_NOT_LICENSED';
     const STATUS_INACTIVE = 'INACTIVE';
 
+    const POSTE_POINTU = 'POINTU';
+    const POSTE_LIBERO = 'LIBERO';
+    const POSTE_RECEP4 = 'RECEP4';
+    const POSTE_CENTRAL = 'CENTRAL';
+    const POSTE_PASSEUR = 'PASSEUR';
+
     const GENDER_MALE = 'MALE';
     const GENDER_FEMALE = 'FEMALE';
 
@@ -269,6 +275,13 @@ class User extends EntityUser
      * @ORM\Column(name="date_shirt_delivered", type="datetime", nullable=true)
      */
     protected $dateShirtDelivered;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="poste", type="string", length=255, nullable=true)
+     */
+    protected $poste;
 
     /**
      * @var string
@@ -644,6 +657,22 @@ class User extends EntityUser
     }
 
     /**
+     * Returns the status list
+     *
+     * @return array
+     */
+    public static function getPostesList()
+    {
+        return array(
+            self::POSTE_CENTRAL => 'constants.user.postes.'.self::POSTE_CENTRAL,
+            self::POSTE_LIBERO  => 'constants.user.postes.'.self::POSTE_LIBERO,
+            self::POSTE_PASSEUR => 'constants.user.postes.'.self::POSTE_PASSEUR,
+            self::POSTE_POINTU  => 'constants.user.postes.'.self::POSTE_POINTU,
+            self::POSTE_RECEP4  => 'constants.user.postes.'.self::POSTE_RECEP4,
+        );
+    }
+
+    /**
      * Set status
      *
      * @param string $status
@@ -929,5 +958,28 @@ class User extends EntityUser
     public function getAttestation()
     {
         return $this->attestation;
+    }
+
+    /**
+     * Set poste
+     *
+     * @param string $poste
+     * @return User
+     */
+    public function setPoste($poste)
+    {
+        $this->poste = $poste;
+    
+        return $this;
+    }
+
+    /**
+     * Get poste
+     *
+     * @return string 
+     */
+    public function getPoste()
+    {
+        return $this->poste;
     }
 }

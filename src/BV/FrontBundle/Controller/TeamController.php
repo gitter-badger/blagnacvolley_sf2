@@ -47,7 +47,8 @@ class TeamController extends Controller
         }
 
         return $this->render('FrontBundle:Team:show.html.twig', array(
-            'entity'      => $entity,
+            'team'      => $entity,
+            'users'     => $em->getRepository('FrontBundle:User')->findAllByTeam($id)
         ));
     }
 }

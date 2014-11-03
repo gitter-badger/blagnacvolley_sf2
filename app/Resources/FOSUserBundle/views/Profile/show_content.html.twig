@@ -63,7 +63,7 @@
                         <tbody>
                         <tr>
                             <th>{{ 'profile.show.club_data.level'|trans() }}</th>
-                            <td>{{ user.level }}</td>
+                            <td>{{ ('constants.user.level.' ~ user.level) |trans()}}</td>
                         </tr>
                         <tr>
                             <th>{{ 'profile.show.club_data.mscteam'|trans() }}</th>

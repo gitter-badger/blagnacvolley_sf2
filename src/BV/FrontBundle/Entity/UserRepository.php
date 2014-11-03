@@ -3,6 +3,7 @@
 namespace BV\FrontBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * UserRepository
@@ -120,5 +121,22 @@ class UserRepository extends EntityRepository
             return true;
 
         return false;
+    }
+
+    public function findAllByTeam($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+            SELECT p FROM FrontBundle:User p
+            WHERE p.mscTeam = :id
+            OR p.mixTeam = :id
+            OR p.femTeam = :id'
+            )->setParameter('id', $id);
+
+        try {
+            return $query->getArrayResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 }
