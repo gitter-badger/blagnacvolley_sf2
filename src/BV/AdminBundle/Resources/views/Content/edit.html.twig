@@ -1,0 +1,34 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="/js/redactor/redactor/redactor.css" />
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="/js/redactor/redactor/redactor.js"></script>
+    <script type="text/javascript" src="/js/redactor/redactor/filemanager.js"></script>
+{% endblock javascripts %}
+
+{% block form %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        //<![CDATA[
+        (function ( $ ) {
+            $('.redactor').redactor({
+                fileUpload: '{{ path('bv_static_cms_page_upload') }}'
+            });
+        }( jQuery ));
+        //]]>
+    </script>
+
+{% endblock form %}
+
+{% block list_filters %}
+
+{% endblock list_filters %}

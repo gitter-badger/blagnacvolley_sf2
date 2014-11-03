@@ -40,3 +40,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
+    sonata.admin.static:
+        class: BV\AdminBundle\Admin\StaticAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Pages statiques" }
+        arguments:
+            - ~
+            - BV\FrontBundle\Entity\CmsPage
+            - ~
+        calls:
+            - [ setTranslationDomain, [FrontBundle] ]
+            - [ setTemplate, [edit, AdminBundle:Content:edit.html.twig]]

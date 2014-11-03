@@ -17,6 +17,7 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
         $cmsPageVS->setName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL);
         $cmsPageVS->setCreatedAt(new \DateTime());
         $cmsPageVS->setUpdatedAt(null);
+        $cmsPageVS->setDescription("Ecole de volley");
 
         // Jeu libre
         $cmsPageFG = new CmsPage();
@@ -24,6 +25,7 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
         $cmsPageFG->setName(CmsPage::STATIC_PAGE_FREE_GAME);
         $cmsPageFG->setCreatedAt(new \DateTime());
         $cmsPageFG->setUpdatedAt(null);
+        $cmsPageFG->setDescription("Jeu libre");
 
         $manager->persist($cmsPageVS);
         $manager->persist($cmsPageFG);

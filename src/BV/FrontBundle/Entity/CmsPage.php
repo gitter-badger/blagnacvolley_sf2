@@ -35,6 +35,13 @@ class CmsPage
     /**
      * @var string
      *
+     * @ORM\Column(name="description", type="string", length=512, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
@@ -172,5 +179,28 @@ class CmsPage
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return CmsPage
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
