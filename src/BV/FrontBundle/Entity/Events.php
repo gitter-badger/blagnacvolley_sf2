@@ -17,6 +17,7 @@ class Events
     const TYPE_MATCH = 'MATCH';
     const TYPE_VOLLEYSCHOOL_ADULT = 'VOLLEYSCHOOL_ADULT';
     const TYPE_VOLLEYSCHOOL_YOUTH = 'VOLLEYSCHOOL_YOUTH';
+    const TYPE_FREE_PLAY = 'FREE_PLAY';
     const TYPE_CLOSED = 'CLOSED';
 
     /**
@@ -213,6 +214,7 @@ class Events
             self::TYPE_MATCH                => 'constants.events.type.'.self::TYPE_MATCH,
             self::TYPE_VOLLEYSCHOOL_ADULT   => 'constants.events.type.'.self::TYPE_VOLLEYSCHOOL_ADULT,
             self::TYPE_VOLLEYSCHOOL_YOUTH   => 'constants.events.type.'.self::TYPE_VOLLEYSCHOOL_YOUTH,
+            self::TYPE_FREE_PLAY            => 'constants.events.type.'.self::TYPE_FREE_PLAY,
             self::TYPE_CLOSED               => 'constants.events.type.'.self::TYPE_CLOSED,
         );
     }
@@ -227,6 +229,7 @@ class Events
             self::TYPE_MATCH                => '/images/icons/'.self::TYPE_MATCH.'.png',
             self::TYPE_VOLLEYSCHOOL_ADULT   => '/images/icons/'.self::TYPE_VOLLEYSCHOOL_ADULT.'.png',
             self::TYPE_VOLLEYSCHOOL_YOUTH   => '/images/icons/'.self::TYPE_VOLLEYSCHOOL_YOUTH.'.png',
+            self::TYPE_FREE_PLAY            => '/images/icons/'.self::TYPE_FREE_PLAY.'.png',
             self::TYPE_CLOSED               => '/images/icons/'.self::TYPE_CLOSED.'.png',
         );
     }
