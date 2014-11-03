@@ -80,14 +80,23 @@ class EventsRepository extends EntityRepository
         }
     }
 
-    public function findEventsByTeamForDate($team, \Datetime $date)
+    public function findEventsByTeamForDate($team, \Datetime $date, $eventId = null)
     {
-        $query = $this->getEntityManager()
-            ->createQuery(' SELECT p FROM FrontBundle:Events p '.
+        $sql =  ' SELECT p FROM FrontBundle:Events p '.
                 ' WHERE p.team = :team '.
-                ' AND p.startDate = :date')
+                ' AND p.startDate = :date';
+
+        if ($eventId != null)
+            $sql .= ' AND p.id <> :id';
+
+        $query = $this->getEntityManager()
+            ->createQuery($sql)
             ->setParameter('team', $team)
             ->setParameter('date', $date->format('Y-m-d H:i'));
+
+        if ($eventId != null)
+           $query->setParameter('id', $eventId);
+
         try {
             return $query->getResult();
         } catch (NoResultException $e) {

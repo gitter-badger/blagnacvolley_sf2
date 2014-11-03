@@ -50,7 +50,8 @@ class UserRepository extends EntityRepository
                 }
 
                 // Check that there is not a training of this team this day
-                if (count($this->getEntityManager()->getRepository('FrontBundle:Events')->findEventsByTeamForDate($event->getTeam(), $event->getStartDate())) > 0) {
+                $events = $this->getEntityManager()->getRepository('FrontBundle:Events')->findEventsByTeamForDate($event->getTeam(), $event->getStartDate(), $event->getId());
+                if (count($events) > 0) {
                     $messages[] = "Vous ne pouvez réserver ce créneau, vous avez déjà un évènement de planifié ce jour là.";
                 }
 
