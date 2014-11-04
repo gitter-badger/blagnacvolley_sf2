@@ -12,8 +12,8 @@ fos_user_security_logout:
     path:     /logout
 
 ## FOS USER REGISTRATION
-fos_user_registration_register:
-    defaults: { _controller: "FOSUserBundle:Registration:register" }
+fos_user_registration_register: ## OVERRIDE Registration
+    defaults: { _controller: "FrontBundle:Registration:register" }
     path:     /register/
 fos_user_registration_check_email:
     defaults: { _controller: "FOSUserBundle:Registration:checkEmail" }

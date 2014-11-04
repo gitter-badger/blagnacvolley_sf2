@@ -1,0 +1,4 @@
+services:
+    tools.logbundle.logger:
+        class: Tools\LogBundle\Logger\Logger
+        arguments: [ "@doctrine.orm.entity_manager" ]

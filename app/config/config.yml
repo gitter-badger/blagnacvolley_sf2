@@ -109,3 +109,11 @@ front:
         pictures_path: /uploads/users
         certif_path:   /uploads/certif
         attestation_path: /uploads/attestation
+
+monolog:
+    handlers:
+        main:
+            type: service
+            level: warning
+            id: logger_database
+

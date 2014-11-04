@@ -61,4 +61,13 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
-
+    sonata.admin.notification:
+        class: BV\AdminBundle\Admin\NotificationAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Paramètres", label: "Notifications" }
+        arguments:
+            - ~
+            - Tools\LogBundle\Entity\SystemLog
+            - AdminBundle:Static
+        calls:
+            - [ setTranslationDomain, [LogBundle] ]
