@@ -5,11 +5,11 @@ namespace BV\FrontBundle\Controller;
 use BV\FrontBundle\Form\Type\ProfileFormType;
 use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use BV\FrontBundle\Entity\User;
+use Tools\LogBundle\Entity\SystemLog;
 
 class ProfileController extends Controller
 {

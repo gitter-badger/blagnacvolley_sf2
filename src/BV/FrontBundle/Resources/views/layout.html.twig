@@ -167,6 +167,16 @@
 
         {% block content_div_start %}<div class="content">{% endblock content_div_start %}
 
+            {% block admin_notifications %}
+                <ul class="row flash-messages">
+                    {% for notification in app.session.flashbag.get('notice') %}
+                        <li class="bg-info">
+                            {{ notification }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endblock admin_notifications %}
+
             {% block flashes %}
                 <ul class="flash-messages">
                     {% for flashMessage in app.session.flashbag.get('notice') %}

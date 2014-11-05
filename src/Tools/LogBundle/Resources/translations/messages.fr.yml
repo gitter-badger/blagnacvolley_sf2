@@ -1,0 +1,13 @@
+constants:
+  levels:
+    DEBUG: DEBUG
+    INFO: INFO
+    NOTICE: NOTICE
+    WARNING: WARNING
+    ERROR: ERROR
+    CRITICAL: CRITICAL
+    ALERT: ALERT
+    EMERGENCY: EMERGENCY
+  types:
+    TYPE_USER_CREATED: Nouvel Utilisateur
+    TYPE_USER_NEW_SEASON: Demande de renouvellement

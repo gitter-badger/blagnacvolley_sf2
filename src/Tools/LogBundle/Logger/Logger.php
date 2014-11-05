@@ -14,25 +14,27 @@ class Logger
         $this->doctrine = $doctrine;
     }
 
-    public function addDebug($content) { $this->addMessage(SystemLog::DEBUG, $content); }
-    public function addInfo($content) { $this->addMessage(SystemLog::INFO, $content); }
-    public function addNotice($content) { $this->addMessage(SystemLog::NOTICE, $content); }
-    public function addWarning($content) { $this->addMessage(SystemLog::WARNING, $content); }
-    public function addError($content) { $this->addMessage(SystemLog::ERROR, $content); }
-    public function addCritical($content) { $this->addMessage(SystemLog::CRITICAL, $content); }
-    public function addAlert($content) { $this->addMessage(SystemLog::ALERT, $content); }
-    public function addEmergency($content) { $this->addMessage(SystemLog::EMERGENCY, $content); }
+    public function addDebug        ($type, $content) { $this->addMessage(SystemLog::DEBUG, $type, $content); }
+    public function addInfo         ($type, $content) { $this->addMessage(SystemLog::INFO, $type, $content); }
+    public function addNotice       ($type, $content) { $this->addMessage(SystemLog::NOTICE, $type, $content); }
+    public function addWarning      ($type, $content) { $this->addMessage(SystemLog::WARNING, $type, $content); }
+    public function addError        ($type, $content) { $this->addMessage(SystemLog::ERROR, $type, $content); }
+    public function addCritical     ($type, $content) { $this->addMessage(SystemLog::CRITICAL, $type, $content); }
+    public function addAlert        ($type, $content) { $this->addMessage(SystemLog::ALERT, $type, $content); }
+    public function addEmergency    ($type, $content) { $this->addMessage(SystemLog::EMERGENCY, $type, $content); }
 
     /**
      * Save the message to the database
      *
      * @param $level
+     * @param $type
      * @param $content
      */
-    public function addMessage($level, $content)
+    public function addMessage($level, $type, $content)
     {
         $systemLog = new SystemLog($level);
         $systemLog->setContent($content);
+        $systemLog->setType($type);
         $systemLog->setIsRead(false);
         $this->doctrine->persist($systemLog);
         $this->doctrine->flush();

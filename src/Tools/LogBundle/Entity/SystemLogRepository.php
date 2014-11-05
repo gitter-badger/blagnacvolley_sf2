@@ -3,6 +3,7 @@
 namespace Tools\LogBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 class SystemLogRepository extends EntityRepository
 {
@@ -22,5 +23,21 @@ class SystemLogRepository extends EntityRepository
 
         //Return result
         return $q->getResult();
+    }
+
+    /**
+     * Count unread logs and group them by type
+     *
+     * @return array|null
+     */
+    public function countGroupByType()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT p.type, count(p) AS nb FROM ToolsLogBundle:SystemLog p WHERE p.isRead = false GROUP BY p.type");
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 }

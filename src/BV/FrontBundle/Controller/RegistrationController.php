@@ -5,6 +5,7 @@ namespace BV\FrontBundle\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
+use Tools\LogBundle\Entity\SystemLog;
 
 class RegistrationController extends BaseController
 {
@@ -31,7 +32,7 @@ class RegistrationController extends BaseController
             $url = $this->container->get('router')->generate($route);
             $response = new RedirectResponse($url);
 
-            $this->container->get('tools.logbundle.logger')->addNotice('Nouveau compte utilisateur crée : '.$user->getFirstName().' '.$user->getLastName());
+            $this->container->get('tools.logbundle.logger')->addNotice(SystemLog::TYPE_USER_CREATED, 'Nouveau compte utilisateur crée : '.$user->getFirstName().' '.$user->getLastName());
 
             if ($authUser) {
                 $this->authenticateUser($user, $response);

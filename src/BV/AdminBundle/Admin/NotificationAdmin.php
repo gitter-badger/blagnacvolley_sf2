@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use BV\FrontBundle\Entity\Events;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Tools\LogBundle\Entity\SystemLog;
 
 class NotificationAdmin extends Admin
 {
@@ -16,7 +17,7 @@ class NotificationAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('level')
+            ->add('level', 'choice', array('choices' => SystemLog::getLevels()))
             ->add('content')
             ->add('created')
             ->add('isRead')
@@ -37,7 +38,8 @@ class NotificationAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('level')
+            ->add('level',  'choice', array ('choices' => SystemLog::getLevels() ) )
+            ->add('type',  'choice', array ('choices' => SystemLog::getTypes() ) )
             ->add('content')
             ->add('created','datetime',array('format' => 'd M Y H:m'))
             ->add('isRead')
