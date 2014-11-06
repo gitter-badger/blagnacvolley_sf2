@@ -158,6 +158,13 @@ class User extends EntityUser
     public $certifFile;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_certif", type="datetime", nullable=true)
+     */
+    protected $dateCertif;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="attestation", type="string", length=512, nullable=true)
@@ -174,6 +181,13 @@ class User extends EntityUser
      * )
      */
     public $attestationFile;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_attestation", type="datetime", nullable=true)
+     */
+    protected $dateAttestation;
 
     /**
      * @var string
@@ -981,5 +995,51 @@ class User extends EntityUser
     public function getPoste()
     {
         return $this->poste;
+    }
+
+    /**
+     * Set dateCertif
+     *
+     * @param \DateTime $dateCertif
+     * @return User
+     */
+    public function setDateCertif($dateCertif)
+    {
+        $this->dateCertif = $dateCertif;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateCertif
+     *
+     * @return \DateTime 
+     */
+    public function getDateCertif()
+    {
+        return $this->dateCertif;
+    }
+
+    /**
+     * Set dateAttestation
+     *
+     * @param \DateTime $dateAttestation
+     * @return User
+     */
+    public function setDateAttestation($dateAttestation)
+    {
+        $this->dateAttestation = $dateAttestation;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateAttestation
+     *
+     * @return \DateTime 
+     */
+    public function getDateAttestation()
+    {
+        return $this->dateAttestation;
     }
 }

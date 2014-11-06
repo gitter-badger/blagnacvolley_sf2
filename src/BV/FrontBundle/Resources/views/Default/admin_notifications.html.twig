@@ -12,7 +12,13 @@
                         {% for n in notificationsList %}
                             {% if n.level == notification.level %}
                                 {% set type = "constants.types." ~ types[n.type] %}
-                                <li>{{ type|trans() }} : {{ n.content }}</li>
+                                <li>{{ type|trans() }} :
+                                    {% if n.user != null %}
+                                        {{ n.user.firstname }} {{ n.user.lastname }}
+                                    {% else %}
+                                        {{ n.content }}
+                                    {% endif %}
+                                </li>
                             {% endif %}
                         {% endfor %}
                     </ul>

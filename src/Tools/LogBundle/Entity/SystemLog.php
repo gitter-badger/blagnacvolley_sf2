@@ -2,6 +2,7 @@
 
 namespace Tools\LogBundle\Entity;
 
+use BV\FrontBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 
@@ -18,6 +19,8 @@ class SystemLog
 
     const TYPE_USER_CREATED = 100;
     const TYPE_USER_NEW_SEASON = 110;
+    const TYPE_USER_NEW_CERTIF = 120;
+    const TYPE_USER_NEW_ATTESTATION = 130;
 
     protected static $levels = array(
         self::NOTICE            => 'NOTICE',
@@ -27,6 +30,8 @@ class SystemLog
     protected static $types = array(
         self::TYPE_USER_CREATED     => 'TYPE_USER_CREATED',
         self::TYPE_USER_NEW_SEASON  => 'TYPE_USER_NEW_SEASON',
+        self::TYPE_USER_NEW_CERTIF  => 'TYPE_USER_NEW_CERTIF',
+        self::TYPE_USER_NEW_ATTESTATION  => 'TYPE_USER_NEW_ATTESTATION',
     );
 
     /**
@@ -35,6 +40,14 @@ class SystemLog
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $user;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -316,5 +329,28 @@ class SystemLog
         }
 
         return static::$types[$type];
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     * @return SystemLog
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

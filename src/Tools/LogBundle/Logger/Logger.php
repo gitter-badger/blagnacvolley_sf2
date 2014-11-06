@@ -14,19 +14,21 @@ class Logger
         $this->doctrine = $doctrine;
     }
 
-    public function addNotice       ($type, $content) { $this->addMessage(SystemLog::NOTICE, $type, $content); }
-    public function addWarning      ($type, $content) { $this->addMessage(SystemLog::REQUIRE_ACTION, $type, $content); }
+    public function addNotice       ($type, $user, $content = '') { $this->addMessage(SystemLog::NOTICE, $type, $user, $content); }
+    public function addWarning      ($type, $user, $content = '') { $this->addMessage(SystemLog::REQUIRE_ACTION, $type, $user, $content); }
 
     /**
      * Save the message to the database
      *
      * @param $level
      * @param $type
+     * @param $user
      * @param $content
      */
-    public function addMessage($level, $type, $content)
+    public function addMessage($level, $type, $user, $content)
     {
         $systemLog = new SystemLog($level);
+        $systemLog->setUser($user);
         $systemLog->setContent($content);
         $systemLog->setType($type);
         $systemLog->setIsRead(false);

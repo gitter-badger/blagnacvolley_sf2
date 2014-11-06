@@ -18,17 +18,17 @@ class LoadSystemLogData extends AbstractFixture implements OrderedFixtureInterfa
 
         $syslog1 = new SystemLog(SystemLog::NOTICE);
         $syslog1->setIsRead(false);
-        $syslog1->setContent($user_yann->getFirstname().' '.$user_yann->getLastname());
+        $syslog1->setUser($user_yann);
         $syslog1->setType(SystemLog::TYPE_USER_CREATED);
 
         $syslog2 = new SystemLog(SystemLog::NOTICE);
         $syslog2->setIsRead(false);
-        $syslog2->setContent($user_seb->getFirstname().' '.$user_seb->getLastname());
+        $syslog1->setUser($user_seb);
         $syslog2->setType(SystemLog::TYPE_USER_CREATED);
 
         $syslog3 = new SystemLog(SystemLog::REQUIRE_ACTION);
         $syslog3->setIsRead(false);
-        $syslog3->setContent($user_yann->getFirstname().' '.$user_yann->getLastname());
+        $syslog1->setUser($user_yann);
         $syslog3->setType(SystemLog::TYPE_USER_NEW_SEASON);
 
         $syslog4 = new SystemLog(SystemLog::NOTICE);

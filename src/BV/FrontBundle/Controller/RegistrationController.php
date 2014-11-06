@@ -32,7 +32,7 @@ class RegistrationController extends BaseController
             $url = $this->container->get('router')->generate($route);
             $response = new RedirectResponse($url);
 
-            $this->container->get('tools.logbundle.logger')->addNotice(SystemLog::TYPE_USER_CREATED, 'Nouveau compte utilisateur crée : '.$user->getFirstName().' '.$user->getLastName());
+            $this->container->get('tools.logbundle.logger')->addNotice(SystemLog::TYPE_USER_CREATED, $user);
 
             if ($authUser) {
                 $this->authenticateUser($user, $response);

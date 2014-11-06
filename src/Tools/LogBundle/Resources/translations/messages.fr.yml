@@ -5,3 +5,5 @@ constants:
   types:
     TYPE_USER_CREATED: Nouvel Utilisateur
     TYPE_USER_NEW_SEASON: Demande de renouvellement
+    TYPE_USER_NEW_CERTIF: Nouveau certificat médical
+    TYPE_USER_NEW_ATTESTATION: Nouvelle attestation P.E.

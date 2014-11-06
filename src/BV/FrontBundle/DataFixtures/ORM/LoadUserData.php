@@ -98,7 +98,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user1->setShirtSize('L');
         $user1->setIsRequiredBill(false);
         $user1->setIsLookingForTeam(false);
-        $user1->setStatus(USER::STATUS_ACTIVE_LICENSED);
+        $user1->setStatus(USER::STATUS_ACTIVE_NOT_LICENSED);
         $user1->setLicenseNumber('132132151');
         // base User implementation
         $user1->setUsername('pichon');

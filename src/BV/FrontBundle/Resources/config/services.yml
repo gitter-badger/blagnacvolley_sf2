@@ -25,7 +25,7 @@ services:
         arguments: [ "@mailer", "@templating" ]
     bv.user_manager:
         class: BV\FrontBundle\Doctrine\UserManager
-        arguments: [ "@security.encoder_factory", "@fos_user.util.username_canonicalizer", "@fos_user.util.email_canonicalizer", "@fos_user.entity_manager", "%fos_user.model.user.class%" ]
+        arguments: [ "@security.encoder_factory", "@fos_user.util.username_canonicalizer", "@fos_user.util.email_canonicalizer", "@fos_user.entity_manager", "%fos_user.model.user.class%", "@tools.logbundle.logger" ]
         public: false
         calls:
             - [ setContainer, ["@service_container"] ]

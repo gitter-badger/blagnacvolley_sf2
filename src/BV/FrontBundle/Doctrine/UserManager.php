@@ -2,6 +2,7 @@
 
 namespace BV\FrontBundle\Doctrine;
 
+use BV\FrontBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManager as BaseUserManager;
@@ -9,6 +10,8 @@ use FOS\UserBundle\Util\CanonicalizerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Tools\LogBundle\Entity\SystemLog;
+use Tools\LogBundle\Logger\Logger;
 
 class UserManager extends BaseUserManager implements ContainerAwareInterface
 {
@@ -16,6 +19,7 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
     protected $class;
     protected $repository;
     protected $container;
+    protected $logger;
 
     /**
      * Constructor.
@@ -25,8 +29,9 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
      * @param CanonicalizerInterface  $emailCanonicalizer
      * @param ObjectManager           $om
      * @param string                  $class
+     * @param Logger $logger
      */
-    public function __construct(EncoderFactoryInterface $encoderFactory, CanonicalizerInterface $usernameCanonicalizer, CanonicalizerInterface $emailCanonicalizer, ObjectManager $om, $class)
+    public function __construct(EncoderFactoryInterface $encoderFactory, CanonicalizerInterface $usernameCanonicalizer, CanonicalizerInterface $emailCanonicalizer, ObjectManager $om, $class, Logger $logger)
     {
         parent::__construct($encoderFactory, $usernameCanonicalizer, $emailCanonicalizer);
 
@@ -35,6 +40,7 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
 
         $metadata = $om->getClassMetadata($class);
         $this->class = $metadata->getName();
+        $this->logger = $logger;
     }
 
     /**
@@ -86,6 +92,7 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
      */
     public function updateUser(UserInterface $user, $andFlush = true)
     {
+        /* @var $user User */
         $this->updateCanonicalFields($user);
         $this->updatePassword($user);
 
@@ -98,6 +105,8 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
             $user->certifFile->move($uploadDir, $filename);
             $user->setCertif($certifPath.'/'.$filename);
             $user->certifFile = null;
+
+            $this->logger->addWarning(SystemLog::TYPE_USER_NEW_CERTIF, $user);
         }
 
         if (null !== $user->attestationFile) {
@@ -109,6 +118,8 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
             $user->attestationFile->move($uploadDir, $filename);
             $user->setAttestation($attestationPath.'/'.$filename);
             $user->attestationFile = null;
+
+            $this->logger->addWarning(SystemLog::TYPE_USER_NEW_ATTESTATION, $user);
         }
 
         $this->objectManager->persist($user);
