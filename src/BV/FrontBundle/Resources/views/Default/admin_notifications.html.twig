@@ -2,7 +2,6 @@
     <span class="label">
         {% for notification in notifications %}
             {% set level = "constants.levels." ~ levels[notification.level] %}
-            {#{% if notification.level == constant('\\Tools\\LogBundle\\Entity\\SystemLog::NOTICE') %}#}
             <a rel="popover" href="{{ path('admin_tools_log_systemlog_list') }}" class="notification-link">
                 <i class="fa fa-flag color-notification color-{{ notification.level }}"></i> ({{ notification.nb }})
                 <div class="head hide">
@@ -19,7 +18,6 @@
                     </ul>
                 </div>
             </a>
-            {#{% endif %}#}
         {% endfor %}
     </span>
 </div>
