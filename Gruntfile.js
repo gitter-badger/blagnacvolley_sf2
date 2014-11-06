@@ -48,6 +48,8 @@ module.exports = function(grunt) {
           { src: 'bower_components/redactor/redactor/redactor.js',          dest: 'web/js/redactor/redactor/redactor.js' },
           { src: 'lib/redactor/locale/fr.js',                               dest: 'web/js/redactor/redactor/locale/fr.js' },
           { src: 'lib/redactor/filemanager.js',                             dest: 'web/js/redactor/redactor/filemanager.js' },
+          { src: 'bower_components/bootstrap/js/popover.js',                dest: 'web/js/bootstrap/popover.js' },
+          { src: 'bower_components/bootstrap/js/tooltip.js',                dest: 'web/js/bootstrap/tooltip.js' },
 
           // CKEDITOR
           { cwd: 'bower_components/redactor/', src: '**/*', dest: 'web/js/redactor/', expand: true  }
@@ -80,6 +82,14 @@ module.exports = function(grunt) {
       styles: {
         files: ['src/**/*.less'], // which files to watch
         tasks: ['less'],
+        options: {
+          nospawn: true
+        }
+      },
+
+      js_files: {
+        files: ['Gruntfile.js'], // which files to watch
+        tasks: ['build'],
         options: {
           nospawn: true
         }

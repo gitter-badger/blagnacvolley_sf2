@@ -25,7 +25,10 @@
 
         {% block head_script %}
 
-            <script type="text/javascript" src="/js/modernizr.js"></script>
+            <script type="text/javascript" src="{{ asset('js/modernizr.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/bootstrap/tooltip.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/bootstrap/popover.js') }}"></script>
 
         {% endblock head_script %}
 

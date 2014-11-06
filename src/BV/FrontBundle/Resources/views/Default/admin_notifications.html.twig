@@ -1,11 +1,43 @@
 <div class="sharing-left">
     <span class="label">
         {% for notification in notifications %}
+            {% set level = "constants.levels." ~ levels[notification.level] %}
             {#{% if notification.level == constant('\\Tools\\LogBundle\\Entity\\SystemLog::NOTICE') %}#}
-            <a href="{{ path('admin_tools_log_systemlog_list') }}" class="notification-link">
+            <a rel="popover" href="{{ path('admin_tools_log_systemlog_list') }}" class="notification-link">
                 <i class="fa fa-flag color-notification color-{{ notification.level }}"></i> ({{ notification.nb }})
+                <div class="head hide">
+                    {{ notification.nb }} messages <i>{{ level|trans() }}</i>
+                </div>
+                <div class="content hide">
+                    <ul>
+                        {% for n in notificationsList %}
+                            {% if n.level == notification.level %}
+                                {% set type = "constants.types." ~ types[n.type] %}
+                                <li>{{ type|trans() }} : {{ n.content }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
             </a>
             {#{% endif %}#}
         {% endfor %}
     </span>
 </div>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery("[rel=popover]").each(function(){
+            jQuery(this).popover({
+                html : true,
+                trigger: 'hover',
+                title: function() {
+                    return jQuery(this).children('.head').html();
+                },
+                content: function() {
+                    return jQuery(this).children('.content').html();
+                },
+                container: 'body',
+                placement: 'bottom'
+            });
+        });
+    });
+</script>

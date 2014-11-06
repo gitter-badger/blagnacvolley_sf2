@@ -22,7 +22,9 @@ class DefaultController extends Controller
     {
         return $this->render('FrontBundle:Default:admin_notifications.html.twig', array(
             'notifications' => $this->getDoctrine()->getRepository('ToolsLogBundle:SystemLog')->countGroupByLevel(),
-            'types' => SystemLog::getLevels()
+            'notificationsList' => $this->getDoctrine()->getRepository('ToolsLogBundle:SystemLog')->findAllOrderByLevel(),
+            'levels' => SystemLog::getLevels(),
+            'types' => SystemLog::getTypes()
         ));
     }
 

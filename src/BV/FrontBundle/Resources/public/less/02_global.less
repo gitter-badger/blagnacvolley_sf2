@@ -18,6 +18,10 @@ ul.flash-messages { padding:0;
 }
 
 // Colors
+.color-text-peter-river {color:           #3498db;}
+.color-back-peter-river {background-color:#3498db;}
+.color-text-belize-hole {color:           #2980b9;}
+.color-back-belize-hole {background-color:#2980b9;}
 .color-text-red         {color:           #e74c3c;}
 .color-back-red         {background-color:#e74c3c;}
 .color-text-orange      {color:           #e67e22;}
@@ -44,14 +48,19 @@ ul.flash-messages { padding:0;
 .color-back-wysteria    {background-color:#8e44ad;}
 
 // Color notifications
-.notification-link { font-size: 14px; }
+.notification-link { font-size: 12px; }
 .color-notification {
   &.color-100 { .color-text-emerald; }
-  &.color-200 { .color-text-nephritis; }
-  &.color-250 { .color-text-amethyst; }
-  &.color-300 { .color-text-wysteria; }
-  &.color-400 { .color-text-sunflower; }
-  &.color-500 { .color-text-carrot; }
-  &.color-550 { .color-text-pumpkin; }
-  &.color-600 { .color-text-pomegranate; }
+//  &.color-200 { .color-text-nephritis; }
+  &.color-200 { .color-text-pomegranate; }
+}
+
+// Popover skin
+.popover { position: absolute; top: 0; left: 0; z-index: 1010; display: none; max-width: 600px; padding: 1px; text-align: left; white-space: normal; background-color: #ffffff; border: 1px solid #ccc; border: 1px solid rgba(0, 0, 0, 0.2); -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); -webkit-background-clip: padding-box; -moz-background-clip: padding; background-clip: padding-box;
+  .popover-title i { font-weight: bold; .color-text-belize-hole; }
+  .popover-content {
+    ul { padding:10px;margin-bottom: 0;
+      li { list-style: none;font-size: 12px; }
+    }
+  }
 }

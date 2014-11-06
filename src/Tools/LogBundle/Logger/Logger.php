@@ -14,14 +14,8 @@ class Logger
         $this->doctrine = $doctrine;
     }
 
-    public function addDebug        ($type, $content) { $this->addMessage(SystemLog::DEBUG, $type, $content); }
-    public function addInfo         ($type, $content) { $this->addMessage(SystemLog::INFO, $type, $content); }
     public function addNotice       ($type, $content) { $this->addMessage(SystemLog::NOTICE, $type, $content); }
-    public function addWarning      ($type, $content) { $this->addMessage(SystemLog::WARNING, $type, $content); }
-    public function addError        ($type, $content) { $this->addMessage(SystemLog::ERROR, $type, $content); }
-    public function addCritical     ($type, $content) { $this->addMessage(SystemLog::CRITICAL, $type, $content); }
-    public function addAlert        ($type, $content) { $this->addMessage(SystemLog::ALERT, $type, $content); }
-    public function addEmergency    ($type, $content) { $this->addMessage(SystemLog::EMERGENCY, $type, $content); }
+    public function addWarning      ($type, $content) { $this->addMessage(SystemLog::REQUIRE_ACTION, $type, $content); }
 
     /**
      * Save the message to the database

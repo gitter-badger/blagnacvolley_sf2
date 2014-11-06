@@ -13,27 +13,15 @@ use Symfony\Component\Form\Exception\InvalidArgumentException;
  */
 class SystemLog
 {
-    const DEBUG     = 100;
-    const INFO      = 200;
-    const NOTICE    = 250;
-    const WARNING   = 300;
-    const ERROR     = 400;
-    const CRITICAL  = 500;
-    const ALERT     = 550;
-    const EMERGENCY = 600;
+    const NOTICE         = 100;
+    const REQUIRE_ACTION = 200;
 
     const TYPE_USER_CREATED = 100;
     const TYPE_USER_NEW_SEASON = 110;
 
     protected static $levels = array(
-        self::DEBUG     => 'DEBUG',
-        self::INFO      => 'INFO',
-        self::NOTICE    => 'NOTICE',
-        self::WARNING   => 'WARNING',
-        self::ERROR     => 'ERROR',
-        self::CRITICAL  => 'CRITICAL',
-        self::ALERT     => 'ALERT',
-        self::EMERGENCY => 'EMERGENCY',
+        self::NOTICE            => 'NOTICE',
+        self::REQUIRE_ACTION    => 'REQUIRE_ACTION',
     );
 
     protected static $types = array(
@@ -275,6 +263,11 @@ class SystemLog
      */
     public static function getLevels()
     {
+        return static::$levels;
+    }
+
+    public static function getFlipLevels()
+    {
         return array_flip(static::$levels);
     }
 
@@ -300,6 +293,11 @@ class SystemLog
      * @return array Assoc array with human-readable type names => type codes.
      */
     public static function getTypes()
+    {
+        return static::$types;
+    }
+
+    public static function getFlipTypes()
     {
         return array_flip(static::$types);
     }
