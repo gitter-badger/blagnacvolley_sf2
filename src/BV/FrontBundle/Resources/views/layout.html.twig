@@ -16,6 +16,7 @@
             <link rel="stylesheet" href="/css/bootstrap.css">
             <link rel="stylesheet" href="/css/styles.css">
             <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+            <link rel="stylesheet" href="/css/font-awesome/font-awesome.min.css">
 
         {% endblock head_style %}
 
@@ -66,6 +67,13 @@
                             |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'header.navbar.logged_user' | trans() }} {{ app.user.firstname }} {{ app.user.lastname }}
                         </span>
                     </div>
+
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        {% block admin_notifications %}
+                            {{ render(controller('FrontBundle:Default:adminNotifications')) }}
+                        {% endblock admin_notifications %}
+                    {% endif %}
+
                 {% endif %}
                 <div class="sharing">
                     {% if app.user %}
@@ -166,16 +174,6 @@
         {% endblock container_div_start %}
 
         {% block content_div_start %}<div class="content">{% endblock content_div_start %}
-
-            {% block admin_notifications %}
-                <ul class="row flash-messages">
-                    {% for notification in app.session.flashbag.get('notice') %}
-                        <li class="bg-info">
-                            {{ notification }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endblock admin_notifications %}
 
             {% block flashes %}
                 <ul class="flash-messages">

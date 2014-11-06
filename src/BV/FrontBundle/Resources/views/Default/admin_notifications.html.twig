@@ -1,0 +1,11 @@
+<div class="sharing-left">
+    <span class="label">
+        {% for notification in notifications %}
+            {#{% if notification.level == constant('\\Tools\\LogBundle\\Entity\\SystemLog::NOTICE') %}#}
+            <a href="{{ path('admin_tools_log_systemlog_list') }}" class="notification-link">
+                <i class="fa fa-flag color-notification color-{{ notification.level }}"></i> ({{ notification.nb }})
+            </a>
+            {#{% endif %}#}
+        {% endfor %}
+    </span>
+</div>

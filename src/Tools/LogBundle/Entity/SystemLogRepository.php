@@ -40,4 +40,20 @@ class SystemLogRepository extends EntityRepository
             return null;
         }
     }
+
+    /**
+     * Count unread logs and group them by level
+     *
+     * @return array|null
+     */
+    public function countGroupByLevel()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT p.level, count(p) AS nb FROM ToolsLogBundle:SystemLog p WHERE p.isRead = false GROUP BY p.level");
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }

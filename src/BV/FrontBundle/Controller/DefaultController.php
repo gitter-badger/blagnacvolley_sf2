@@ -9,12 +9,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
+use Tools\LogBundle\Entity\SystemLog;
 
 class DefaultController extends Controller
 {
     public function indexAction()
     {
         return $this->render('FrontBundle:Default:index.html.twig', array());
+    }
+
+    public function adminNotificationsAction()
+    {
+        return $this->render('FrontBundle:Default:admin_notifications.html.twig', array(
+            'notifications' => $this->getDoctrine()->getRepository('ToolsLogBundle:SystemLog')->countGroupByLevel(),
+            'types' => SystemLog::getLevels()
+        ));
     }
 
     public function volleySchoolAction()

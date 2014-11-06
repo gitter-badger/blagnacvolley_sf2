@@ -275,7 +275,7 @@ class SystemLog
      */
     public static function getLevels()
     {
-        return static::$levels;
+        return array_flip(static::$levels);
     }
 
     /**
@@ -301,7 +301,7 @@ class SystemLog
      */
     public static function getTypes()
     {
-        return static::$types;
+        return array_flip(static::$types);
     }
 
     /**
@@ -314,7 +314,7 @@ class SystemLog
     public static function getTypeName($type)
     {
         if (!isset(static::$types[$type])) {
-            throw new InvalidArgumentException('Type "'.$type.'" is not defined, use one of: '.implode(', ', array_keys(static::$types)));
+            throw new InvalidArgumentException('Level "'.$type.'" is not defined, use one of: '.implode(', ', array_keys(static::$types)));
         }
 
         return static::$types[$type];
