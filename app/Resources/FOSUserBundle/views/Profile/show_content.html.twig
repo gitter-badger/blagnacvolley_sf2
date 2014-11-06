@@ -21,17 +21,15 @@
             {% endif %}
         </span>
 
-        {% if user.getCertif %}
-            <div class="mt10"><a href="{{ asset(user.getCertif) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Certificat médical</a></div>
-        {% else %}
-            <div class="mt10"><span class="fa fa-file-pdf-o color-text-red"></span> Certificat médical</div>
-        {% endif %}
+        <div class="user_files">
+            {% if user.getCertif %}
+                <div class="file"><a href="{{ asset(user.getCertif) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Certificat médical</a></div>
+            {% endif %}
 
-        {% if user.getAttestation %}
-            <div class="mt10"><a href="{{ asset(user.getAttestation) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Attestation pôle emploi</a></div>
-        {% else %}
-            <div class="mt10"><span class="fa fa-file-pdf-o color-text-red"></span> Attestation pôle emploi</div>
-        {% endif %}
+            {% if user.getAttestation %}
+                <div class="file"><a href="{{ asset(user.getAttestation) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Attestation pôle emploi</a></div>
+            {% endif %}
+        </div>
 
         <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block mt10" >Modifier</a>
     </div>
