@@ -16,7 +16,7 @@ services:
         arguments:
             - ~
             - BV\FrontBundle\Entity\Events
-            - ~
+            - AdminBundle:Calendar
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
             - [ setTemplate, [list, AdminBundle:Calendar:list.html.twig]]

@@ -13,7 +13,10 @@ module.exports = function(grunt) {
         files: {
           // target.css file: source.less file
           "web/css/styles.css": "src/BV/FrontBundle/Resources/public/less/styles.less",
-          "web/css/bootstrap.css": "bower_components/bootstrap/less/bootstrap.less"
+          "web/css/bootstrap.css": "bower_components/bootstrap/less/bootstrap.less",
+
+          // Admin files
+          "web/css/styles_admin.css": "src/BV/AdminBundle/Resources/public/styles.less"
         }
       }
     },
@@ -26,6 +29,7 @@ module.exports = function(grunt) {
           {src: 'bower_components/scheduler/codebase/dhtmlxscheduler.css', dest: 'web/css/scheduler/dhtmlxscheduler.css'},
           {src: 'bower_components/redactor/redactor/redactor.css', dest: 'web/css/redactor/redactor/redactor.css'},
           {src: 'bower_components/font-awesome/css/font-awesome.min.css', dest: 'web/css/font-awesome/font-awesome.min.css'},
+          {src: 'bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css', dest: 'web/css/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'},
           {cwd: 'bower_components/font-awesome/fonts/', src: '**/*', dest: 'web/css/fonts/', expand: true  }
         ]
       },

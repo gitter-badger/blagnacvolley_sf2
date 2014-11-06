@@ -4,6 +4,7 @@ sonata_admin:
     security:
         handler: sonata.admin.security.handler.role
     templates:
+        layout: AdminBundle::layout.html.twig
         dashboard: AdminBundle:Core:dashboard.html.twig
 
 sonata_user:

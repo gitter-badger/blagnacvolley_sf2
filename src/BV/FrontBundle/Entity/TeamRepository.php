@@ -29,4 +29,19 @@ class TeamRepository extends EntityRepository
             return null;
         }
     }
+
+    /**
+     * @return array
+     */
+    public function findAllAsOptions()
+    {
+        $res = array();
+        foreach ($this->findAll() as $team) {
+            $res[] = array(
+                'key' => $team->getId(),
+                'label' => $team->getName()
+            );
+        }
+        return $res;
+    }
 }

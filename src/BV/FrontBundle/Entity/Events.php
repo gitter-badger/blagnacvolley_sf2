@@ -219,6 +219,20 @@ class Events
         );
     }
 
+    public static function getEventsTypeAsOptions()
+    {
+        $res = array();
+
+        $res[] = array( 'key' => Events::TYPE_TRAINING           ,'label' => 'constants.events.type.'.self::TYPE_TRAINING           );
+        $res[] = array( 'key' => Events::TYPE_MATCH              ,'label' => 'constants.events.type.'.self::TYPE_MATCH              );
+        $res[] = array( 'key' => Events::TYPE_VOLLEYSCHOOL_ADULT ,'label' => 'constants.events.type.'.self::TYPE_VOLLEYSCHOOL_ADULT );
+        $res[] = array( 'key' => Events::TYPE_VOLLEYSCHOOL_YOUTH ,'label' => 'constants.events.type.'.self::TYPE_VOLLEYSCHOOL_YOUTH );
+        $res[] = array( 'key' => Events::TYPE_FREE_PLAY          ,'label' => 'constants.events.type.'.self::TYPE_FREE_PLAY          );
+        $res[] = array( 'key' => Events::TYPE_CLOSED             ,'label' => 'constants.events.type.'.self::TYPE_CLOSED             );
+
+        return $res;
+    }
+
     /**
      * @return array
      */
