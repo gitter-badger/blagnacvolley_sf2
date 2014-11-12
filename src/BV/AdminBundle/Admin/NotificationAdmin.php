@@ -28,6 +28,7 @@ class NotificationAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+            ->add('isRead', 'doctrine_orm_choice', array(), 'choice' , array('choices' => array(true => 'Oui', false => 'Non')))
             ->add('level', 'doctrine_orm_string')
             ->add('content', 'doctrine_orm_string')
             ->add('created', 'doctrine_orm_datetime')
@@ -41,7 +42,7 @@ class NotificationAdmin extends Admin
             ->add('level',  'choice', array ('choices' => SystemLog::getLevels() ) )
             ->add('type',  'choice', array ('choices' => SystemLog::getTypes() ) )
             ->add('content')
-            ->add('created','datetime',array('format' => 'd M Y H:m'))
+            ->add('created','datetime',array('format' => 'd M Y H:i'))
             ->add('isRead')
             ->add('_action', 'actions', array(
                 'actions' => array(
