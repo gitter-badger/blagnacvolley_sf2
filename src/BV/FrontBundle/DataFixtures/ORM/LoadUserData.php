@@ -95,6 +95,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user1->setGeoLat('43.662233');
         $user1->setGeoLng('1.476035');
         $user1->setPicture('/images/defaults/default_male.png');
+        $user1->setCertif('/uploads/certif/pichon.png');
         $user1->setShirtSize('L');
         $user1->setIsRequiredBill(false);
         $user1->setIsLookingForTeam(false);
@@ -123,6 +124,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 
         $this->addReference('user_yann', $user_yann);
         $this->addReference('user_seb', $user_seb);
+        $this->addReference('user_1', $user1);
 
         $manager->flush();
     }

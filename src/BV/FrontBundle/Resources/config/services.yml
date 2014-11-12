@@ -22,7 +22,7 @@ services:
         public: false
     bv_mailer:
         class: BV\FrontBundle\Services\Email
-        arguments: [ "@mailer", "@templating" ]
+        arguments: [ "@mailer", "@templating", "@doctrine.orm.entity_manager" ]
     bv.user_manager:
         class: BV\FrontBundle\Doctrine\UserManager
         arguments: [ "@security.encoder_factory", "@fos_user.util.username_canonicalizer", "@fos_user.util.email_canonicalizer", "@fos_user.entity_manager", "%fos_user.model.user.class%", "@tools.logbundle.logger" ]

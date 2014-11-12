@@ -71,3 +71,4 @@ services:
             - AdminBundle:Static
         calls:
             - [ setTranslationDomain, [LogBundle] ]
+            - [ setTemplate, [inner_list_row, AdminBundle:Notification:inner_row_comment.html.twig], [base_list_field, [SonataAdminBundle:CRUD:base_list_flat_field.html.twig]]]

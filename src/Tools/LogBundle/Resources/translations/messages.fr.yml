@@ -1,7 +1,7 @@
 constants:
   levels:
-    NOTICE: NOTICE
-    REQUIRE_ACTION: REQUIRE_ACTION
+    NOTICE: Info
+    REQUIRE_ACTION: Action requise
   types:
     TYPE_USER_CREATED: Nouvel Utilisateur
     TYPE_USER_NEW_SEASON: Demande de renouvellement

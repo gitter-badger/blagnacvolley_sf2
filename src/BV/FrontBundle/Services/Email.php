@@ -4,17 +4,22 @@ namespace BV\FrontBundle\Services;
 
 use Symfony\Component\Templating\EngineInterface;
 use BV\FrontBundle\Entity\User;
+use Doctrine\ORM\EntityManager;
 
 class Email
 {
     protected $mailer;
     protected $templating;
+    protected $container;
+
+    const TYPE_SEND_CERTIF_REFUSED_EMAIL = 'SEND_CERTIF_REFUSED_EMAIL';
 
     private $from = "contact@blagnac-volley.fr";
 
-    public function __construct($mailer, EngineInterface $templating) {
+    public function __construct($mailer, EngineInterface $templating, EntityManager $doctrine) {
         $this->mailer = $mailer;
         $this->templating = $templating;
+        $this->doctrine = $doctrine;
     }
 
     protected function sendMessage($from, $to, $subject, $body) {
@@ -61,6 +66,47 @@ class Email
         $body = $this->templating->render($template, array(
             'user'      => $user,
             'message'   => $message
+        ));
+
+        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
+    }
+
+    /**
+     * Send message to user when the Admin user refuse his certificate
+     *
+     * @param User $user
+     */
+    public function sendCertifRefusedEmail($user)
+    {
+//        /* @var \BV\FrontBundle\Entity\Email $email */
+//        $email = $this->doctrine->getRepository("FrontBundle:Email")->findSingleByName(self::TYPE_SEND_CERTIF_REFUSED_EMAIL);
+//
+//        $this->sendMessage(
+//            $user->getEmail(),
+//            $this->from,
+//            $email->getTitle(),
+//            $email->getContent());
+
+        $subject = "[BlagnacVolley] l'admin a refusé votre certificat";
+        $template = 'FrontBundle:Mail:certifRefused.html.twig';
+        $body = $this->templating->render($template, array(
+            'user'      => $user,
+        ));
+
+        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
+    }
+
+    /**
+     * Send message to user when the Admin user refuse his certificate
+     *
+     * @param User $user
+     */
+    public function sendAttestationRefusedEmail($user)
+    {
+        $subject = "[BlagnacVolley] l'admin a refusé votre attestation";
+        $template = 'FrontBundle:Mail:attestationRefused.html.twig';
+        $body = $this->templating->render($template, array(
+            'user'      => $user,
         ));
 
         $this->sendMessage($user->getEmail(), $this->from, $subject, $body);

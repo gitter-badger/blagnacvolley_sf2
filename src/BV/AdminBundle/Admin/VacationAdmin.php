@@ -37,7 +37,7 @@ class VacationAdmin extends Admin
         $datagridMapper
             ->add('start_date', 'doctrine_orm_datetime')
             ->add('end_date', 'doctrine_orm_datetime')
-//            ->add('text')
+            ->add('text')
         ;
     }
 
@@ -45,19 +45,9 @@ class VacationAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('id')
-            ->add('start_date','datetime',array('date_format' => 'dd/MM/yyyy HH:mm'))
-            ->add('end_date','datetime',array('date_format' => 'dd/MM/yyyy HH:mm'))
-            ->add('text')
+            ->addIdentifier('text')
+            ->add('start_date','datetime',array('format' => 'd M Y H:i'))
+            ->add('end_date','datetime',array('format' => 'd M Y H:i'))
         ;
-    }
-
-    public function prePersist($object)
-    {
-        /* @var $object \BV\FrontBundle\Entity\Events */
-        parent::prePersist($object);
-//        $object->setContentFormatter('richhtml');
-//        $object->setContent($object->getRawContent());
-//        $object->setTitle($object->getTitle());
     }
 }

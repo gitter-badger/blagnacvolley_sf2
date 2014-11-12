@@ -1,0 +1,27 @@
+{% if admin.list.has('batch') and not app.request.isXmlHttpRequest %}
+    {{ object|render_list_element(admin.list['batch']) }}
+{% endif %}
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-choice" objectid="33">
+        {{ object|render_list_element(admin.list['level']) }}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-choice" objectid="33">
+        {{ object|render_list_element(admin.list['type']) }}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-string" objectid="33">
+        {{ object.content }}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-datetime" objectid="33">
+        {{ object.created|date("d M Y H:i") }}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-boolean" objectid="33">
+        {{ object|render_list_element(admin.list['isRead']) }}
+    </td>
+
+{% if admin.list.has('_action') and not app.request.isXmlHttpRequest %}
+    {{ object|render_list_element(admin.list['_action']) }}
+{% endif %}

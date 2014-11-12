@@ -1,0 +1,13 @@
+{% extends "FrontBundle:Mail:layout.html.twig" %}
+
+{% block title_content %}
+    [BlagnacVolley] l'admin a refusé votre attestation
+{% endblock title_content %}
+
+{% block mail_content %}
+
+    Bonjour {{ user.firstname }} {{ user.lastname }}<br/><br/>
+
+    Nous vous informons que l'administrateur du site a refusé votre attestation pôle emploi. Merci d'en envoyer une autre ou de vous rapprocher de lui pour de plus amples renseignements.
+
+{% endblock mail_content %}

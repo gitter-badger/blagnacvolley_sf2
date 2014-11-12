@@ -39,16 +39,14 @@ class NotificationAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('level',  'choice', array ('choices' => SystemLog::getLevels() ) )
-            ->add('type',  'choice', array ('choices' => SystemLog::getTypes() ) )
-            ->add('content')
+            ->add('level',  'choice', array ('choices' => SystemLog::getLevels(), 'template' => 'AdminBundle:Notification:Fields/level_field.html.twig') )
+            ->add('type',  'choice', array ('choices' => SystemLog::getTypes(), 'template' => 'AdminBundle:Notification:Fields/type_field.html.twig') )
+            ->add('content', 'string', array('template' => 'AdminBundle:Notification:Fields/content_field.html.twig'))
             ->add('created','datetime',array('format' => 'd M Y H:i'))
-            ->add('isRead')
+            ->add('isRead', 'boolean', array('template' => 'AdminBundle:Notification:Fields/boolean_field.html.twig') )
             ->add('_action', 'actions', array(
                 'actions' => array(
-                    'Clone' => array(
-                        'template' => 'AdminBundle:Static:list__action_mark_as_read.html.twig'
-                    )
+                    'markAsRead' => array('template' => 'AdminBundle:Notification:list__action_mark_as_read.html.twig'),
                 )
             ))
         ;
@@ -57,6 +55,8 @@ class NotificationAdmin extends Admin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('markHasRead', $this->getRouterIdParameter().'/markHasRead');
+        $collection->add('validateFile', $this->getRouterIdParameter().'/validateFile');
+        $collection->add('refuseFile', $this->getRouterIdParameter().'/refuseFile');
     }
 
     public function getBatchActions()

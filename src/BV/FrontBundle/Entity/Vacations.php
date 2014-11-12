@@ -5,6 +5,10 @@ namespace BV\FrontBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use BV\FrontBundle\Entity\Events;
 
+/**
+ * @ORM\Table(name="events")
+ * @ORM\MappedSuperclass
+ */
 class Vacations extends Events
 {
     /**

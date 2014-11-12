@@ -21,6 +21,11 @@ module.exports = function(grunt) {
       }
     },
     copy: {
+      fonts: {
+        files: [
+          {cwd: 'bower_components/bootstrap/fonts/', src: '**/*', dest: 'web/fonts/', expand: true  }
+        ]
+      },
       css: {
         files: [
           {src: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css', dest: 'web/css/bootstrap-theme.min.css'},

@@ -15,6 +15,7 @@ class LoadSystemLogData extends AbstractFixture implements OrderedFixtureInterfa
         /* @var $user_yann User */
         $user_yann = $this->getReference('user_yann');
         $user_seb = $this->getReference('user_seb');
+        $user_1 = $this->getReference('user_1');
 
         $syslog1 = new SystemLog(SystemLog::NOTICE);
         $syslog1->setIsRead(false);
@@ -41,11 +42,17 @@ class LoadSystemLogData extends AbstractFixture implements OrderedFixtureInterfa
         $syslog5->setContent('ANOTHER PREVIOUS USER');
         $syslog5->setType(SystemLog::TYPE_USER_CREATED);
 
+        $syslog6 = new SystemLog(SystemLog::NOTICE);
+        $syslog6->setIsRead(false);
+        $syslog6->setUser($user_1);
+        $syslog6->setType(SystemLog::TYPE_USER_NEW_CERTIF);
+
         $manager->persist($syslog1);
         $manager->persist($syslog2);
         $manager->persist($syslog3);
         $manager->persist($syslog4);
         $manager->persist($syslog5);
+        $manager->persist($syslog6);
 
         $manager->flush();
     }
