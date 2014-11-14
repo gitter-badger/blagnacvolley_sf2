@@ -78,6 +78,14 @@ class News
      */
     private $updatedAt;
 
+    /**
+     * @var Events
+     *
+     * @ORM\OneToOne(targetEntity="BV\FrontBundle\Entity\Events", cascade={"persist"})
+     * @ORM\JoinColumn(name="events_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $eventsId;
+
 
     /**
      * Get id
@@ -330,4 +338,27 @@ class News
         return $text;
     }
 
+
+    /**
+     * Set eventsId
+     *
+     * @param Events $eventsId
+     * @return News
+     */
+    public function setEventsId(Events $eventsId = null)
+    {
+        $this->eventsId = $eventsId;
+    
+        return $this;
+    }
+
+    /**
+     * Get eventsId
+     *
+     * @return Events
+     */
+    public function getEventsId()
+    {
+        return $this->eventsId;
+    }
 }

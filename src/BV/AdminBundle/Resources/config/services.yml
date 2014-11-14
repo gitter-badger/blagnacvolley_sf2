@@ -6,7 +6,7 @@ services:
         arguments:
             - ~
             - BV\FrontBundle\Entity\News
-            - ~
+            - AdminBundle:NewsAdmin
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
     sonata.admin.events:

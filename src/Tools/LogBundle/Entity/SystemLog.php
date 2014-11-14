@@ -279,6 +279,14 @@ class SystemLog
         return static::$levels;
     }
 
+    public static function getLevelsAsOptions()
+    {
+        return array(
+            self::NOTICE => 'constants.levels.'.self::NOTICE,
+            self::REQUIRE_ACTION => 'constants.levels.'.self::REQUIRE_ACTION,
+        );
+    }
+
     public static function getFlipLevels()
     {
         return array_flip(static::$levels);
