@@ -116,4 +116,21 @@ class EventsRepository extends EntityRepository
             return null;
         }
     }
+
+    /**
+     * @param $type
+     * @return array|null
+     */
+    public function findEventsByType($type)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(' SELECT p FROM FrontBundle:Events p '.
+                ' WHERE p.type = :type')
+            ->setParameter('type', $type);
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }

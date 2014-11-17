@@ -23,13 +23,25 @@ class LoadNewsData extends AbstractFixture implements OrderedFixtureInterface
         $post->setContentFormatter('richhtml');
         $post->setEnabled(true);
 
+        $eventsVS = $this->getReference('eventsVS');
+        $newsVS = new News();
+        $newsVS->setTitle('Volley School du 11 Novembre');
+        $content = "Si vous êtes disponibles, cliquez sur le lien suivant : <a href=\"#\">Ici</a>";
+        $newsVS->setRawContent($content);
+        $newsVS->setContent($content);
+        $newsVS->setContentFormatter('richhtml');
+        $newsVS->setEnabled(true);
+        $newsVS->setEventsId($eventsVS);
+
         $manager->persist($post);
+        $manager->persist($newsVS);
+
         $manager->flush();
 
     }
 
     public function getOrder()
     {
-        return 2;
+        return 4;
     }
 }

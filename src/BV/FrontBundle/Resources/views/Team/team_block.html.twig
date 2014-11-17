@@ -1,4 +1,5 @@
-{% for entity in entities %}{% set level = "constants.user.level." ~ entity.level %}
+{% for entity in entities %}
+    {% set level = "constants.user.level." ~ entity.level %}
     <tr>
         <td>{{ entity.type }}</td>
         <td>

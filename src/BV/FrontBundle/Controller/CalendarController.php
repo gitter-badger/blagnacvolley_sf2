@@ -78,13 +78,22 @@ class CalendarController extends Controller
                 $res[$i]["team_name"] = $event->getTeam()->getName();
             }
 
-            // It's a vacation, always readonly
-            if ($event->getType() == Events::TYPE_CLOSED) {
-                $res[$i]["readonly"] = true;
-                $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> Fermé : </strong> " . $event->getText() . "</div>";
-            } else {
-                $res[$i]["readonly"] = $this->getDoctrine()->getRepository('FrontBundle:Events')->isReadonly($event, $user);
-                $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> " . $event->getTeam()->getName() . "</strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
+            switch ($event->getType()) {
+                case Events::TYPE_CLOSED:
+                    $res[$i]["readonly"] = true;
+                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> Fermé : </strong> " . $event->getText() . "</div>";
+                break;
+                case Events::TYPE_VOLLEYSCHOOL_ADULT:
+                case Events::TYPE_VOLLEYSCHOOL_YOUTH:
+                case Events::TYPE_FREE_PLAY:
+                    $res[$i]["readonly"] = true;
+                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> ".$this->get('translator')->trans('constants.events.type.'.$event->getType())." : </strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
+                break;
+                case Events::TYPE_TRAINING:
+                case Events::TYPE_MATCH:
+                    $res[$i]["readonly"] = $this->getDoctrine()->getRepository('FrontBundle:Events')->isReadonly($event, $user);
+                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> " . $event->getTeam()->getName() . "</strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
+                break;
             }
 
             $i++;

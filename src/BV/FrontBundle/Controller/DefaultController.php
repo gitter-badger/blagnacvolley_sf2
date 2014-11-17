@@ -3,6 +3,7 @@
 namespace BV\FrontBundle\Controller;
 
 use BV\FrontBundle\Entity\CmsPage;
+use BV\FrontBundle\Entity\Events;
 use BV\FrontBundle\Entity\User;
 use BV\FrontBundle\Form\CmsPageFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -36,9 +37,12 @@ class DefaultController extends Controller
         /* @var CmsPage $cmsPage */
         $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL);
 
-        return $this->render('FrontBundle:Default:volleyschool.html.twig', array(
+        $events = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_ADULT);
+
+        return $this->render('FrontBundle:Volleyschool:volleyschool.html.twig', array(
             'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
             'content' => $cmsPage->getContent(),
+            'events' => $events,
         ));
     }
 
@@ -72,7 +76,7 @@ class DefaultController extends Controller
             }
         }
 
-        return $this->render('FrontBundle:Default:volleyschool_edit.html.twig', array(
+        return $this->render('FrontBundle:Volleyschool:volleyschool_edit.html.twig', array(
             'form' => $form->createView(),
         ));
     }

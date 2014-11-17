@@ -3,7 +3,6 @@
 namespace BV\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use BV\FrontBundle\Entity\User;
 
 /**
  * Events
@@ -71,6 +70,18 @@ class Events
      * @ORM\Column(name="scheduler_id", type="string", length=255)
      */
     protected $schedulerId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
+     */
+    protected $status;
+
+    /*
+     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="events")
+     */
+    protected $availability;
 
     /**
      * Get id
@@ -278,5 +289,28 @@ class Events
     public static function isTypeValid($type)
     {
         return array_key_exists($type, self::getEventsType());
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return Events
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

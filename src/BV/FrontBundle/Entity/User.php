@@ -304,6 +304,11 @@ class User extends EntityUser
      */
     protected $phone;
 
+    /*
+     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="events")
+     */
+    protected $availability;
+
     public function __construct()
     {
         parent::__construct();

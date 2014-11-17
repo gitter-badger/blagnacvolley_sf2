@@ -7,4 +7,9 @@
 
     {{ content|raw }}
 
+    {% for event in events %}
+        {{ event.text }}
+        <i>De {{ event.startDate|date('d/m/Y H:i') }} à {{ event.endDate|date('d/m/Y H:i') }}</i>
+    {% endfor %}
+
 {% endblock content_row %}
