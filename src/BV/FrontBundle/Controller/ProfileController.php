@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use BV\FrontBundle\Entity\User;
-use Tools\LogBundle\Entity\SystemLog;
 
 class ProfileController extends Controller
 {
@@ -101,10 +100,25 @@ class ProfileController extends Controller
         if ('GET' === $request->getMethod()) {
             if ($this->getDoctrine()->getRepository('FrontBundle:Events')->isEventTypeValidForGroup($request->get('type')))
             {
+                /* @var $user User */
                 $user->toggleGroup($request->get('type'));
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user);
                 $request->getSession()->getFlashBag()->add('success', 'Modifications apportées avec succès' );
+
+                // user left group, remove availabilities associated
+                if (!$user->isInGroup($request->get('type')))
+                {
+                    $em = $this->container->get('doctrine.orm.entity_manager');
+                    foreach ($this->getDoctrine()->getRepository('FrontBundle:Availability')->findByUser($user) as $availability)
+                    {
+                        $em->remove($availability);
+                    }
+                    $em->flush();
+                }
+
+                $referer = $request->headers->get('referer');
+                return $this->redirect($referer);
             }
             else
             {

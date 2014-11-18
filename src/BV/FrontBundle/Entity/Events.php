@@ -78,8 +78,8 @@ class Events
      */
     protected $status;
 
-    /*
-     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="events")
+    /**
+     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="event")
      */
     protected $availability;
 

@@ -47,8 +47,8 @@ class LoadEventsData extends AbstractFixture implements OrderedFixtureInterface
         $eventsFem1->setSchedulerId("4");
 
         $eventsVSA = new Events();
-        $eventsVSA->setStartDate(new \DateTime('2014-11-14 20:30:00'));
-        $eventsVSA->setEndDate(new \DateTime('2014-11-14 23:00:00'));
+        $eventsVSA->setStartDate(new \DateTime('2014-11-30 20:30:00'));
+        $eventsVSA->setEndDate(new \DateTime('2014-11-30 23:00:00'));
         $eventsVSA->setType(Events::TYPE_VOLLEYSCHOOL_ADULT);
         $eventsVSA->setTeam(null);
         $eventsVSA->setSchedulerId("5");

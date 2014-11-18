@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="bv_availability")
  * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\AvailabilityRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Availability
 {
@@ -38,7 +39,7 @@ class Availability
      * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\Events", inversedBy="availability")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id", nullable=false)
      */
-    protected $events;
+    protected $event;
 
     /**
      * Set isAvailable
@@ -110,25 +111,41 @@ class Availability
     }
 
     /**
-     * Set events
+     * Set event
      *
-     * @param \BV\FrontBundle\Entity\Events $events
+     * @param \BV\FrontBundle\Entity\Events $event
      * @return Availability
      */
-    public function setEvents(\BV\FrontBundle\Entity\Events $events)
+    public function setEvent(\BV\FrontBundle\Entity\Events $event)
     {
-        $this->events = $events;
+        $this->event = $event;
     
         return $this;
     }
 
     /**
-     * Get events
+     * Get event
      *
      * @return \BV\FrontBundle\Entity\Events 
      */
-    public function getEvents()
+    public function getEvent()
     {
-        return $this->events;
+        return $this->event;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->validatedAt = (new \DateTime);
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->validatedAt = (new \DateTime);
     }
 }

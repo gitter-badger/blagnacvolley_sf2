@@ -3,6 +3,7 @@
 namespace BV\FrontBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * AvailabilityRepository
@@ -12,4 +13,66 @@ use Doctrine\ORM\EntityRepository;
  */
 class AvailabilityRepository extends EntityRepository
 {
+    /**
+     * @param $event
+     * @return array|null
+     */
+    public function countAvailabilities($event)
+    {
+        if (!$event instanceof Events)
+            return array();
+
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT count(p) as total, SUM(p.isAvailable) as nbAvailable FROM FrontBundle:Availability p '.
+                ' WHERE p.event = :event_id')
+            ->setParameter('event_id', $event)
+        ;
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param User $user
+     * @return array|null
+     */
+    public function findByUser(User $user)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT p FROM FrontBundle:Availability p '.
+                ' WHERE p.user = :user')
+            ->setParameter('user', $user)
+        ;
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param $user
+     * @param $event
+     * @return array|null
+     */
+    public function findByUserAndEvent($user, $event)
+    {
+        if (!$user instanceof User || !$event instanceof Events)
+            return null;
+
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT p FROM FrontBundle:Availability p '.
+                ' WHERE p.user = :user '.
+                ' AND p.event = :event')
+            ->setParameter('user', $user)
+            ->setParameter('event', $event)
+        ;
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }

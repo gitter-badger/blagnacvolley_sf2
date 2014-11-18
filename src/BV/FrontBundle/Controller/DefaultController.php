@@ -2,6 +2,7 @@
 
 namespace BV\FrontBundle\Controller;
 
+use BV\FrontBundle\Entity\Availability;
 use BV\FrontBundle\Entity\CmsPage;
 use BV\FrontBundle\Entity\Events;
 use BV\FrontBundle\Entity\User;
@@ -36,22 +37,84 @@ class DefaultController extends Controller
 
         $events = [];
         $cms = [];
+        $nb = $this->getDoctrine()->getRepository('FrontBundle:User')->countUsersByGroups();
 
         // VOLLEYSCHOOL_ADULTS
         $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_ADULTS);
         $cms[Events::TYPE_VOLLEYSCHOOL_ADULT] = $cmsPage->getContent();
-        $events[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_ADULT);
+        $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_ADULT);
+        $events[Events::TYPE_VOLLEYSCHOOL_ADULT] = $event;
+        $availabilities[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->countAvailabilities($event);
+        $availability[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByUserAndEvent($user, $event);
 
         // VOLLEYSCHOOL_YOUTH
         $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_YOUTH);
         $cms[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $cmsPage->getContent();
-        $events[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_YOUTH);
+        $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_YOUTH);
+        $events[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $event;
+        $availabilities[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->countAvailabilities($event);
+        $availability[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByUserAndEvent($user, $event);
 
         return $this->render('FrontBundle:Volleyschool:volleyschool.html.twig', array(
             'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
+            'user' => $user,
             'cms' => $cms,
             'events' => $events,
+            'availabilities' => $availabilities,
+            'availability' => $availability,
+            'nb' => $nb
         ));
+    }
+
+    public function toggleAvailabilityAction(Request $request)
+    {
+        /* @var User $user */
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        // Redirect to consultation if not logged or not allowed to edit
+        if (!$user instanceof User)
+        {
+            return $this->redirect($this->generateUrl('bv_static_volley_school'), 302);
+        }
+
+        if ('GET' === $request->getMethod())
+        {
+            if ($request->get('event') != null && $request->get('is_available') != null)
+            {
+                $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->find($request->get('event'));
+                if ($event instanceof Events)
+                {
+                    $availability = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByUserAndEvent($user, $event);
+                    if (count($availability) == 0)
+                    {
+                        $availability = new Availability();
+                        $availability->setUser($user);
+                        $availability->setEvent($event);
+                        $availability->setIsAvailable($request->get('is_available'));
+                    }
+                    else
+                    {
+                        $availability->setIsAvailable($request->get('is_available'));
+                    }
+
+                    $em = $this->container->get('doctrine.orm.entity_manager');
+                    $em->persist($availability);
+                    $em->flush();
+
+                    $request->getSession()->getFlashBag()->add('success', 'Disponibilité enregistrée pour cette session' );
+                }
+                else
+                {
+                    $request->getSession()->getFlashBag()->add('error', 'Evènement invalide' );
+                }
+            }
+            else
+            {
+                $request->getSession()->getFlashBag()->add('error', 'Paramètres invalides' );
+            }
+        }
+
+        return $this->redirect($this->generateUrl('bv_static_volley_school'), 302);
     }
 
     public function volleySchoolEditAction(Request $request)
@@ -66,7 +129,7 @@ class DefaultController extends Controller
         }
 
         /* @var CmsPage $cmsPage */
-        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL);
+        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_ADULTS);
         $form = $this->createForm(new CmsPageFormType(), $cmsPage);
 
         if ('POST' === $request->getMethod())

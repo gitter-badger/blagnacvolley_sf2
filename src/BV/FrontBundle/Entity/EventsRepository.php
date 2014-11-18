@@ -123,29 +123,16 @@ class EventsRepository extends EntityRepository
      */
     public function findEventsByType($type)
     {
+        $date = new \DateTime();
         $query = $this->getEntityManager()
-            ->createQuery(' SELECT p FROM FrontBundle:Events p '.
-                ' WHERE p.type = :type')
-            ->setParameter('type', $type);
+            ->createQuery('SELECT p FROM FrontBundle:Events p '.
+                ' WHERE p.type = :type
+                  AND p.startDate > :date')
+            ->setParameter('type', $type)
+            ->setParameter('date', $date->format('Y-m-d H:i'))
+        ;
         try {
-            return $query->getResult();
-        } catch (NoResultException $e) {
-            return null;
-        }
-    }
-
-    /**
-     * @param $type
-     * @return array|null
-     */
-    public function findEventsByTypeCountAvailable($type)
-    {
-        $query = $this->getEntityManager()
-            ->createQuery(' SELECT p FROM FrontBundle:Events p '.
-                ' WHERE p.type = :type')
-            ->setParameter('type', $type);
-        try {
-            return $query->getResult();
+            return $query->getSingleResult();
         } catch (NoResultException $e) {
             return null;
         }

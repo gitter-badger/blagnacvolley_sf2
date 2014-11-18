@@ -73,3 +73,6 @@ bv_user_update_informations_request:  ## ADD Profile Send change request
 bv_user_toggle_group:  ## Toggle Group
     defaults: { _controller: "FrontBundle:Profile:toggleGroup" }
     path:     /profile/toggleGroup
+bv_user_toggle_availability:  ## Toggle Availability
+    defaults: { _controller: "FrontBundle:Default:toggleAvailability" }
+    path:     /user/toggleAvailability

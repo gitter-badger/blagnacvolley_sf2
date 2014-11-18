@@ -304,8 +304,8 @@ class User extends EntityUser
      */
     protected $phone;
 
-    /*
-     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="events")
+    /**
+     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="user")
      */
     protected $availability;
 
@@ -1152,5 +1152,20 @@ class User extends EntityUser
         if ($group == Events::TYPE_FREE_PLAY) {
             $this->setIsFreeplay(!$this->getIsFreeplay());
         }
+    }
+
+    public function isInGroup($group)
+    {
+        if ($group == Events::TYPE_VOLLEYSCHOOL_ADULT) {
+            return ($this->getIsVolleySchoolAdult());
+        }
+        if ($group == Events::TYPE_VOLLEYSCHOOL_YOUTH) {
+            return ($this->getIsVolleySchoolYouth());
+        }
+        if ($group == Events::TYPE_FREE_PLAY) {
+            return ($this->getIsFreeplay());
+        }
+
+        return false;
     }
 }

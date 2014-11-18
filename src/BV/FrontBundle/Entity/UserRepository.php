@@ -140,4 +140,22 @@ class UserRepository extends EntityRepository
             return null;
         }
     }
+
+    /**
+     * @return array|null
+     */
+    public function countUsersByGroups()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(' SELECT
+                                SUM(p.isVolleySchoolAdult) as '.Events::TYPE_VOLLEYSCHOOL_ADULT.',
+                                SUM(p.isVolleySchoolYouth) as '.Events::TYPE_VOLLEYSCHOOL_YOUTH.',
+                                SUM(p.isFreeplay) as '.Events::TYPE_FREE_PLAY.'
+                            FROM FrontBundle:User p');
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }
