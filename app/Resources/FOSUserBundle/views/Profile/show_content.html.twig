@@ -35,6 +35,47 @@
     </div>
     <div class="col-sm-9">
         <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Groupes accessibles :
+                    </div>
+                    <table class="table table-hover table-striped table-condensed">
+                        <tbody>
+                        <tr>
+                            <th class="lh30">Ecole de volley Adultes</th>
+                            <td>
+                                {% if (user.isVolleySchoolAdult) == true %}
+                                    <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT')} ) }}" class="btn btn-warning btn-sm btn-block" >Quitter</a>
+                                {% else %}
+                                    <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT')} ) }}"  class="btn btn-success btn-sm btn-block"  >S'inscrire</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="lh30">Ecole de volley Jeunes</th>
+                            <td>
+                                {% if (user.isVolleySchoolYouth) == true %}
+                                    <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH')} ) }}" class="btn btn-warning btn-sm btn-block" >Quitter</a>
+                                {% else %}
+                                    <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH')} ) }}"  class="btn btn-success btn-sm btn-block"  >S'inscrire</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="lh30">Jeu libre</th>
+                            <td>
+                                {% if (user.isFreeplay) == true %}
+                                    <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY')} ) }}" class="btn btn-warning btn-sm btn-block" >Quitter</a>
+                                {% else %}
+                                    <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY')} ) }}"  class="btn btn-success btn-sm btn-block"  >S'inscrire</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="col-sm-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">

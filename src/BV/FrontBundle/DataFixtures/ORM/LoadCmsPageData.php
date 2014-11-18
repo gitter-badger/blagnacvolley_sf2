@@ -11,13 +11,21 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        // Volley School
-        $cmsPageVS = new CmsPage();
-        $cmsPageVS->setContent('');
-        $cmsPageVS->setName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL);
-        $cmsPageVS->setCreatedAt(new \DateTime());
-        $cmsPageVS->setUpdatedAt(null);
-        $cmsPageVS->setDescription("Ecole de volley");
+        // Volley School Adults
+        $cmsPageVSA = new CmsPage();
+        $cmsPageVSA->setContent('');
+        $cmsPageVSA->setName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_ADULTS);
+        $cmsPageVSA->setCreatedAt(new \DateTime());
+        $cmsPageVSA->setUpdatedAt(null);
+        $cmsPageVSA->setDescription("Ecole de volley Adultes");
+
+        // Volley School Youth
+        $cmsPageVSY = new CmsPage();
+        $cmsPageVSY->setContent('');
+        $cmsPageVSY->setName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_YOUTH);
+        $cmsPageVSY->setCreatedAt(new \DateTime());
+        $cmsPageVSY->setUpdatedAt(null);
+        $cmsPageVSY->setDescription("Ecole de volley Jeunes");
 
         // Jeu libre
         $cmsPageFG = new CmsPage();
@@ -43,7 +51,8 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
         $cmsPageA->setUpdatedAt(null);
         $cmsPageA->setDescription("Adresses");
 
-        $manager->persist($cmsPageVS);
+        $manager->persist($cmsPageVSA);
+        $manager->persist($cmsPageVSY);
         $manager->persist($cmsPageFG);
         $manager->persist($cmsPageS);
         $manager->persist($cmsPageA);

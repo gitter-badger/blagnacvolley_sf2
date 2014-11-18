@@ -1,15 +1,20 @@
 {% extends "FrontBundle::layout.html.twig" %}
 
+{% block head_script %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="/js/moment/moment.min.js"></script>
+    <script type="text/javascript" src="/js/moment/locales.min.js"></script>
+{% endblock head_script %}
+
 {% block title %}{{ parent() }} - {{ 'volleyschool.welcome'|trans() }} {% endblock %}
 
 {% block content_row %}
     <h1>{{ 'volleyschool.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_volley_school_edit') }}">{{ 'volleyschool.edit'|trans() }}</a> {% endif %} </h1>
 
-    {{ content|raw }}
-
-    {% for event in events %}
-        {{ event.text }}
-        <i>De {{ event.startDate|date('d/m/Y H:i') }} à {{ event.endDate|date('d/m/Y H:i') }}</i>
-    {% endfor %}
+    <div class="row">
+        {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {events: events,cms: cms, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT')} , with_context = false  ) }}
+        {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {events: events,cms: cms, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH')} , with_context = false ) }}
+    </div>
 
 {% endblock content_row %}

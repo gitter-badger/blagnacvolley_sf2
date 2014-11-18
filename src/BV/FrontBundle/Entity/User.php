@@ -309,6 +309,27 @@ class User extends EntityUser
      */
     protected $availability;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_volley_school_adult", type="boolean", options={"default": false})
+     */
+    protected $isVolleySchoolAdult;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_volley_school_youth", type="boolean", options={"default": false})
+     */
+    protected $isVolleySchoolYouth;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_freeplay", type="boolean", options={"default": false})
+     */
+    protected $isFreeplay;
+
     public function __construct()
     {
         parent::__construct();
@@ -1046,5 +1067,90 @@ class User extends EntityUser
     public function getDateAttestation()
     {
         return $this->dateAttestation;
+    }
+
+    /**
+     * Set isVolleySchoolAdult
+     *
+     * @param boolean $isVolleySchoolAdult
+     * @return User
+     */
+    public function setIsVolleySchoolAdult($isVolleySchoolAdult)
+    {
+        $this->isVolleySchoolAdult = $isVolleySchoolAdult;
+    
+        return $this;
+    }
+
+    /**
+     * Get isVolleySchoolAdult
+     *
+     * @return boolean 
+     */
+    public function getIsVolleySchoolAdult()
+    {
+        return $this->isVolleySchoolAdult;
+    }
+
+    /**
+     * Set isVolleySchoolYouth
+     *
+     * @param boolean $isVolleySchoolYouth
+     * @return User
+     */
+    public function setIsVolleySchoolYouth($isVolleySchoolYouth)
+    {
+        $this->isVolleySchoolYouth = $isVolleySchoolYouth;
+    
+        return $this;
+    }
+
+    /**
+     * Get isVolleySchoolYouth
+     *
+     * @return boolean 
+     */
+    public function getIsVolleySchoolYouth()
+    {
+        return $this->isVolleySchoolYouth;
+    }
+
+    /**
+     * Set isFreeplay
+     *
+     * @param boolean $isFreeplay
+     * @return User
+     */
+    public function setIsFreeplay($isFreeplay)
+    {
+        $this->isFreeplay = $isFreeplay;
+    
+        return $this;
+    }
+
+    /**
+     * Get isFreeplay
+     *
+     * @return boolean 
+     */
+    public function getIsFreeplay()
+    {
+        return $this->isFreeplay;
+    }
+
+    /**
+     * @param $group
+     */
+    public function toggleGroup($group)
+    {
+        if ($group == Events::TYPE_VOLLEYSCHOOL_ADULT) {
+            $this->setIsVolleySchoolAdult(!$this->getIsVolleySchoolAdult());
+        }
+        if ($group == Events::TYPE_VOLLEYSCHOOL_YOUTH) {
+            $this->setIsVolleySchoolYouth(!$this->getIsVolleySchoolYouth());
+        }
+        if ($group == Events::TYPE_FREE_PLAY) {
+            $this->setIsFreeplay(!$this->getIsFreeplay());
+        }
     }
 }

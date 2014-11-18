@@ -43,6 +43,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_yann->setPlainPassword('pass4bv');
         $user_yann->setEmail('y.lastapis@gmail.com');
         $user_yann->setEnabled(true);
+        $user_yann->setIsVolleySchoolAdult(true);
+        $user_yann->setIsVolleySchoolYouth(false);
+        $user_yann->setIsFreeplay(false);
 
         $user_seb = new User();
         $user_seb->setFirstname('Sébastien');
@@ -74,6 +77,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_seb->setPlainPassword('pass4bv');
         $user_seb->setEmail('s.fastrez@gmail.com');
         $user_seb->setEnabled(true);
+        $user_seb->setIsVolleySchoolAdult(false);
+        $user_seb->setIsVolleySchoolYouth(true);
+        $user_seb->setIsFreeplay(false);
 
         $user1 = new User();
         $user1->setFirstname('Jean-Yves');
@@ -106,6 +112,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user1->setPlainPassword('pass4bv');
         $user1->setEmail('jy.pichon@gmail.com');
         $user1->setEnabled(true);
+        $user1->setIsVolleySchoolAdult(false);
+        $user1->setIsVolleySchoolYouth(false);
+        $user1->setIsFreeplay(true);
 
         /* @var $teamMsc1 Team */
         $teamMsc1 = $this->getReference('teamMsc1');

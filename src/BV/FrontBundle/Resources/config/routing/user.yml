@@ -70,3 +70,6 @@ fos_user_profile_edit:  ## OVERRIDE Profile Edition
 bv_user_update_informations_request:  ## ADD Profile Send change request
     defaults: { _controller: "FrontBundle:Profile:updateRequest" }
     path:     /profile/updateRequest
+bv_user_toggle_group:  ## Toggle Group
+    defaults: { _controller: "FrontBundle:Profile:toggleGroup" }
+    path:     /profile/toggleGroup

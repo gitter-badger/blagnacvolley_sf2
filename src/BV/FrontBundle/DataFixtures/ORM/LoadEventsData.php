@@ -46,20 +46,20 @@ class LoadEventsData extends AbstractFixture implements OrderedFixtureInterface
         $eventsFem1->setTeam($teamFem1);
         $eventsFem1->setSchedulerId("4");
 
-        $eventsVS = new Events();
-        $eventsVS->setStartDate(new \DateTime('2014-11-14 20:30:00'));
-        $eventsVS->setEndDate(new \DateTime('2014-11-14 23:00:00'));
-        $eventsVS->setType(Events::TYPE_VOLLEYSCHOOL_ADULT);
-        $eventsVS->setTeam(null);
-        $eventsVS->setSchedulerId("5");
+        $eventsVSA = new Events();
+        $eventsVSA->setStartDate(new \DateTime('2014-11-14 20:30:00'));
+        $eventsVSA->setEndDate(new \DateTime('2014-11-14 23:00:00'));
+        $eventsVSA->setType(Events::TYPE_VOLLEYSCHOOL_ADULT);
+        $eventsVSA->setTeam(null);
+        $eventsVSA->setSchedulerId("5");
 
         $manager->persist($events);
         $manager->persist($eventsMsc1);
         $manager->persist($eventsMix1);
         $manager->persist($eventsFem1);
-        $manager->persist($eventsVS);
+        $manager->persist($eventsVSA);
 
-        $this->addReference('eventsVS', $eventsVS);
+        $this->addReference('eventsVSA', $eventsVSA);
 
         $manager->flush();
     }

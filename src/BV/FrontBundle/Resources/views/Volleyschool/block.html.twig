@@ -1,0 +1,35 @@
+<div class="col-sm-6">
+    <h2>{{ ('volleyschool.' ~ type)|trans() }}</h2>
+
+    {% if cms[type]|raw != null %}
+        <div class="well">
+            {{ cms[type]|raw }}
+        </div>
+    {% endif %}
+
+    {% if events[type]|length > 0 %}
+        <table class="table table-row table-stripped">
+            <thead>
+            <tr>
+                <th>Prochaine session</th>
+                <th><span class="color-text-green fa fa-check"></span></th>
+                <th><span class="color-text-carrot fa fa-question"></span></th>
+                <th><span class="color-text-pomegranate fa fa-remove"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for event in events[type] %}
+                    <td><i>De {{ event.startDate|date('d/m/Y H:i') }} à {{ event.endDate|date('d/m/Y H:i') }}</i></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    {#{{ event.text }}#}
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>Pas de session prévue pour le moment</p>
+    {% endif %}
+</div>

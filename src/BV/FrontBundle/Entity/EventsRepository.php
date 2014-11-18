@@ -133,4 +133,32 @@ class EventsRepository extends EntityRepository
             return null;
         }
     }
+
+    /**
+     * @param $type
+     * @return array|null
+     */
+    public function findEventsByTypeCountAvailable($type)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(' SELECT p FROM FrontBundle:Events p '.
+                ' WHERE p.type = :type')
+            ->setParameter('type', $type);
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Check if type is valid for a group
+     *
+     * @param $type
+     * @return bool
+     */
+    public static function isEventTypeValidForGroup($type)
+    {
+        return ( $type == Events::TYPE_VOLLEYSCHOOL_ADULT || $type == Events::TYPE_VOLLEYSCHOOL_YOUTH || $type == Events::TYPE_FREE_PLAY);
+    }
 }

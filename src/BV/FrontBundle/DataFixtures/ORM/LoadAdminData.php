@@ -28,6 +28,9 @@ class LoadAdminData extends AbstractFixture implements OrderedFixtureInterface
         $userAdmin->setPicture('EMPTY');
         $userAdmin->setGeoLat('43.6334661');
         $userAdmin->setGeoLng('1.3874611');
+        $userAdmin->setIsVolleySchoolAdult(false);
+        $userAdmin->setIsVolleySchoolYouth(false);
+        $userAdmin->setIsFreeplay(false);
 
         $manager->persist($userAdmin);
         $manager->flush();

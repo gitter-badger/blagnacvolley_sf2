@@ -34,14 +34,22 @@ class DefaultController extends Controller
         /* @var User $user */
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        /* @var CmsPage $cmsPage */
-        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL);
+        $events = [];
+        $cms = [];
 
-        $events = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_ADULT);
+        // VOLLEYSCHOOL_ADULTS
+        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_ADULTS);
+        $cms[Events::TYPE_VOLLEYSCHOOL_ADULT] = $cmsPage->getContent();
+        $events[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_ADULT);
+
+        // VOLLEYSCHOOL_YOUTH
+        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_YOUTH);
+        $cms[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $cmsPage->getContent();
+        $events[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_YOUTH);
 
         return $this->render('FrontBundle:Volleyschool:volleyschool.html.twig', array(
             'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
-            'content' => $cmsPage->getContent(),
+            'cms' => $cms,
             'events' => $events,
         ));
     }

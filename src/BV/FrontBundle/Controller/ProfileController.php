@@ -90,4 +90,28 @@ class ProfileController extends Controller
             )
         );
     }
+
+    public function toggleGroupAction(Request $request)
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        if ('GET' === $request->getMethod()) {
+            if ($this->getDoctrine()->getRepository('FrontBundle:Events')->isEventTypeValidForGroup($request->get('type')))
+            {
+                $user->toggleGroup($request->get('type'));
+                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager->updateUser($user);
+                $request->getSession()->getFlashBag()->add('success', 'Modifications apportées avec succès' );
+            }
+            else
+            {
+                $request->getSession()->getFlashBag()->add('error', 'Type invalide' );
+            }
+        }
+
+        return $this->redirect($this->generateUrl('fos_user_profile_show'));
+    }
 }

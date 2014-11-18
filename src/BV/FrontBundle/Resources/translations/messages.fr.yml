@@ -62,6 +62,8 @@ homepage:
 
 volleyschool:
   welcome: Ecole de volley
+  VOLLEYSCHOOL_ADULT: Ecole de volley Adultes
+  VOLLEYSCHOOL_YOUTH: Ecole de volley Jeunes
   edit: Editer
   form:
     submit: Valider
