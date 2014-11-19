@@ -156,12 +156,16 @@ class DefaultController extends Controller
         /* @var User $user */
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        /* @var CmsPage $cmsPage */
-        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_FREE_GAME);
+        $content = [];
+        $nb = $this->getDoctrine()->getRepository('FrontBundle:User')->countUsersByGroups();
 
-        return $this->render('FrontBundle:Default:jeulibre.html.twig', array(
+        $content[Events::TYPE_FREE_PLAY] = $this->_populateResults(CmsPage::STATIC_PAGE_FREE_GAME, Events::TYPE_FREE_PLAY);
+
+        return $this->render('FrontBundle:Freeplay:freeplay.html.twig', array(
             'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
-            'content' => $cmsPage->getContent(),
+            'user' => $user,
+            'nb' => $nb,
+            'content' => $content,
         ));
     }
 

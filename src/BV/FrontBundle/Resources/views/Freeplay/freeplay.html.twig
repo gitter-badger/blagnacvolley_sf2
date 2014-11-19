@@ -1,0 +1,14 @@
+{% extends "FrontBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'jeulibre.welcome'|trans() }} {% endblock %}
+
+{% block content_row %}
+    <h1>{{ 'jeulibre.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_jeu_libre_edit') }}">{{ 'jeulibre.edit'|trans() }}</a> {% endif %} </h1>
+
+    <div class="row">
+        <div class="col-sm-12">
+            {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {title: ('volleyschool.' ~ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY'))|trans(), content: content, user: user, nb: nb, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY')} , with_context = false  ) }}
+        </div>
+    </div>
+
+{% endblock content_row %}

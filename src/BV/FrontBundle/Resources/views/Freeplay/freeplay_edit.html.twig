@@ -1,0 +1,46 @@
+{% extends "FrontBundle::layout.html.twig" %}
+
+{% block head_style %}
+
+    {{ parent() }}
+    <link rel="stylesheet" href="/js/redactor/redactor/redactor.css" />
+
+{% endblock head_style %}
+
+{% block head_script %}
+
+    {{ parent() }}
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/redactor/redactor/redactor.js"></script>
+    <script type="text/javascript" src="/js/redactor/redactor/filemanager.js"></script>
+
+{% endblock head_script %}
+
+{% block title %}{{ parent() }} - {{ 'jeulibre.welcome'|trans() }} {% endblock %}
+
+{% block content_row %}
+    <h1>{{ 'jeulibre.welcome'|trans() }}</h1>
+
+    <form action="{{ path('bv_static_jeu_libre_edit') }}" {{ form_enctype(form) }} method="POST">
+
+        {{ form_widget(form.content) }}
+
+        <br/>
+        <div>
+            <input class="btn btn-success" type="submit" value="{{ 'jeulibre.form.submit'|trans() }}" />
+        </div>
+
+        {{ form_rest(form) }}
+    </form>
+
+    <script type="text/javascript">
+    //<![CDATA[
+    (function ( $ ) {
+        $('.redactor').redactor({
+            fileUpload: '{{ path('bv_static_cms_page_upload') }}'
+        });
+    }( jQuery ));
+    //]]>
+    </script>
+
+{% endblock content_row %}
