@@ -1,78 +1,84 @@
 <div class="col-sm-6">
-    <h2>
-        {{ ('volleyschool.' ~ type)|trans() }}
-        {% if app.user %}
-            {% if user.isInGroup(type) %}
-                <a href="{{ path('bv_user_toggle_group', {'type': type} ) }}" class="btn btn-warning btn-sm" >Quitter</a>
-            {% else %}
-                <a href="{{ path('bv_user_toggle_group', {'type': type} ) }}"  class="btn btn-success btn-sm"  >S'inscrire</a>
-            {% endif %}
-        {% endif %}
-        <span class="label label-primary pull-right">{{ nb[0][type] }} inscrits</span>
-    </h2>
-
-    {% if cms[type]|raw != null %}
-        <div class="well">
-            {{ cms[type]|raw }}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            {{ ('volleyschool.' ~ type)|trans() }}
+            <span class="label label-sm label-success pull-right"><span class="badge">{{ nb[0][type] }}</span> Inscrits dans ce groupe</span>
         </div>
-    {% endif %}
+        <div class="panel-body">
+            {% if cms[type]|raw != null %}
+                <div class="well">
+                    {{ cms[type]|raw }}
+                </div>
+            {% endif %}
 
-    {% if events[type]|length > 0 %}
-        {% set event = events[type] %}
-        <table class="table table-row table-stripped">
-            <thead>
-            <tr>
-                <th>Prochaine session : <i>{{ event.startDate|date('d M Y') }} de {{ event.startDate|date('H:i') }} à {{ event.endDate|date('H:i') }}</i></th>
-                <th><span class="color-text-green fa fa-check"></span></th>
-                <th><span class="color-text-carrot fa fa-question"></span></th>
-                <th><span class="color-text-pomegranate fa fa-remove"></span></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                {% set unavailable = (availabilities[type]['total'] - availabilities[type]['nbAvailable'] ) %}
-                {% set available = availabilities[type]['nbAvailable'] %}
-                <td></td>
-                <td>{{ available }}</td>
-                <td>{{ ( nb[0][type] - available - unavailable ) }}</td>
-                <td>{{ unavailable }}</td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="4">
-                    {% if app.user %}
-                        {% if user.isInGroup(type) %}
-                            {% if (availability[type] != null) %}
-                                {% if (availability[type].isAvailable) %}
-                                    <div class="well">
-                                        <p>Vous avez indiqué être présent pour cette session. Pour changer :</p>
-                                        <a class="btn btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Indisponible</a>
-                                    </div>
+            {% if events[type]|length > 0 %}
+                {% set event = events[type] %}
+                <table class="table table-row table-stripped">
+                    <thead>
+                    <tr>
+                        <th>Prochaine session : <i>{{ event.startDate|date('d M Y') }} de {{ event.startDate|date('H:i') }} à {{ event.endDate|date('H:i') }}</i></th>
+                        <th><span class="color-text-green fa fa-check"></span></th>
+                        <th><span class="color-text-carrot fa fa-question"></span></th>
+                        <th><span class="color-text-pomegranate fa fa-remove"></span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {% set unavailable = (availabilities[type]['total'] - availabilities[type]['nbAvailable'] ) %}
+                        {% set available = availabilities[type]['nbAvailable'] %}
+                        <td></td>
+                        <td>{{ available }}</td>
+                        <td>{{ ( nb[0][type] - available - unavailable ) }}</td>
+                        <td>{{ unavailable }}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            {% if app.user %}
+                                {% if user.isInGroup(type) %}
+                                    {% if (availability[type] != null) %}
+                                        {% if (availability[type].isAvailable) %}
+                                            <div class="well">
+                                                <p>Vous avez indiqué être présent pour cette session. Pour changer :</p>
+                                                <a class="btn btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Indisponible</a>
+                                            </div>
+                                        {% else %}
+                                            <div class="well">
+                                                <p>Vous avez indiqué être absent pour cette session. Pour changer :</p>
+                                                <a class="btn btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">Disponible</a>
+                                            </div>
+                                        {% endif %}
+                                    {% else %}
+                                        <div class="well">
+                                            <p>Vous n'avez pas encore indiqué vos disponibilités pour cette session :</p>
+                                            <a class="btn btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">Disponible</a>
+                                            <a class="btn btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Indisponible</a>
+                                        </div>
+                                    {% endif %}
                                 {% else %}
-                                    <div class="well">
-                                        <p>Vous avez indiqué être absent pour cette session. Pour changer :</p>
-                                        <a class="btn btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">Disponible</a>
-                                    </div>
+                                    <div class="well">Vous ne faites pas partie de ce groupe. Pour pouvoir indiquer vos disponibilités, voius devez le rejoindre. Cliquez sur s'inscrire, plus haut.</div>
                                 {% endif %}
                             {% else %}
-                                <div class="well">
-                                    <p>Vous n'avez pas encore indiqué vos disponibilités pour cette session :</p>
-                                    <a class="btn btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">Disponible</a>
-                                    <a class="btn btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Indisponible</a>
-                                </div>
+                                <div class="well">Vous devez être connecté pour indiquer vos disponibilités.</div>
                             {% endif %}
-                        {% else %}
-                            <div class="well">Vous ne faites pas partie de ce groupe. Pour pouvoir indiquer vos disponibilités, voius devez le rejoindre. Cliquez sur s'inscrire, plus haut.</div>
-                        {% endif %}
-                    {% else %}
-                        <div class="well">Vous devez être connecté pour indiquer vos disponibilités.</div>
-                    {% endif %}
-                </td>
-            </tr>
-            </tfoot>
-        </table>
-    {% else %}
-        <p>Pas de session prévue pour le moment</p>
-    {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Joueurs disponibles</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            {% for u in users[type] %}
+                                <img class="img-thumbnail pull-left" src="{{ u.user.picture| apply_filter('img_100_100') }}" style="margin: 0 auto;display: block;" />
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            {% else %}
+                <p>Pas de session prévue pour le moment</p>
+            {% endif %}
+        </div>
+    </div>
 </div>

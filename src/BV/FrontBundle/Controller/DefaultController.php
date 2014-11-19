@@ -46,6 +46,7 @@ class DefaultController extends Controller
         $events[Events::TYPE_VOLLEYSCHOOL_ADULT] = $event;
         $availabilities[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->countAvailabilities($event);
         $availability[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByUserAndEvent($user, $event);
+        $users[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByEventAndAvailable($event);
 
         // VOLLEYSCHOOL_YOUTH
         $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_YOUTH);
@@ -54,10 +55,12 @@ class DefaultController extends Controller
         $events[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $event;
         $availabilities[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->countAvailabilities($event);
         $availability[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByUserAndEvent($user, $event);
+        $users[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByEventAndAvailable($event);
 
         return $this->render('FrontBundle:Volleyschool:volleyschool.html.twig', array(
             'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
             'user' => $user,
+            'users' => $users,
             'cms' => $cms,
             'events' => $events,
             'availabilities' => $availabilities,

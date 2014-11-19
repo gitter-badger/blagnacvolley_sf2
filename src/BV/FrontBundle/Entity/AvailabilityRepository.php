@@ -53,6 +53,50 @@ class AvailabilityRepository extends EntityRepository
     }
 
     /**
+     * @param Events $event
+     * @return array|null
+     */
+    public function findByEvent($event)
+    {
+        if (!$event instanceof Events)
+            return null;
+
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT p FROM FrontBundle:Availability p '.
+                ' WHERE p.event = :event')
+            ->setParameter('event', $event)
+        ;
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+
+    /**
+     * @param Events $event
+     * @return array|null
+     */
+    public function findByEventAndAvailable($event)
+    {
+        if (!$event instanceof Events)
+            return null;
+
+        $query = $this->getEntityManager()
+            ->createQuery(' SELECT p FROM FrontBundle:Availability p '.
+                          ' WHERE p.event = :event'.
+                          ' AND p.isAvailable = true')
+            ->setParameter('event', $event)
+        ;
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
      * @param $user
      * @param $event
      * @return array|null

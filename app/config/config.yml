@@ -110,9 +110,14 @@ front:
         certif_path:   /uploads/certif
         attestation_path: /uploads/attestation
 
-#monolog:
-#    handlers:
-#        main:
-#            type: service
-#            level: warning
-#            id: logger_database
+avalanche_imagine:
+    filters:
+        img_200_200:
+            type:    thumbnail
+            options: { size: [200, 200], mode: outbound, quality: 100, format: png }
+        img_150_150:
+            type:    thumbnail
+            options: { size: [150, 150], mode: outbound, quality: 100, format: png }
+        img_100_100:
+            type:    thumbnail
+            options: { size: [100, 100], mode: outbound, quality: 100, format: png }

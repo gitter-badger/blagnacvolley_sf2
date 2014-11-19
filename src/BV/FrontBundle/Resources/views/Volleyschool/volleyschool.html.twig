@@ -6,8 +6,8 @@
     <h1>{{ 'volleyschool.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_volley_school_edit') }}">{{ 'volleyschool.edit'|trans() }}</a> {% endif %} </h1>
 
     <div class="row">
-        {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {availability: availability, availabilities: availabilities, user: user, nb: nb, events: events,cms: cms, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT')} , with_context = false  ) }}
-        {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {availability: availability, availabilities: availabilities, user: user, nb: nb, events: events,cms: cms, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH')} , with_context = false ) }}
+        {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {users: users, availability: availability, availabilities: availabilities, user: user, nb: nb, events: events,cms: cms, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT')} , with_context = false  ) }}
+        {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {users: users, availability: availability, availabilities: availabilities, user: user, nb: nb, events: events,cms: cms, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH')} , with_context = false ) }}
     </div>
 
 {% endblock content_row %}
