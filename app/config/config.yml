@@ -121,3 +121,6 @@ avalanche_imagine:
         img_100_100:
             type:    thumbnail
             options: { size: [100, 100], mode: outbound, quality: 100, format: png }
+        img_50_50:
+            type:    thumbnail
+            options: { size: [50, 50], mode: outbound, quality: 100, format: png }

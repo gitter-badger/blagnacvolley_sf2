@@ -1,7 +1,7 @@
 {% set event = content[type]['events'] %}
 {% set cms = content[type]['cmsPage'] %}
 
-<div class="panel panel-primary">
+<div class="panel panel-primary panel-doodle">
     <div class="panel-heading">
         {{ title }}
         <span class="label label-sm label-success pull-right"><span class="badge">{{ nb[0][type] }}</span> Inscrits dans ce groupe</span>
@@ -35,50 +35,50 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="4">
-                        {% if app.user %}
-                            {% if user.isInGroup(type) %}
-                                {% if (content[type]['availability'] != null) %}
-                                    {% if (content[type]['availability'].isAvailable) %}
-                                        <div class="well">
-                                            <p>Vous avez indiqué être présent pour cette session. Pour changer :</p>
-                                            <a class="btn btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Indisponible</a>
-                                        </div>
-                                    {% else %}
-                                        <div class="well">
-                                            <p>Vous avez indiqué être absent pour cette session. Pour changer :</p>
-                                            <a class="btn btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">Disponible</a>
-                                        </div>
-                                    {% endif %}
-                                {% else %}
-                                    <div class="well">
-                                        <p>Vous n'avez pas encore indiqué vos disponibilités pour cette session :</p>
-                                        <a class="btn btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">Disponible</a>
-                                        <a class="btn btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Indisponible</a>
-                                    </div>
-                                {% endif %}
-                            {% else %}
-                                <div class="well">Vous ne faites pas partie de ce groupe. Pour pouvoir indiquer vos disponibilités, voius devez le rejoindre. Cliquez sur s'inscrire, plus haut.</div>
-                            {% endif %}
-                        {% else %}
-                            <div class="well">Vous devez être connecté pour indiquer vos disponibilités.</div>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">Joueurs disponibles</td>
-                </tr>
-                <tr>
-                    <td colspan="4">
+                    <td colspan="4" style="padding-left:0;padding-right:0;">
+                        <p>Inscrits pour cette session</p>
                         {% for u in content[type]['users'] %}
-                            <img class="img-thumbnail pull-left" src="{{ u.user.picture| apply_filter('img_100_100') }}" style="margin: 0 auto;display: block;" />
+                            <div class="relative pull-left mr2 mb2">
+                                <img class="img-thumbnail" src="{{ u.user.picture| apply_filter('img_200_200') }}" style="margin: 0 auto;width:128px;height:128px;" />
+                                <label class="label-thumbnail">{{ u.user.firstname|slice(0, 18) }}</label>
+                            </div>
                         {% endfor %}
+                        <div class="clearfix"></div>
                     </td>
                 </tr>
                 </tfoot>
             </table>
         {% else %}
             <p>Pas de session prévue pour le moment</p>
+        {% endif %}
+    </div>
+    <div class="panel-footer">
+        {% if app.user %}
+            {% if user.isInGroup(type) %}
+                {% if (content[type]['availability'] != null) %}
+                    {% if (content[type]['availability'].isAvailable) %}
+                        <a class="btn btn-block btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Se désister pour cette session.</a>
+                    {% else %}
+                        <a class="btn btn-block btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">S'inscrire pour cette session.</a>
+                    {% endif %}
+                {% else %}
+                    <p class="text-center">Vous n'avez pas encore indiqué vos disponibilités pour cette session</p>
+                    <div class="row">
+
+                    <div class="col-sm-6">
+                        <a class="btn btn-block btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">Disponible</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-block btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Indisponible</a>
+                    </div>
+                    </div>
+                    <div class="clearfix"></div>
+                {% endif %}
+            {% else %}
+                Vous ne faites pas partie de ce groupe. Pour pouvoir indiquer vos disponibilités, voius devez le rejoindre. Cliquez sur s'inscrire, dans votre profil.
+            {% endif %}
+        {% else %}
+            Vous devez être connecté pour indiquer vos disponibilités.
         {% endif %}
     </div>
 </div>
