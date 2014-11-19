@@ -1,3 +1,5 @@
+{% set event = content[type]['events'] %}
+{% set cms = content[type]['cmsPage'] %}
 <div class="col-sm-6">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -5,14 +7,15 @@
             <span class="label label-sm label-success pull-right"><span class="badge">{{ nb[0][type] }}</span> Inscrits dans ce groupe</span>
         </div>
         <div class="panel-body">
-            {% if cms[type]|raw != null %}
+            {% if cms|raw != null %}
                 <div class="well">
-                    {{ cms[type]|raw }}
+                    {{ cms|raw }}
                 </div>
             {% endif %}
 
-            {% if events[type]|length > 0 %}
-                {% set event = events[type] %}
+            {% if event|length > 0 %}
+                {% set unavailable = (content[type]['availabilities']['total'] - content[type]['availabilities']['nbAvailable'] ) %}
+                {% set available = content[type]['availabilities']['nbAvailable'] %}
                 <table class="table table-row table-stripped">
                     <thead>
                     <tr>
@@ -24,8 +27,6 @@
                     </thead>
                     <tbody>
                     <tr>
-                        {% set unavailable = (availabilities[type]['total'] - availabilities[type]['nbAvailable'] ) %}
-                        {% set available = availabilities[type]['nbAvailable'] %}
                         <td></td>
                         <td>{{ available }}</td>
                         <td>{{ ( nb[0][type] - available - unavailable ) }}</td>
@@ -37,8 +38,8 @@
                         <td colspan="4">
                             {% if app.user %}
                                 {% if user.isInGroup(type) %}
-                                    {% if (availability[type] != null) %}
-                                        {% if (availability[type].isAvailable) %}
+                                    {% if (content[type]['availability'] != null) %}
+                                        {% if (content[type]['availability'].isAvailable) %}
                                             <div class="well">
                                                 <p>Vous avez indiqué être présent pour cette session. Pour changer :</p>
                                                 <a class="btn btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Indisponible</a>
@@ -69,7 +70,7 @@
                     </tr>
                     <tr>
                         <td colspan="4">
-                            {% for u in users[type] %}
+                            {% for u in content[type]['users'] %}
                                 <img class="img-thumbnail pull-left" src="{{ u.user.picture| apply_filter('img_100_100') }}" style="margin: 0 auto;display: block;" />
                             {% endfor %}
                         </td>

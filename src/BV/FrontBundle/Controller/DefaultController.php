@@ -35,49 +35,45 @@ class DefaultController extends Controller
         /* @var User $user */
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $events = [];
-        $cms = [];
+        $content = [];
         $nb = $this->getDoctrine()->getRepository('FrontBundle:User')->countUsersByGroups();
 
-        // VOLLEYSCHOOL_ADULTS
-        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_ADULTS);
-        $cms[Events::TYPE_VOLLEYSCHOOL_ADULT] = $cmsPage->getContent();
-        $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_ADULT);
-        $events[Events::TYPE_VOLLEYSCHOOL_ADULT] = $event;
-        $availabilities[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->countAvailabilities($event);
-        $availability[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByUserAndEvent($user, $event);
-        $users[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByEventAndAvailable($event);
-
-        // VOLLEYSCHOOL_YOUTH
-        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_YOUTH);
-        $cms[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $cmsPage->getContent();
-        $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType(Events::TYPE_VOLLEYSCHOOL_YOUTH);
-        $events[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $event;
-        $availabilities[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->countAvailabilities($event);
-        $availability[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByUserAndEvent($user, $event);
-        $users[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByEventAndAvailable($event);
+        $content[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->_populateResults(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_ADULTS, Events::TYPE_VOLLEYSCHOOL_ADULT);
+        $content[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->_populateResults(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_YOUTH, Events::TYPE_VOLLEYSCHOOL_YOUTH);
 
         return $this->render('FrontBundle:Volleyschool:volleyschool.html.twig', array(
             'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
             'user' => $user,
-            'users' => $users,
-            'cms' => $cms,
-            'events' => $events,
-            'availabilities' => $availabilities,
-            'availability' => $availability,
-            'nb' => $nb
+            'nb' => $nb,
+            'content' => $content,
         ));
+    }
+
+    private function _populateResults($typeCms, $typeEvent)
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName($typeCms);
+        $event = $this->getDoctrine()->getRepository('FrontBundle:Events')->findEventsByType($typeEvent);
+
+        return array(
+            'cmsPage'         => $cmsPage->getContent(),
+            'events'          => $event,
+            'availabilities'  => $this->getDoctrine()->getRepository('FrontBundle:Availability')->countAvailabilities($event),
+            'availability'    => $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByUserAndEvent($user, $event),
+            'users'           => $this->getDoctrine()->getRepository('FrontBundle:Availability')->findByEventAndAvailable($event),
+        );
     }
 
     public function toggleAvailabilityAction(Request $request)
     {
         /* @var User $user */
         $user = $this->container->get('security.context')->getToken()->getUser();
+        $referer = $request->headers->get('referer');
 
         // Redirect to consultation if not logged or not allowed to edit
         if (!$user instanceof User)
         {
-            return $this->redirect($this->generateUrl('bv_static_volley_school'), 302);
+            return $this->redirect($referer);
         }
 
         if ('GET' === $request->getMethod())
@@ -117,7 +113,7 @@ class DefaultController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('bv_static_volley_school'), 302);
+        return $this->redirect($referer);
     }
 
     public function volleySchoolEditAction(Request $request)
