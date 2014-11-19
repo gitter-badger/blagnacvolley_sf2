@@ -78,15 +78,6 @@ class Email
      */
     public function sendCertifRefusedEmail($user)
     {
-//        /* @var \BV\FrontBundle\Entity\Email $email */
-//        $email = $this->doctrine->getRepository("FrontBundle:Email")->findSingleByName(self::TYPE_SEND_CERTIF_REFUSED_EMAIL);
-//
-//        $this->sendMessage(
-//            $user->getEmail(),
-//            $this->from,
-//            $email->getTitle(),
-//            $email->getContent());
-
         $subject = "[BlagnacVolley] l'admin a refusé votre certificat";
         $template = 'FrontBundle:Mail:certifRefused.html.twig';
         $body = $this->templating->render($template, array(

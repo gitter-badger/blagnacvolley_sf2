@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Tools\LogBundle\Entity\SystemLog;
+use Symfony\Component\Filesystem\Filesystem;
 
 class StaticController extends Controller
 {
@@ -144,9 +145,10 @@ class StaticController extends Controller
                 return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
             }
 
-            if (file_exists($this->container->getParameter('web_dir').$user->getCertif()))
+            $fs = new Filesystem();
+            if ($fs->exists($this->container->getParameter('front.web_dir').$user->getCertif()))
             {
-                unlink($this->container->getParameter('web_dir').$user->getCertif());
+                unlink($this->container->getParameter('front.web_dir').$user->getCertif());
             }
 
             $user->setCertif(null);

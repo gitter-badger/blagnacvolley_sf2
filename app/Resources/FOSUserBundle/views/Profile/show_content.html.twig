@@ -23,11 +23,24 @@
 
         <div class="user_files">
             {% if user.getCertif %}
-                <div class="file"><a href="{{ asset(user.getCertif) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Certificat médical</a></div>
+                <div class="file">
+                    {% if user.getDateCertif  %}
+                        <a href="{{ asset(user.getCertif) }}" class="mt10" data-toggle="tooltip" title="Validé par l'administrateur BVB"><span class="fa fa-file-pdf-o color-text-green"></span> Certificat médical</a>
+                    {% else %}
+                        <a href="{{ asset(user.getCertif) }}" class="mt10" data-toggle="tooltip" title="Pas encore validé par l'administrateur BVB"><span class="fa fa-file-pdf-o color-text-orange"></span> Certificat médical</a>
+                    {% endif %}
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+                    //]]>
+                    </script>
+                </div>
             {% endif %}
 
             {% if user.getAttestation %}
-                <div class="file"><a href="{{ asset(user.getAttestation) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Attestation pôle emploi</a></div>
+                <div class="file">
+                    <a href="{{ asset(user.getAttestation) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Attestation pôle emploi</a>
+                </div>
             {% endif %}
         </div>
 
