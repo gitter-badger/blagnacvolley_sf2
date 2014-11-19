@@ -41,11 +41,14 @@ class DefaultController extends Controller
         $content[Events::TYPE_VOLLEYSCHOOL_ADULT] = $this->_populateResults(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_ADULTS, Events::TYPE_VOLLEYSCHOOL_ADULT);
         $content[Events::TYPE_VOLLEYSCHOOL_YOUTH] = $this->_populateResults(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_YOUTH, Events::TYPE_VOLLEYSCHOOL_YOUTH);
 
+        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL);
+
         return $this->render('FrontBundle:Volleyschool:volleyschool.html.twig', array(
             'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
             'user' => $user,
             'nb' => $nb,
             'content' => $content,
+            'text' => ($cmsPage instanceof CmsPage ? $cmsPage->getContent() : null)
         ));
     }
 
@@ -127,8 +130,17 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('bv_static_volley_school'), 302);
         }
 
+        if ('GET' === $request->getMethod())
+        {
+            $name = $request->get('name');
+        }
+        else
+        {
+            $name = $request->get('bv_frontbundle_cmspage')['name'];
+        }
+
         /* @var CmsPage $cmsPage */
-        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL_ADULTS);
+        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName($name);
         $form = $this->createForm(new CmsPageFormType(), $cmsPage);
 
         if ('POST' === $request->getMethod())
@@ -161,11 +173,14 @@ class DefaultController extends Controller
 
         $content[Events::TYPE_FREE_PLAY] = $this->_populateResults(CmsPage::STATIC_PAGE_FREE_GAME, Events::TYPE_FREE_PLAY);
 
+        $cmsPage = $this->getDoctrine()->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_FREE_GAME);
+
         return $this->render('FrontBundle:Freeplay:freeplay.html.twig', array(
             'allowed' => $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToEditCmsPages($user),
             'user' => $user,
             'nb' => $nb,
             'content' => $content,
+            'text' => ($cmsPage instanceof CmsPage ? $cmsPage->getContent() : null)
         ));
     }
 

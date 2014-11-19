@@ -1,5 +1,11 @@
 {% extends "FrontBundle:Volleyschool:block.html.twig" %}
 
-{#{% block col-container %}#}
-{#<div class="col-sm-12">#}
-{#{% endblock col-container %}#}
+{% block panel_heading %}
+    <div class="panel-heading">
+        {{ title }}
+        <span class="label label-sm label-success pull-right"><span class="badge">{{ nb[0][type] }}</span> Inscrits dans ce groupe</span>
+    </div>
+{% endblock panel_heading %}
+
+{% block panel_body_cms %}
+{% endblock panel_body_cms %}

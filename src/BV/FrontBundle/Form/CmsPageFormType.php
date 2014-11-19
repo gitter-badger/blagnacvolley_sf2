@@ -18,6 +18,7 @@ class CmsPageFormType extends AbstractType
             ->add('content', 'textarea', array(
                 'attr'  => array('class' => 'redactor'),
             ))
+            ->add('name', 'hidden')
         ;
     }
     

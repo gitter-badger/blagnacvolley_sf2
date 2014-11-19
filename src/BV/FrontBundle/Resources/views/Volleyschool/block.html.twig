@@ -2,16 +2,21 @@
 {% set cms = content[type]['cmsPage'] %}
 
 <div class="panel panel-primary panel-doodle">
-    <div class="panel-heading">
-        {{ title }}
-        <span class="label label-sm label-success pull-right"><span class="badge">{{ nb[0][type] }}</span> Inscrits dans ce groupe</span>
-    </div>
+    {% block panel_heading %}
+        <div class="panel-heading">
+            {{ title }}
+            {% if allowed %} <a class="btn btn-primary btn-xs pull-right" href="{{ path('bv_static_volley_school_edit', { 'name': cmsPageId }) }}">{{ 'volleyschool.edit'|trans() }}</a> {% endif %}
+            <span class="label label-sm label-success pull-right"><span class="badge">{{ nb[0][type] }}</span> Inscrits dans ce groupe</span>
+        </div>
+    {% endblock panel_heading %}
     <div class="panel-body">
-        {% if cms|raw != null %}
-            <div class="well">
-                {{ cms|raw }}
-            </div>
-        {% endif %}
+        {% block panel_body_cms %}
+            {% if cms|raw != null %}
+                <div class="well">
+                    {{ cms|raw }}
+                </div>
+            {% endif %}
+        {% endblock panel_body_cms %}
 
         {% if event|length > 0 %}
             {% set unavailable = (content[type]['availabilities']['total'] - content[type]['availabilities']['nbAvailable'] ) %}

@@ -3,11 +3,17 @@
 {% block title %}{{ parent() }} - {{ 'jeulibre.welcome'|trans() }} {% endblock %}
 
 {% block content_row %}
-    <h1>{{ 'jeulibre.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_jeu_libre_edit') }}">{{ 'jeulibre.edit'|trans() }}</a> {% endif %} </h1>
+    <h1>{{ 'jeulibre.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_jeu_libre_edit', { 'name': constant('\\BV\\FrontBundle\\Entity\\CmsPage::STATIC_PAGE_FREE_GAME') }) }}">{{ 'jeulibre.edit'|trans() }}</a> {% endif %} </h1>
+
+    {% if text|length > 0 %}
+        <div class="well">{{ text|raw }}</div>
+    {% endif %}
 
     <div class="row">
         <div class="col-sm-12">
-            {{ include ( 'FrontBundle:freeplay:block.html.twig', {title: ('jeulibre.' ~ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY'))|trans(), content: content, user: user, nb: nb, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY')} , with_context = false  ) }}
+            {% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY') %}
+            {% set cmsPageId = constant('\\BV\\FrontBundle\\Entity\\CmsPage::STATIC_PAGE_FREE_GAME') %}
+            {{ include ( 'FrontBundle:freeplay:block.html.twig', {cmsPageId: cmsPageId, allowed: allowed, title: ('jeulibre.' ~ type)|trans(), content: content, user: user, nb: nb, type: type} , with_context = false  ) }}
         </div>
     </div>
 

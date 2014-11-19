@@ -3,14 +3,22 @@
 {% block title %}{{ parent() }} - {{ 'volleyschool.welcome'|trans() }} {% endblock %}
 
 {% block content_row %}
-    <h1>{{ 'volleyschool.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_volley_school_edit') }}">{{ 'volleyschool.edit'|trans() }}</a> {% endif %} </h1>
+    <h1>{{ 'volleyschool.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_volley_school_edit', { 'name': constant('\\BV\\FrontBundle\\Entity\\CmsPage::STATIC_PAGE_VOLLEYSCHOOL') }) }}">{{ 'volleyschool.edit'|trans() }}</a> {% endif %} </h1>
+
+    {% if text|length > 0 %}
+        <div class="well">{{ text|raw }}</div>
+    {% endif %}
 
     <div class="row">
         <div class="col-sm-6">
-            {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {title: ('volleyschool.' ~ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT'))|trans(), content: content, user: user, nb: nb, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT')} , with_context = false  ) }}
+            {% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT') %}
+            {% set cmsPageId = constant('\\BV\\FrontBundle\\Entity\\CmsPage::STATIC_PAGE_VOLLEYSCHOOL_ADULTS') %}
+            {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {cmsPageId: cmsPageId, allowed: allowed, title: ('volleyschool.' ~ type)|trans(), content: content, user: user, nb: nb, type: type} , with_context = false  ) }}
         </div>
         <div class="col-sm-6">
-            {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {title: ('volleyschool.' ~ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH'))|trans(), content: content, user: user, nb: nb, type: constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH')} , with_context = false ) }}
+            {% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH') %}
+            {% set cmsPageId = constant('\\BV\\FrontBundle\\Entity\\CmsPage::STATIC_PAGE_VOLLEYSCHOOL_YOUTH') %}
+            {{ include ( 'FrontBundle:Volleyschool:block.html.twig', {cmsPageId: cmsPageId, allowed: allowed, title: ('volleyschool.' ~ type)|trans(), content: content, user: user, nb: nb, type: type} , with_context = false ) }}
         </div>
     </div>
 

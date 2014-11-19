@@ -11,6 +11,14 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
+        // Volley School
+        $cmsPageVS = new CmsPage();
+        $cmsPageVS->setContent('');
+        $cmsPageVS->setName(CmsPage::STATIC_PAGE_VOLLEYSCHOOL);
+        $cmsPageVS->setCreatedAt(new \DateTime());
+        $cmsPageVS->setUpdatedAt(null);
+        $cmsPageVS->setDescription("Ecole de volley");
+
         // Volley School Adults
         $cmsPageVSA = new CmsPage();
         $cmsPageVSA->setContent('');
@@ -51,6 +59,7 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
         $cmsPageA->setUpdatedAt(null);
         $cmsPageA->setDescription("Adresses");
 
+        $manager->persist($cmsPageVS);
         $manager->persist($cmsPageVSA);
         $manager->persist($cmsPageVSY);
         $manager->persist($cmsPageFG);

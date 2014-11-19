@@ -112,7 +112,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user1->setPlainPassword('pass4bv');
         $user1->setEmail('jy.pichon@gmail.com');
         $user1->setEnabled(true);
-        $user1->setIsVolleySchoolAdult(false);
+        $user1->setIsVolleySchoolAdult(true);
         $user1->setIsVolleySchoolYouth(false);
         $user1->setIsFreeplay(true);
 

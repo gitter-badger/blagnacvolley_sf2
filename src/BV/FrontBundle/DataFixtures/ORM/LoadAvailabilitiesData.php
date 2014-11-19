@@ -20,7 +20,7 @@ class LoadAvailabilitiesData extends AbstractFixture implements OrderedFixtureIn
 
         $availability_yann = new Availability();
         $availability_yann->setUser($user_yann);
-        $availability_yann->setEvents($eventsVSA);
+        $availability_yann->setEvent($eventsVSA);
         $availability_yann->setIsAvailable(true);
         $availability_yann->setValidatedAt(new \Datetime());
 
@@ -32,7 +32,7 @@ class LoadAvailabilitiesData extends AbstractFixture implements OrderedFixtureIn
 
         $availability_user1 = new Availability();
         $availability_user1->setUser($user_1);
-        $availability_user1->setEvents($eventsVSA);
+        $availability_user1->setEvent($eventsVSA);
         $availability_user1->setIsAvailable(false);
         $availability_user1->setValidatedAt(new \Datetime());
 
