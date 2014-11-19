@@ -2,6 +2,7 @@
 
 namespace BV\AdminBundle\Admin;
 
+use BV\FrontBundle\Entity\User;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -47,11 +48,11 @@ class UserAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('username')
+            ->addIdentifier('firstname')
+            ->add('lastname')
             ->add('email')
-//            ->add('groups')
+            ->add('status', 'choice', array('label' => 'Statut', 'template' => 'AdminBundle:User:Fields/status_field.html.twig') )
             ->add('enabled', null, array('editable' => true))
-            ->add('locked', null, array('editable' => true))
 //            ->add('createdAt')
         ;
 
@@ -71,10 +72,16 @@ class UserAdmin extends Admin
     {
         $filterMapper
             ->add('id')
-            ->add('username')
-            ->add('locked')
+            ->add('firstname')
+            ->add('lastname')
             ->add('email')
-//            ->add('groups')
+            ->add('status', 'doctrine_orm_choice', array( 'label' => 'Statut'), 'choice',
+                array(
+                    'choices' => User::getStatusList(),
+                    'expanded' => false,
+                    'multiple' => false
+                )
+            )
         ;
     }
 
@@ -88,9 +95,6 @@ class UserAdmin extends Admin
                 ->add('username')
                 ->add('email')
             ->end()
-//            ->with('Groups')
-//                ->add('groups')
-//            ->end()
             ->with('Profile')
                 ->add('dob')
                 ->add('firstname')
@@ -152,13 +156,6 @@ class UserAdmin extends Admin
                     ->add('isLookingForTeam', null, array('required' => false))
                 ->end()
             ->end()
-//            ->with('Groups')
-//                ->add('groups', 'sonata_type_model', array(
-//                    'required' => false,
-//                    'expanded' => true,
-//                    'multiple' => true
-//                ))
-//            ->end()
         ;
 
 //        if ($this->getSubject() && !$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {

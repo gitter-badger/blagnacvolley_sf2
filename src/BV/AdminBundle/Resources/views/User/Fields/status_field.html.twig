@@ -1,0 +1,51 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% set valueId = value %}
+    {% spaceless %}
+        {% if field_description.options.choices is defined %}
+            {% if field_description.options.multiple is defined and field_description.options.multiple==true and value is iterable %}
+
+                {% set result = '' %}
+                {% set delimiter = field_description.options.delimiter|default(', ') %}
+
+                {% for val in value %}
+                    {% if result is not empty %}
+                        {% set result = result ~ delimiter %}
+                    {% endif %}
+
+                    {% if field_description.options.choices[val] is defined %}
+                        {% if field_description.options.catalogue is not defined %}
+                            {% set result = result ~ field_description.options.choices[val] %}
+                        {% else %}
+                            {% set result = result ~ field_description.options.choices[val]|trans({}, field_description.options.catalogue) %}
+                        {% endif %}
+                    {% else %}
+                        {% set result = result ~ val %}
+                    {% endif %}
+                {% endfor %}
+
+                {% set value = result %}
+
+            {% elseif value in field_description.options.choices|keys %}
+                {% if field_description.options.catalogue is not defined %}
+                    {% set value = field_description.options.choices[value] %}
+                {% else %}
+                    {% set value = field_description.options.choices[value]|trans({}, field_description.options.catalogue) %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        {% set val = 'constants.user.status.' ~ value %}
+        {% set class = 'label-danger' %}
+        {% if value == constant('\\BV\\FrontBundle\\Entity\\User::STATUS_ACTIVE_LICENSED') %}
+            {% set class = 'label-success' %}
+        {% endif %}
+        {% if value == constant('\\BV\\FrontBundle\\Entity\\User::STATUS_ACTIVE_NOT_LICENSED') %}
+            {% set class = 'label-warning' %}
+        {% endif %}
+
+        <span class="label {{ class }}">{{ val|trans({}, 'BVUserBundle') }}</span>
+
+    {% endspaceless %}
+{% endblock %}
