@@ -1,0 +1,71 @@
+
+{% if events[type]['event'] %}
+    {% set event = events[type]['event'] %}
+    {% set unavailable = (events[type]['availabilities']['total'] - events[type]['availabilities']['nbAvailable'] ) %}
+    {% set available = events[type]['availabilities']['nbAvailable'] %}
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+            {{ title }}
+        </div>
+        <div class="panel-body">
+            <p class="text-center">{{ event.startDate| localizeddate('full', 'none', app.request.locale )|capitalize }}</p>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="text-center"><span class="color-text-green fa fa-check"></span></th>
+                    <th class="text-center"><span class="color-text-carrot fa fa-question"></span></th>
+                    <th class="text-center"><span class="color-text-pomegranate fa fa-remove"></span></th>
+                </tr>
+                <tr>
+                    <td class="text-center">{{ available + 0 }}</td>
+                    <td class="text-center">{{ ( nb[0][type] - available - unavailable ) }}</td>
+                    <td class="text-center">{{ unavailable }}</td>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="panel-footer text-center">
+            {% if app.user %}
+                {% if user.isInGroup(type) %}
+                    {% if (events[type]['availability'] != null) %}
+                        {% if (events[type]['availability'].isAvailable) %}
+                            <a class="btn btn-block btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Se désister pour cette session.</a>
+                        {% else %}
+                            <a class="btn btn-block btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">S'inscrire pour cette session.</a>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-center">Vous n'avez pas encore indiqué vos disponibilités pour cette session</p>
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                <a class="btn btn-block btn-sm btn-success" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': true }) }}">Disponible</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="btn btn-block btn-sm btn-warning" href="{{ path('bv_user_toggle_availability', { 'event': event.id, 'is_available': false }) }}">Indisponible</a>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    {% endif %}
+                {% else %}
+                    <span style="text-align: justify; font-size: 10px; font-family: tahoma;">
+                        Vous ne faites pas partie de ce groupe. Pour pouvoir indiquer vos disponibilités, voius devez le rejoindre. Cliquez sur s'inscrire, dans votre profil.
+                    </span>
+                {% endif %}
+            {% else %}
+                <span style="text-align: justify; font-size: 10px; font-family: tahoma;">
+                    Vous devez être connecté pour indiquer vos disponibilités.
+                </span>
+            {% endif %}
+        </div>
+    </div>
+{% else %}
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+            {{ ('volleyschool.' ~ event ~ '.' ~ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT'))|trans() }}
+        </div>
+        <div class="panel-body">
+            Pas de date définie
+        </div>
+    </div>
+{% endif %}

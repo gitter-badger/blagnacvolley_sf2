@@ -33,7 +33,7 @@
                 <tbody>
                 <tr>
                     <td></td>
-                    <td>{{ available }}</td>
+                    <td>{{ available + 0 }}</td>
                     <td>{{ ( nb[0][type] - available - unavailable ) }}</td>
                     <td>{{ unavailable }}</td>
                 </tr>
@@ -41,14 +41,18 @@
                 <tfoot>
                 <tr>
                     <td colspan="4" style="padding-left:0;padding-right:0;">
-                        <p>Inscrits pour cette session</p>
-                        {% for u in content[type]['users'] %}
-                            <div class="relative pull-left mr2 mb2">
-                                <img class="img-thumbnail" src="{{ u.user.picture| apply_filter('img_200_200') }}" style="margin: 0 auto;width:128px;height:128px;" />
-                                <label class="label-thumbnail">{{ u.user.firstname|slice(0, 18) }}</label>
-                            </div>
-                        {% endfor %}
-                        <div class="clearfix"></div>
+                        {% if content[type]['users']|length > 0 %}
+                            <p>Inscrits pour cette session</p>
+                            {% for u in content[type]['users'] %}
+                                <div class="relative pull-left mr2 mb2">
+                                    <img class="img-thumbnail" src="{{ u.user.picture| apply_filter('img_200_200') }}" style="margin: 0 auto;width:128px;height:128px;" />
+                                    <label class="label-thumbnail">{{ u.user.firstname|slice(0, 18) }}</label>
+                                </div>
+                            {% endfor %}
+                            <div class="clearfix"></div>
+                        {% else %}
+                            <p>Aucun inscrits pour le moment</p>
+                        {% endif %}
                     </td>
                 </tr>
                 </tfoot>

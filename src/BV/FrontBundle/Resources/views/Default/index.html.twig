@@ -5,6 +5,13 @@
 {% block content %}
     <h1>{{ 'homepage.welcome'|trans() }}</h1>
 
-    {{ render(controller('FrontBundle:News:displayActives')) }}
+    <div class="row">
+        <div class="col-sm-9">
+            {{ render(controller('FrontBundle:News:displayActives')) }}
+        </div>
+        <div class="col-sm-3">
+            {{ render(controller('FrontBundle:News:displayDoodles')) }}
+        </div>
+    </div>
 
 {% endblock content %}

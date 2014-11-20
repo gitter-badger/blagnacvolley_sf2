@@ -49,3 +49,7 @@ services:
         arguments: [ "BV\FrontBundle\Entity\Team", "getTypeList", "bv_team_type" ]
         tags:
             - { name: form.type, alias: bv_team_type }
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

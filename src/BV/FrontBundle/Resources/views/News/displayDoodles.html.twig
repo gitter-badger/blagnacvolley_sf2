@@ -1,0 +1,11 @@
+{% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT') %}
+{% set title = ('volleyschool.' ~ type)|trans() %}
+{{ include ( 'FrontBundle:News:block.html.twig', { title: title, type: type, events: events, user: user, nb: nb } , with_context = false  ) }}
+
+{% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH') %}
+{% set title = ('volleyschool.' ~ type)|trans() %}
+{{ include ( 'FrontBundle:News:block.html.twig', { title: title, type: type, events: events, user: user, nb: nb } , with_context = false  ) }}
+
+{% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY') %}
+{% set title = ('jeulibre.' ~ type)|trans() %}
+{{ include ( 'FrontBundle:News:block.html.twig', { title: title, type: type, events: events, user: user, nb: nb } , with_context = false  ) }}
