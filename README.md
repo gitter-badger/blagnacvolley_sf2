@@ -56,5 +56,7 @@ npm install
 bower install
 grunt less
 php composer.phar install
+composer self-update
 php app/console doctrine:migrations:migrate
+php app/console assets:install
 ```

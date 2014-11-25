@@ -72,3 +72,12 @@ services:
         calls:
             - [ setTranslationDomain, [LogBundle] ]
             - [ setTemplate, [inner_list_row, AdminBundle:Notification:inner_row_comment.html.twig], [base_list_field, [SonataAdminBundle:CRUD:base_list_flat_field.html.twig]]]
+    bv_user.form.level_list:
+        class: Sonata\CoreBundle\Form\Type\StatusType
+        arguments: [ "%fos_user.model.user.class%", "getLevelList", "bv_user_level" ]
+        tags:
+            - { name: form.type, alias: bv_user_level }
+    bv_user.image_type_extension:
+        class: BV\AdminBundle\Form\Extension\ImageTypeExtension
+        tags:
+            - { name: form.type_extension, alias: file }

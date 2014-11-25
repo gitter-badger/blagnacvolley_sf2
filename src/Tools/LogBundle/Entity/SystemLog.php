@@ -21,6 +21,7 @@ class SystemLog
     const TYPE_USER_NEW_SEASON = 110;
     const TYPE_USER_NEW_CERTIF = 120;
     const TYPE_USER_NEW_ATTESTATION = 130;
+    const TYPE_USER_NEW_PARENTAL_ADVISORY = 140;
 
     protected static $levels = array(
         self::NOTICE            => 'NOTICE',
@@ -32,6 +33,7 @@ class SystemLog
         self::TYPE_USER_NEW_SEASON  => 'TYPE_USER_NEW_SEASON',
         self::TYPE_USER_NEW_CERTIF  => 'TYPE_USER_NEW_CERTIF',
         self::TYPE_USER_NEW_ATTESTATION  => 'TYPE_USER_NEW_ATTESTATION',
+        self::TYPE_USER_NEW_PARENTAL_ADVISORY=> 'TYPE_USER_NEW_PARENTAL_ADVISORY',
     );
 
     /**

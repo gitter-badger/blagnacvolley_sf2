@@ -14,3 +14,7 @@ _sonata_admin:
 sonata_user:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
+
+bv_delete_file:
+    path:     /deleteFile
+    defaults: { _controller: AdminBundle:Static:deleteFile }

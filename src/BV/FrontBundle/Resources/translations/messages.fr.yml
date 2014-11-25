@@ -112,6 +112,18 @@ constants:
       PROM_A: Promotion A
       PROM_B: Promotion B
       PROM_C: Promotion C
+    license:
+      TYPE_RENEWAL: Renouvellement
+      TYPE_CREATION: Création
+      TYPE_MUTATION: Mutation
+    filetype:
+      IMAGE_TYPE_CERTIF:  Certificat
+      IMAGE_TYPE_ATTESTATION: Attestation
+      IMAGE_TYPE_PICTURE: Photo du profil
+      IMAGE_TYPE_PARENTAL_ADV: Accord Parental
+
+
+
   events:
     type:
       TRAINING: Entraînement

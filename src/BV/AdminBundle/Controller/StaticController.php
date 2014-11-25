@@ -6,6 +6,7 @@ use BV\FrontBundle\Entity\User;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Tools\LogBundle\Entity\SystemLog;
@@ -184,6 +185,30 @@ class StaticController extends Controller
         }
 
         $this->addFlash('sonata_flash_success', 'Le fichier a bien été supprimé');
+
+        return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
+    }
+
+    public function deleteFileAction(Request $request)
+    {
+        die('here');
+        if (!$this->getUser()->isSuperAdmin()) {
+            throw new AccessDeniedException();
+        }
+
+        if ('GET' === $request->getMethod())
+        {
+            if ($request->get('type') != null && $request->get('id') != null)
+            {
+                $user = $this->getDoctrine()->getRepository('FrontBundle:User')->find($request->get('id'));
+                if ($user instanceof $user && User::isFileTypeValid($request->get('type')))
+                {
+                    $user->setFile($request->get('type'), null);
+                    $this->container->get('sonata.user.admin.user')->getUserManager()->updateUser($user);
+                    $this->container->get('bv_cache')->deleteAllFromCache($user->getId());
+                }
+            }
+        }
 
         return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
     }

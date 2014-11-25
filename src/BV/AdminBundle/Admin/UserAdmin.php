@@ -115,31 +115,30 @@ class UserAdmin extends Admin
          * $roles (array)
          */
         $formMapper
-            ->tab('General')
-                ->with('User')
-                    ->add('username')
-                    ->add('email')
-                    ->add('plainPassword', 'text', array(
-                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId()))
-                    ))
+            ->tab('Informations personelles')
+                ->with('Informations de Connexion')
+                    ->add('username', 'text', array('help' => 'Note: Le nom utilisateur doit être unique car utilisé pour se connecter.'))
+                    ->add('email', 'text', array('help' => 'Note: Le mail doit être unique car utilisé pour les notifications.'))
+//                    ->add('plainPassword', 'text', array(
+//                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId()))
+//                    ))
                 ->end()
-                ->with('Profile')
-                    ->add('gender', 'sonata_user_gender', array(
-                        'required' => true,
-                    ))
-                    ->add('firstname', null, array('required' => false))
-                    ->add('lastname', null, array('required' => false))
-                    ->add('dob', 'sonata_type_date_picker', array('required' => false))
-                    ->add('address')
+                ->with('Informations utilisateur')
+                    ->add('gender', 'sonata_user_gender', array('required' => true,))
+                    ->add('firstname', null, array('required' => true))
+                    ->add('lastname', null, array('required' => true))
+                    ->add('dob', 'sonata_type_date_picker', array('required' => true, 'format' => 'dd/MM/yyyy'))
+                    ->add('address', 'autocomplete', array('required' => true,))
+                    ->add('geo_lat', 'hidden')
+                    ->add('geo_lng', 'hidden')
                     ->add('phone', null, array('required' => false))
-                    ->add('picture')
+                    ->add('phonePro', null, array('label' => 'Téléphone pro.', 'required' => false))
                 ->end()
             ->end()
-            ->tab('Club')
+            ->tab('Informations administratives')
                 ->with('License')
-                    ->add('status', 'bv_user_status', array(
-                        'required' => true,
-                    ))
+                    ->add('status', 'bv_user_status', array( 'required' => true, ))
+                    ->add('licenseType', 'choice', array('label' => 'Type license.', 'choices' => User::getLicenseTypeList(), 'required' => false))
                     ->add('licenseNumber', 'text')
                     ->add('feeAmount')
                     ->add('datePayment', 'sonata_type_datetime_picker')
@@ -153,28 +152,36 @@ class UserAdmin extends Admin
                     ->add('mscTeam')
                     ->add('femTeam')
                     ->add('mixTeam')
-                    ->add('isLookingForTeam', null, array('required' => false))
+                    ->add('isLookingForTeam', null, array('label' => 'Recherche une équipe', 'required' => false))
+                ->end()
+            ->end()
+            ->tab('Fichiers associés')
+                ->with('Club')
+                    ->add('pictureFile', 'file',            array('label' => 'Photo du joueur', 'required' => false, 'image_type' => User::IMAGE_TYPE_PICTURE))
+                    ->add('certifFile', 'file',             array('label' => 'Certificat médical', 'required' => false, 'image_type' => User::IMAGE_TYPE_CERTIF))
+                    ->add('attestationFile', 'file',        array('label' => 'Attestation pôle emploi', 'required' => false, 'image_type' => User::IMAGE_TYPE_ATTESTATION))
+                    ->add('parentalAdvisoryFile', 'file',   array('label' => 'Accord parental', 'required' => false, 'image_type' => User::IMAGE_TYPE_PARENTAL_ADV))
                 ->end()
             ->end()
         ;
 
 //        if ($this->getSubject() && !$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
-            $formMapper
-                ->tab('Management')
-                ->with('Management')
-//                    ->add('realRoles', 'sonata_security_roles', array(
-//                        'label'    => 'form.label_roles',
-//                        'expanded' => true,
-//                        'multiple' => true,
-//                        'required' => false
-//                    ))
-                    ->add('locked', null, array('required' => false))
-                    ->add('expired', null, array('required' => false))
-                    ->add('enabled', null, array('required' => false))
-                    ->add('credentialsExpired', null, array('required' => false))
-                ->end()
-                ->end()
-            ;
+//            $formMapper
+//                ->tab('Management')
+//                ->with('Management')
+////                    ->add('realRoles', 'sonata_security_roles', array(
+////                        'label'    => 'form.label_roles',
+////                        'expanded' => true,
+////                        'multiple' => true,
+////                        'required' => false
+////                    ))
+//                    ->add('locked', null, array('required' => false))
+//                    ->add('expired', null, array('required' => false))
+//                    ->add('enabled', null, array('required' => false))
+//                    ->add('credentialsExpired', null, array('required' => false))
+//                ->end()
+//                ->end()
+//            ;
 //        }
 
     }
@@ -184,8 +191,7 @@ class UserAdmin extends Admin
      */
     public function preUpdate($user)
     {
-        $this->getUserManager()->updateCanonicalFields($user);
-        $this->getUserManager()->updatePassword($user);
+        $this->getUserManager()->updateUser($user);
     }
 
     /**

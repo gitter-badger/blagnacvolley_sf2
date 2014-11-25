@@ -106,9 +106,10 @@ genemu_form:
 
 front:
     profile:
-        pictures_path: /uploads/users
+        pictures_path: /uploads/picture
         certif_path:   /uploads/certif
         attestation_path: /uploads/attestation
+        parental_advisory_path: /uploads/parental_advisory
 
 avalanche_imagine:
     filters:

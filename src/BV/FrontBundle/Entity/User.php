@@ -2,58 +2,22 @@
 
 namespace BV\FrontBundle\Entity;
 
-use Composer\EventDispatcher\Event;
 use FOS\UserBundle\Entity\User as EntityUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use BV\FrontBundle\Entity\Events;
 
 /**
- * User
- *
- * Requis pour la création de compte :
- *
- * - Identifiant (Unique sur le site, qui sert à s'authentifier)
- * - Email, (mail)
- * - Mot de passe. (password)
- * - Genre, (gender)
- * - Nom, (lastname)
- * - Prénom, (firstname)
- * - Date de naissance, (dob)
- * - Adresse, (address)
- * - Tel portable, (phone)
- * - Photo, (picture)
- *
- * A Saisir par l'utilisateur par la suite :
- *
- * - Taille Maillot (shirt_size)
- * - Facture requise (is_required_bill)
- * - Equipe garçon (msc_team) avec l'équipe choisie.
- * - Equipe fille (fem_team) avec l'équipe choisie.
- * - Equipe mixte (mix_team) avec l'équipe choisie.
- * - Recherche une équipe (is_looking_for_team)
- * - Niveau (level) variant du plus faible au plus fort : (Promotion B, Promotion A, Honneur C, Honneur B, Honneur A, Excellence C, Excellence B, Excellence A)
- *
- * Calculées automatiquement à la création du compte :
- *
- * - Coordonnées GPS, calculées à partir de l'adresse (See google maps field)
- * - Statut (à passer à ACTIF_NON_LICENCIE à la création de compte) Autre statuts disponibles : INACTIF, ACTIF_LICENCIE.
- *
- * Entré par l'administrateur du club par la suite :
- *
- * - Numéro de License (license_number)
- * - Montant Cotisation (fee_amount)
- * - Date paiement Cotisation (date_payment_fee)
- * - Date livraison maillot (date_shirt_delivered)
- * - Est capitaine (is_captain)
- * - Est suppléant (is_sub_captain)
- *
  * @ORM\Table(name="bv_user")
  * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\UserRepository")
  */
 class User extends EntityUser
 {
+    const IMAGE_TYPE_CERTIF         = 'certif';
+    const IMAGE_TYPE_ATTESTATION    = 'attestation';
+    const IMAGE_TYPE_PICTURE        = 'picture';
+    const IMAGE_TYPE_PARENTAL_ADV   = 'parental_advisory';
+
     const STATUS_ACTIVE_LICENSED = 'ACTIVE_LICENSED';
     const STATUS_ACTIVE_NOT_LICENSED = 'ACTIVE_NOT_LICENSED';
     const STATUS_INACTIVE = 'INACTIVE';
@@ -76,6 +40,10 @@ class User extends EntityUser
     const LEVEL_PROM_A = 'PROM_A';
     const LEVEL_PROM_B = 'PROM_B';
     const LEVEL_PROM_C = 'PROM_C';
+
+    const LICENSE_TYPE_RENEWAL = 'TYPE_RENEWAL';
+    const LICENSE_TYPE_CREATION = 'TYPE_CREATION';
+    const LICENSE_TYPE_MUTATION = 'TYPE_MUTATION';
 
     /**
      * @var integer
@@ -142,6 +110,24 @@ class User extends EntityUser
     /**
      * @var string
      *
+     * @ORM\Column(name="parental_advisory", type="string", length=512, nullable=true)
+     */
+    protected $parentalAdvisory;
+
+    /**
+     * @var File
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff", "application/pdf"},
+     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *     mimeTypesMessage = "Only the filetypes image and PDF are allowed."
+     * )
+     */
+    public $parentalAdvisoryFile;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="certif", type="string", length=512, nullable=true)
      */
     protected $certif;
@@ -152,7 +138,7 @@ class User extends EntityUser
      *     maxSize = "5M",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff", "application/pdf"},
      *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
-     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     *     mimeTypesMessage = "Only the filetypes image and PDF are allowed."
      * )
      */
     public $certifFile;
@@ -177,7 +163,7 @@ class User extends EntityUser
      *     maxSize = "5M",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff", "application/pdf"},
      *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
-     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     *     mimeTypesMessage = "Only the filetypes image and PDF are allowed."
      * )
      */
     public $attestationFile;
@@ -244,6 +230,13 @@ class User extends EntityUser
     /**
      * @var string
      *
+     * @ORM\Column(name="license_type", type="string", length=255, nullable=true)
+     */
+    protected $licenseType;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="geo_lat", type="string", length=255)
      */
     protected $geoLat;
@@ -303,6 +296,13 @@ class User extends EntityUser
      * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
     protected $phone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone_pro", type="string", length=255, nullable=true)
+     */
+    protected $phonePro;
 
     /**
      * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="user")
@@ -614,6 +614,20 @@ class User extends EntityUser
     }
 
     /**
+     * Returns the level list
+     *
+     * @return array
+     */
+    public static function getLicenseTypeList()
+    {
+        return array(
+            self::LICENSE_TYPE_CREATION => 'constants.user.license.'.self::LICENSE_TYPE_CREATION,
+            self::LICENSE_TYPE_RENEWAL => 'constants.user.license.'.self::LICENSE_TYPE_RENEWAL,
+            self::LICENSE_TYPE_MUTATION => 'constants.user.license.'.self::LICENSE_TYPE_MUTATION,
+        );
+    }
+
+    /**
      * Set level
      *
      * @param string $level
@@ -680,6 +694,21 @@ class User extends EntityUser
     public function getGeoLng()
     {
         return $this->geoLng;
+    }
+
+    /**
+     * Returns the status list
+     *
+     * @return array
+     */
+    public static function getFileTypeList()
+    {
+        return array(
+            self::IMAGE_TYPE_CERTIF       => 'constants.user.filetype'.self::IMAGE_TYPE_CERTIF,
+            self::IMAGE_TYPE_ATTESTATION  => 'constants.user.filetype'.self::IMAGE_TYPE_ATTESTATION,
+            self::IMAGE_TYPE_PICTURE      => 'constants.user.filetype'.self::IMAGE_TYPE_PICTURE,
+            self::IMAGE_TYPE_PARENTAL_ADV => 'constants.user.filetype'.self::IMAGE_TYPE_PARENTAL_ADV,
+        );
     }
 
     /**
@@ -1167,5 +1196,170 @@ class User extends EntityUser
         }
 
         return false;
+    }
+
+    /**
+     * Set parentalAdvisory
+     *
+     * @param string $parentalAdvisory
+     * @return User
+     */
+    public function setParentalAdvisory($parentalAdvisory)
+    {
+        $this->parentalAdvisory = $parentalAdvisory;
+    
+        return $this;
+    }
+
+    /**
+     * Get parentalAdvisory
+     *
+     * @return string 
+     */
+    public function getParentalAdvisory()
+    {
+        return $this->parentalAdvisory;
+    }
+
+    /**
+     * Set phonePro
+     *
+     * @param string $phonePro
+     * @return User
+     */
+    public function setPhonePro($phonePro)
+    {
+        $this->phonePro = $phonePro;
+    
+        return $this;
+    }
+
+    /**
+     * Get phonePro
+     *
+     * @return string 
+     */
+    public function getPhonePro()
+    {
+        return $this->phonePro;
+    }
+
+    /**
+     * Add availability
+     *
+     * @param \BV\FrontBundle\Entity\Availability $availability
+     * @return User
+     */
+    public function addAvailability(\BV\FrontBundle\Entity\Availability $availability)
+    {
+        $this->availability[] = $availability;
+    
+        return $this;
+    }
+
+    /**
+     * Remove availability
+     *
+     * @param \BV\FrontBundle\Entity\Availability $availability
+     */
+    public function removeAvailability(\BV\FrontBundle\Entity\Availability $availability)
+    {
+        $this->availability->removeElement($availability);
+    }
+
+    /**
+     * Get availability
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    /**
+     * Set licenseType
+     *
+     * @param string $licenseType
+     * @return User
+     */
+    public function setLicenseType($licenseType)
+    {
+        $this->licenseType = $licenseType;
+    
+        return $this;
+    }
+
+    /**
+     * Get licenseType
+     *
+     * @return string 
+     */
+    public function getLicenseType()
+    {
+        return $this->licenseType;
+    }
+
+    public function lifecycleFileUpload() {
+        $this->uploadFiles();
+    }
+
+    public function uploadFiles()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // we use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and target filename as params
+        $this->getFile()->move(
+            Image::SERVER_PATH_TO_IMAGE_FOLDER,
+            $this->getFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->filename = $this->getFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->setFile(null);
+    }
+
+    /**
+     * @param $type
+     * @return bool
+     */
+    public static function isFileTypeValid($type)
+    {
+        return array_key_exists($type, User::getFileTypeList());
+    }
+
+    /**
+     * @param $type
+     * @param $file
+     */
+    public function setFile($type, $file)
+    {
+        switch ($type)
+        {
+            case self::IMAGE_TYPE_ATTESTATION:
+                $this->attestationFile = $file;
+                $this->setAttestation($file);
+            break;
+            case self::IMAGE_TYPE_CERTIF:
+                $this->certifFile = $file;
+                $this->setCertif($file);
+            break;
+            case self::IMAGE_TYPE_PARENTAL_ADV:
+                $this->parentalAdvisoryFile = $file;
+                $this->setParentalAdvisory($file);
+            break;
+            case self::IMAGE_TYPE_PICTURE:
+                $this->pictureFile = $file;
+                $this->setPicture($file);
+            break;
+        }
     }
 }

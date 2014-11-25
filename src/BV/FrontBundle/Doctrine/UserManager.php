@@ -10,7 +10,6 @@ use FOS\UserBundle\Util\CanonicalizerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Tools\LogBundle\Entity\SystemLog;
 use Tools\LogBundle\Logger\Logger;
 
 class UserManager extends BaseUserManager implements ContainerAwareInterface
@@ -97,29 +96,48 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
         $this->updatePassword($user);
 
         if (null !== $user->certifFile) {
-            $certifPath = $this->container->getParameter('front.profile.certif_path');
-            $uploadDir = $this->container->getParameter('front.web_dir').$certifPath;
-
-            $filename = $user->getUsernameCanonical().'.'.$user->certifFile->guessExtension();
-
+            $path = $this->container->getParameter('front.profile.certif_path');
+            $ext = $user->certifFile->guessExtension();
+            $uploadDir = $this->container->getParameter('front.web_dir').$path;
+            $filename = $user->getId().'.'.$ext;
             $user->certifFile->move($uploadDir, $filename);
-            $user->setCertif($certifPath.'/'.$filename);
+            $user->setCertif($path.'/'.$filename);
             $user->certifFile = null;
 
-            $this->logger->addWarning(SystemLog::TYPE_USER_NEW_CERTIF, $user);
+            $this->container->get('bv_cache')->resetCache($path, $filename, $uploadDir, 'img_50_50');
         }
-
         if (null !== $user->attestationFile) {
-            $attestationPath = $this->container->getParameter('front.profile.attestation_path');
-            $uploadDir = $this->container->getParameter('front.web_dir').$attestationPath;
-
-            $filename = $user->getUsernameCanonical().'.'.$user->attestationFile->guessExtension();
-
+            $path = $this->container->getParameter('front.profile.attestation_path');
+            $ext = $user->attestationFile->guessExtension();
+            $uploadDir = $this->container->getParameter('front.web_dir').$path;
+            $filename = $user->getId().'.'.$ext;
             $user->attestationFile->move($uploadDir, $filename);
-            $user->setAttestation($attestationPath.'/'.$filename);
+            $user->setAttestation($path.'/'.$filename);
             $user->attestationFile = null;
 
-            $this->logger->addWarning(SystemLog::TYPE_USER_NEW_ATTESTATION, $user);
+            $this->container->get('bv_cache')->resetCache($path, $filename, $uploadDir, 'img_50_50');
+        }
+        if (null !== $user->pictureFile) {
+            $path = $this->container->getParameter('front.profile.pictures_path');
+            $ext = $user->pictureFile->guessExtension();
+            $uploadDir = $this->container->getParameter('front.web_dir').$path;
+            $filename = $user->getId().'.'.$ext;
+            $user->pictureFile->move($uploadDir, $filename);
+            $user->setPicture($path.'/'.$filename);
+            $user->pictureFile = null;
+
+            $this->container->get('bv_cache')->resetCache($path, $filename, $uploadDir, 'img_50_50');
+        }
+        if (null !== $user->parentalAdvisoryFile) {
+            $path = $this->container->getParameter('front.profile.parental_advisory_path');
+            $ext = $user->parentalAdvisoryFile->guessExtension();
+            $uploadDir = $this->container->getParameter('front.web_dir').$path;
+            $filename = $user->getId().'.'.$ext;
+            $user->parentalAdvisoryFile->move($uploadDir, $filename);
+            $user->setParentalAdvisory($path.'/'.$filename);
+            $user->parentalAdvisoryFile = null;
+
+            $this->container->get('bv_cache')->resetCache($path, $filename, $uploadDir, 'img_50_50');
         }
 
         $this->objectManager->persist($user);

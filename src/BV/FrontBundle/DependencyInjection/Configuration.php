@@ -35,6 +35,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('pictures_path')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('certif_path')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('attestation_path')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('parental_advisory_path')->isRequired()->cannotBeEmpty()->end()
                     ->end()
                 ->end()
             ->end()
