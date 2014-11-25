@@ -6,6 +6,13 @@ DATADIR=${OPENSHIFT_DATA_DIR%/}
 echo $DATADIR/.composer > $ENVDIR/COMPOSER_HOME
 echo $DATADIR/.npmrc    > $ENVDIR/NPM_CONFIG_USERCONFIG
 
+# check if composer exists in data dir
+if [ ! -f "$OPENSHIFT_DATA_DIR/composer.phar" ]; then
+    curl -s https://getcomposer.org/installer | php -- --install-dir=$OPENSHIFT_DATA_DIR
+else
+    COMPOSER_HOME=$DATADIR/.composer php $OPENSHIFT_DATA_DIR/composer.phar self-update
+fi
+
 if [ ! -e $NPM_CONFIG_USERCONFIG ]; then
     npm set production     true
     npm set cache          $DATADIR/.npm
