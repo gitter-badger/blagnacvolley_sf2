@@ -30,7 +30,7 @@ done
     # Front libraries
     HOME=$OPENSHIFT_DATA_DIR bower install
     # Compile Less files
-    grunt less
+    grunt build
 
     ### COMPOSER ###
     unset GIT_DIR
