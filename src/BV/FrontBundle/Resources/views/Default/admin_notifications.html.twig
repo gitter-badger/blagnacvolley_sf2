@@ -28,16 +28,16 @@
     </span>
 </div>
 <script type="text/javascript">
-    jQuery(document).ready(function() {
-        jQuery("[rel=popover]").each(function(){
-            jQuery(this).popover({
+    $(document).ready(function() {
+        $("[rel=popover]").each(function(){
+            $(this).popover({
                 html : true,
                 trigger: 'hover',
                 title: function() {
-                    return jQuery(this).children('.head').html();
+                    return $(this).children('.head').html();
                 },
                 content: function() {
-                    return jQuery(this).children('.content').html();
+                    return $(this).children('.content').html();
                 },
                 container: 'body',
                 placement: 'bottom'

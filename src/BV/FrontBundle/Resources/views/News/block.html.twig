@@ -62,7 +62,7 @@
 {% else %}
     <div class="panel panel-primary">
         <div class="panel-heading text-center">
-            {{ ('volleyschool.' ~ event ~ '.' ~ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT'))|trans() }}
+            {{ ('volleyschool.' ~ events[type]['event'] ~ '.' ~ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT'))|trans() }}
         </div>
         <div class="panel-body">
             Pas de date définie
