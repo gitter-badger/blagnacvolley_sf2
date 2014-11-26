@@ -14,9 +14,10 @@
         {% block head_style %}
 
             <link rel="stylesheet" href="/css/bootstrap.css">
-            <link rel="stylesheet" href="/css/styles.css">
             <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
             <link rel="stylesheet" href="/css/font-awesome/font-awesome.min.css">
+
+            <link rel="stylesheet" href="/css/styles.css">
 
         {% endblock head_style %}
 
@@ -53,126 +54,88 @@
 {% block body %}
 
 {% block bv_head %}
-    <header class="expanded no-hover">
-        <div class="nav-container">
-            <a href="{{ url('home') }}" class="nav-logo"></a>
+    {% if app.user %}
+        <div class="above-header-nav">
+            <div class="pull-left">
+                <span class="label">
+                    {{ 'header.navbar.logged_user' | trans() }} {{ app.user.firstname }} {{ app.user.lastname }}
+                </span>
+            </div>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                {% block admin_notifications %}
+                    {{ render(controller('FrontBundle:Default:adminNotifications')) }}
+                {% endblock admin_notifications %}
+                <div class="pull-right"><span class="label"><a href="{{ url('sonata_admin_redirect') }}" >Acc&egrave;s Administrateur</a></span></div>
+            {% endif %}
         </div>
-
-        {% block bv_head_top %}
-            <div class="bar">
-                <div class="sharing-left">
-                    <a href="{{ url('sonata_admin_redirect') }}" class="label social">Acc&egrave;s Administrateur</a>
+    {% endif %}
+    <nav class="navbar navbar-default navbar-top" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="relative">
+                    <a class="navbar-brand nav-logo" href="{{ url('home') }}"></a>
                 </div>
-                {% if app.user %}
-                    <div class="sharing-left">
-                        <span class="label">
-                            |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'header.navbar.logged_user' | trans() }} {{ app.user.firstname }} {{ app.user.lastname }}
-                        </span>
-                    </div>
+            </div>
 
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        {% block admin_notifications %}
-                            {{ render(controller('FrontBundle:Default:adminNotifications')) }}
-                        {% endblock admin_notifications %}
-                    {% endif %}
-
-                {% endif %}
-                <div class="sharing">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    {#<li&#123;&#35; class="active"&#35;&#125;><a href="#">Link <span class="sr-only">(current)</span></a></li>#}
+                    <li><a href="{{ path('bv_calendar_index') }}">Calendrier</a></li>
+                    <li><a href="{{ path('bv_static_volley_school') }}">Ecole de Volley</a></li>
+                    <li><a href="{{ path('bv_static_jeu_libre') }}"><span class="name">Jeu Libre</span></a></li>
+                    <li><a href="{{ url('contact') }}"><span class="name">Contact</span></a></li>
+                    <li>
+                        {% block bv_head_top_registration %}
+                            {% if app.user %}
+                                <a href="{{ path('fos_user_profile_show') }}">
+                                    <span class="name">
+                                        {{ 'header.navbar.my_account' | trans() }}
+                                    </span>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('fos_user_registration_register') }}">
+                                    <span class="name">
+                                        {{ 'header.navbar.register' | trans() }}
+                                    </span>
+                                </a>
+                            {% endif %}
+                        {% endblock %}
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Informations utiles <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ path('bv_static_addresses') }}">Adresses</a></li>
+                            <li><a href="{{ path('bv_static_schedule') }}">Horaires</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('teams') }}"><span class="name">Equipes</span></a></li>
+                            <li><a href="#"><span class="name">Bureau</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     {% if app.user %}
-                        <a href="{{ path('fos_user_security_logout') }}" class="label social">{{ 'header.navbar.logout' | trans() }}</a>
+                        <li><a href="{{ path('fos_user_security_logout') }}" >{{ 'header.navbar.logout' | trans() }}</a></li>
                     {% else %}
-                        <a href="{{ path('fos_user_security_login') }}" class="label social">{{ 'header.navbar.login'|trans() }}</a>
+                        <li><a href="{{ path('fos_user_security_login') }}" >{{ 'header.navbar.login'|trans() }}</a></li>
                     {% endif %}
-                    {#<a href="" target="_blank" class="header-icon twitter">Twitter</a>#}
-                    {#<a href="" target="_blank" class="header-icon facebook">Facebook</a>#}
-                    {#<span class="label social">Retrouvez-nous sur </span>#}
-                </div>
-            </div>
-        {% endblock bv_head_top %}
-
-        {% block bv_head_content %}
-            <div class="nav-mask">
-                <nav>
-                    <div class="nav-container">
-                        <ul class="nav left">
-                            <li class="home">
-                                <a href="{{ url('home') }}">Accueil</a>
-                            </li>
-                            <li class="calendar">
-                                <a href="{{ path('bv_calendar_index') }}">
-                                    <span class="name"><br>Calendrier</span>
-                                </a>
-                            </li>
-                            <li class="addresses">
-                                <a href="{{ path('bv_static_addresses') }}">
-                                    <span class="name"><br>Adresses</span>
-                                </a>
-                            </li>
-                            <li class="horaires">
-                                <a href="{{ path('bv_static_schedule') }}">
-                                    <span class="name"><br>Horaires</span>
-                                </a>
-                            </li>
-                            <li class="school">
-                                <a href="{{ path('bv_static_volley_school') }}">
-                                    <span class="name"><br>Ecole de Volley</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav right">
-                            <li class="connexion">
-                                <a href="#">
-                                    <span class="name"><br>Bureau</span>
-                                </a>
-                            </li>
-                            <li class="myaccount">
-                                {% block bv_head_top_registration %}
-                                    {% if app.user %}
-                                        <a href="{{ path('fos_user_profile_show') }}">
-                                            <span class="name"><br>
-                                                {{ 'header.navbar.my_account' | trans() }}
-                                            </span>
-                                        </a>
-                                    {% else %}
-                                        <a href="{{ path('fos_user_registration_register') }}">
-                                            <span class="name"><br>
-                                                {{ 'header.navbar.register' | trans() }}
-                                            </span>
-                                        </a>
-                                    {% endif %}
-                                {% endblock %}
-                            </li>
-                            <li class="contact">
-                                <a href="{{  url('contact') }}">
-                                    <span class="name"><br>Contact</span>
-                                </a>
-                            </li>
-                            <li class="teams">
-                                <a href="{{ path('teams') }}">
-                                    <span class="name"><br>Equipes</span>
-                                </a>
-                            </li>
-                            <li class="freeplay">
-                                <a href="{{ path('bv_static_jeu_libre') }}">
-                                    <span class="name"><br>Jeu Libre</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        {% endblock bv_head_content %}
-
-        {% block bv_head_bottom %}
-        {% endblock bv_head_bottom %}
-
-    </header>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 {% endblock bv_head %}
 
 <div class="body_content">
     {% block container %}
-        {% block container_div_start %}
-        <div class="{% block container_class %}container{% endblock container_class %}">
+    {% block container_div_start %}
+    <div class="{% block container_class %}container{% endblock container_class %}">
         {% endblock container_div_start %}
 
         {% block content_div_start %}<div class="content">{% endblock content_div_start %}
@@ -214,12 +177,12 @@
                 </div>
             {% endblock content_row %}
 
-        {% block content_div_end %}
+            {% block content_div_end %}
         </div>
         {% endblock content_div_end %}
 
-    {% endblock container %}
-</div> <!-- END body_content -->
+        {% endblock container %}
+    </div> <!-- END body_content -->
 
     {% block body_end_before_js %}
         <div id="push"></div>
@@ -241,10 +204,10 @@
         {% endblock foot_script_assetic %}
 
         <script type="text/javascript">
-//            $(document).ready(function () {
-//                $('[data-toggle="tooltip"]').tooltip();
-//                $('[data-toggle="popover"]').popover();
-//            });
+            //            $(document).ready(function () {
+            //                $('[data-toggle="tooltip"]').tooltip();
+            //                $('[data-toggle="popover"]').popover();
+            //            });
         </script>
     {% endblock foot_script %}
     {% endblock body %}

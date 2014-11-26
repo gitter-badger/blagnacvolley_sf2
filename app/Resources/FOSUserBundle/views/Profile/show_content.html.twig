@@ -3,9 +3,11 @@
         <h1>{{ user.firstname }} {{ user.lastname }}</h1>
     </div>
 
+    {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
     <div class="col-sm-12">
         <div class="well well-sm">{{ 'profile.show.not_licensed'|trans() }}</div>
     </div>
+    {% endif %}
 
     <div class="col-sm-3">
         <img src="{{ user.picture }}" class="img-circle" style="max-height: 200px;max-width: 200px;margin: 0 auto;display: block;" />
