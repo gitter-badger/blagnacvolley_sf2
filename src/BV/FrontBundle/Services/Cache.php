@@ -2,6 +2,8 @@
 
 namespace BV\FrontBundle\Services;
 
+use Symfony\Component\Finder\Finder;
+
 class Cache
 {
     protected $container;
@@ -32,13 +34,45 @@ class Cache
         }
     }
 
-    public function deleteAllFromCache($id)
+    /**
+     * Delete all files from cache sub directories of type $type for which name match $id.*
+     *
+     * @param $id
+     * @param $type
+     */
+    public function deleteFilesFromCache($id, $type)
     {
         $cachePath = $this->container->get('kernel')->getRootDir() . '/../web/media/cache/';
-        $directory = new \RecursiveDirectoryIterator($cachePath);
-        $iterator = new \RecursiveIteratorIterator($directory);
-        $regex = new \RegexIterator($iterator, '/^'.$id.'.+\.*$/i', \RecursiveRegexIterator::GET_MATCH);
+        $finder = new Finder();
+        $finder->directories()->in($cachePath);
+        foreach ($finder as $filter) {
+            $path = $cachePath.$filter->getRelativePathname().'/uploads/'.$type;
+            if (is_dir($path)) {
+                $finder2 = new Finder();
+                $finder2->files()->in($path)->name('/^'.$id.'.[\w]+$/i');
+                foreach ($finder2 as $file)
+                {
+                    unlink($file);
+                }
+            }
+        }
+    }
 
-        echo $regex; // TODO DELETE FILES
+    /**
+     * Delete a Single File from Upload Directory
+     *
+     * @param $id
+     * @param $type
+     */
+    public function deleteFileFromUploadDir($id, $type)
+    {
+        $uploadPath = $this->container->get('kernel')->getRootDir() . '/../web/uploads/'.$type;
+        if (is_dir($uploadPath)) {
+            $finder = new Finder();
+            $finder->files()->in($uploadPath)->name('/^'.$id.'.[\w]+$/i');
+            foreach ($finder as $file) {
+                unlink($file);
+            }
+        }
     }
 }

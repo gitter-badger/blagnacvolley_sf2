@@ -141,74 +141,22 @@ class StaticController extends Controller
             return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
         }
 
-        if ($object->getType() == SystemLog::TYPE_USER_NEW_CERTIF) {
-            if ($user->getCertif() == null) {
-                return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
-            }
+        // Delete from Cache (If any) & Upload Dir
+        $this->container->get('bv_cache')->deleteFileFromUploadDir($user->getId(), $object->getType());
+        $this->container->get('bv_cache')->deleteFilesFromCache($user->getId(), $object->getType());
+        $user->setFileFromType($object->getType(), null);
 
-            $fs = new Filesystem();
-            if ($fs->exists($this->container->getParameter('front.web_dir').$user->getCertif()))
-            {
-                unlink($this->container->getParameter('front.web_dir').$user->getCertif());
-            }
+        // Update User
+        $modelManager = $this->admin->getModelManager();
+        $modelManager->update($user);
 
-            $user->setCertif(null);
-            $user->setDateCertif(null);
-            $modelManager = $this->admin->getModelManager();
-            $modelManager->update($user);
+        // Delete Notification
+        $this->admin->delete($object);
 
-            $object->setIsRead(true);
-            $this->admin->delete($object);
-
-            $this->container->get('bv_mailer')->sendCertifRefusedEmail($user);
-        }
-
-        if ($object->getType() == SystemLog::TYPE_USER_NEW_ATTESTATION) {
-            if ($user->getAttestation() == null) {
-                return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
-            }
-
-            if (file_exists($this->container->getParameter('web_dir').$user->getAttestation()))
-            {
-                unlink($this->container->getParameter('web_dir').$user->getAttestation());
-            }
-
-            $user->setAttestation(null);
-            $user->setDateAttestation(null);
-            $modelManager = $this->admin->getModelManager();
-            $modelManager->update($user);
-
-            $object->setIsRead(true);
-            $this->admin->delete($object);
-
-            $this->container->get('bv_mailer')->sendAttestationRefusedEmail($user);
-        }
+        // Send email for refused file
+        $this->container->get('bv_mailer')->sendFileRefused($user, $object->getType());
 
         $this->addFlash('sonata_flash_success', 'Le fichier a bien été supprimé');
-
-        return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
-    }
-
-    public function deleteFileAction(Request $request)
-    {
-        die('here');
-        if (!$this->getUser()->isSuperAdmin()) {
-            throw new AccessDeniedException();
-        }
-
-        if ('GET' === $request->getMethod())
-        {
-            if ($request->get('type') != null && $request->get('id') != null)
-            {
-                $user = $this->getDoctrine()->getRepository('FrontBundle:User')->find($request->get('id'));
-                if ($user instanceof $user && User::isFileTypeValid($request->get('type')))
-                {
-                    $user->setFile($request->get('type'), null);
-                    $this->container->get('sonata.user.admin.user')->getUserManager()->updateUser($user);
-                    $this->container->get('bv_cache')->deleteAllFromCache($user->getId());
-                }
-            }
-        }
 
         return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
     }

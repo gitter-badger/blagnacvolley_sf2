@@ -151,6 +151,13 @@ class User extends EntityUser
     protected $dateCertif;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_parental_adv", type="datetime", nullable=true)
+     */
+    protected $dateParentalAdvisory;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="attestation", type="string", length=512, nullable=true)
@@ -1340,26 +1347,52 @@ class User extends EntityUser
      * @param $type
      * @param $file
      */
-    public function setFile($type, $file)
+    public function setFileFromType($type, $file)
     {
         switch ($type)
         {
             case self::IMAGE_TYPE_ATTESTATION:
                 $this->attestationFile = $file;
                 $this->setAttestation($file);
+                $this->setDateAttestation(($file == null ? null : new \DateTime()));
             break;
             case self::IMAGE_TYPE_CERTIF:
                 $this->certifFile = $file;
                 $this->setCertif($file);
+                $this->setDateCertif(($file == null ? null : new \DateTime()));
             break;
             case self::IMAGE_TYPE_PARENTAL_ADV:
                 $this->parentalAdvisoryFile = $file;
                 $this->setParentalAdvisory($file);
+                $this->setDateParentalAdvisory(($file == null ? null : new \DateTime()));
             break;
             case self::IMAGE_TYPE_PICTURE:
                 $this->pictureFile = $file;
                 $this->setPicture($file);
             break;
         }
+    }
+
+    /**
+     * Set dateParentalAdvisory
+     *
+     * @param \DateTime $dateParentalAdvisory
+     * @return User
+     */
+    public function setDateParentalAdvisory($dateParentalAdvisory)
+    {
+        $this->dateParentalAdvisory = $dateParentalAdvisory;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateParentalAdvisory
+     *
+     * @return \DateTime 
+     */
+    public function getDateParentalAdvisory()
+    {
+        return $this->dateParentalAdvisory;
     }
 }

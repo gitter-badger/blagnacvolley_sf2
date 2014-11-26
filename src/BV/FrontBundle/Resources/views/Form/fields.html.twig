@@ -59,9 +59,11 @@
                 <div class="col-sm-9 mt10">
                     <input type="file" {{ block('widget_attributes') }} value="E:\www\blagnacvolley_sf2\web\uploads\attestation\42.jpeg">
                 </div>
-                <div class="col-sm-1 mt10">
-                    <a href="{{ path('bv_delete_file', { 'id': user_id, 'type': image_type }) }}" class="btn btn-danger">Supprimer</a>
-                </div>
+                {% if image_type != constant('\\BV\\FrontBundle\\Entity\\User::IMAGE_TYPE_PICTURE') %}
+                    <div class="col-sm-1 mt10">
+                        <a href="{{ path('bv_delete_file', { 'id': user_id, 'type': image_type }) }}" class="btn btn-danger">Supprimer</a>
+                    </div>
+                {% endif %}
             </div>
             <div class="clearfix"></div>
         {% else %}
