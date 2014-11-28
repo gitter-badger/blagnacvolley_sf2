@@ -51,7 +51,7 @@ class UserAdmin extends Admin
             ->addIdentifier('firstname')
             ->add('lastname')
             ->add('address', 'text', array('label' => 'Adresse'))
-            ->add('age', 'string', array( 'label'=>'Age', ))
+            ->add('dob', 'string', array( 'label'=>'Age', 'code' => 'getAge' ))
             ->add('category', 'choice', array( 'label'=>'Catégorie', 'template' => 'AdminBundle:User:Fields/category_field.html.twig'))
             ->add('status', 'choice', array('label' => 'Statut', 'template' => 'AdminBundle:User:Fields/status_field.html.twig') )
             ->add('enabled', null, array('editable' => true))
