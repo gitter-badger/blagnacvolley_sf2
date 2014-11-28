@@ -52,7 +52,7 @@ class UserAdmin extends Admin
             ->add('lastname')
             ->add('address', 'text', array('label' => 'Adresse'))
             ->add('age', 'string', array( 'label'=>'Age', ))
-            ->add('category', 'string', array( 'label'=>'Catégorie', ))
+            ->add('category', 'choice', array( 'label'=>'Catégorie', 'template' => 'AdminBundle:User:Fields/category_field.html.twig'))
             ->add('status', 'choice', array('label' => 'Statut', 'template' => 'AdminBundle:User:Fields/status_field.html.twig') )
             ->add('enabled', null, array('editable' => true))
 //            ->add('createdAt')
@@ -76,7 +76,6 @@ class UserAdmin extends Admin
             ->add('id')
             ->add('firstname')
             ->add('lastname')
-            ->add('email')
             ->add('status', 'doctrine_orm_choice', array( 'label' => 'Statut'), 'choice',
                 array(
                     'choices' => User::getStatusList(),

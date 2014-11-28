@@ -121,8 +121,16 @@ constants:
       IMAGE_TYPE_ATTESTATION: Attestation
       IMAGE_TYPE_PICTURE: Photo du profil
       IMAGE_TYPE_PARENTAL_ADV: Accord Parental
-
-
+    category:
+      CATEGORY_TYPE_BABY:     Baby
+      CATEGORY_TYPE_PUPILLE:  Pupille
+      CATEGORY_TYPE_POUSSIN:  Poussins
+      CATEGORY_TYPE_BENJAMIN: Benjamins
+      CATEGORY_TYPE_MINIME:   Minimes
+      CATEGORY_TYPE_CADET:    Cadets
+      CATEGORY_TYPE_JUNIOR:   Juniors
+      CATEGORY_TYPE_ESPOIR:   Espoirs
+      CATEGORY_TYPE_SENIOR:   Seniors
 
   events:
     type:

@@ -45,6 +45,16 @@ class User extends EntityUser
     const LICENSE_TYPE_CREATION = 'TYPE_CREATION';
     const LICENSE_TYPE_MUTATION = 'TYPE_MUTATION';
 
+    const CATEGORY_TYPE_BABY        = 'CATEGORY_TYPE_BABY';
+    const CATEGORY_TYPE_PUPILLE     = 'CATEGORY_TYPE_PUPILLE';
+    const CATEGORY_TYPE_POUSSIN     = 'CATEGORY_TYPE_POUSSIN';
+    const CATEGORY_TYPE_BENJAMIN    = 'CATEGORY_TYPE_BENJAMIN';
+    const CATEGORY_TYPE_MINIME      = 'CATEGORY_TYPE_MINIME';
+    const CATEGORY_TYPE_CADET       = 'CATEGORY_TYPE_CADET';
+    const CATEGORY_TYPE_JUNIOR      = 'CATEGORY_TYPE_JUNIOR';
+    const CATEGORY_TYPE_ESPOIR      = 'CATEGORY_TYPE_ESPOIR';
+    const CATEGORY_TYPE_SENIOR      = 'CATEGORY_TYPE_SENIOR';
+
     /**
      * @var integer
      *
@@ -1404,8 +1414,37 @@ class User extends EntityUser
         return $age->format('%y');
     }
 
+    public static function getCategories()
+    {
+        return array(
+            '1' => self::CATEGORY_TYPE_BABY,
+            '2' => self::CATEGORY_TYPE_BABY,
+            '3' => self::CATEGORY_TYPE_BABY,
+            '4' => self::CATEGORY_TYPE_BABY,
+            '5' => self::CATEGORY_TYPE_BABY,
+            '6' => self::CATEGORY_TYPE_BABY,
+            '7' => self::CATEGORY_TYPE_PUPILLE,
+            '8' => self::CATEGORY_TYPE_PUPILLE,
+            '9' => self::CATEGORY_TYPE_POUSSIN,
+            '10' => self::CATEGORY_TYPE_POUSSIN,
+            '11' => self::CATEGORY_TYPE_BENJAMIN,
+            '12' => self::CATEGORY_TYPE_BENJAMIN,
+            '13' => self::CATEGORY_TYPE_MINIME,
+            '14' => self::CATEGORY_TYPE_MINIME,
+            '15' => self::CATEGORY_TYPE_CADET,
+            '16' => self::CATEGORY_TYPE_CADET,
+            '17' => self::CATEGORY_TYPE_JUNIOR,
+            '18' => self::CATEGORY_TYPE_JUNIOR,
+            '19' => self::CATEGORY_TYPE_ESPOIR,
+            '20' => self::CATEGORY_TYPE_ESPOIR,
+            '21' => self::CATEGORY_TYPE_SENIOR,
+            'over' => self::CATEGORY_TYPE_SENIOR,
+        );
+    }
+
     public function getCategory()
     {
         $age = $this->getAge();
+        return ( array_key_exists($age, $this->getCategories()) ? $this->getCategories()[$age] : $this->getCategories()['over'] );
     }
 }
