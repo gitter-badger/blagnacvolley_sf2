@@ -45,12 +45,12 @@
 
 {% block file_widget  %}
     {% spaceless %}
-        {% if image_url is defined %}
+        {% if image_url is defined and image_url is not null %}
             <div class="row-fluid">
                 <div class="col-sm-1">
                     <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ image_url }}">
                         {% if image_url|split('.')|last|lower != 'pdf' %}
-                            <img class="img-thumbnail" src="{{ asset(image_url)| apply_filter('img_50_50') }}"/>
+                            <img class="img-thumbnail" src="{{ asset(image_url)|apply_filter('img_50_50') }}"/>
                         {% else %}
                             <i class="img-thumbnail fa fa-file-text-o color-text-belize-hole" style="font-size: 50px; padding-left: 7px; width: 59px; height: 59px;"></i>
                         {% endif %}

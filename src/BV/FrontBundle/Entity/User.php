@@ -254,6 +254,13 @@ class User extends EntityUser
     /**
      * @var string
      *
+     * @ORM\Column(name="license_batch", type="string", length=255, nullable=true)
+     */
+    protected $licenseBatch;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="geo_lat", type="string", length=255)
      */
     protected $geoLat;
@@ -1449,5 +1456,28 @@ class User extends EntityUser
     {
         $age = $this->getAge();
         return ( array_key_exists($age, $this->getCategories()) ? $this->getCategories()[$age] : $this->getCategories()['over'] );
+    }
+
+    /**
+     * Set licenseBatch
+     *
+     * @param string $licenseBatch
+     * @return User
+     */
+    public function setLicenseBatch($licenseBatch)
+    {
+        $this->licenseBatch = $licenseBatch;
+    
+        return $this;
+    }
+
+    /**
+     * Get licenseBatch
+     *
+     * @return string 
+     */
+    public function getLicenseBatch()
+    {
+        return $this->licenseBatch;
     }
 }

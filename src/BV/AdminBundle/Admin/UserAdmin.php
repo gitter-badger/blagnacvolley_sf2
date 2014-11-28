@@ -141,6 +141,7 @@ class UserAdmin extends Admin
                     ->add('status', 'bv_user_status', array( 'required' => true, ))
                     ->add('licenseType', 'choice', array('label' => 'Type license.', 'choices' => User::getLicenseTypeList(), 'required' => false))
                     ->add('licenseNumber', 'text')
+                    ->add('licenseBatch', 'text', array('label' => 'Lot license'))
                     ->add('feeAmount')
                     ->add('datePayment', 'sonata_type_datetime_picker')
                 ->end()
