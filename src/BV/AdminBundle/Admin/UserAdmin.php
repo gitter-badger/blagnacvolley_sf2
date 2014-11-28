@@ -50,7 +50,9 @@ class UserAdmin extends Admin
         $listMapper
             ->addIdentifier('firstname')
             ->add('lastname')
-            ->add('email')
+            ->add('address', 'text', array('label' => 'Adresse'))
+            ->add('age', 'string', array( 'label'=>'Age', ))
+            ->add('category', 'string', array( 'label'=>'Catégorie', ))
             ->add('status', 'choice', array('label' => 'Statut', 'template' => 'AdminBundle:User:Fields/status_field.html.twig') )
             ->add('enabled', null, array('editable' => true))
 //            ->add('createdAt')

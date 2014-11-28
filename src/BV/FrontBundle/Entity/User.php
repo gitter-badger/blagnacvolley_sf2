@@ -1395,4 +1395,17 @@ class User extends EntityUser
     {
         return $this->dateParentalAdvisory;
     }
+
+    public function getAge()
+    {
+        $now = new \DateTime();
+        $age = $this->dob->diff($now);
+
+        return $age->format('%y');
+    }
+
+    public function getCategory()
+    {
+        $age = $this->getAge();
+    }
 }

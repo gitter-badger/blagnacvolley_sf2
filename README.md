@@ -3,8 +3,8 @@ blagnacvolley_sf2
 
 Symfony 2 Website for Blagnac Volley
 
-http://bvb-tle.rhcloud.com/app_dev.php
-http://bvb-tle.rhcloud.com/
+Serveur de test : http://test-blagnacvolley.rhcloud.com/
+
 
 ## Installation
 
@@ -59,4 +59,10 @@ php composer.phar install
 composer self-update
 php app/console doctrine:migrations:migrate
 php app/console assets:install
+```
+
+## Deployment
+
+```
+git push test
 ```
