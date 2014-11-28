@@ -131,7 +131,10 @@ constants:
       CATEGORY_TYPE_JUNIOR:   Juniors
       CATEGORY_TYPE_ESPOIR:   Espoirs
       CATEGORY_TYPE_SENIOR:   Seniors
-
+    billing_group:
+      1: Jeunes
+      2: Etudiants & Chomeurs
+      3: Salariés
   events:
     type:
       TRAINING: Entraînement
@@ -140,3 +143,4 @@ constants:
       VOLLEYSCHOOL_YOUTH: Ecole de Volley Jeunes
       CLOSED: Fermeture
       FREE_PLAY: Jeu Libre
+

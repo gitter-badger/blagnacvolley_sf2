@@ -13,6 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends EntityUser
 {
+    const FACTURATION_GROUP_TYPE_YOUTH = 1;
+    const FACTURATION_GROUP_TYPE_STUDENT = 2;
+    const FACTURATION_GROUP_TYPE_EMPLOYEE = 3;
+
     const IMAGE_TYPE_CERTIF         = 'certif';
     const IMAGE_TYPE_ATTESTATION    = 'attestation';
     const IMAGE_TYPE_PICTURE        = 'picture';
@@ -278,6 +282,13 @@ class User extends EntityUser
      * @ORM\Column(name="status", type="string", length=255, options={"default": "ACTIVE_NOT_LICENSED"})
      */
     protected $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="billing_group", type="integer", length=2, nullable=true)
+     */
+    protected $billingGroup;
 
     /**
      * @var string
@@ -735,6 +746,15 @@ class User extends EntityUser
             self::IMAGE_TYPE_ATTESTATION  => 'constants.user.filetype'.self::IMAGE_TYPE_ATTESTATION,
             self::IMAGE_TYPE_PICTURE      => 'constants.user.filetype'.self::IMAGE_TYPE_PICTURE,
             self::IMAGE_TYPE_PARENTAL_ADV => 'constants.user.filetype'.self::IMAGE_TYPE_PARENTAL_ADV,
+        );
+    }
+
+    public static function getGroupTypeList()
+    {
+        return array(
+            self::FACTURATION_GROUP_TYPE_YOUTH          => 'constants.user.billing_group.'.self::FACTURATION_GROUP_TYPE_YOUTH,
+            self::FACTURATION_GROUP_TYPE_STUDENT        => 'constants.user.billing_group.'.self::FACTURATION_GROUP_TYPE_STUDENT,
+            self::FACTURATION_GROUP_TYPE_EMPLOYEE       => 'constants.user.billing_group.'.self::FACTURATION_GROUP_TYPE_EMPLOYEE,
         );
     }
 
@@ -1479,5 +1499,28 @@ class User extends EntityUser
     public function getLicenseBatch()
     {
         return $this->licenseBatch;
+    }
+
+    /**
+     * Set billingGroup
+     *
+     * @param integer $billingGroup
+     * @return User
+     */
+    public function setBillingGroup($billingGroup)
+    {
+        $this->billingGroup = $billingGroup;
+    
+        return $this;
+    }
+
+    /**
+     * Get billingGroup
+     *
+     * @return integer 
+     */
+    public function getBillingGroup()
+    {
+        return $this->billingGroup;
     }
 }
