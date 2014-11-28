@@ -45,7 +45,7 @@
 
 {% block file_widget  %}
     {% spaceless %}
-        {% if image_url is not null %}
+        {% if image_url is defined %}
             <div class="row-fluid">
                 <div class="col-sm-1">
                     <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ image_url }}">

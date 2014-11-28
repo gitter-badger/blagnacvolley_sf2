@@ -39,6 +39,13 @@ class RegistrationFormHandler extends BaseHandler
             $user->setEnabled(true);
         }
 
+        // Check if dob is valid
+        if ($user->getDob() != null && !$user->getDob() instanceof \DateTime)
+        {
+            $dt = \DateTime::createFromFormat("d/m/Y", $user->getDob());
+            $user->setDob($dt);
+        }
+
         if (null !== $user->pictureFile) {
             $picturesPath = $this->container->getParameter('front.profile.pictures_path');
             $uploadDir = $this->container->getParameter('front.web_dir').$picturesPath;

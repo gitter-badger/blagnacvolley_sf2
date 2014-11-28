@@ -354,6 +354,9 @@ class User extends EntityUser
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->isRequiredBill = false;
         $this->isLookingForTeam = false;
+        $this->isVolleySchoolAdult = false;
+        $this->isVolleySchoolYouth = false;
+        $this->isFreeplay = false;
         $this->status = static::STATUS_ACTIVE_NOT_LICENSED;
     }
 
