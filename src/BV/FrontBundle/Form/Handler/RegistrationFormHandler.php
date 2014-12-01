@@ -46,17 +46,6 @@ class RegistrationFormHandler extends BaseHandler
             $user->setDob($dt);
         }
 
-        if (null !== $user->pictureFile) {
-            $picturesPath = $this->container->getParameter('front.profile.pictures_path');
-            $uploadDir = $this->container->getParameter('front.web_dir').$picturesPath;
-
-            $filename = $user->getUsernameCanonical().'.'.$user->pictureFile->guessExtension();
-
-            $user->pictureFile->move($uploadDir, $filename);
-            $user->setPicture($picturesPath.'/'.$filename);
-            $user->pictureFile = null;
-        }
-
         $this->userManager->updateUser($user);
     }
 }

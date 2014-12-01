@@ -23,9 +23,12 @@ class RegistrationFormType extends AbstractType
             ->add('address', 'autocomplete', array( 'label'=>'Adresse',))
             ->add("geo_lat","hidden")
             ->add("geo_lng","hidden")
+            ->add('city', 'hidden')
+            ->add('zip', 'hidden')
             ->add('phone', 'text', array( 'label'=>'Portable',))
-            ->add('phonePro', 'text', array( 'label'=>'Tel Pro.',))
+            ->add('phonePro', 'text', array( 'label'=>'Tel Pro.', 'required' => false))
             ->add('pictureFile', 'file', array('label'=>'Photo',))
+            ->add('parentalAdvisoryFile', 'file', array('label'=>'Attestation parentale', 'required' => false))
         ;
     }
 

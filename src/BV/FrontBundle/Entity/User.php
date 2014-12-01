@@ -106,6 +106,20 @@ class User extends EntityUser
     /**
      * @var string
      *
+     * @ORM\Column(name="city", type="string", length=512, nullable=true)
+     */
+    protected $city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zip", type="string", length=32)
+     */
+    protected $zip;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="picture", type="string", length=512)
      */
     protected $picture;
@@ -1522,5 +1536,51 @@ class User extends EntityUser
     public function getBillingGroup()
     {
         return $this->billingGroup;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return User
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set zip
+     *
+     * @param string $zip
+     * @return User
+     */
+    public function setZip($zip)
+    {
+        $this->zip = $zip;
+    
+        return $this;
+    }
+
+    /**
+     * Get zip
+     *
+     * @return string 
+     */
+    public function getZip()
+    {
+        return $this->zip;
     }
 }

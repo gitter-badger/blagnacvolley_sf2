@@ -13,8 +13,14 @@
 
                 google.maps.event.addListener(autocomplete, 'place_changed', function () {
                     var place = autocomplete.getPlace();
+
+                    // Initialize geoloc
                     document.getElementById('{{ id|replace({'_address':'_geo_lat'}) }}').value = place.geometry.location.lat();
                     document.getElementById('{{ id|replace({'_address':'_geo_lng'}) }}').value = place.geometry.location.lng();
+
+                    // Initialize address values
+                    document.getElementById('{{ id|replace({'_address':'_zip'}) }}').value = place.address_components[6]['long_name'];
+                    document.getElementById('{{ id|replace({'_address':'_city'}) }}').value = place.address_components[2]['long_name'];
                 });
             }
             initialize();
@@ -25,7 +31,6 @@
 {% endblock autocomplete_widget %}
 
 {% block datePicker_widget  %}
-
     {% spaceless %}
 
         <div class="input-group date">

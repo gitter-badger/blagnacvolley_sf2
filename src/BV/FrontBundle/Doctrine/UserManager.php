@@ -95,6 +95,16 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
         $this->updateCanonicalFields($user);
         $this->updatePassword($user);
 
+        // user creation
+        if ($user->getId() == null) {
+            // Save to get the user Id
+            $user->setPicture('EMPTY');
+            $this->objectManager->persist($user);
+            if ($andFlush) {
+                $this->objectManager->flush();
+            }
+        }
+
         if (null !== $user->certifFile) {
             $path = $this->container->getParameter('front.profile.certif_path');
             $ext = $user->certifFile->guessExtension();
