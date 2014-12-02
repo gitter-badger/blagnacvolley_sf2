@@ -61,6 +61,7 @@ module.exports = function(grunt) {
           { src: 'bower_components/bootstrap/js/tooltip.js',                dest: 'web/js/bootstrap/tooltip.js' },
           { src: 'bower_components/bootstrap-filestyle/src/bootstrap-filestyle.js',                dest: 'web/js/bootstrap-filestyle/bootstrap-filestyle.js' },
           { src: 'bower_components/bootstrap/dist/js/bootstrap.min.js',     dest: 'web/js/bootstrap/bootstrap.min.js' },
+          { src: 'bower_components/bootstrap/js/tab.js',                    dest: 'web/js/bootstrap/tab.js' },
 
           // CKEDITOR
           { cwd: 'bower_components/redactor/', src: '**/*', dest: 'web/js/redactor/', expand: true  }

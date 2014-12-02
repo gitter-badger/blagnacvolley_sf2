@@ -12,12 +12,8 @@ class ProfileFormType extends AbstractType
         $builder
             ->remove('username')
             ->remove('current_password')
-            ->add('certifFile', 'file', array(
-                'label'=>'Certificat médical',
-            ))
-            ->add('attestationFile', 'file', array(
-                'label'=>'Attestation pôle emploi',
-                'required' => false
+            ->add('certifFile', 'file', array('label'=>'Certificat médical',))
+            ->add('attestationFile', 'file', array('label'=>'Attestation pôle emploi','required' => false
             ))
         ;
     }
