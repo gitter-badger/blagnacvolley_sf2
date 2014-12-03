@@ -113,7 +113,7 @@ class User extends EntityUser
     /**
      * @var string
      *
-     * @ORM\Column(name="zip", type="string", length=32)
+     * @ORM\Column(name="zip", type="string", length=32, nullable=true)
      */
     protected $zip;
 

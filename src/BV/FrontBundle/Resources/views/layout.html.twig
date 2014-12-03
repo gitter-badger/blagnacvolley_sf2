@@ -141,7 +141,7 @@
         {% block content_div_start %}<div class="content">{% endblock content_div_start %}
 
             {% block flashes %}
-                <ul class="flash-messages">
+                <ul class="well">
                     {% for flashMessage in app.session.flashbag.get('notice') %}
                         <li class="bg-warning">
                             {{ flashMessage }}
