@@ -2,17 +2,17 @@
 
 {% block head_style %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/datepicker3.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-3-datepicker/css/datepicker3.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/dropzone/downloads/css/dropzone.css') }}">
 {% endblock head_style %}
 
 {% block head_script %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.fr.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/moment/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/moment/locales.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/bootstrap-3-datepicker/js/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/bootstrap-3-datepicker/js/locales/bootstrap-datepicker.fr.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/moment/min/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/moment/min/locales.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-filestyle/bootstrap-filestyle.js') }}"></script>
 {% endblock head_script %}
 
