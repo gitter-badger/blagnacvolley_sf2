@@ -12,7 +12,7 @@ LINKED_DIRS="vendor node_modules web/vendor"
 for DIR in $LINKED_DIRS; do
     # check data dir
     if [ ! -d "$OPENSHIFT_DATA_DIR/$DIR" ]; then
-        mkdir $OPENSHIFT_DATA_DIR/$DIR
+        mkdir -p $OPENSHIFT_DATA_DIR/$DIR
         chmod -R 0777 $OPENSHIFT_DATA_DIR/$DIR
     fi
     # check symlink
