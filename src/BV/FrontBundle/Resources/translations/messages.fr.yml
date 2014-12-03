@@ -9,7 +9,7 @@ header:
 
 profile:
   show:
-    not_licensed: Vous n'avez pas renouvellé votre inscription pour la nouvelle saison. Pour ce faire, éditez votre compte et renseignez le certificat médical, éventuellement l'attestation pôle emploi et faites passer la cotisation auprès d'un membre du bureau.
+    not_licensed: Vous n'avez pas renouvellé votre inscription pour la nouvelle saison. Pour ce faire, éditez votre compte et renseignez le certificat médical, éventuellement l'attestation pôle emploi et l'autorisation parentale si requise, et faites passer la cotisation auprès d'un membre du bureau.
     connexion_data:
       title:  Informations de connexion
     address_data:

@@ -1,7 +1,7 @@
 <div class="fos_user_user_show">
 {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
     <div class="col-sm-12">
-        <div class="well well-sm">{{ 'profile.show.not_licensed'|trans() }}</div>
+        <div class="well well-sm warning">{{ 'profile.show.not_licensed'|trans() }}</div>
     </div>
 {% endif %}
 
@@ -13,13 +13,13 @@
     {%  set class='danger' %}
 {% endif %}
 
-<div class="col-sm-3">
+<div class="col-sm-2">
     <div class="panel panel-{{ class }}">
-        <div class="panel-heading">
+        <div class="panel-heading" style="border:0;font-size: 0.9em;">
             {{ ('constants.user.status.' ~ user.status) |trans()}}
         </div>
-        <div class="panel-body">
-            <img src="{{ user.picture |apply_filter('img_200_200') }}" class="" style="margin: 0 auto;display: block;" />
+        <div class="panel-body p0">
+            <img src="{{ user.picture |apply_filter('img_160_160') }}" class="" style="margin: 0 auto;display: block;" />
         </div>
 
 
@@ -46,13 +46,13 @@
         {#{% endif %}#}
         {#</div>#}
         <div class="panel-footer">
-            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block mt10" >Modifier</a>
+            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block">Modifier</a>
         </div>
     </div>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-10">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Groupes accessibles
@@ -92,8 +92,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="col-sm-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     {{ 'profile.show.connexion_data.title'|trans()}}
