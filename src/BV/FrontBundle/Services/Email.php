@@ -72,66 +72,14 @@ class Email
     }
 
     /**
-     * @param $user
-     * @param $type
-     */
-    public function sendFileRefused($user, $type)
-    {
-        switch ($type)
-        {
-            case User::IMAGE_TYPE_CERTIF:
-                $this->sendCertifRefusedEmail($user);
-            break;
-            case User::IMAGE_TYPE_ATTESTATION:
-                $this->sendCertifRefusedEmail($user);
-            break;
-            case User::IMAGE_TYPE_PARENTAL_ADV:
-                $this->sendParentalAdvRefusedEmail($user);
-            break;
-        }
-    }
-
-    /**
      * Send message to user when the Admin user refuse his Parental Advisory
      *
      * @param User $user
      */
-    public function sendParentalAdvRefusedEmail($user)
+    public function sendLicenseRenewalRefused($user)
     {
-        $subject = "[BlagnacVolley] l'admin a refusé votre Attestation parentale";
-        $template = 'FrontBundle:Mail:parentalAdvRefused.html.twig';
-        $body = $this->templating->render($template, array(
-            'user'      => $user,
-        ));
-
-        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
-    }
-
-    /**
-     * Send message to user when the Admin user refuse his certificate
-     *
-     * @param User $user
-     */
-    public function sendCertifRefusedEmail($user)
-    {
-        $subject = "[BlagnacVolley] l'admin a refusé votre certificat";
-        $template = 'FrontBundle:Mail:certifRefused.html.twig';
-        $body = $this->templating->render($template, array(
-            'user'      => $user,
-        ));
-
-        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
-    }
-
-    /**
-     * Send message to user when the Admin user refuse his certificate
-     *
-     * @param User $user
-     */
-    public function sendAttestationRefusedEmail($user)
-    {
-        $subject = "[BlagnacVolley] l'admin a refusé votre attestation";
-        $template = 'FrontBundle:Mail:attestationRefused.html.twig';
+        $subject = "[BlagnacVolley] l'admin a refusé votre demande de renouvelement de licence";
+        $template = 'FrontBundle:Mail:licenseRenewalRefused.html.twig';
         $body = $this->templating->render($template, array(
             'user'      => $user,
         ));

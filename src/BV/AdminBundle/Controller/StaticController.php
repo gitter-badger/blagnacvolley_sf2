@@ -93,11 +93,14 @@ class StaticController extends Controller
             return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
         }
 
-        if ($object->getType() == SystemLog::TYPE_USER_NEW_CERTIF) {
-            if ($user->getCertif() == null) {
+        if ($object->getType() == SystemLog::TYPE_USER_LICENSE_RENEWAL)
+        {
+            if (!$user->isAllowedToRenew() == null) {
+                $this->addFlash('sonata_flash_error', 'Cet utilisateur n\'est pas dans les conditions de renouvellement de licence');
                 return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
             }
-            $user->setDateCertif(new \DateTime());
+
+            $user->setStatus(User::STATUS_ACTIVE_WAITING_LICENSE);
             $modelManager = $this->admin->getModelManager();
             $modelManager->update($user);
 
@@ -105,19 +108,7 @@ class StaticController extends Controller
             $this->admin->delete($object);
         }
 
-        if ($object->getType() == SystemLog::TYPE_USER_NEW_ATTESTATION) {
-            if ($user->getAttestation() == null) {
-                return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
-            }
-            $user->setDateAttestation(new \DateTime());
-            $modelManager = $this->admin->getModelManager();
-            $modelManager->update($user);
-
-            $object->setIsRead(true);
-            $this->admin->delete($object);
-        }
-
-        $this->addFlash('sonata_flash_success', 'Le fichier a bien été validé');
+        $this->addFlash('sonata_flash_success', 'Le fichier a bien été validé.');
 
         return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
     }
@@ -142,11 +133,20 @@ class StaticController extends Controller
         }
 
         // Delete from Cache (If any) & Upload Dir
-        $this->container->get('bv_cache')->deleteFileFromUploadDir($user->getId(), $object->getType());
-        $this->container->get('bv_cache')->deleteFilesFromCache($user->getId(), $object->getType());
-        $user->setFileFromType($object->getType(), null);
+        $this->container->get('bv_cache')->deleteFileFromUploadDir($user->getId(), User::IMAGE_TYPE_ATTESTATION);
+        $this->container->get('bv_cache')->deleteFileFromUploadDir($user->getId(), User::IMAGE_TYPE_PARENTAL_ADV);
+        $this->container->get('bv_cache')->deleteFileFromUploadDir($user->getId(), User::IMAGE_TYPE_CERTIF);
+
+        $this->container->get('bv_cache')->deleteFilesFromCache($user->getId(), User::IMAGE_TYPE_ATTESTATION);
+        $this->container->get('bv_cache')->deleteFilesFromCache($user->getId(), User::IMAGE_TYPE_PARENTAL_ADV);
+        $this->container->get('bv_cache')->deleteFilesFromCache($user->getId(), User::IMAGE_TYPE_CERTIF);
+
+        $user->setFileFromType(User::IMAGE_TYPE_ATTESTATION, null);
+        $user->setFileFromType(User::IMAGE_TYPE_PARENTAL_ADV, null);
+        $user->setFileFromType(User::IMAGE_TYPE_CERTIF, null);
 
         // Update User
+        $user->setStatus(User::STATUS_ACTIVE_NOT_LICENSED);
         $modelManager = $this->admin->getModelManager();
         $modelManager->update($user);
 
@@ -154,9 +154,9 @@ class StaticController extends Controller
         $this->admin->delete($object);
 
         // Send email for refused file
-        $this->container->get('bv_mailer')->sendFileRefused($user, $object->getType());
+        $this->container->get('bv_mailer')->sendLicenseRenewalRefused($user, $object->getType());
 
-        $this->addFlash('sonata_flash_success', 'Le fichier a bien été supprimé');
+        $this->addFlash('sonata_flash_success', 'Les fichiers ont bien été supprimé. Un email a été envoyé à l\'utilisateur pour le prévenir du refus de renouvelement' );
 
         return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
     }

@@ -9,3 +9,4 @@ constants:
     TYPE_USER_NEW_SEASON: Demande de renouvellement
     TYPE_USER_NEW_CERTIF: Nouveau certificat médical
     TYPE_USER_NEW_ATTESTATION: Nouvelle attestation P.E.
+    TYPE_USER_LICENSE_RENEWAL: Demande de validation

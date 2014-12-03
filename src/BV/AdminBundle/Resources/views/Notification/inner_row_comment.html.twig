@@ -2,23 +2,23 @@
     {{ object|render_list_element(admin.list['batch']) }}
 {% endif %}
 
-    <td class="sonata-ba-list-field sonata-ba-list-field-choice" objectid="33">
+    <td class="sonata-ba-list-field sonata-ba-list-field-choice">
         {{ object|render_list_element(admin.list['level']) }}
     </td>
 
-    <td class="sonata-ba-list-field sonata-ba-list-field-choice" objectid="33">
+    <td class="sonata-ba-list-field sonata-ba-list-field-choice">
         {{ object|render_list_element(admin.list['type']) }}
     </td>
 
-    <td class="sonata-ba-list-field sonata-ba-list-field-string" objectid="33">
+    <td class="sonata-ba-list-field sonata-ba-list-field-string">
         {{ object.content }}
     </td>
 
-    <td class="sonata-ba-list-field sonata-ba-list-field-datetime" objectid="33">
+    <td class="sonata-ba-list-field sonata-ba-list-field-datetime">
         {{ object.created|date("d M Y H:i") }}
     </td>
 
-    <td class="sonata-ba-list-field sonata-ba-list-field-boolean" objectid="33">
+    <td class="sonata-ba-list-field sonata-ba-list-field-boolean">
         {{ object|render_list_element(admin.list['isRead']) }}
     </td>
 

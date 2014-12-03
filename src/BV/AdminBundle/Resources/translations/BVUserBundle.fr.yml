@@ -148,6 +148,8 @@ constants:
     status:
       ACTIVE_LICENSED: Actif licencié
       ACTIVE_NOT_LICENSED: Actif non licencié
+      STATUS_ACTIVE_WAITING_LICENSE: En attente Licence
+      STATUS_ACTIVE_WAITING_VALIDATION: En attente validation
       INACTIVE: Inactif
     gender:
       MALE: Homme

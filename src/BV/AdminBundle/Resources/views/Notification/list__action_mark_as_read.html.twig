@@ -1,6 +1,6 @@
-{% if ((object.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_CERTIF') or object.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_ATTESTATION') )) %}
-    <a class="btn btn-sm btn-primary" href="{{ admin.generateObjectUrl('validateFile', object) }}" style="display:block;">Validate</a>
-    <a class="btn btn-sm btn-default" href="{{ admin.generateObjectUrl('refuseFile', object) }}" style="display:block;">Refuse</a>
+{% if object.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_LICENSE_RENEWAL') %}
+    <a class="btn btn-sm btn-primary" href="{{ admin.generateObjectUrl('validateFile', object) }}" style="display:block;">Accepter</a>
+    <a class="btn btn-sm btn-danger" href="{{ admin.generateObjectUrl('refuseFile', object) }}" style="display:block;">Refuser</a>
 {% else %}
-    <a class="btn btn-sm btn-primary" href="{{ admin.generateObjectUrl('markHasRead', object) }}">Mark as read</a>
+    <a class="btn btn-sm btn-primary" href="{{ admin.generateObjectUrl('markHasRead', object) }}">Marquer comme lu</a>
 {% endif %}
