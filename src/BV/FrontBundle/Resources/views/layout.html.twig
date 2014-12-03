@@ -141,23 +141,34 @@
         {% block content_div_start %}<div class="content">{% endblock content_div_start %}
 
             {% block flashes %}
-                <ul class="well">
-                    {% for flashMessage in app.session.flashbag.get('notice') %}
-                        <li class="bg-warning">
+                {% set notice = app.session.flashbag.get('notice')      %}
+                {% set success = app.session.flashbag.get('success')    %}
+                {% set error = app.session.flashbag.get('error')        %}
+
+                {% if (notice|length > 0) %}
+                    <div class="well notice">
+                        {% for flashMessage in notice %}
                             {{ flashMessage }}
-                        </li>
-                    {% endfor %}
-                    {% for flashMessage in app.session.flashbag.get('success') %}
-                        <li class="bg-success">
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if (success|length > 0) %}
+                    <div class="well success">
+                        {% for flashMessage in success %}
                             {{ flashMessage }}
-                        </li>
-                    {% endfor %}
-                    {% for flashMessage in app.session.flashbag.get('error') %}
-                        <li class="bg-danger">
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if (error|length > 0) %}
+                    <div class="well error">
+                        {% for flashMessage in error %}
                             {{ flashMessage }}
-                        </li>
-                    {% endfor %}
-                </ul>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
             {% endblock flashes %}
 
             {% block content_row %}
