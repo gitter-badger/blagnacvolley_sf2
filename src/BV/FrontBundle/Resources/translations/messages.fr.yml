@@ -9,12 +9,13 @@ header:
 
 profile:
   show:
-    not_licensed: Vous n'avez pas renouvellé votre inscription pour la nouvelle saison. Pour ce faire, éditez votre compte et renseignez le certificat médical, éventuellement l'attestation pôle emploi et l'autorisation parentale si requise, et faites passer la cotisation auprès d'un membre du bureau.
+    not_licensed: Vous n'avez pas renouvellé votre inscription pour la nouvelle saison. Pour ce faire, vous devez éditer votre compte et renseigner le certificat médical, éventuellement l'attestation pôle emploi et l'autorisation parentale si requise. Si vous ne pouvez pas les envoyer sur le site, faites-les passer auprès du responsable du club. <br/>Une fois ces informations entrées, vous pourrez effectuer une demande de renouvellement (Bouton renouveller) sur cette page. Cette demande ne sera validée que lors de la réception de votre cotisation par le responsable du club (pour le moment par chèque...).
     connexion_data:
       title:  Informations de connexion
     address_data:
       title:  Coordonnées
       dob: Date de naissance
+      category: Catégorie
       phone: Portable
       address: Adresse
       gender: Genre
@@ -90,8 +91,10 @@ schedule:
 constants:
   user:
     status:
-      ACTIVE_LICENSED: Actif licencié
       ACTIVE_NOT_LICENSED: Actif non licencié
+      ACTIVE_WAITING_VALIDATION: Attente validation
+      ACTIVE_WAITING_LICENSE: Attente licence
+      ACTIVE_LICENSED: Actif licencié
       INACTIVE: Inactif
     postes:
       CENTRAL: Central

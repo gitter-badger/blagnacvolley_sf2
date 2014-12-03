@@ -15,32 +15,50 @@
             </div>
         </div>
 
-        {% if isRequiredCertif %}
-            <div class="form-group">
-                <div class="col-sm-2">
-                    {{ form_label(form.certifFile) }}
-                </div>
-                <div class="col-sm-10">
+        <div class="form-group">
+            <div class="col-sm-2">
+                {{ form_label(form.certifFile) }}
+            </div>
+            <div class="col-sm-10">
+                {% if isRequiredCertif %}
                     <div class="row">
                         {{ form_errors(form.certifFile) }}
                         {{ form_widget(form.certifFile) }}
                     </div>
-                </div>
+                {% else %}
+                    <a target="_blank" href="{{ asset(user.getCertif) }}"><span class="fa fa-file fs20 pt5 color-text-peter-river"></span></a> Envoyé le <i>{{ user.getDateCertif()|date('d/m/Y') }} à {{ user.getDateCertif()|date('H:i') }}</i>
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
 
-        {% if isRequiredAttestation %}
         <div class="form-group">
             <div class="col-sm-2">
                 {{ form_label(form.attestationFile) }}
             </div>
             <div class="col-sm-10">
-                <div class="row">
-                    {{ form_errors(form.attestationFile) }}
-                    {{ form_widget(form.attestationFile) }}
-                </div>
+                {% if isRequiredAttestation %}
+                    <div class="row">
+                        {{ form_errors(form.attestationFile) }}
+                        {{ form_widget(form.attestationFile) }}
+                    </div>
+                {% else %}
+                    <a target="_blank" href="{{ asset(user.getAttestation) }}"><span class="fa fa-file fs20 pt5 color-text-peter-river"></span></a> Envoyé le <i>{{ user.getDateAttestation()|date('d/m/Y') }} à {{ user.getDateAttestation()|date('H:i') }}</i>
+                {% endif %}
             </div>
         </div>
+
+        {% if isRequiredParentalAdvisory %}
+            <div class="form-group">
+                <div class="col-sm-2">
+                    {{ form_label(form.parentalAdvisoryFile) }}
+                </div>
+                <div class="col-sm-10">
+                    <div class="row">
+                        {{ form_errors(form.parentalAdvisoryFile) }}
+                        {{ form_widget(form.parentalAdvisoryFile) }}
+                    </div>
+                </div>
+            </div>
         {% endif %}
 
         <div class="form-group">
@@ -57,102 +75,15 @@
     </form>
     <hr/>
     <br/>
-    <h1>{{ 'profile.edit.update'|trans() }}</h1>
 
-    <div class="col-sm-3">
-        <img src="{{ user.picture }}" class="img-circle" style="max-height: 200px;max-width: 200px;margin: 0 auto;display: block;" />
-        <br/>
-        <br/>
-        <span class="user_status">
-            {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
-                <span class="dblock w100p label label-warning">{{ 'constants.user.status.ACTIVE_NOT_LICENSED'|trans()}}</span>
-            {% elseif user.status == constant('STATUS_ACTIVE_LICENSED', user) %}
-                <span class="dblock w100p label label-primary">{{ 'constants.user.status.ACTIVE_LICENSED'|trans()}}</span>
-            {% else %}
-                <span class="dblock w100p label label-danger">{{ 'constants.user.status.INACTIVE'|trans()}}</span>
-            {% endif %}
-        </span>
-    </div>
-    <div class="col-sm-9">
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ 'profile.show.club_data.title'|trans()}}
-                </div>
-                <table class="table table-hover table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.level'|trans() }}</th>
-                        <td>{{ user.level }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.mscteam'|trans() }}</th>
-                        <td>{{ user.getMscTeam }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.mixteam'|trans() }}</th>
-                        <td>{{ user.getMixTeam }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.femteam'|trans() }}</th>
-                        <td>{{ user.getFemTeam }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.shirt_size'|trans() }}</th>
-                        <td>{{ user.shirtSize }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.license'|trans() }}</th>
-                        <td>{{ user.licenseNumber }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ 'profile.show.address_data.title'|trans()}}
-                </div>
-                <table class="table table-hover table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.firstname'|trans()}}</th>
-                        <td>{{ user.firstname }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.lastname'|trans()}}</th>
-                        <td>{{ user.lastname }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
-                        <td>{{ ('constants.user.gender.' ~ user.gender) |trans()}}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
-                        <td>{{ user.dob|date('d/m/Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.address'|trans()}}</th>
-                        <td>{{ user.address }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.phone'|trans()}}</th>
-                        <td>{{ user.phone }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-12">
-            <form action="{{ path('bv_user_update_informations_request') }}" method="POST" class="form-horizontal row-fluid" role="form">
-                <label class="control-label required" for="fos_user_profile_form_message">Votre message</label>
-                <br/>
-                <br/>
-                <textarea class="form-control" id="fos_user_profile_form_message" name="fos_user_profile_form[message]" rows="3"></textarea>
-                <br/>
-                <input class="btn btn-success" type="submit" value="Envoyer" />
-            </form>
-        </div>
+    <div class="col-sm-12">
+        <form action="{{ path('bv_user_update_informations_request') }}" method="POST" class="form-horizontal row-fluid" role="form">
+            <label class="control-label required" for="fos_user_profile_form_message">Votre message</label>
+            <br/>
+            <br/>
+            <textarea class="form-control" id="fos_user_profile_form_message" name="fos_user_profile_form[message]" rows="3"></textarea>
+            <br/>
+            <input class="btn btn-success" type="submit" value="Envoyer" />
+        </form>
     </div>
 </div>

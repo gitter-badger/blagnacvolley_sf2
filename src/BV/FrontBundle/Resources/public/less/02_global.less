@@ -13,7 +13,9 @@ h2 { font-size: 18px; }
 .mr10 {margin-right:10px;}
 .mb2 {margin-bottom:2px;}
 .p0 { padding:0;}
+.pt5 { padding-top:5px;}
 .w100p {width:100%;}
+.fs20 {font-size: 20px;}
 
 .dblock {display:block;}
 .relative {position:relative;}
@@ -76,12 +78,14 @@ ul.flash-messages { padding:0;
 .well { .box-shadow(inset 0px -3px 0px 0px @color-grey-3); background-color: #FFF; .border-radius(5); background-image:none; border:0;
   &.warning { .box-shadow(inset 0px -3px 0px 0px @color-carrot); }
   &.success { .box-shadow(inset 0px -3px 0px 0px @color-emerald); }
+  &.danger  { .box-shadow(inset 0px -3px 0px 0px @color-pumpkin); }
   p {margin-bottom:0; }
 }
 .panel { border:0; .border-radius(0);
   &>.panel-heading { font-family: 'Ubuntu',sans-serif; text-transform: uppercase; text-align: center; font-size: 1.1em; background-image:none; .border-radius(0); }
   &.panel-primary > .panel-heading { background-color: @color-peter-river; }
   &.panel-warning > .panel-heading { background-color: @color-carrot; color:#FFF; }
+  &.panel-danger > .panel-heading { background-color: @color-pumpkin; color:#FFF; }
 }
 .btn { font-family: "Ubuntu", sans-serif; text-transform: uppercase; border-width: 0; .border-radius(5); background-image:none;
   &.btn-success { background-color: @color-emerald; ;.box-shadow(inset 0px -3px 0px 0px @color-nephritis);

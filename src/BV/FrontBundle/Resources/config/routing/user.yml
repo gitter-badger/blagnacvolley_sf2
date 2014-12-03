@@ -76,3 +76,6 @@ bv_user_toggle_group:  ## Toggle Group
 bv_user_toggle_availability:  ## Toggle Availability
     defaults: { _controller: "FrontBundle:Default:toggleAvailability" }
     path:     /user/toggleAvailability
+bv_user_profile_renew_license:
+    defaults: { _controller: "FrontBundle:Profile:renew" }
+    path:     /profile/renew

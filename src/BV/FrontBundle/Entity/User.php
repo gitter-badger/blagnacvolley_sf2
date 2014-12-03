@@ -24,6 +24,8 @@ class User extends EntityUser
 
     const STATUS_ACTIVE_LICENSED = 'ACTIVE_LICENSED';
     const STATUS_ACTIVE_NOT_LICENSED = 'ACTIVE_NOT_LICENSED';
+    const STATUS_ACTIVE_WAITING_LICENSE = 'ACTIVE_WAITING_LICENSE';
+    const STATUS_ACTIVE_WAITING_VALIDATION = 'ACTIVE_WAITING_VALIDATION';
     const STATUS_INACTIVE = 'INACTIVE';
 
     const POSTE_POINTU = 'POINTU';
@@ -1582,5 +1584,10 @@ class User extends EntityUser
     public function getZip()
     {
         return $this->zip;
+    }
+
+    public function isAllowedToRenew()
+    {
+        return ( $this->getStatus() == self::STATUS_ACTIVE_NOT_LICENSED && ( $this->getAge() > 18 || ( $this->getAge() <= 18 && $this->getParentalAdvisory() != null )) );
     }
 }

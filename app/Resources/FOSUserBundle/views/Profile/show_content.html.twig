@@ -1,16 +1,16 @@
 <div class="fos_user_user_show">
 {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
     <div class="col-sm-12">
-        <div class="well well-sm warning">{{ 'profile.show.not_licensed'|trans() }}</div>
+        <div class="well well-sm warning">{{ 'profile.show.not_licensed'|trans()|raw }}</div>
     </div>
 {% endif %}
 
 {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
-    {%  set class='warning' %}
+    {%  set class='danger' %}
 {% elseif user.status == constant('STATUS_ACTIVE_LICENSED', user) %}
     {%  set class='primary' %}
 {% else %}
-    {%  set class='danger' %}
+    {%  set class='warning' %}
 {% endif %}
 
 <div class="col-sm-2">
@@ -21,32 +21,11 @@
         <div class="panel-body p0">
             <img src="{{ user.picture |apply_filter('img_160_160') }}" class="" style="margin: 0 auto;display: block;" />
         </div>
-
-
-        {#<div class="user_files">#}
-        {#{% if user.getCertif %}#}
-        {#<div class="file">#}
-        {#{% if user.getDateCertif  %}#}
-        {#<a href="{{ asset(user.getCertif) }}" class="mt10" data-toggle="tooltip" title="Validé par l'administrateur BVB"><span class="fa fa-file-pdf-o color-text-green"></span> Certificat médical</a>#}
-        {#{% else %}#}
-        {#<a href="{{ asset(user.getCertif) }}" class="mt10" data-toggle="tooltip" title="Pas encore validé par l'administrateur BVB"><span class="fa fa-file-pdf-o color-text-orange"></span> Certificat médical</a>#}
-        {#{% endif %}#}
-        {#<script type="text/javascript">#}
-        {#//<![CDATA[#}
-        {#$('[data-toggle="tooltip"]').tooltip({'placement': 'top'});#}
-        {#//]]>#}
-        {#</script>#}
-        {#</div>#}
-        {#{% endif %}#}
-
-        {#{% if user.getAttestation %}#}
-        {#<div class="file">#}
-        {#<a href="{{ asset(user.getAttestation) }}" class="mt10"><span class="fa fa-file-pdf-o color-text-green"></span> Attestation pôle emploi</a>#}
-        {#</div>#}
-        {#{% endif %}#}
-        {#</div>#}
         <div class="panel-footer">
             <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block">Modifier</a>
+            {% if user.isAllowedToRenew() %}
+                <a href="{{ path('bv_user_profile_renew_license') }}" class="btn btn-success btn-sm btn-block">Renouveler</a>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -57,7 +36,7 @@
                 <div class="panel-heading">
                     Groupes accessibles
                 </div>
-                <table class="table table-hover table-striped table-condensed">
+                <table class="table table-condensed">
                     <tbody>
                     <tr>
                         <th class="lh30">Ecole de volley Adultes</th>
@@ -169,6 +148,61 @@
                     <tr>
                         <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
                         <td>{{ user.dob|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'profile.show.address_data.category'|trans()}}</th>
+                        <td>
+                            {{ user.getAge() }} ans
+                            <a rel="popover" href="javascript:void(0);">
+                                ({{ ('constants.user.category.' ~ user.getCategory())|trans() }})
+                                <div class="head hide">
+                                    Catégories
+                                </div>
+                                <div class="content hide">
+                                    {% set lastcat = null %}
+                                    {% set lastage = 0 %}
+                                    {% set previousage = 0 %}
+                                    {% set previouscat = null %}
+                                    <ul>
+                                        {% for key, cat in user.getCategories() %}
+                                            {% if lastage == 0 %}
+                                                {% set lastage = key %}
+                                                {% set lastcat = cat %}
+                                            {% endif %}
+                                            {% if (lastcat != cat) %}
+                                                <li>{{ previousage }} - {{ lastage }} ans : {{ ('constants.user.category.' ~ lastcat)|trans }}</li>
+                                                {% set lastage = key %}
+                                                {% set lastcat = cat %}
+                                                {% set previousage = key %}
+                                                {% set previouscat = cat %}
+                                            {% else %}
+                                                {% set lastage = key %}
+                                                {% set lastcat = cat %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <li>{{ previousage }} + : {{ ('constants.user.category.' ~ lastcat)|trans }}</li>
+                                    </ul>
+                                </div>
+                            </a>
+                            <script type="text/javascript">
+                                $(document).ready(function() {
+                                    $("[rel=popover]").each(function(){
+                                        $(this).popover({
+                                            html : true,
+                                            trigger: 'hover',
+                                            title: function() {
+                                                return $(this).children('.head').html();
+                                            },
+                                            content: function() {
+                                                return $(this).children('.content').html();
+                                            },
+                                            container: 'body',
+                                            placement: 'bottom'
+                                        });
+                                    });
+                                });
+                            </script>
+                        </td>
                     </tr>
                     <tr>
                         <th>{{ 'profile.show.address_data.address'|trans()}}</th>

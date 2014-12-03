@@ -5,10 +5,12 @@ namespace BV\FrontBundle\Controller;
 use BV\FrontBundle\Form\Type\ProfileFormType;
 use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use BV\FrontBundle\Entity\User;
+use Tools\LogBundle\Entity\SystemLog;
 
 class ProfileController extends Controller
 {
@@ -55,9 +57,43 @@ class ProfileController extends Controller
                 'form' => $form->createView(),
                 'user' => $user,
                 'isRequiredCertif' => ($user->getCertif() == null),
-                'isRequiredAttestation' => ($user->getAttestation() == null)
+                'isRequiredAttestation' => ($user->getAttestation() == null),
+                'isRequiredParentalAdvisory' => ($user->getAge() <= 18 && $user->getParentalAdvisory() == null),
             )
         );
+    }
+
+    public function renewAction(Request $request)
+    {
+        /* @var $user User */
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        // Check if user is allowed to renew his License
+        if (!$user->isAllowedToRenew())
+        {
+            throw new Exception('This user cannot perform this action.');
+        }
+
+        if ('GET' === $request->getMethod()) {
+            $userManager = $this->container->get('fos_user.user_manager');
+            try {
+                $user->setStatus(User::STATUS_ACTIVE_WAITING_VALIDATION);
+                $userManager->updateUser($user);
+                $request->getSession()->getFlashBag()->add('success', 'Modifications sauvegardées avec succès' );
+
+                // Send notification to Admin to validate the account
+                $this->container->get('tools.logbundle.logger')->addWarning(SystemLog::TYPE_USER_LICENSE_RENEWAL, $user);
+            }
+            catch (DBALException $e) {
+                $request->getSession()->getFlashBag()->add('error', 'Cet email est déjà utilisé sur la plateforme' );
+            }
+        }
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 
     public function updateRequestAction(Request $request)

@@ -114,6 +114,8 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
             $user->setCertif($path.'/'.$filename);
             $user->certifFile = null;
 
+            $user->setDateCertif(new \DateTime());
+
             $this->container->get('bv_cache')->resetCache($path, $filename, $uploadDir, 'img_50_50');
         }
         if (null !== $user->attestationFile) {
@@ -124,6 +126,8 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
             $user->attestationFile->move($uploadDir, $filename);
             $user->setAttestation($path.'/'.$filename);
             $user->attestationFile = null;
+
+            $user->setDateAttestation(new \DateTime());
 
             $this->container->get('bv_cache')->resetCache($path, $filename, $uploadDir, 'img_50_50');
         }
@@ -146,6 +150,8 @@ class UserManager extends BaseUserManager implements ContainerAwareInterface
             $user->parentalAdvisoryFile->move($uploadDir, $filename);
             $user->setParentalAdvisory($path.'/'.$filename);
             $user->parentalAdvisoryFile = null;
+
+            $user->setDateParentalAdvisory(new \DateTime());
 
             $this->container->get('bv_cache')->resetCache($path, $filename, $uploadDir, 'img_50_50');
         }
