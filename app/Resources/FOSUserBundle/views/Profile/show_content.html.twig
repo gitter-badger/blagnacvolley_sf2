@@ -4,6 +4,16 @@
         <div class="well well-sm warning">{{ 'profile.show.not_licensed'|trans()|raw }}</div>
     </div>
 {% endif %}
+{% if user.status == constant('STATUS_ACTIVE_WAITING_VALIDATION', user) %}
+    <div class="col-sm-12">
+        <div class="well well-sm warning">{{ 'profile.show.waiting_validation'|trans()|raw }}</div>
+    </div>
+{% endif %}
+{% if user.status == constant('STATUS_ACTIVE_WAITING_LICENSE', user) %}
+    <div class="col-sm-12">
+        <div class="well well-sm warning">{{ 'profile.show.waiting_license'|trans()|raw }}</div>
+    </div>
+{% endif %}
 
 {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
     {%  set class='danger' %}
