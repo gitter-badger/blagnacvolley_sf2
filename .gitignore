@@ -15,5 +15,5 @@
 /web/uploads/*
 !web/uploads/media/.gitkeep
 node_modules
-bower_components
+/web/vendor/*
 web/media/cache

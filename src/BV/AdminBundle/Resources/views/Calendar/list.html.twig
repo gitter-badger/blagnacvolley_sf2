@@ -3,22 +3,19 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <link rel="stylesheet" href="/css/scheduler/dhtmlxscheduler.css" >
-    <link rel="stylesheet" href="/css/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" >
+    <link rel="stylesheet" href="/vendor/scheduler/codebase/dhtmlxscheduler.css" >
+    <link rel="stylesheet" href="/vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" >
 {% endblock stylesheets %}
 
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript" src="/js/moment/moment.min.js"></script>
-    <script type="text/javascript" src="/js/moment/locales.min.js"></script>
+    <script type="text/javascript" src="/vendor/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="/vendor/moment/min/locales.min.js"></script>
 
-    <script type="text/javascript" src="/js/moment/moment.min.js"></script>
-    <script type="text/javascript" src="/js/moment/locales.min.js"></script>
-
-    <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler.js"></script>
-    <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler_editors.js"></script>
-    <script type="text/javascript" src="/js/scheduler/locale_fr.js"></script>
+    <script type="text/javascript" src="/vendor/scheduler/codebase/dhtmlxscheduler.js"></script>
+    <script type="text/javascript" src="/vendor/scheduler/codebase/ext/dhtmlxscheduler_editors.js"></script>
+    <script type="text/javascript" src="/vendor/scheduler/codebase/locale/locale_fr.js"></script>
 {% endblock javascripts %}
 
 {% block list_table %}

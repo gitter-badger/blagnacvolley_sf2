@@ -7,7 +7,7 @@ for VAR in `ls ~/.env/user_vars`; do
 done
 
 ### DIRECTORIES ###
-LINKED_DIRS="vendor node_modules bower_components"
+LINKED_DIRS="vendor node_modules web/vendor"
 
 for DIR in $LINKED_DIRS; do
     # check data dir

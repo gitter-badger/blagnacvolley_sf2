@@ -14,8 +14,8 @@
         {% block head_style %}
 
             <link rel="stylesheet" href="/css/bootstrap.css">
-            <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-            <link rel="stylesheet" href="/css/font-awesome/font-awesome.min.css">
+            <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+            <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
 
             <link rel="stylesheet" href="/css/styles.css">
 
@@ -26,9 +26,9 @@
 
         {% block head_script %}
 
-            <script type="text/javascript" src="{{ asset('js/modernizr.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('vendor/modernizr/modernizr.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
         {% endblock head_script %}
 

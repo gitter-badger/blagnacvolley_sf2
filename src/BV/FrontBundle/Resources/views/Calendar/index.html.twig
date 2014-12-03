@@ -4,18 +4,18 @@
 
 {% block head_style %}
     {{ parent() }}
-    <link rel="stylesheet" href="/css/scheduler/dhtmlxscheduler.css" >
+    <link rel="stylesheet" href="/vendor/scheduler/codebase/dhtmlxscheduler.css" >
 {% endblock %}
 
 {% block head_script %}
     {{ parent() }}
-    <script type="text/javascript" src="/js/moment/moment.min.js"></script>
-    <script type="text/javascript" src="/js/moment/locales.min.js"></script>
+    <script type="text/javascript" src="/vendor/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="/vendor/moment/min/locales.min.js"></script>
 
-    <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler.js"></script>
-    <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler_readonly.js"></script>
-    <script type="text/javascript" src="/js/scheduler/dhtmlxscheduler_editors.js"></script>
-    <script type="text/javascript" src="/js/scheduler/locale_fr.js"></script>
+    <script type="text/javascript" src="/vendor/scheduler/codebase/dhtmlxscheduler.js"></script>
+    <script type="text/javascript" src="/vendor/scheduler/codebase/sources/ext/dhtmlxscheduler_readonly.js"></script>
+    <script type="text/javascript" src="/vendor/scheduler/codebase/sources/ext/dhtmlxscheduler_editors.js"></script>
+    <script type="text/javascript" src="/vendor/scheduler/codebase/locale/locale_fr.js"></script>
 {% endblock %}
 
 {% block content_row %}
