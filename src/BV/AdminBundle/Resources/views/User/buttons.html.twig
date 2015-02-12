@@ -1,0 +1,29 @@
+{% if object.status == constant('\\BV\\FrontBundle\\Entity\\User::STATUS_ACTIVE_WAITING_VALIDATION') %}
+    <div class="well mt5">
+        <span class="col-sm-8">
+            Cet utilisateur a effectu&eacute; une demande de licence. Une fois les documents valid&eacute;s et la cotisation pay&eacute;e, cliquer sur Valider, l'utilisateur sera pr&eacute;venu par email. Sinon cliquer sur Refuser. Vous pourrez alors pr&eacute;ciser le motif. Un email sera envoy&eacute; &agrave; cet utilisateur.
+        </span>
+        <span class="col-sm-4">
+            <button type="button" class="pull-right btn btn-sm btn-success mt8">Valider la demande</button>
+            <button type="button" class="pull-right btn btn-sm btn-primary mt8 mr5">Refuser la demande</button>
+        </span>
+        <div class="clearfix"></div>
+    </div>
+{% endif %}
+{% if object.status == constant('\\BV\\FrontBundle\\Entity\\User::STATUS_ACTIVE_WAITING_LICENSE') %}
+    <div class="well mt5">
+        <span class="col-sm-8">
+            {% if object.licenseBatch != '' %}
+                Une demande de licence a &eacute;t&eacute; &eacute;ffectu&eacute;e aupr&egrave;s de l'organisme concern&eacute; (LOT <strong>{{ object.licenseBatch }}</strong>). Une fois les informations re&ccedil;ues et remplies, cliquer sur le bouton suivant. L'utilisateur recevra un email de confirmation.
+            {% else %}
+                Le dossier de cet utilisateur est validé, il est en attente d'une demande FSGT / FFVB. Merci de remplir les informations (LOT / TYPE) de licence.
+            {% endif %}
+        </span>
+        <span class="col-sm-4">
+            {% if object.licenseBatch != '' %}
+                <button type="button" class="pull-right btn btn-sm btn-primary mt8 mr5">Valider la licence</button>
+            {% endif %}
+        </span>
+        <div class="clearfix"></div>
+    </div>
+{% endif %}

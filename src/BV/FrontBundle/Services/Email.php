@@ -86,4 +86,36 @@ class Email
 
         $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
     }
+
+    /**
+     * Send message to user when the Admin user deactivate his account
+     *
+     * @param User $user
+     */
+    public function sendAccountDeactivated($user)
+    {
+        $subject = "[BlagnacVolley] l'admininistrateur du site vient de désactiver votre compte.";
+        $template = 'FrontBundle:Mail:userDeactivated.html.twig';
+        $body = $this->templating->render($template, array(
+            'user'      => $user,
+        ));
+
+        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
+    }
+
+    /**
+     * Send message to user when the Admin user deactivate his account
+     *
+     * @param User $user
+     */
+    public function sendAccountReactivated($user)
+    {
+        $subject = "[BlagnacVolley] l'admininistrateur du site vient de réactiver votre compte.";
+        $template = 'FrontBundle:Mail:userReactivated.html.twig';
+        $body = $this->templating->render($template, array(
+            'user'      => $user,
+        ));
+
+        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
+    }
 }

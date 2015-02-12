@@ -1,31 +1,4 @@
-{#
-
-This file is part of the Sonata package.
-
-(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
-
-For the full copyright and license information, please view the LICENSE
-file that was distributed with this source code.
-
-#}
-
 {% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
-
-{#{% block javascripts %}#}
-    {#{{ parent() }}#}
-    {#<script type="text/javascript">#}
-        {#$(document).ready(function(){#}
-            {#var startDateCtn = $('.bv-start-date').parents('.sonata-ba-field').parents('.form-group');#}
-            {#var endDateCtn = $('.bv-end-date').parents('.sonata-ba-field').parents('.form-group');#}
-
-            {#// Hide on start#}
-            {#startDateCtn.hide();#}
-            {#endDateCtn.hide();#}
-
-
-        {#});#}
-    {#</script>#}
-{#{% endblock javascripts %}#}
 
 {% block form %}
     {{ block('parentForm') }}

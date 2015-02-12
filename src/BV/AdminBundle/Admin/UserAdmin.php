@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\UserBundle\Model\UserInterface;
 
@@ -14,6 +15,11 @@ use FOS\UserBundle\Model\UserManagerInterface;
 
 class UserAdmin extends Admin
 {
+    public function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('deactivate', '{id}/deactivate');
+        $collection->add('reactivate', '{id}/reactivate');
+    }
     /**
      * {@inheritdoc}
      */
@@ -140,15 +146,15 @@ class UserAdmin extends Admin
                 ->with('License et facturation')
                     ->add('status', 'bv_user_status', array( 'required' => true, ))
                     ->add('licenseType', 'choice', array('label' => 'Type license.', 'choices' => User::getLicenseTypeList(), 'required' => false))
-                    ->add('licenseNumber', 'text')
-                    ->add('licenseBatch', 'text', array('label' => 'Lot license'))
+                    ->add('licenseNumber', 'text', array('required' => false))
+                    ->add('licenseBatch', 'text', array('label' => 'Lot license', 'required' => false))
                     ->add('billingGroup', 'choice', array('label' => 'Groupe de facturation', 'choices' => User::getGroupTypeList(), 'required' => false))
                     ->add('feeAmount')
-                    ->add('datePayment', 'sonata_type_datetime_picker')
+                    ->add('datePayment', 'sonata_type_datetime_picker', array('required' => false))
                 ->end()
                 ->with('Shirt')
                     ->add('shirtSize')
-                    ->add('dateShirtDelivered', 'sonata_type_datetime_picker')
+                    ->add('dateShirtDelivered', 'sonata_type_datetime_picker', array('required' => false))
                 ->end()
                 ->with('Teams')
                     ->add('level', 'bv_user_level')

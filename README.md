@@ -3,8 +3,17 @@ blagnacvolley_sf2
 
 Symfony 2 Website for Blagnac Volley
 
-Serveur de test : http://test-blagnacvolley.rhcloud.com/
+Serveur de Test :
 
+```
+test.blagnacvolley.fr --> http://test-blagnacvolley.rhcloud.com/
+```
+
+Serveur de Prod :
+
+```
+blagnacvolley.fr --> http://prod-blagnacvolley.rhcloud.com/
+```
 
 ## Installation
 
