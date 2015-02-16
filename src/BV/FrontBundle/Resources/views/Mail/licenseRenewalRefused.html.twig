@@ -1,13 +1,16 @@
 {% extends "FrontBundle:Mail:layout.html.twig" %}
 
 {% block title_content %}
-    [BlagnacVolley] l'admin a refusé votre demande de renouvelement de licence
+    [BlagnacVolley] l'admin a refusé votre demande de renouvellement de licence
 {% endblock title_content %}
 
 {% block mail_content %}
 
     Bonjour {{ user.firstname }} {{ user.lastname }}<br/><br/>
 
-    Nous vous informons que l'administrateur du site a refusé votre demande de renouvelement de License. Merci de vous rapprocher de lui pour de plus amples renseignements.
+    Nous vous informons que l'administrateur du site a refusé votre demande de renouvellement de License. Il vous a laissé le message suivant : <br/><br/>
+    <i>
+        {{ message }}
+    </i>
 
 {% endblock mail_content %}

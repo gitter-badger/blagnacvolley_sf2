@@ -14,7 +14,7 @@ class StaticAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
+            ->add('name', 'text_confirm', array('attr' => array('class' => 'form-control'), 'label' => 'Nom', 'help' => '<strong style="color:red;font-style:italic">DO NOT CHANGE THE NAME UNLESS YOU EXACTLY KNOW WHAT YOU ARE DOING</strong>'))
             ->add('description')
             ->add('content', 'textarea', array(
                 'attr' => array(
@@ -23,16 +23,6 @@ class StaticAdmin extends Admin
             ))
         ;
     }
-
-//    public function createQuery($context = 'list')
-//    {
-//        $query = parent::createQuery($context);
-//        $query->andWhere(
-//            $query->expr()->eq($query->getRootAlias() . '.type', ':my_param')
-//        );
-//        $query->setParameter('my_param', Events::TYPE_CLOSED);
-//        return $query;
-//    }
 
     // Fields to be shown on filter forms
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

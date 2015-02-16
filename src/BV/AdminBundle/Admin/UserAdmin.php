@@ -19,6 +19,8 @@ class UserAdmin extends Admin
     {
         $collection->add('deactivate', '{id}/deactivate');
         $collection->add('reactivate', '{id}/reactivate');
+        $collection->add('reactivate', '{id}/validate_renewal');
+        $collection->add('reactivate', '{id}/refuse_renewal');
     }
     /**
      * {@inheritdoc}

@@ -53,4 +53,51 @@ class UserController extends CRUDController
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
     }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function validateRenewalAction(Request $request)
+    {
+        $id = $request->get('id');
+        $user = $this->getDoctrine()->getRepository('FrontBundle:User')->find($id);
+        if ($user != null)
+        {
+            $user->setStatus(User::STATUS_ACTIVE_WAITING_LICENSE);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->container->get('bv_mailer')->sendLicenseRenewalValidated($user);
+            $this->container->get('session')->getFlashBag()->add('success', 'Utilisateur '.$user->getFirstname().' '.$user->getLastname().' correctement mis à jour. Il peut maintenant avoir accès aux fonctionnalités restreintes du site.');
+        }
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
+
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function refuseRenewalAction(Request $request)
+    {
+        $id = $request->get('id');
+        $message = $request->get('message');
+
+        $user = $this->getDoctrine()->getRepository('FrontBundle:User')->find($id);
+        if ($user != null)
+        {
+            $user->setStatus(User::STATUS_ACTIVE_WAITING_LICENSE);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->container->get('bv_mailer')->sendLicenseRenewalRefused($user, $message);
+            $this->container->get('session')->getFlashBag()->add('success', 'Utilisateur '.$user->getFirstname().' '.$user->getLastname().' correctement mis à jour. Il a été notifié du refus de dossier.');
+        }
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
 }

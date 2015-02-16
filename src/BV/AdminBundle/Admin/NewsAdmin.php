@@ -17,7 +17,11 @@ class NewsAdmin extends Admin
         $formMapper
             ->with('News')
                 ->add('title')
-                ->add('rawContent')
+                ->add('content', 'textarea', array(
+                    'attr' => array(
+                        'class' => 'redactor',
+                    ),
+                ))
                 ->add('enabled', null, array('required' => false))
             ->end()
             ->with('Optinal Event')
@@ -62,18 +66,6 @@ class NewsAdmin extends Admin
             $object->setContentFormatter('richhtml');
             $object->setContent($object->getRawContent());
             $object->setTitle($object->getTitle());
-        }
-    }
-
-    public function getTemplate($name)
-    {
-        switch ($name) {
-            case 'edit':
-                return 'AdminBundle:News:edit.html.twig';
-                break;
-            default:
-                return parent::getTemplate($name);
-                break;
         }
     }
 

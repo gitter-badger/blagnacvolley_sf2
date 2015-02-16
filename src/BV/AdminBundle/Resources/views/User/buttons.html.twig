@@ -4,7 +4,7 @@
             Cet utilisateur a effectu&eacute; une demande de licence. Une fois les documents valid&eacute;s et la cotisation pay&eacute;e, cliquer sur Valider, l'utilisateur sera pr&eacute;venu par email. Sinon cliquer sur Refuser. Vous pourrez alors pr&eacute;ciser le motif. Un email sera envoy&eacute; &agrave; cet utilisateur.
         </span>
         <span class="col-sm-4">
-            <button type="button" class="pull-right btn btn-sm btn-success mt8">Valider la demande</button>
+            <a href="{{ path('admin_bv_front_user_reactivate', { id: object.id }) }}" class="pull-right btn btn-sm btn-success mt8">Valider la demande</a>
             <button type="button" class="pull-right btn btn-sm btn-primary mt8 mr5">Refuser la demande</button>
         </span>
         <div class="clearfix"></div>

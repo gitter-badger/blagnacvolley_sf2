@@ -171,35 +171,37 @@ class NewsAdminController extends Controller
                     if ($this->get('request')->request->get($uniqid) != null)
                     {
                         $params = $this->get('request')->request->get($uniqid);
-                        if (array_key_exists('level', $params) && array_key_exists('start_date', $params) && array_key_exists('end_date', $params) &&
-                            $params['level'] != null && $params['start_date'] != null && $params['end_date'] != null &&
-                            array_key_exists($params['level'], Events::getEventsType())) {
-                            $level = $params['level'];
-                            $startDate = \DateTime::createFromFormat('d/m/Y G:i', $params['start_date']);
-                            $endDate = \DateTime::createFromFormat('d/m/Y G:i', $params['end_date']);
-                            if ($startDate > $endDate) {
-                                throw new ModelManagerException('Dates invalides');
-                            }
-                            else
-                            {
-                                if ($object->getEventsId() != null && ($events = $this->getDoctrine()->getRepository('FrontBundle:Events')->find($object->getEventsId())) instanceof Events)
-                                {
-                                    $events->setStartDate($startDate);
-                                    $events->setEndDate($endDate);
-                                    $events->setType($level);
-                                    $events->setTeam(null);
+                        if (array_key_exists('level', $params) && array_key_exists('start_date', $params) && array_key_exists('end_date', $params)) {
 
-                                    $this->admin->update($events);
+                            // An optional event is associated to this news
+                            if ( $params['level'] != null && $params['start_date'] != null && $params['end_date'] != null && array_key_exists($params['level'], Events::getEventsType())) {
+                                $level = $params['level'];
+                                $startDate = \DateTime::createFromFormat('d/m/Y G:i', $params['start_date']);
+                                $endDate = \DateTime::createFromFormat('d/m/Y G:i', $params['end_date']);
+                                if ($startDate > $endDate) {
+                                    throw new ModelManagerException('Dates invalides');
                                 }
                                 else
                                 {
-                                    $events = new Events();
-                                    $events->setStartDate($startDate);
-                                    $events->setEndDate($endDate);
-                                    $events->setType($level);
-                                    $events->setTeam(null);
+                                    if ($object->getEventsId() != null && ($events = $this->getDoctrine()->getRepository('FrontBundle:Events')->find($object->getEventsId())) instanceof Events)
+                                    {
+                                        $events->setStartDate($startDate);
+                                        $events->setEndDate($endDate);
+                                        $events->setType($level);
+                                        $events->setTeam(null);
 
-                                    $this->admin->create($events);
+                                        $this->admin->update($events);
+                                    }
+                                    else
+                                    {
+                                        $events = new Events();
+                                        $events->setStartDate($startDate);
+                                        $events->setEndDate($endDate);
+                                        $events->setType($level);
+                                        $events->setTeam(null);
+
+                                        $this->admin->create($events);
+                                    }
                                 }
                             }
                         }

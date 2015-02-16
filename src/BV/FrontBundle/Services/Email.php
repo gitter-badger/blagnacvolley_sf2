@@ -59,7 +59,7 @@ class Email
      * @param User $user
      * @param $message.
      */
-    public function sendInformationsChangedEmail($user, $message)
+    public function sendInformationsChangedEmail(User $user, $message)
     {
         $subject = "[BlagnacVolley] Les informations d'un utilisateur ont changé";
         $template = 'FrontBundle:Mail:informationsChanged.html.twig';
@@ -72,16 +72,34 @@ class Email
     }
 
     /**
-     * Send message to user when the Admin user refuse his Parental Advisory
+     * Send message to user when the Admin user validates his license renewal demand
      *
      * @param User $user
      */
-    public function sendLicenseRenewalRefused($user)
+    public function sendLicenseRenewalValidated(User $user)
     {
-        $subject = "[BlagnacVolley] l'admin a refusé votre demande de renouvelement de licence";
+        $subject = "[BlagnacVolley] l'administrateur a validé votre demande de renouvellement de licence";
+        $template = 'FrontBundle:Mail:licenseRenewalValidated.html.twig';
+        $body = $this->templating->render($template, array(
+            'user'      => $user,
+        ));
+
+        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
+    }
+
+    /**
+     * Send message to user when the Admin user refuse his license renewal demand
+     *
+     * @param User $user
+     * @param User $message
+     */
+    public function sendLicenseRenewalRefused(User $user, $message)
+    {
+        $subject = "[BlagnacVolley] l'admin a refusé votre demande de renouvellement de licence";
         $template = 'FrontBundle:Mail:licenseRenewalRefused.html.twig';
         $body = $this->templating->render($template, array(
             'user'      => $user,
+            'message'   => $message,
         ));
 
         $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
@@ -92,7 +110,7 @@ class Email
      *
      * @param User $user
      */
-    public function sendAccountDeactivated($user)
+    public function sendAccountDeactivated(User $user)
     {
         $subject = "[BlagnacVolley] l'admininistrateur du site vient de désactiver votre compte.";
         $template = 'FrontBundle:Mail:userDeactivated.html.twig';
@@ -108,7 +126,7 @@ class Email
      *
      * @param User $user
      */
-    public function sendAccountReactivated($user)
+    public function sendAccountReactivated(User $user)
     {
         $subject = "[BlagnacVolley] l'admininistrateur du site vient de réactiver votre compte.";
         $template = 'FrontBundle:Mail:userReactivated.html.twig';

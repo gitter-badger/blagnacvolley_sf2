@@ -9,6 +9,7 @@ services:
             - AdminBundle:NewsAdmin
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
+            - [ setTemplate, [edit, AdminBundle:Content:edit.html.twig]]
     sonata.admin.events:
         class: BV\AdminBundle\Admin\EventsAdmin
         tags:
@@ -93,3 +94,7 @@ services:
         class: BV\AdminBundle\Form\Extension\ImageTypeExtension
         tags:
             - { name: form.type_extension, alias: file }
+    bv.admin.form.type.text_confirm:
+        class: BV\AdminBundle\Form\Field\TextConfirm
+        tags:
+            - { name: form.type, alias: text_confirm }

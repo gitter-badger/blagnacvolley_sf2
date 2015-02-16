@@ -3,14 +3,14 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <link rel="stylesheet" href="/vendor/redactor/redactor/redactor.css" />
+    <link rel="stylesheet" href="{{ asset('vendor/redactor/redactor/redactor.css') }}" />
 {% endblock stylesheets %}
 
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript" src="/vendor/redactor/redactor/redactor.js"></script>
-    <script type="text/javascript" src="/js/redactor/redactor/filemanager.js"></script>
+    <script type="text/javascript" src="{{ asset('vendor/redactor/redactor/redactor.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/redactor/redactor/filemanager.js') }}"></script>
 {% endblock javascripts %}
 
 {% block form %}

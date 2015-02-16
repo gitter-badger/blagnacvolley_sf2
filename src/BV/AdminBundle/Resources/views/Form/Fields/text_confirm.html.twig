@@ -1,0 +1,30 @@
+{% spaceless %}
+    <div class="input-group">
+        <input type="text"
+               id="{{ id ~ '_disabled' }}"
+               name="{{ full_name }}"
+               class="form-control disabled"
+               value="{{ value }}"
+               disabled="disabled"
+                />
+        <input type="text"
+               id="{{ id }}"
+               name="{{ full_name }}"
+                {% if required == true %} required="required" {% endif %}
+               class="form-control disabled"
+               value="{{ value }}"
+               style="display: none"
+                />
+        <span class="input-group-btn">
+            <button id="{{ id ~ '_btn' }}" class="btn btn-primary" type="button">Modifier quand même</button>
+        </span>
+    </div>
+{% endspaceless %}
+<script type="text/javascript">
+//<![CDATA[
+    $('#' + '{{ id ~ '_btn' }}').click(function(){
+        $('#' + '{{ id ~ '_disabled' }}').hide();
+        $('#' + '{{ id }}').show();
+    });
+//]]>
+</script>
