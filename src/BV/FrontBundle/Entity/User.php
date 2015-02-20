@@ -785,7 +785,7 @@ class User extends EntityUser
             self::STATUS_ACTIVE_LICENSED => 'constants.user.status.'.self::STATUS_ACTIVE_LICENSED,
             self::STATUS_ACTIVE_NOT_LICENSED => 'constants.user.status.'.self::STATUS_ACTIVE_NOT_LICENSED,
             self::STATUS_ACTIVE_WAITING_LICENSE => 'constants.user.status.'.self::STATUS_ACTIVE_WAITING_LICENSE,
-            self::STATUS_ACTIVE_WAITING_VALIDATION => 'constants.user.status.'.self::STATUS_ACTIVE_WAITING_LICENSE,
+            self::STATUS_ACTIVE_WAITING_VALIDATION => 'constants.user.status.'.self::STATUS_ACTIVE_WAITING_VALIDATION,
             self::STATUS_INACTIVE => 'constants.user.status.'.self::STATUS_INACTIVE,
         );
     }

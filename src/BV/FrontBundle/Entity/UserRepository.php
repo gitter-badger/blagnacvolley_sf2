@@ -158,4 +158,37 @@ class UserRepository extends EntityRepository
             return null;
         }
     }
+
+    public function countUsersForDashboard()
+    {
+        $query = $this->getEntityManager()->createQuery(' SELECT u.enabled, COUNT(u.enabled) as nb FROM FrontBundle:User u GROUP BY u.enabled ');
+        $totals = $query->getResult();
+
+        $results = array(
+            User::STATUS_ACTIVE_NOT_LICENSED => '0',
+            User::STATUS_ACTIVE_WAITING_LICENSE => '0',
+            User::STATUS_ACTIVE_WAITING_VALIDATION => '0',
+            User::STATUS_ACTIVE_LICENSED => '0',
+        );
+
+        $results['total'] = 0;
+        foreach ($totals as $total)
+        {
+            $results['total'] += $total['nb'];
+            if ($total['enabled'] == false)
+            {
+                $results[User::STATUS_INACTIVE] = $total['nb'];
+            }
+        }
+
+        $query = $this->getEntityManager()->createQuery(' SELECT u.status, COUNT(u.status) as nb FROM FrontBundle:User u WHERE u.enabled = TRUE GROUP BY u.status ');
+        $statuses = $query->getResult();
+
+        foreach ($statuses as $status)
+        {
+            $results[$status['status']] = $status['nb'];
+        }
+
+        return $results;
+    }
 }

@@ -1,0 +1,99 @@
+@import "00_config.less";
+
+*,
+*:before,
+*:after
+{
+  @value: border-box;
+  -moz-box-sizing: @value;
+  -webkit-box-sizing: @value;
+  box-sizing: @value;
+}
+
+.set-size { font-size: 10em; color: #444; font-family: Tahoma, Geneva, sans-serif; width: 140px; }
+
+.pie-wrapper {
+  @size: 1em;
+
+  .size(@size, @size); display: inline-block; position: relative;
+
+  .pie
+  {
+    .size(100%, 100%); clip: rect(0, @size, @size, @size / 2); left: 0; position: absolute; top: 0;
+    .half-circle { .size(100%, 100%); border: @size / 10 solid #3498db; border-radius: 50%; clip: rect(0, @size / 2, @size, 0); left: 0; position: absolute; top: 0; }
+  }
+
+  .label
+  {
+    @font-size: @size / 4; @font-size-redo: @size * 4;
+    background: #34495e; border-radius: 50%; bottom: @font-size-redo / 10; color: #ecf0f1; cursor: default; display: block; font-size: @font-size; left: @font-size-redo / 10; line-height: @font-size-redo * .65; position: absolute; right: @font-size-redo / 10; text-align: center; top: @font-size-redo / 10;
+    .smaller { color: #bdc3c7; font-size: .45em; padding-bottom: 20px; vertical-align: super; }
+    &.below { position: initial; line-height: initial; padding: 0; font-size: 0.15em;text-align: center;white-space: normal; }
+  }
+
+  .shadow { .size(100%, 100%); border: @size / 10 solid #bdc3c7; border-radius: 50%; }
+
+  &.style-2
+  {
+    .label { background: none; color: #7f8c8d; .smaller { color: #bdc3c7; } }
+    &.below { position: initial; line-height: initial; padding: 0; font-size: 0.15em;text-align: center;white-space: normal; }
+  }
+}
+
+.mixin-loop (@i:1) when (@i =< 100) {
+  @classname: e("pie-wrapper.progress-@{i}");
+  .@{classname}
+  {
+    .draw-progress(@i);
+  }
+  .mixin-loop(@i + 1);
+}
+.mixin-loop();
+
+.draw-progress(@progress) when (@progress =< 50)
+{
+  .pie
+  {
+    .o-right-side { margin-left:0; background: transparent; display: none; }
+  }
+}
+
+.draw-progress(@progress) when (@progress > 50)
+{
+  .pie
+  {
+    clip: rect(auto, auto, auto, auto);
+    .o-right-side { margin-left:0; background: transparent; .transform(rotate(180deg)); }
+  }
+}
+
+.draw-progress(@progress)
+{
+  .pie
+  {
+    .o-left-side { background: transparent; @rotate: @progress * 3.6; .transform(rotate(~'@{rotate}deg')); }
+  }
+}
+
+.pie-wrapper {
+  .pie .half-circle { border-color: @color-peter-river; } // Default
+  &.color-peter-river .pie .half-circle { border-color: @color-peter-river; }
+  &.color-belize-hole .pie .half-circle { border-color: @color-belize-hole; }
+  &.color-red         .pie .half-circle { border-color: @color-red        ; }
+  &.color-orange      .pie .half-circle { border-color: @color-orange     ; }
+  &.color-sunflower   .pie .half-circle { border-color: @color-sunflower  ; }
+  &.color-carrot      .pie .half-circle { border-color: @color-carrot     ; }
+  &.color-pumpkin     .pie .half-circle { border-color: @color-pumpkin    ; }
+  &.color-alizarin    .pie .half-circle { border-color: @color-alizarin   ; }
+  &.color-pomegranate .pie .half-circle { border-color: @color-pomegranate; }
+  &.color-green       .pie .half-circle { border-color: @color-green      ; }
+  &.color-emerald     .pie .half-circle { border-color: @color-emerald    ; }
+  &.color-nephritis   .pie .half-circle { border-color: @color-nephritis  ; }
+  &.color-amethyst    .pie .half-circle { border-color: @color-amethyst   ; }
+  &.color-wysteria    .pie .half-circle { border-color: @color-wysteria   ; }
+
+}
+
+// Mixins
+.size(@w, @h) { height: @h; width: @w; }
+.transform(@value) { -webkit-transform: @value; -moz-transform: @value; -ms-transform: @value; -o-transform: @value; transform: @value; }

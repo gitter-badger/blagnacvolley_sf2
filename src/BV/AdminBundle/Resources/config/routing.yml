@@ -18,3 +18,7 @@ sonata_user:
 bv_delete_file:
     path:     /deleteFile
     defaults: { _controller: AdminBundle:Default:deleteFile }
+
+sonata_admin_dashboard:
+     pattern:  /admin/dashboard
+     defaults: { _controller: AdminBundle:Custom:dashboard }

@@ -1,69 +1,135 @@
-{#
-
-This file is part of the Sonata package.
-
-(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
-
-For the full copyright and license information, please view the LICENSE
-file that was distributed with this source code.
-
-#}
-
 {% extends base_template %}
 
 {% block title %}{{ 'title_dashboard'|trans({}, 'SonataAdminBundle') }}{% endblock%}
 {% block breadcrumb %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/progress.css') }}">
+{% endblock stylesheets %}
+
 {% block content %}
 
-    {{ sonata_block_render_event('sonata.admin.dashboard.top', { 'admin_pool': admin_pool }) }}
+    {% set p_active = ((( users.total - users.INACTIVE) * 100 / users.total ) )|round  %}
+    {% set active = ( users.total - users.INACTIVE) %}
+    {% set p_inactive = ((( users.INACTIVE) * 100 / users.total ) )|round  %}
+    {% set p_active_not_licensed = ((( users.ACTIVE_NOT_LICENSED) * 100 / active ) )|round  %}
+    {% set p_active_waiting_license = ((( users.ACTIVE_WAITING_LICENSE) * 100 / active ) )|round  %}
+    {% set p_active_waiting_validation = ((( users.ACTIVE_WAITING_VALIDATION) * 100 / active ) )|round  %}
+    {% set p_active_licensed = ((( users.ACTIVE_LICENSED) * 100 / active ) )|round  %}
 
-    {% if blocks.top|length > 0 %}
-        <div class="row">
-            {% for block in blocks.top %}
-                <div class="{{ block.class }}">
-                    {{ sonata_block_render({ 'type': block.type, 'settings': block.settings}) }}
+    <div class="row-fluid">
+
+        <div class="col-sm-10">
+            <div class="set-size center-block">
+                <div class="pie-wrapper progress-{{ p_active }} style-2 color-emerald">
+                    <span class="label">{{ active }}</span></span>
+                    <div class="pie">
+                        <div class="o-left-side half-circle"></div>
+                        <div class="o-right-side half-circle"></div>
+                    </div>
+                    <div class="shadow"></div>
+                    <div class="label below">
+                        Actifs
+                    </div>
                 </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    <div class="row">
-        {% set has_center = false %}
-
-        <div class="{% if blocks.center|length > 0 %}col-md-4{% else %}col-md-6{% endif %}">
-            {% for block in blocks.left %}
-                {{  block.type  }}
-                {{ sonata_block_render({ 'type': block.type, 'settings': block.settings}) }}
-            {% endfor %}
-        </div>
-
-        {% if blocks.center|length > 0 %}
-            <div class="col-md-4">
-                {% for block in blocks.center %}
-                    {{ sonata_block_render({ 'type': block.type, 'settings': block.settings}) }}
-                {% endfor %}
             </div>
-        {% endif %}
-
-        <div class="{% if blocks.center|length > 0 %}col-md-4{% else %}col-md-6{% endif %}">
-            {% for block in blocks.right %}
-                {{ sonata_block_render({ 'type': block.type, 'settings': block.settings}) }}
-            {% endfor %}
         </div>
-    </div>
 
-    {% if blocks.bottom|length > 0 %}
-        <div class="row">
-            {% for block in blocks.bottom %}
-                <div class="{{ block.class }}">
-                    {{ sonata_block_render({ 'type': block.type, 'settings': block.settings}) }}
+        <div class="col-sm-2">
+            <a href="{{ path('admin_bv_front_user_list', {'filter[enabled][value]': 2}) }}" >
+                <div class="set-size  center-block">
+                    <div class="pie-wrapper progress-{{ p_inactive }} style-2 color-alizarin">
+                        <span class="label">{{ users.INACTIVE }}</span>
+                        <div class="pie">
+                            <div class="o-left-side half-circle"></div>
+                            <div class="o-right-side half-circle"></div>
+                        </div>
+                        <div class="shadow"></div>
+                        <div class="label below">
+                            Inactifs
+                        </div>
+                    </div>
                 </div>
-            {% endfor %}
+            </a>
         </div>
-    {% endif %}
 
+        <div class="clearfix"></div>
 
+        <div class="col-sm-10">
+            <div class="col-sm-3">
+                <a href="{{ path('admin_bv_front_user_list', {'filter[status][value]': 'ACTIVE_NOT_LICENSED'}) }}" >
+                    <div class="set-size  center-block">
+                        <div class="pie-wrapper progress-{{ p_active_not_licensed }} style-2 color-alizarin">
+                            <span class="label">{{ users.ACTIVE_NOT_LICENSED }}</span>
+                            <div class="pie">
+                                <div class="o-left-side half-circle"></div>
+                                <div class="o-right-side half-circle"></div>
+                            </div>
+                            <div class="shadow"></div>
+                            <div class="label below">
+                                Non licenciés
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a href="{{ path('admin_bv_front_user_list', {'filter[status][value]': 'ACTIVE_WAITING_VALIDATION'}) }}" >
+                    <div class="set-size  center-block">
+                        <div class="pie-wrapper progress-{{ p_active_waiting_validation }} style-2 color-orange">
+                            <span class="label">{{ users.ACTIVE_WAITING_VALIDATION }}</span>
+                            <div class="pie">
+                                <div class="o-left-side half-circle"></div>
+                                <div class="o-right-side half-circle"></div>
+                            </div>
+                            <div class="shadow"></div>
+                            <div class="label below">
+                                En attente validation
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a href="{{ path('admin_bv_front_user_list', {'filter[status][value]': 'ACTIVE_WAITING_LICENSE'}) }}" >
+                    <div class="set-size  center-block">
+                        <div class="pie-wrapper progress-{{ p_active_waiting_license }} style-2 color-sunflower">
+                            <span class="label">{{ users.ACTIVE_WAITING_LICENSE }}</span>
+                            <div class="pie">
+                                <div class="o-left-side half-circle"></div>
+                                <div class="o-right-side half-circle"></div>
+                            </div>
+                            <div class="shadow"></div>
+                            <div class="label below">
+                                En attente Licence
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a href="{{ path('admin_bv_front_user_list', {'filter[status][value]': 'ACTIVE_LICENSED'}) }}" >
+                    <div class="set-size  center-block">
+                        <div class="pie-wrapper progress-{{ p_active_licensed }} style-2 color-emerald">
+                            <span class="label">{{ users.ACTIVE_LICENSED }}</span>
+                            <div class="pie">
+                                <div class="o-left-side half-circle"></div>
+                                <div class="o-right-side half-circle"></div>
+                            </div>
+                            <div class="shadow"></div>
+                            <div class="label below">
+                                Actifs Licenciés
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-2">
+        </div>
 
-    {{ sonata_block_render_event('sonata.admin.dashboard.bottom', { 'admin_pool': admin_pool }) }}
+        <div class="clearfix"></div>
+    </div>
 
 {% endblock %}

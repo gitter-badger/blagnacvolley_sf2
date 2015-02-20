@@ -13,6 +13,7 @@ module.exports = function(grunt) {
         files: {
           // target.css file: source.less file
           "web/css/styles.css": "src/BV/FrontBundle/Resources/public/less/styles.less",
+          "web/css/progress.css": "src/BV/FrontBundle/Resources/public/less/progress.less",
           "web/css/bootstrap.css": "web/vendor/bootstrap/less/bootstrap.less",
 
           // Admin files

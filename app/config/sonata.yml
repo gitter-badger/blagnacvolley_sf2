@@ -5,7 +5,6 @@ sonata_admin:
         handler: sonata.admin.security.handler.role
     templates:
         layout: AdminBundle::layout.html.twig
-        dashboard: AdminBundle:Core:dashboard.html.twig
     assets:
         stylesheets:
             - 'bundles/sonataadmin/vendor/bootstrap/dist/css/bootstrap.min.css'
