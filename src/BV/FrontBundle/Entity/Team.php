@@ -6,12 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use BV\FrontBundle\Validator\TeamLeadersAreMembers;
 
 /**
  * Team
- *
- * @TeamLeadersAreMembers()
  *
  * @ORM\Table(name="bv_team")
  * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\TeamRepository")
@@ -71,7 +68,7 @@ class Team
     /**
      * @var string
      *
-     * @ORM\Column(name="slot", type="string", length=255)
+     * @ORM\Column(name="slot", type="string", length=255, nullable=true)
      */
     private $slot;
 
@@ -360,39 +357,6 @@ class Team
 
         return $this;
     }
-
-    // @Assert\Callback()
-    /* exemple of validation in the class
-    public function validate(ExecutionContextInterface $context)
-    {
-        switch ($this->type) {
-            case self::TYPE_FEM:
-                $members = $this->membersFem;
-                break;
-            case self::TYPE_MIX:
-                $members = $this->membersMix;
-                break;
-            case self::TYPE_MSC:
-                $members = $this->membersMsc;
-                break;
-        }
-
-        if (!$members->contains($this->captain)) {
-            $context
-                ->buildViolation('The captain must be in the members list.')
-                ->atPath('captain')
-                ->addViolation()
-            ;
-        }
-        if (!$members->contains($this->subCaptain)) {
-            $context
-                ->buildViolation('The subCaptain must be in the members list.')
-                ->atPath('subCaptain')
-                ->addViolation()
-            ;
-        }
-    }
-    */
 
     /**
      * @return string

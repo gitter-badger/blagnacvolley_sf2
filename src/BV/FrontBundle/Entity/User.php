@@ -1033,7 +1033,7 @@ class User extends EntityUser
      */
     public function __toString()
     {
-        return $this->getUsername() ?: '-';
+        return $this->getFirstname().' '.$this->getLastname() ?: '-';
     }
 
     /**

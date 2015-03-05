@@ -20,17 +20,24 @@ class TeamAdmin extends Admin
         $formMapper
             ->tab('Management')
                 ->with('Management')
-                    ->add('name')
+                    ->add('name', 'text', array(
+                        'label' => 'Nom de l\'équipe'
+                    ))
                     ->add('type', 'bv_team_type', array(
-                        'help' => "This field is required in order to add members.",
                         'disabled' => !is_null($type),
                     ))
-                    ->add('level', 'bv_user_level')
-                    ->add('slot')
+                    ->add('level', 'bv_user_level', array(
+                        'label' => 'Niveau FSGT'
+                    ))
+                    ->add('slot', 'text', array(
+                        'label' => 'Créneau attribué',
+                        'required' => false
+                    ))
                 ->end()
             ->end()
         ;
 
+        // Type has been set on this team : Editing now -> Can display Members tab
         if (!is_null($type)) {
             switch ($this->getSubject()->getType()) {
                 case Team::TYPE_FEM:
@@ -49,6 +56,8 @@ class TeamAdmin extends Admin
 
             /* @var $em \Doctrine\ORM\EntityManager */
             $em = $this->getModelManager()->getEntityManager($this->getClass());
+            $membersAssociated = $em->getRepository('FrontBundle:User')->findAllByTeam($this->getSubject()->getId());
+
             $meta = $em->getClassMetadata($this->getClass());
             $expr = $em->getExpressionBuilder();
             $qbMember = $em->createQueryBuilder()
@@ -58,38 +67,52 @@ class TeamAdmin extends Admin
                     $expr->eq('u.' . $meta->getAssociationMapping($members)['mappedBy'], ':team'),
                     $expr->isNull('u.' . $meta->getAssociationMapping($members)['mappedBy'])
                 ))
+                ->andWhere($expr->eq('u.gender', ':gender'))
                 ->setParameter('team', $this->getSubject()->getId())
-            ;
-            if (!is_null($gender)) {
-                $qbMember
-                    ->andWhere($expr->eq('u.gender', ':gender'))
-                    ->setParameter('gender', $gender);
-            }
-
-            $qbCaptain = $em->createQueryBuilder()
-                ->select('u')
-                ->from($meta->getAssociationMapping($members)['targetEntity'], 'u')
-                ->where($expr->eq('u.' . $meta->getAssociationMapping($members)['mappedBy'], ':team'))
-                ->leftJoin($this->getClass(), 't', Join::WITH, $expr->andX(
-                    $expr->neq('t.id', ':team'),
-                    $expr->neq('t.captain', 'u.id')
-                ))
-                ->setParameter('team', $this->getSubject()->getId())
-            ;
-
-            $qbSubCaptain = $em->createQueryBuilder()
-                ->select('u')
-                ->from($meta->getAssociationMapping($members)['targetEntity'], 'u')
-                ->where($expr->eq('u.' . $meta->getAssociationMapping($members)['mappedBy'], ':team'))
-                ->leftJoin($this->getClass(), 't', Join::WITH, $expr->andX(
-                    $expr->neq('t.id', ':team'),
-                    $expr->neq('t.subCaptain', 'u.id')
-                ))
-                ->setParameter('team', $this->getSubject()->getId())
+                ->setParameter('gender', $gender);
             ;
 
             $formMapper
                 ->tab('Members')
+                ->with('Players')
+                ->add($members, 'sonata_type_model', array(
+                    'by_reference' => false,
+                    'query' => $qbMember,
+                    'multiple' => true,
+                    'required' => false,
+                    'label' => 'Members',
+                    'btn_add' => false,
+                ))
+                ->end()
+                ->end()
+            ;
+
+            if (count($membersAssociated) > 0)
+            {
+                $qbCaptain = $em->createQueryBuilder()
+                    ->select('u')
+                    ->from($meta->getAssociationMapping($members)['targetEntity'], 'u')
+                    ->where($expr->eq('u.' . $meta->getAssociationMapping($members)['mappedBy'], ':team'))
+                    ->leftJoin($this->getClass(), 't', Join::WITH, $expr->andX(
+                        $expr->neq('t.id', ':team'),
+                        $expr->neq('t.captain', 'u.id')
+                    ))
+                    ->setParameter('team', $this->getSubject()->getId())
+                ;
+
+                $qbSubCaptain = $em->createQueryBuilder()
+                    ->select('u')
+                    ->from($meta->getAssociationMapping($members)['targetEntity'], 'u')
+                    ->where($expr->eq('u.' . $meta->getAssociationMapping($members)['mappedBy'], ':team'))
+                    ->leftJoin($this->getClass(), 't', Join::WITH, $expr->andX(
+                        $expr->neq('t.id', ':team'),
+                        $expr->neq('t.subCaptain', 'u.id')
+                    ))
+                    ->setParameter('team', $this->getSubject()->getId())
+                ;
+
+                $formMapper
+                    ->tab('Members')
                     ->with('Leaders')
                         ->add('captain', 'sonata_type_model', array(
                             'query' => $qbCaptain,
@@ -101,19 +124,10 @@ class TeamAdmin extends Admin
                             'btn_add' => false,
                             'required' => false,
                         ))
+                        ->end()
                     ->end()
-                    ->with('Players')
-                        ->add($members, 'sonata_type_model', array(
-                            'by_reference' => false,
-                            'query' => $qbMember,
-                            'multiple' => true,
-                            'required' => false,
-                            'label' => 'Members',
-                            'btn_add' => false,
-                        ))
-                    ->end()
-                ->end()
-            ;
+                ;
+            }
         }
     }
 

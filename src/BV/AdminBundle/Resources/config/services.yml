@@ -38,7 +38,7 @@ services:
         arguments:
             - ~
             - BV\FrontBundle\Entity\Team
-            - ~
+            - AdminBundle:Team
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
     sonata.admin.static:
