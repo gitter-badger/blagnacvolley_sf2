@@ -34,12 +34,12 @@
         "knplabs/knp-menu": "*",
         "knplabs/knp-menu-bundle": "*",
         "knplabs/knp-paginator-bundle": "*",
+
         "sonata-project/core-bundle": "*",
-        "sonata-project/block-bundle": "*",
-        "sonata-project/intl-bundle": "*",
         "sonata-project/admin-bundle": "*",
-        "sonata-project/doctrine-orm-admin-bundle": "*",
         "sonata-project/user-bundle": "*",
+        "sonata-project/block-bundle": "*",
+        "sonata-project/doctrine-orm-admin-bundle": "*",
         "sonata-project/notification-bundle": "*"
     },
     "require-dev": {
