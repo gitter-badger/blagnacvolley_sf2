@@ -1,0 +1,1032 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+{% set _preview      = block('preview') %}
+{% set _form         = block('form') %}
+{% set _show         = block('show') %}
+{% set _list_table   = block('list_table') %}
+{% set _list_filters = block('list_filters') %}
+{% set _tab_menu     = block('tab_menu') %}
+{% set _content      = block('content') %}
+{% set _title        = block('title') %}
+{% set _breadcrumb   = block('breadcrumb') %}
+{% set _actions      = block('actions') %}
+{% set _navbar_title = block('navbar_title') %}
+
+<!DOCTYPE html>
+<html {% block html_attributes %}class="no-js"{% endblock %}>
+<head>
+    {% block meta_tags %}
+        <meta charset="UTF-8">
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    {% endblock %}
+
+    {% block stylesheets %}
+
+        <link rel="stylesheet" href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/global/plugins/uniform/css/uniform.default.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('assets/global/css/components.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/global/css/plugins.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/admin/layout/css/layout.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/admin/layout/css/themes/darkblue.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/admin/layout/css/custom.css') }}">
+
+        {#<link rel="stylesheet" href="{{ asset('css/styles_admin.css') }}">#}
+
+    {% endblock %}
+
+    {% block google_fonts %}
+
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+
+    {% endblock google_fonts %}
+
+    {% block javascripts %}
+        <script>
+            window.SONATA_CONFIG = {
+                CONFIRM_EXIT: {% if admin_pool is defined and admin_pool.getOption('confirm_exit') %}true{% else %}false{% endif %},
+                USE_SELECT2: {% if admin_pool is defined and admin_pool.getOption('use_select2') %}true{% else %}false{% endif %},
+                USE_ICHECK: {% if admin_pool is defined and admin_pool.getOption('use_icheck') %}true{% else %}false{% endif %}
+            };
+            window.SONATA_TRANSLATIONS = {
+                CONFIRM_EXIT:  '{{ 'confirm_exit'|trans({}, 'SonataAdminBundle')|escape('js') }}'
+            };
+        </script>
+
+    {% endblock %}
+
+    <title>
+        {#{% block sonata_head_title %}#}
+        {#{{ 'Admin'|trans({}, 'SonataAdminBundle') }}#}
+
+        {#{% if _title is not empty %}#}
+        {#{{ _title|raw }}#}
+        {#{% else %}#}
+        {#{% if action is defined %}#}
+        {#-#}
+        {#{% for menu in admin.breadcrumbs(action) %}#}
+        {#{% if not loop.first %}#}
+        {#{%  if loop.index != 2 %}#}
+        {#&gt;#}
+        {#{% endif %}#}
+
+        {#{{ menu.label }}#}
+        {#{% endif %}#}
+        {#{% endfor %}#}
+        {#{% endif %}#}
+        {#{% endif%}#}
+        {#{% endblock %}#}
+    </title>
+</head>
+{#<body {% block body_attributes %}class="sonata-bc skin-black fixed"{% endblock %}>#}
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
+{% block sonata_header %}
+    <!-- BEGIN HEADER -->
+    <div class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="{{ path('sonata_admin_dashboard') }}">
+                    <img src="{{ asset('images/admin/logo-small.png') }}" style="  height: 45px; margin-top: 0px;" alt="logo" class="logo-default"/>
+                </a>
+                <div class="menu-toggler sidebar-toggler hide">
+                </div>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <!-- BEGIN NOTIFICATION DROPDOWN -->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                    <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-bell"></i>
+					<span class="badge badge-default">
+					7 </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="external">
+                                <h3><span class="bold">12 pending</span> notifications</h3>
+                                <a href="extra_profile.html">view all</a>
+                            </li>
+                            <li>
+                                <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="time">just now</span>
+									<span class="details">
+									<span class="label label-sm label-icon label-success">
+									<i class="fa fa-plus"></i>
+									</span>
+									New user registered. </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="time">3 mins</span>
+									<span class="details">
+									<span class="label label-sm label-icon label-danger">
+									<i class="fa fa-bolt"></i>
+									</span>
+									Server #12 overloaded. </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="time">10 mins</span>
+									<span class="details">
+									<span class="label label-sm label-icon label-warning">
+									<i class="fa fa-bell-o"></i>
+									</span>
+									Server #2 not responding. </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="time">14 hrs</span>
+									<span class="details">
+									<span class="label label-sm label-icon label-info">
+									<i class="fa fa-bullhorn"></i>
+									</span>
+									Application error. </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="time">2 days</span>
+									<span class="details">
+									<span class="label label-sm label-icon label-danger">
+									<i class="fa fa-bolt"></i>
+									</span>
+									Database overloaded 68%. </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="time">3 days</span>
+									<span class="details">
+									<span class="label label-sm label-icon label-danger">
+									<i class="fa fa-bolt"></i>
+									</span>
+									A user IP blocked. </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="time">4 days</span>
+									<span class="details">
+									<span class="label label-sm label-icon label-warning">
+									<i class="fa fa-bell-o"></i>
+									</span>
+									Storage Server #4 not responding dfdfdfd. </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="time">5 days</span>
+									<span class="details">
+									<span class="label label-sm label-icon label-info">
+									<i class="fa fa-bullhorn"></i>
+									</span>
+									System Error. </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="time">9 days</span>
+									<span class="details">
+									<span class="label label-sm label-icon label-danger">
+									<i class="fa fa-bolt"></i>
+									</span>
+									Storage server failed. </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END TODO DROPDOWN -->
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                    <li class="dropdown dropdown-user">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img alt="" class="img-circle" src="{{ asset(app.user.picture)|apply_filter('img_50_50') }}"/>
+                            <span class="username username-hide-on-mobile"> {{ app.user.firstname }} </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a href="extra_profile.html">
+                                    <i class="icon-user"></i> My Profile </a>
+                            </li>
+                            <li>
+                                <a href="page_calendar.html">
+                                    <i class="icon-calendar"></i> My Calendar </a>
+                            </li>
+                            <li>
+                                <a href="inbox.html">
+                                    <i class="icon-envelope-open"></i> My Inbox <span class="badge badge-danger">
+							3 </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="page_todo.html">
+                                    <i class="icon-rocket"></i> My Tasks <span class="badge badge-success">
+							7 </span>
+                                </a>
+                            </li>
+                            <li class="divider">
+                            </li>
+                            <li>
+                                <a href="extra_lock.html">
+                                    <i class="icon-lock"></i> Lock Screen </a>
+                            </li>
+                            <li>
+                                <a href="login.html">
+                                    <i class="icon-key"></i> Log Out </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                    <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                    <li class="dropdown dropdown-quick-sidebar-toggler">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-logout"></i>
+                        </a>
+                    </li>
+                    <!-- END QUICK SIDEBAR TOGGLER -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+
+    <div class="clearfix"></div>
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar-wrapper">
+        <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+        <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+        <div class="page-sidebar navbar-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+            <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+            <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+            <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+            <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+            <ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                <li class="sidebar-toggler-wrapper">
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                    <div class="sidebar-toggler">
+                    </div>
+                    <!-- END SIDEBAR TOGGLER BUTTON -->
+                </li>
+                <li class="start active open">
+                    <a href="{{ path('sonata_admin_dashboard') }}">
+                        <i class="icon-home"></i>
+                        <span class="title">Dashboard</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-basket"></i>
+                        <span class="title">eCommerce</span>
+                        <span class="arrow "></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="ecommerce_index.html">
+                                <i class="icon-home"></i>
+                                Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="ecommerce_orders.html">
+                                <i class="icon-basket"></i>
+                                Orders</a>
+                        </li>
+                        <li>
+                            <a href="ecommerce_orders_view.html">
+                                <i class="icon-tag"></i>
+                                Order View</a>
+                        </li>
+                        <li>
+                            <a href="ecommerce_products.html">
+                                <i class="icon-handbag"></i>
+                                Products</a>
+                        </li>
+                        <li>
+                            <a href="ecommerce_products_edit.html">
+                                <i class="icon-pencil"></i>
+                                Product Edit</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="heading">
+                    <h3 class="uppercase">Features</h3>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-settings"></i>
+                        <span class="title">Form Stuff</span>
+                        <span class="arrow "></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="form_controls_md.html">
+                                <span class="badge badge-roundless badge-danger">new</span>Material Design<br>
+                                Form Controls</a>
+                        </li>
+                        <li>
+                            <a href="form_controls.html">
+                                Bootstrap<br>
+                                Form Controls</a>
+                        </li>
+                        <li>
+                            <a href="form_icheck.html">
+                                iCheck Controls</a>
+                        </li>
+                        <li>
+                            <a href="form_layouts.html">
+                                Form Layouts</a>
+                        </li>
+                        <li>
+                            <a href="form_editable.html">
+                                <span class="badge badge-roundless badge-warning">new</span>Form X-editable</a>
+                        </li>
+                        <li>
+                            <a href="form_wizard.html">
+                                Form Wizard</a>
+                        </li>
+                        <li>
+                            <a href="form_validation.html">
+                                Form Validation</a>
+                        </li>
+                        <li>
+                            <a href="form_image_crop.html">
+                                <span class="badge badge-roundless badge-danger">new</span>Image Cropping</a>
+                        </li>
+                        <li>
+                            <a href="form_fileupload.html">
+                                Multiple File Upload</a>
+                        </li>
+                        <li>
+                            <a href="form_dropzone.html">
+                                Dropzone File Upload</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </div>
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+    <div class="page-content">
+    <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+    <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    Widget settings form goes here
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn blue">Save changes</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+    <!-- BEGIN STYLE CUSTOMIZER -->
+    <div class="theme-panel hidden-xs hidden-sm">
+        <div class="toggler">
+        </div>
+        <div class="toggler-close">
+        </div>
+        <div class="theme-options">
+            <div class="theme-option theme-colors clearfix">
+						<span>
+						THEME COLOR </span>
+                <ul>
+                    <li class="color-default current tooltips" data-style="default" data-container="body" data-original-title="Default">
+                    </li>
+                    <li class="color-darkblue tooltips" data-style="darkblue" data-container="body" data-original-title="Dark Blue">
+                    </li>
+                    <li class="color-blue tooltips" data-style="blue" data-container="body" data-original-title="Blue">
+                    </li>
+                    <li class="color-grey tooltips" data-style="grey" data-container="body" data-original-title="Grey">
+                    </li>
+                    <li class="color-light tooltips" data-style="light" data-container="body" data-original-title="Light">
+                    </li>
+                    <li class="color-light2 tooltips" data-style="light2" data-container="body" data-html="true" data-original-title="Light 2">
+                    </li>
+                </ul>
+            </div>
+            <div class="theme-option">
+						<span>
+						Theme Style </span>
+                <select class="layout-style-option form-control input-sm">
+                    <option value="square" selected="selected">Square corners</option>
+                    <option value="rounded">Rounded corners</option>
+                </select>
+            </div>
+            <div class="theme-option">
+						<span>
+						Layout </span>
+                <select class="layout-option form-control input-sm">
+                    <option value="fluid" selected="selected">Fluid</option>
+                    <option value="boxed">Boxed</option>
+                </select>
+            </div>
+            <div class="theme-option">
+						<span>
+						Header </span>
+                <select class="page-header-option form-control input-sm">
+                    <option value="fixed" selected="selected">Fixed</option>
+                    <option value="default">Default</option>
+                </select>
+            </div>
+            <div class="theme-option">
+						<span>
+						Top Menu Dropdown</span>
+                <select class="page-header-top-dropdown-style-option form-control input-sm">
+                    <option value="light" selected="selected">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+            <div class="theme-option">
+						<span>
+						Sidebar Mode</span>
+                <select class="sidebar-option form-control input-sm">
+                    <option value="fixed">Fixed</option>
+                    <option value="default" selected="selected">Default</option>
+                </select>
+            </div>
+            <div class="theme-option">
+						<span>
+						Sidebar Menu </span>
+                <select class="sidebar-menu-option form-control input-sm">
+                    <option value="accordion" selected="selected">Accordion</option>
+                    <option value="hover">Hover</option>
+                </select>
+            </div>
+            <div class="theme-option">
+						<span>
+						Sidebar Style </span>
+                <select class="sidebar-style-option form-control input-sm">
+                    <option value="default" selected="selected">Default</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+            <div class="theme-option">
+						<span>
+						Sidebar Position </span>
+                <select class="sidebar-pos-option form-control input-sm">
+                    <option value="left" selected="selected">Left</option>
+                    <option value="right">Right</option>
+                </select>
+            </div>
+            <div class="theme-option">
+						<span>
+						Footer </span>
+                <select class="page-footer-option form-control input-sm">
+                    <option value="fixed">Fixed</option>
+                    <option value="default" selected="selected">Default</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- END STYLE CUSTOMIZER -->
+    <!-- BEGIN PAGE HEADER-->
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="{{ path('sonata_admin_dashboard') }}">Home</a>
+            </li>
+        </ul>
+        <div class="page-toolbar">
+            <div id="dashboard-report-range" class="pull-right tooltips btn btn-sm btn-default" data-container="body" data-placement="bottom" data-original-title="Change dashboard date range">
+                <i class="icon-calendar"></i>&nbsp; <span class="thin uppercase visible-lg-inline-block"></span>&nbsp; <i class="fa fa-angle-down"></i>
+            </div>
+        </div>
+    </div>
+    <h3 class="page-title">
+        Dashboard <small>reports & statistics</small>
+    </h3>
+    <!-- END PAGE HEADER-->
+    {#<div class="row">#}
+        {#<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">#}
+            {#<div class="dashboard-stat blue-madison">#}
+                {#<div class="visual">#}
+                    {#<i class="fa fa-comments"></i>#}
+                {#</div>#}
+                {#<div class="details">#}
+                    {#<div class="number">#}
+                        {#1349#}
+                    {#</div>#}
+                    {#<div class="desc">#}
+                        {#New Feedbacks#}
+                    {#</div>#}
+                {#</div>#}
+                {#<a class="more" href="javascript:;">#}
+                    {#View more <i class="m-icon-swapright m-icon-white"></i>#}
+                {#</a>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">#}
+            {#<div class="dashboard-stat red-intense">#}
+                {#<div class="visual">#}
+                    {#<i class="fa fa-bar-chart-o"></i>#}
+                {#</div>#}
+                {#<div class="details">#}
+                    {#<div class="number">#}
+                        {#12,5M$#}
+                    {#</div>#}
+                    {#<div class="desc">#}
+                        {#Total Profit#}
+                    {#</div>#}
+                {#</div>#}
+                {#<a class="more" href="javascript:;">#}
+                    {#View more <i class="m-icon-swapright m-icon-white"></i>#}
+                {#</a>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">#}
+            {#<div class="dashboard-stat green-haze">#}
+                {#<div class="visual">#}
+                    {#<i class="fa fa-shopping-cart"></i>#}
+                {#</div>#}
+                {#<div class="details">#}
+                    {#<div class="number">#}
+                        {#549#}
+                    {#</div>#}
+                    {#<div class="desc">#}
+                        {#New Orders#}
+                    {#</div>#}
+                {#</div>#}
+                {#<a class="more" href="javascript:;">#}
+                    {#View more <i class="m-icon-swapright m-icon-white"></i>#}
+                {#</a>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">#}
+            {#<div class="dashboard-stat purple-plum">#}
+                {#<div class="visual">#}
+                    {#<i class="fa fa-globe"></i>#}
+                {#</div>#}
+                {#<div class="details">#}
+                    {#<div class="number">#}
+                        {#+89%#}
+                    {#</div>#}
+                    {#<div class="desc">#}
+                        {#Brand Popularity#}
+                    {#</div>#}
+                {#</div>#}
+                {#<a class="more" href="javascript:;">#}
+                    {#View more <i class="m-icon-swapright m-icon-white"></i>#}
+                {#</a>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="clearfix"></div>#}
+    {#<div class="row">#}
+        {#<div class="col-md-6 col-sm-6">#}
+            {#<!-- BEGIN PORTLET-->#}
+            {#<div class="portlet light ">#}
+                {#<div class="portlet-title">#}
+                    {#<div class="caption">#}
+                        {#<i class="icon-bar-chart font-green-sharp hide"></i>#}
+                        {#<span class="caption-subject font-green-sharp bold uppercase">Site Visits</span>#}
+                        {#<span class="caption-helper">weekly stats...</span>#}
+                    {#</div>#}
+                    {#<div class="actions">#}
+                        {#<div class="btn-group btn-group-devided" data-toggle="buttons">#}
+                            {#<label class="btn btn-transparent grey-salsa btn-circle btn-sm active">#}
+                                {#<input type="radio" name="options" class="toggle" id="option1">New</label>#}
+                            {#<label class="btn btn-transparent grey-salsa btn-circle btn-sm">#}
+                                {#<input type="radio" name="options" class="toggle" id="option2">Returning</label>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="portlet-body">#}
+                    {#<div id="site_statistics_loading">#}
+                        {#<img src="../../assets/admin/layout/img/loading.gif" alt="loading"/>#}
+                    {#</div>#}
+                    {#<div id="site_statistics_content" class="display-none">#}
+                        {#<div id="site_statistics" class="chart">#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<!-- END PORTLET-->#}
+        {#</div>#}
+        {#<div class="col-md-6 col-sm-6">#}
+            {#<!-- BEGIN PORTLET-->#}
+            {#<div class="portlet light ">#}
+                {#<div class="portlet-title">#}
+                    {#<div class="caption">#}
+                        {#<i class="icon-share font-red-sunglo hide"></i>#}
+                        {#<span class="caption-subject font-red-sunglo bold uppercase">Revenue</span>#}
+                        {#<span class="caption-helper">monthly stats...</span>#}
+                    {#</div>#}
+                    {#<div class="actions">#}
+                        {#<div class="btn-group">#}
+                            {#<a href="" class="btn grey-salsa btn-circle btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">#}
+                                {#Filter Range<span class="fa fa-angle-down">#}
+									{#</span>#}
+                            {#</a>#}
+                            {#<ul class="dropdown-menu pull-right">#}
+                                {#<li>#}
+                                    {#<a href="javascript:;">#}
+                                        {#Q1 2014 <span class="label label-sm label-default">#}
+											{#past </span>#}
+                                    {#</a>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="javascript:;">#}
+                                        {#Q2 2014 <span class="label label-sm label-default">#}
+											{#past </span>#}
+                                    {#</a>#}
+                                {#</li>#}
+                                {#<li class="active">#}
+                                    {#<a href="javascript:;">#}
+                                        {#Q3 2014 <span class="label label-sm label-success">#}
+											{#current </span>#}
+                                    {#</a>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="javascript:;">#}
+                                        {#Q4 2014 <span class="label label-sm label-warning">#}
+											{#upcoming </span>#}
+                                    {#</a>#}
+                                {#</li>#}
+                            {#</ul>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="portlet-body">#}
+                    {#<div id="site_activities_loading">#}
+                        {#<img src="../../assets/admin/layout/img/loading.gif" alt="loading"/>#}
+                    {#</div>#}
+                    {#<div id="site_activities_content" class="display-none">#}
+                        {#<div id="site_activities" style="height: 228px;">#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div style="margin: 20px 0 10px 30px">#}
+                        {#<div class="row">#}
+                            {#<div class="col-md-3 col-sm-3 col-xs-6 text-stat">#}
+										{#<span class="label label-sm label-success">#}
+										{#Revenue: </span>#}
+                                {#<h3>$13,234</h3>#}
+                            {#</div>#}
+                            {#<div class="col-md-3 col-sm-3 col-xs-6 text-stat">#}
+										{#<span class="label label-sm label-info">#}
+										{#Tax: </span>#}
+                                {#<h3>$134,900</h3>#}
+                            {#</div>#}
+                            {#<div class="col-md-3 col-sm-3 col-xs-6 text-stat">#}
+										{#<span class="label label-sm label-danger">#}
+										{#Shipment: </span>#}
+                                {#<h3>$1,134</h3>#}
+                            {#</div>#}
+                            {#<div class="col-md-3 col-sm-3 col-xs-6 text-stat">#}
+										{#<span class="label label-sm label-warning">#}
+										{#Orders: </span>#}
+                                {#<h3>235090</h3>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<!-- END PORTLET-->#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="clearfix"></div>#}
+
+    </div>
+    </div>
+    <!-- END CONTENT -->
+    <!-- END CONTAINER -->
+    </div>
+
+    <!-- END HEADER -->
+
+    {#<header class="header">#}
+    {#{% block sonata_header_noscript_warning %}#}
+    {#<noscript>#}
+    {#<div class="noscript-warning">#}
+    {#{{ 'noscript_warning'|trans({}, 'SonataAdminBundle') }}#}
+    {#</div>#}
+    {#</noscript>#}
+    {#{% endblock %}#}
+    {#{% block logo %}#}
+    {#{% spaceless %}#}
+    {#<a class="logo" href="{{ url('home') }}">#}
+    {#<span>Front Office</span>#}
+    {#</a>#}
+    {#{% endspaceless %}#}
+    {#{% endblock %}#}
+    {#{% block sonata_nav %}#}
+    {#{% if admin_pool is defined %}#}
+
+    {#<nav class="navbar navbar-static-top  breadcrumb-ctn" role="navigation" style="background-color: #333;">#}
+    {#<div class="navbar-left" style="  height: 50px; line-height: 50px;">#}
+
+    {#{% block sonata_breadcrumb %}#}
+    {#<ol class="breadcrumb" style="  height: 50px; line-height: 50px; padding: 0; margin: 0 20px;">#}
+    {#<li><a href="{{ path('sonata_admin_dashboard') }}" style="  padding: 0 10px; text-decoration: none;"><i class="fa fa-home"></i> Accueil</a></li>#}
+    {#{% if action is defined %}#}
+    {#{% for menu in admin.breadcrumbs(action) %}#}
+    {#{% if not loop.first %}#}
+    {#{% if not loop.last  %}#}
+    {#<li>#}
+    {#{% if menu.uri is not empty %}#}
+    {#<a href="{{ menu.uri }}">{{ menu.label|raw }}</a>#}
+    {#{% else %}#}
+    {#{{ menu.label }}#}
+    {#{% endif %}#}
+    {#</li>#}
+    {#{% else %}#}
+    {#<li class="active"><span>{{ menu.label }}</span></li>#}
+    {#{% endif %}#}
+    {#{% endif %}#}
+    {#{% endfor %}#}
+    {#{% endif %}#}
+    {#</ol>#}
+    {#<div class="clearfix"></div>#}
+    {#{% endblock sonata_breadcrumb %}#}
+
+    {#</div>#}
+
+    {#{% block sonata_top_nav_menu %}#}
+    {#<div class="navbar-right" style="margin-right: 20px;  height: 50px; line-height: 50px;">#}
+    {#<div class="dropdown dropdown-user">#}
+    {#<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false">#}
+    {#<img alt="" class="img-circle" src="{{ asset(app.user.picture)|apply_filter('img_50_50') }}" style="max-width: 30px;">#}
+    {#{% block username %}#}
+    {#<span class="username username-hide-on-mobile"> {{ app.user.firstname }} {{ app.user.lastname }} </span>#}
+    {#{% endblock username %}#}
+    {#<i class="fa fa-angle-down"></i>#}
+    {#</a>#}
+    {#<ul class="dropdown-menu dropdown-menu-default">#}
+    {#&#123;&#35;<li>&#35;&#125;#}
+    {#&#123;&#35;<a href="#">&#35;&#125;#}
+    {#&#123;&#35;<i class="icon-user"></i> My Profile&#35;&#125;#}
+    {#&#123;&#35;</a>&#35;&#125;#}
+    {#&#123;&#35;</li>&#35;&#125;#}
+    {#&#123;&#35;<li>&#35;&#125;#}
+    {#&#123;&#35;<a href="#">&#35;&#125;#}
+    {#&#123;&#35;<i class="icon-envelope-open"></i> My Inbox <span class="badge badge-danger"> 3 </span>&#35;&#125;#}
+    {#&#123;&#35;</a>&#35;&#125;#}
+    {#&#123;&#35;</li>&#35;&#125;#}
+    {#&#123;&#35;<li>&#35;&#125;#}
+    {#&#123;&#35;<a href="#">&#35;&#125;#}
+    {#&#123;&#35;<i class="icon-rocket"></i> My Tasks <span class="badge badge-success"> 7 </span>&#35;&#125;#}
+    {#&#123;&#35;</a>&#35;&#125;#}
+    {#&#123;&#35;</li>&#35;&#125;#}
+    {#&#123;&#35;<li class="divider">&#35;&#125;#}
+    {#&#123;&#35;</li>&#35;&#125;#}
+    {#<li>#}
+    {#<a href="{{ path('sonata_user_admin_security_logout') }}" ><i class="icon icon-exit"></i> {{ 'header.navbar.logout' | trans() }}</a>#}
+    {#</li>#}
+    {#</ul>#}
+    {#</div>#}
+    {#</div>#}
+    {#{% endblock %}#}
+    {#</nav>#}
+    {#{% endif %}#}
+    {#{% endblock sonata_nav %}#}
+    {#</header>#}
+{% endblock sonata_header %}
+
+{#{% block sonata_wrapper %}#}
+{#<div class="wrapper row-offcanvas row-offcanvas-left">#}
+{#{% block sonata_left_side %}#}
+{#<aside class="left-side sidebar-offcanvas">#}
+{#<section class="sidebar">#}
+{#{% block sonata_side_nav %}#}
+{#{% block side_bar_before_nav %} {% endblock %}#}
+{#{% block side_bar_nav %}#}
+{#{% if app.security.token and is_granted('ROLE_SONATA_ADMIN') %}#}
+{#<ul class="sidebar-menu">#}
+{#{% for group in admin_pool.dashboardgroups %}#}
+{#{% set display = (group.roles is empty or is_granted('ROLE_SUPER_ADMIN') ) %}#}
+{#{% for role in group.roles if not display %}#}
+{#{% set display = is_granted(role) %}#}
+{#{% endfor %}#}
+
+{#&#123;&#35; Do not display the group label if no item in group is available &#35;&#125;#}
+{#{% set item_count = 0 %}#}
+{#{% if display %}#}
+{#{% for admin in group.items if item_count == 0 %}#}
+{#{% if admin.hasroute('list') and admin.isGranted('LIST') %}#}
+{#{% set item_count = item_count+1 %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{#{% endif %}#}
+
+{#{% if display and (item_count > 0) %}#}
+{#{% set active = false %}#}
+{#{% for admin in group.items %}#}
+{#{% if admin.hasroute('list') and admin.isGranted('LIST') and app.request.get('_sonata_admin') == admin.code %}#}
+{#{% set active = true %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{#<li class="treeview{% if active %} active{% endif %}">#}
+{#<a href="#">#}
+{#{% if group.icon|default() %}{{ group.icon|raw }}{% endif %}#}
+{#<span>{{ group.label|trans({}, group.label_catalogue) }}</span>#}
+{#<i class="fa pull-right fa-angle-left"></i>#}
+{#</a>#}
+{#<ul class="treeview-menu{% if active %} active{% endif %}">#}
+{#{% for admin in group.items %}#}
+{#{% if admin.hasroute('list') and admin.isGranted('LIST') %}#}
+{#<li{% if app.request.get('_sonata_admin') == admin.code %} class="active"{% endif %}><a href="{{ admin.generateUrl('list')}}"><i class="fa fa-angle-double-right"></i> {{ admin.label|trans({}, admin.translationdomain) }}</a></li>#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{#</ul>#}
+{#</li>#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{#</ul>#}
+{#{% endif %}#}
+{#{% endblock side_bar_nav %}#}
+{#{% block side_bar_after_nav %}#}
+
+{#{% endblock %}#}
+{#{% endblock sonata_side_nav %}#}
+{#</section>#}
+{#</aside>#}
+{#{% endblock sonata_left_side %}#}
+
+{#<aside class="right-side">#}
+{#{% block bv_admin_notifications %}#}
+{#<ul class="flash-messages"></ul>#}
+{#{% endblock bv_admin_notifications %}#}
+
+{#{% block sonata_page_content %}#}
+{#<section class="content-header">#}
+{#{% block sonata_page_content_header %}#}
+{#{% block sonata_page_content_nav %}#}
+{#{% if _tab_menu is not empty or _actions is not empty %}#}
+{#<nav class="navbar navbar-default" role="navigation">#}
+{#{% block tab_menu_navbar_header %}#}
+{#{% if _navbar_title is not empty %}#}
+{#<div class="navbar-header">#}
+{#<span class="navbar-brand">{{ _navbar_title|raw }}</span>#}
+{#</div>#}
+{#{% endif %}#}
+{#{% endblock %}#}
+{#<div class="container-fluid">#}
+{#<div class="navbar-left">#}
+{#{% if _tab_menu is not empty %}#}
+{#{{ _tab_menu|raw }}#}
+{#{% endif %}#}
+{#</div>#}
+
+{#{% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}#}
+{#<ul class="nav navbar-nav navbar-right">#}
+{#<li class="dropdown sonata-actions">#}
+{#<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'link_actions'|trans({}, 'SonataAdminBundle') }} <b class="caret"></b></a>#}
+{#<ul class="dropdown-menu" role="menu">#}
+{#{{ _actions|raw }}#}
+{#</ul>#}
+{#</li>#}
+{#</ul>#}
+{#{% endif %}#}
+{#</div>#}
+{#</nav>#}
+{#{% endif %}#}
+{#{% endblock sonata_page_content_nav %}#}
+
+{#{% endblock sonata_page_content_header %}#}
+{#</section>#}
+
+{#<section class="content">#}
+{#{% block sonata_admin_content %}#}
+
+{#{% block notice %}#}
+{#{% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}#}
+{#{% endblock notice %}#}
+
+{#{% if _preview is not empty %}#}
+{#<div class="sonata-ba-preview">{{ _preview|raw }}</div>#}
+{#{% endif %}#}
+
+{#{% if _content is not empty %}#}
+{#<div class="sonata-ba-content">{{ _content|raw }}</div>#}
+{#{% endif %}#}
+
+{#{% if _show is not empty %}#}
+{#<div class="sonata-ba-show">{{ _show|raw }}</div>#}
+{#{% endif %}#}
+
+{#{% if _form is not empty %}#}
+{#<div class="sonata-ba-form">{{ _form|raw }}</div>#}
+{#{% endif %}#}
+
+{#{% if _list_table is not empty or _list_filters is not empty %}#}
+{#<div class="row">#}
+{#<div class="sonata-ba-list {% if _list_filters|trim %}col-md-10{% else %}col-md-12{% endif %}">#}
+{#{{ _list_table|raw }}#}
+{#</div>#}
+
+{#{% if _list_filters|trim %}#}
+{#<div class="sonata-ba-filter col-md-2">#}
+{#{{ _list_filters|raw }}#}
+{#</div>#}
+{#{% endif %}#}
+{#</div>#}
+{#{% endif %}#}
+{#{% endblock sonata_admin_content %}#}
+{#</section>#}
+{#{% endblock sonata_page_content %}#}
+{#</aside>#}
+
+{#</div>#}
+{#{% endblock sonata_wrapper %}#}
+
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+{#<!--[if lt IE 9]>#}
+{#<script src="{{ asset('assets/global/plugins/respond.min.js') }}"></script>#}
+{#<script src="{{ asset('assets/global/plugins/excanvas.min.js') }}"></script>#}
+{#<![endif]-->#}
+<script src="{{ asset('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-migrate.min.js') }}" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="{{ asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('vendor/bootstrap/js/collapse.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') }}" type="text/javascript"></script>
+{#<script src="{{ asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/jquery.cokie.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/uniform/jquery.uniform.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>#}
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+{#<script src="{{ asset('assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js') }}" type="text/javascript"></script>#}
+{#<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>#}
+{#<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>#}
+{#<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>#}
+{#<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>#}
+{#<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>#}
+{#<script src="../../assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/flot/jquery.flot.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/flot/jquery.flot.resize.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/flot/jquery.flot.categories.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/jquery.pulsate.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/moment.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>#}
+<!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
+{#<script src="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/jquery-easypiechart/angular.easypiechart.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ asset('assets/global/plugins/jquery.sparkline.min.js') }}" type="text/javascript"></script>#}
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{{ asset('assets/global/scripts/metronic.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/layout/scripts/demo.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/layout/scripts/quick-sidebar.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/layout/scripts/demo.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/pages/scripts/index.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/pages/scripts/tasks.js') }}" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+
+</body>
+</html>

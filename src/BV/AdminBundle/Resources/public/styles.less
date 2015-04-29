@@ -1,6 +1,27 @@
+@import "../../../FrontBundle/Resources/public/less/00_config";
+@import "../../../FrontBundle/Resources/public/less/01_mixins.less";
+@import "../../../FrontBundle/Resources/public/less/02_global.less";
+
+body { font-family: "Open Sans";
+
+}
+
 .mr5 {margin-right:5px;}.mr10 {margin-right:10px;}.mr20 {margin-right:20px;}
 .mt5 {margin-top:5px;}.mt8 {margin-top:8px;}
 
 ul.flash-messages { margin-bottom: 20px; padding: 0;
   li { list-style: none; padding: 15px; }
+}
+
+.navbar {
+  a { color:#FFF; }
+  .breadcrumb-ctn { padding: 0px; background-color: #F7F7F7; margin-bottom: 25px; .border-radius(0);
+    &:before, &:after { content: " "; display: table; }
+    .breadcrumb { display: inline-block; float: left; padding: 8px; margin: 0; list-style: none; .border-radius(0);
+      & > li { display: inline-block; .border-radius(0);
+        & > i { color: #AAA; font-size: 14px; text-shadow: none; width: 1.25em; text-align: center; margin-right: 5px; }
+        & > a, & > span { color: #888; font-size: 14px; text-shadow: none; }
+      }
+    }
+  }
 }
