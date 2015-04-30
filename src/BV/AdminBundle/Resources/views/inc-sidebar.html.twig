@@ -1,0 +1,75 @@
+{% set path = app.request.attributes.get('_route') %}
+{% set param = app.request.attributes.get('_route_params') %}
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar-wrapper">
+    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+    <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+    <div class="page-sidebar navbar-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+        <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+        <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+        <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+        <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+        <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+        <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+        <ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+            <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+            <li class="sidebar-toggler-wrapper">
+                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                <div class="sidebar-toggler" style="margin-bottom: 15px;"></div>
+                <!-- END SIDEBAR TOGGLER BUTTON -->
+            </li>
+            <li class="start {% if path == 'sonata_admin_dashboard' %} active {% endif %}">
+                <a href="{{ path('sonata_admin_dashboard') }}">
+                    <i class="icon-home"></i>
+                    <span class="title">Dashboard</span>
+                    <span class="selected"></span>
+                </a>
+            </li>
+            {% for group in admin_pool.dashboardgroups %}
+                {% set display = (group.roles is empty or is_granted('ROLE_SUPER_ADMIN') ) %}
+                {% for role in group.roles if not display %}
+                    {% set display = is_granted(role) %}
+                {% endfor %}
+
+                {# Do not display the group label if no item in group is available #}
+                {% set item_count = 0 %}
+                {% if display %}
+                    {% for admin in group.items if item_count == 0 %}
+                        {% if admin.hasroute('list') and admin.isGranted('LIST') %}
+                            {% set item_count = item_count+1 %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if display and (item_count > 0) %}
+                    {% set active = false %}
+                    {% for admin in group.items %}
+                        {% if admin.hasroute('list') and admin.isGranted('LIST') and app.request.get('_sonata_admin') == admin.code %}
+                            {% set active = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <li class="treeview{% if active %} active{% endif %}">
+                        <a href="javascript:;">
+                            {% if group.icon|default() %}{{ group.icon|raw }}{% endif %}
+                            <span class="title">{{ group.label|trans({}, group.label_catalogue) }}</span>
+                            <span class="arrow "></span>
+                        </a>
+                        <ul class="sub-menu">
+                            {% for admin in group.items %}
+                                {% if admin.hasroute('list') and admin.isGranted('LIST') %}
+                                    <li{% if app.request.get('_sonata_admin') == admin.code %} class="active"{% endif %}><a href="{{ admin.generateUrl('list')}}"><i class="fa fa-angle-double-right"></i> {{ admin.label|trans({}, admin.translationdomain) }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            <li class="heading">
+                <h3 class="uppercase">Features</h3>
+            </li>
+        </ul>
+        <!-- END SIDEBAR MENU -->
+    </div>
+</div>
+<!-- END SIDEBAR -->

@@ -6,7 +6,14 @@ constants:
     200: Action requise
   types:
     TYPE_USER_CREATED: Nouvel Utilisateur
+    100:               Nouvel Utilisateur
     TYPE_USER_NEW_SEASON: Demande de renouvellement
+    110:                  Demande de renouvellement
     TYPE_USER_NEW_CERTIF: Nouveau certificat médical
+    120:                  Nouveau certificat médical
     TYPE_USER_NEW_ATTESTATION: Nouvelle attestation P.E.
+    130:                       Nouvelle attestation P.E.
+    TYPE_USER_NEW_PARENTAL_ADVISORY : Nouvelle autorisation parentale
+    140:                              Nouvelle autorisation parentale
     TYPE_USER_LICENSE_RENEWAL: Demande de validation
+    150:                       Demande de validation
