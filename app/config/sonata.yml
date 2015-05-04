@@ -5,34 +5,7 @@ sonata_admin:
         handler: sonata.admin.security.handler.role
     templates:
         layout: AdminBundle::layout.html.twig
-#    assets:
-#        stylesheets:
-#            - 'bundles/sonataadmin/vendor/bootstrap/dist/css/bootstrap.min.css'
-#            - 'bundles/sonataadmin/vendor/AdminLTE/css/font-awesome.min.css'
-#            - 'bundles/sonataadmin/vendor/AdminLTE/css/ionicons.min.css'
-#            - 'bundles/sonataadmin/vendor/AdminLTE/css/AdminLTE.css'
-#            - 'bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'
-#            - 'bundles/sonataadmin/vendor/jqueryui/themes/base/jquery-ui.css'
-#            - 'bundles/sonataadmin/vendor/select2/select2.css'
-#            - 'bundles/sonataadmin/vendor/select2/select2-bootstrap.css'
-#            - 'bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css'
-#            - 'bundles/sonataadmin/css/styles.css'
-#            - 'bundles/sonataadmin/css/layout.css'
-#        javascripts:
-#            - 'bundles/sonataadmin/vendor/jquery/dist/jquery.min.js'
-#            - 'bundles/sonataadmin/vendor/jquery.scrollTo/jquery.scrollTo.min.js'
-#            - 'bundles/sonatacore/vendor/moment/min/moment.min.js'
-#            - 'bundles/sonataadmin/vendor/bootstrap/dist/js/bootstrap.min.js'
-#            - 'bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
-#            - 'bundles/sonataadmin/vendor/jqueryui/ui/minified/jquery-ui.min.js'
-#            - 'bundles/sonataadmin/vendor/jqueryui/ui/minified/i18n/jquery-ui-i18n.min.js'
-#            - 'bundles/sonataadmin/jquery/jquery.form.js'
-#            - 'bundles/sonataadmin/jquery/jquery.confirmExit.js'
-#            - 'bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js'
-#            - 'bundles/sonataadmin/vendor/select2/select2.min.js'
-#            - 'bundles/sonataadmin/App.js'
-#            - 'bundles/sonataadmin/Admin.js'
-#            - 'vendor/bootstrap-filestyle/src/bootstrap-filestyle.js'
+        edit: SonataAdminBundle:CRUD:edit.html.twig
 
 sonata_user:
     manager_type: orm
@@ -52,19 +25,11 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts:   [admin]
 
-        #sonata.admin_doctrine_orm.block.audit:
-        #    contexts:   [admin]
-
         sonata.block.service.text:
         sonata.block.service.rss:
 
         sonata.user.block.menu:    # used to display the menu in profile pages
         sonata.user.block.account: # used to display menu option (login option)
-
-        # Some specific block from the SonataMediaBundle
-        #sonata.media.block.media:
-        #sonata.media.block.gallery:
-        #sonata.media.block.feature_media:
 
 sonata_notification:
     backend: sonata.notification.backend.runtime
