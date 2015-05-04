@@ -44,4 +44,37 @@ class TeamRepository extends EntityRepository
         }
         return $res;
     }
+
+    public function findAllGroupedByType()
+    {
+        $res = [
+            Team::TYPE_MSC => [
+            ],
+            Team::TYPE_FEM => [
+            ],
+            Team::TYPE_MIX => [
+            ],
+        ];
+        $query = $this->getEntityManager()
+            ->createQuery(' SELECT p.id, p.name, p.level FROM FrontBundle:Team p '.
+                          ' WHERE p.type = :type '
+            )
+            ->setParameter('type', Team::TYPE_MSC)
+        ;
+
+        foreach ($query->getResult() as $val)
+            $res[Team::TYPE_MSC][$val['id']] = $val['name'].' | '.$val['level'];
+
+        $query->setParameter('type', Team::TYPE_FEM);
+
+        foreach ($query->getResult() as $val)
+            $res[Team::TYPE_FEM][$val['id']] = $val['name'].' | '.$val['level'];
+
+        $query->setParameter('type', Team::TYPE_MIX);
+
+        foreach ($query->getResult() as $val)
+            $res[Team::TYPE_MIX][$val['id']] = $val['name'].' | '.$val['level'];
+
+        return $res;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace BV\AdminBundle\Admin;
 
+use BV\FrontBundle\Entity\Team;
 use BV\FrontBundle\Entity\User;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -15,6 +16,14 @@ use FOS\UserBundle\Model\UserManagerInterface;
 
 class UserAdmin extends Admin
 {
+    protected $container;
+
+    public function __construct($code, $class, $baseControllerName, $container)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->container = $container;
+    }
+
     public function configureRoutes(RouteCollection $collection)
     {
         $collection->add('deactivate', '{id}/deactivate');
@@ -63,16 +72,7 @@ class UserAdmin extends Admin
             ->add('dob', 'choice', array( 'label'=>'Catégorie', 'template' => 'AdminBundle:User:Fields/category_field.html.twig', 'code' => 'getCategory'))
             ->add('status', 'choice', array('label' => 'Statut', 'template' => 'AdminBundle:User:Fields/status_field.html.twig') )
             ->add('enabled', null, array('editable' => true))
-//            ->add('createdAt')
         ;
-
-        /*
-        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
-            $listMapper
-                ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
-            ;
-        }
-        */
     }
 
     /**
@@ -120,6 +120,10 @@ class UserAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $user = $this->getSubject(); /* @var $user User */
+        $em = $this->container->get('doctrine')->getEntityManager();
+        $choices = $em->getRepository('FrontBundle:Team')->findAllGroupedByType();
+
         /*
          * $groups
          * $roles (array)
@@ -129,12 +133,12 @@ class UserAdmin extends Admin
                 ->with('Informations de Connexion')
                     ->add('username', 'text', array('help' => 'Note: Le nom utilisateur doit être unique car utilisé pour se connecter.'))
                     ->add('email', 'text', array('help' => 'Note: Le mail doit être unique car utilisé pour les notifications.'))
-//                    ->add('plainPassword', 'text', array(
-//                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId()))
-//                    ))
+                    ->add('plainPassword', 'text', array(
+                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId()))
+                    ))
                 ->end()
                 ->with('Informations utilisateur')
-                    ->add('gender', 'sonata_user_gender', array('required' => true,))
+                    ->add('gender', 'sonata_user_gender', array('required' => true, 'attr' => ['class' => 'form-control']))
                     ->add('firstname', null, array('required' => true))
                     ->add('lastname', null, array('required' => true))
                     ->add('dob', 'sonata_type_date_picker', array('required' => true, 'format' => 'dd/MM/yyyy'))
@@ -143,28 +147,6 @@ class UserAdmin extends Admin
                     ->add('geo_lng', 'hidden')
                     ->add('phone', null, array('required' => false))
                     ->add('phonePro', null, array('label' => 'Téléphone pro.', 'required' => false))
-                ->end()
-            ->end()
-            ->tab('Informations administratives')
-                ->with('License et facturation')
-                    ->add('status', 'bv_user_status', array( 'required' => true, ))
-                    ->add('licenseType', 'choice', array('label' => 'Type license.', 'choices' => User::getLicenseTypeList(), 'required' => false))
-                    ->add('licenseNumber', 'text', array('required' => false))
-                    ->add('licenseBatch', 'text', array('label' => 'Lot license', 'required' => false))
-                    ->add('billingGroup', 'choice', array('label' => 'Groupe de facturation', 'choices' => User::getGroupTypeList(), 'required' => false))
-                    ->add('feeAmount')
-                    ->add('datePayment', 'sonata_type_datetime_picker', array('required' => false))
-                ->end()
-                ->with('Shirt')
-                    ->add('shirtSize')
-                    ->add('dateShirtDelivered', 'sonata_type_datetime_picker', array('required' => false))
-                ->end()
-                ->with('Teams')
-                    ->add('level', 'bv_user_level')
-                    ->add('mscTeam')
-                    ->add('femTeam')
-                    ->add('mixTeam')
-                    ->add('isLookingForTeam', null, array('label' => 'Recherche une équipe', 'required' => false))
                 ->end()
             ->end()
             ->tab('Fichiers associés')
@@ -176,6 +158,33 @@ class UserAdmin extends Admin
                 ->end()
             ->end()
         ;
+        if ($user->getId() != null)
+        {
+            $formMapper
+                ->tab('Informations administratives')
+                    ->with('License et facturation')
+                        ->add('status', 'bv_user_status', array( 'required' => true, 'attr' => ['class' => 'form-control']))
+                        ->add('licenseType', 'choice', array('label' => 'Type license.', 'choices' => User::getLicenseTypeList(), 'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('licenseNumber', 'text', array('required' => false))
+                        ->add('licenseBatch', 'text', array('label' => 'Lot license', 'required' => false))
+                        ->add('billingGroup', 'choice', array('label' => 'Groupe de facturation', 'choices' => User::getGroupTypeList(), 'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('feeAmount')
+                        ->add('datePayment', 'sonata_type_datetime_picker', array('required' => false))
+                    ->end()
+                    ->with('Shirt')
+                        ->add('shirtSize')
+                        ->add('dateShirtDelivered', 'sonata_type_datetime_picker', array('required' => false))
+                    ->end()
+                    ->with('Teams')
+                        ->add('level', 'bv_user_level', array( 'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('mscTeam', 'choice', array('choices' => $choices[Team::TYPE_MSC], 'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('femTeam', 'choice', array('choices' => $choices[Team::TYPE_FEM], 'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('mixTeam', 'choice', array('choices' => $choices[Team::TYPE_MIX], 'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('isLookingForTeam', null, array('label' => 'Recherche une équipe', 'required' => false))
+                    ->end()
+                ->end()
+            ;
+        }
 
 //        if ($this->getSubject() && !$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
 //            $formMapper
@@ -203,6 +212,8 @@ class UserAdmin extends Admin
      */
     public function preUpdate($user)
     {
+//        $this->getUserManager()->updateCanonicalFields($user);
+//        $this->getUserManager()->updatePassword($user);
         $this->getUserManager()->updateUser($user);
     }
 

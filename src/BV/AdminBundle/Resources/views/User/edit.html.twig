@@ -11,80 +11,73 @@
     <script src="{{ asset('bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 {% endblock scripts %}
 
-{% block sonata_page_content_header %}
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav">
-                <li class="navbar-brand">
-                    {% if admin.id(object) is not null %}
-                        {{ "title_edit"|trans({'%name%': admin.toString(object)|truncate(15) }, 'SonataAdminBundle') }}
-                    {% else %}
-                        Créer un nouvel utilisateur
-                    {% endif %}
-                </li>
-                {% if admin.id(object) is not null %}
-                    <li class="label label-primary navbar-text color-text-clouds">{{ object.status }}</li>
-                {% endif %}
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                {% if admin.id(object) is not null %}
-                    <li>
-                        <button type="button" class="btn btn-sm btn-danger pull-right navbar-btn" data-toggle="modal" data-target="#modalDelete">Supprimer</button>
+{% block page_title %}
+    {% if admin.id(object) is not null %}
+        {{ "title_edit"|trans({'%name%': admin.toString(object)|truncate(15) }, 'SonataAdminBundle') }}
+    {% else %}
+        Créer <small>un nouvel utilisateur</small>
+    {% endif %}
+{% endblock page_title %}
 
-                        <!-- Modal Delete -->
-                        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="modalDelete">Suppression du compte utilisateur</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Attention ! Vous &ecirc;tes sur le point de supprimer un compte utilisateur. Cette action est irr&eacute;versible.<br/><br/>
-                                        Un email sera envoy&eacute; &agrave; l'utilisateur pour l'en informer. Etes-vous s&ucirc;r de vouloir continuer ?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                        <button type="button" class="btn btn-danger">Supprimer</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    {% if object.status != constant('\\BV\\FrontBundle\\Entity\\User::STATUS_INACTIVE') %}
-                        <li>
-                            <button type="button" class="btn btn-sm btn-warning pull-right navbar-btn" data-toggle="modal" data-target="#modalDeactivate">D&eacute;sactiver</button>
+{% block page_title_actions %}
+    {% if admin.id(object) is not null %}
+        <button type="button" class="btn btn-sm btn-danger pull-right navbar-btn" data-toggle="modal" data-target="#modalDelete">Supprimer</button>
 
-                            <!-- Modal Deactivate -->
-                            <div class="modal fade" id="modalDeactivate" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="modalDelete">D&eacute;sactivation du compte utilisateur</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            Attention ! Vous &ecirc;tes sur le point de d&eacute;sactiver un compte utilisateur. Un compte inactif ne peut pas se connecter, renseigner ses pr&eacute;sences aux entra&icirc;nements, matchs, jeu libre, &eacute;cole de volley.<br/><br/>
-                                            Un email sera envoy&eacute; &agrave; l'utilisateur pour l'en informer. Etes-vous s&ucirc;r de vouloir continuer ?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                            <a href="{{ path('admin_bv_front_user_deactivate', { id: object.id }) }}" class="btn btn-warning">D&eacute;sactiver</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href="{{ path('admin_bv_front_user_reactivate', { id: object.id }) }}" class="btn btn-sm btn-success pull-right mt8 mr20">R&eacute;activer</a>
-                        </li>
-                    {% endif %}
-                {% endif %}
-            </ul>
-            <div class="clearfix"></div>
+        <!-- Modal Delete -->
+        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalDelete">Suppression du compte utilisateur</h4>
+                    </div>
+                    <div class="modal-body">
+                        Attention ! Vous &ecirc;tes sur le point de supprimer un compte utilisateur. Cette action est irr&eacute;versible.<br/><br/>
+                        Un email sera envoy&eacute; &agrave; l'utilisateur pour l'en informer. Etes-vous s&ucirc;r de vouloir continuer ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-danger">Supprimer</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </nav>
+
+        {% if object.status != constant('\\BV\\FrontBundle\\Entity\\User::STATUS_INACTIVE') %}
+            <button type="button" class="btn btn-sm btn-warning pull-right navbar-btn" data-toggle="modal" data-target="#modalDeactivate">D&eacute;sactiver</button>
+
+            <!-- Modal Deactivate -->
+            <div class="modal fade" id="modalDeactivate" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalDelete">D&eacute;sactivation du compte utilisateur</h4>
+                        </div>
+                        <div class="modal-body">
+                            Attention ! Vous &ecirc;tes sur le point de d&eacute;sactiver un compte utilisateur. Un compte inactif ne peut pas se connecter, renseigner ses pr&eacute;sences aux entra&icirc;nements, matchs, jeu libre, &eacute;cole de volley.<br/><br/>
+                            Un email sera envoy&eacute; &agrave; l'utilisateur pour l'en informer. Etes-vous s&ucirc;r de vouloir continuer ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                            <a href="{{ path('admin_bv_front_user_deactivate', { id: object.id }) }}" class="btn btn-warning">D&eacute;sactiver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+                <a href="{{ path('admin_bv_front_user_reactivate', { id: object.id }) }}" class="btn btn-sm btn-success pull-right mt8 mr20">R&eacute;activer</a>
+        {% endif %}
+    {% endif %}
+{% endblock page_title_actions %}
+
+{% block sonata_page_content_header %}
+    {% if admin.id(object) is null %}
+        <div class="well container-fluid">
+            Attention, un mot de passe généré aléatoirement sera envoyé par email à la création du compte.
+        </div>
+    {% endif %}
+
     {% if object.status == constant('\\BV\\FrontBundle\\Entity\\User::STATUS_ACTIVE_WAITING_VALIDATION') %}
     <div class="well container-fluid">
         <div class="row">

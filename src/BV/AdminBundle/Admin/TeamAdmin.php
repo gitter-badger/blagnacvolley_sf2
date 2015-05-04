@@ -12,6 +12,14 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class TeamAdmin extends Admin
 {
+    protected $container;
+
+    public function __construct($code, $class, $baseControllerName, $container)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->container = $container;
+    }
+
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -20,19 +28,10 @@ class TeamAdmin extends Admin
         $formMapper
             ->tab('Management')
                 ->with('Management')
-                    ->add('name', 'text', array(
-                        'label' => 'Nom de l\'équipe'
-                    ))
-                    ->add('type', 'bv_team_type', array(
-                        'disabled' => !is_null($type),
-                    ))
-                    ->add('level', 'bv_user_level', array(
-                        'label' => 'Niveau FSGT'
-                    ))
-                    ->add('slot', 'text', array(
-                        'label' => 'Créneau attribué',
-                        'required' => false
-                    ))
+                    ->add('name',   'text',             array('label' => 'Nom de l\'équipe', 'attr' => ['class' => 'form-control']))
+                    ->add('type',   'bv_team_type',     array('disabled' => !is_null($type), 'attr' => ['class' => 'form-control']))
+                    ->add('level',  'bv_user_level',    array('label' => 'Niveau FSGT', 'attr' => ['class' => 'form-control']))
+                    ->add('slot',   'text',             array('label' => 'Créneau attribué','required' => false, 'attr' => ['class' => 'form-control']))
                 ->end()
             ->end()
         ;
@@ -74,16 +73,16 @@ class TeamAdmin extends Admin
 
             $formMapper
                 ->tab('Members')
-                ->with('Players')
-                ->add($members, 'sonata_type_model', array(
-                    'by_reference' => false,
-                    'query' => $qbMember,
-                    'multiple' => true,
-                    'required' => false,
-                    'label' => 'Members',
-                    'btn_add' => false,
-                ))
-                ->end()
+                    ->with('Members')
+                        ->add($members, 'sonata_type_model', array(
+                            'by_reference' => false,
+                            'query' => $qbMember,
+                            'multiple' => true,
+                            'required' => false,
+                            'label' => 'Joueurs disponibles',
+                            'btn_add' => false,
+                        ))
+                    ->end()
                 ->end()
             ;
 
@@ -114,16 +113,8 @@ class TeamAdmin extends Admin
                 $formMapper
                     ->tab('Members')
                     ->with('Leaders')
-                        ->add('captain', 'sonata_type_model', array(
-                            'query' => $qbCaptain,
-                            'btn_add' => false,
-                            'required' => false,
-                        ))
-                        ->add('subCaptain', 'sonata_type_model', array(
-                            'query' => $qbSubCaptain,
-                            'btn_add' => false,
-                            'required' => false,
-                        ))
+                        ->add('captain', 'sonata_type_model', array('query' => $qbCaptain,'btn_add' => false,'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('subCaptain', 'sonata_type_model', array('query' => $qbSubCaptain,'btn_add' => false,'required' => false, 'attr' => ['class' => 'form-control']))
                         ->end()
                     ->end()
                 ;

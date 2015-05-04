@@ -169,6 +169,7 @@ class UserRepository extends EntityRepository
             User::STATUS_ACTIVE_WAITING_LICENSE => '0',
             User::STATUS_ACTIVE_WAITING_VALIDATION => '0',
             User::STATUS_ACTIVE_LICENSED => '0',
+            User::STATUS_INACTIVE => '0'
         );
 
         $results['total'] = 0;

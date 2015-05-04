@@ -4,7 +4,6 @@ namespace BV\AdminBundle\Controller;
 
 use BV\FrontBundle\Entity\Events;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CalendarController extends Controller

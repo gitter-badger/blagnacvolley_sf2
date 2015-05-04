@@ -161,7 +161,9 @@
                                 <tr>
                                     <td>
                                         <span class="label label-sm label-success">{{ ( 'constants.types.' ~ notif.type)|trans }} </span>
-                                        <i class="fa fa-fw fa-user"></i> {{ notif.user.firstname }} {{ notif.user.lastname }}
+                                        {% if notif.user is not null %}
+                                            <i class="fa fa-fw fa-user"></i> {{ notif.user.firstname }} {{ notif.user.lastname }}
+                                        {% endif %}
                                     </td>
                                     <td>
                                         {{ notif.created|date('d/m/Y H:i') }}

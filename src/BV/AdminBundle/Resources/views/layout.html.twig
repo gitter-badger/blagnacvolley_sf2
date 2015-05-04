@@ -164,14 +164,25 @@ License: You must have a valid license purchased only from themeforest(the above
         </ol>
     {% endblock sonata_breadcrumb %}
 </div>
-<h3 class="page-title">
-    Tableau <small>de bord</small>
-</h3>
-<div class="row">
-    {% block bv_admin_notifications %}
-        <ul class="flash-messages"></ul>
-    {% endblock bv_admin_notifications %}
-</div>
+{% block page_title_container %}
+    <div class="container-fluid">
+        <div class="row">
+            <h3 class="page-title">
+                {% block page_title %}
+                    Tableau <small>de bord</small>
+                {% endblock page_title %}
+                <span class="pull-right">
+                    {% block page_title_actions %}{% endblock page_title_actions %}
+                </span>
+            </h3>
+        </div>
+        <div class="row">
+            {% block bv_admin_notifications %}
+                <ul class="flash-messages"></ul>
+            {% endblock bv_admin_notifications %}
+        </div>
+    </div>
+{% endblock page_title_container %}
 <!-- END PAGE HEADER-->
 {% block sonata_wrapper %}
     <div class="wrapper row-offcanvas row-offcanvas-left">

@@ -38,7 +38,8 @@ services:
         arguments:
             - ~
             - BV\FrontBundle\Entity\Team
-            - AdminBundle:Team
+            - ~
+            - @service_container
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
     sonata.admin.static:
@@ -81,6 +82,7 @@ services:
                 - ~
                 - "%sonata.user.admin.user.entity%"  #Tools\FrontBundle\Entity\User
                 - AdminBundle:User
+                - @service_container
             calls:
                 - [ setUserManager, ["@fos_user.user_manager"] ]
                 - [ setTranslationDomain, ["%sonata.user.admin.user.translation_domain%"] ]
