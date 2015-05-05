@@ -2,30 +2,20 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
-    <link rel="stylesheet" href="{{ asset('vendor/redactor/redactor/redactor.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
 {% endblock stylesheets %}
 
-{% block javascripts %}
+{% block scripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/sonatacore/vendor/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/global/plugins/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
 
-    <script type="text/javascript" src="{{ asset('vendor/redactor/redactor/redactor.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/redactor/redactor/filemanager.js') }}"></script>
-{% endblock javascripts %}
+{% endblock scripts %}
 
 {% block form %}
 
     {{ parent() }}
-
-    <script type="text/javascript">
-        //<![CDATA[
-        (function ( $ ) {
-            $('.redactor').redactor({
-                fileUpload: '{{ path('bv_static_cms_page_upload') }}'
-            });
-        }( jQuery ));
-        //]]>
-    </script>
 
 {% endblock form %}
 

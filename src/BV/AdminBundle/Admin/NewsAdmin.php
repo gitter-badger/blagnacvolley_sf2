@@ -11,20 +11,33 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class NewsAdmin extends Admin
 {
+    protected $container;
+
+    public function __construct($code, $class, $baseControllerName, $container)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->container = $container;
+    }
+
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $news = $this->getSubject(); /* @var $user News */
+        $em = $this->container->get('doctrine')->getEntityManager();
+        $events = ($news->getEventsId() == null ? null : $em->getRepository('FrontBundle:Events')->find($news->getEventsId())); /* @var $events Events */
+
         $formMapper
-            ->with('News')
+            ->tab('News')
                 ->add('title')
                 ->add('content', 'textarea', array(
                     'attr' => array(
-                        'class' => 'redactor',
+                        'class' => 'ckeditor',
                     ),
                 ))
                 ->add('enabled', null, array('required' => false))
             ->end()
-            ->with('Optinal Event')
+            ->end()
+            ->tab('Optional Event')
                 ->add('level', 'choice', array(
                     'label' => 'Evènement spécial',
                     'choices' => array(
@@ -32,9 +45,10 @@ class NewsAdmin extends Admin
                         Events::TYPE_VOLLEYSCHOOL_YOUTH => 'constants.events.type.'.Events::TYPE_VOLLEYSCHOOL_YOUTH,
                         Events::TYPE_FREE_PLAY          => 'constants.events.type.'.Events::TYPE_FREE_PLAY
                     ),
-                    'required'=>false, 'mapped'=>false, 'attr' => array( 'class' => 'bv-level' ,)))
-                ->add('start_date', 'sonata_type_datetime_picker',  array('mapped' => false, 'required' => false, 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array( 'class' => 'bv-start-date' ,)))
-                ->add('end_date', 'sonata_type_datetime_picker',    array('mapped' => false, 'required' => false, 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array( 'class' => 'bv-end-date' ,)))
+                    'data' => ($events == null ? null : $events->getType()),
+                    'required'=>false, 'mapped'=>false, 'attr' => array( 'class' => 'bv-level form-control' ,)))
+                ->add('start_date', 'sonata_type_datetime_picker',  array('data' => ($events == null ? null : $events->getStartDate()), 'mapped' => false, 'required' => false, 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array( 'class' => 'bv-start-date' ,)))
+                ->add('end_date', 'sonata_type_datetime_picker',    array('data' => ($events == null ? null : $events->getEndDate()), 'mapped' => false, 'required' => false, 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array( 'class' => 'bv-end-date' ,)))
             ->end()
         ;
     }
@@ -64,8 +78,9 @@ class NewsAdmin extends Admin
         if ($object instanceof News) {
             /* @var $object \BV\FrontBundle\Entity\News */
             $object->setContentFormatter('richhtml');
-            $object->setContent($object->getRawContent());
-            $object->setTitle($object->getTitle());
+            $object->setRawContent(htmlentities($object->getContent()));
+            $object->setCreatedAt(new \DateTime());
+            $object->setUpdatedAt(new \DateTime());
         }
     }
 

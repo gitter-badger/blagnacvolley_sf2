@@ -7,6 +7,7 @@ services:
             - ~
             - BV\FrontBundle\Entity\News
             - AdminBundle:NewsAdmin
+            - @service_container
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
             - [ setTemplate, [edit, AdminBundle:Content:edit.html.twig]]
