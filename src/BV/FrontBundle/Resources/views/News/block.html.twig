@@ -1,14 +1,14 @@
-
 {% if events[type]['event'] %}
     {% set event = events[type]['event'] %}
-    {% set unavailable = (events[type]['availabilities']['total'] - events[type]['availabilities']['nbAvailable'] ) %}
-    {% set available = events[type]['availabilities']['nbAvailable'] %}
+    {% set count = events[type]['availabilities']['count'] %}
+    {% set unavailable = events[type]['availabilities']['not_available'] %}
+    {% set available = events[type]['availabilities']['available'] %}
     <div class="panel panel-primary">
         <div class="panel-heading text-center">
             {{ title }}
         </div>
         <div class="panel-body">
-            <p class="text-center">{{ event.startDate| localizeddate('full', 'none', app.request.locale )|capitalize }}</p>
+            <p class="text-center">{{ event.startDate| localizeddate('full', 'none', app.request.locale )|capitalize }} {{ event.startDate|date('H:i') }} / {{ event.endDate|date('H:i') }}</p>
             <table class="table">
                 <thead>
                 <tr>
@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <td class="text-center">{{ available + 0 }}</td>
-                    <td class="text-center">{{ ( nb[0][type] - available - unavailable ) }}</td>
+                    <td class="text-center">{{ ( count - available - unavailable ) }}</td>
                     <td class="text-center">{{ unavailable }}</td>
                 </tr>
                 </thead>
@@ -48,12 +48,12 @@
                         <div class="clearfix"></div>
                     {% endif %}
                 {% else %}
-                    <span style="text-align: justify; font-size: 10px; font-family: tahoma;">
+                    <span style="text-align: justify; font-size: 10px;">
                         Vous ne faites pas partie de ce groupe. Pour pouvoir indiquer vos disponibilités, voius devez le rejoindre. Cliquez sur s'inscrire, dans votre profil.
                     </span>
                 {% endif %}
             {% else %}
-                <span style="text-align: justify; font-size: 10px; font-family: tahoma;">
+                <span style="text-align: justify; font-size: 10px;">
                     Vous devez être connecté pour indiquer vos disponibilités.
                 </span>
             {% endif %}

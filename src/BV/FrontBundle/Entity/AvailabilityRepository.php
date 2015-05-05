@@ -22,13 +22,30 @@ class AvailabilityRepository extends EntityRepository
         if (!$event instanceof Events)
             return array();
 
+        $repo = $this->getEntityManager()->getRepository('FrontBundle:Availability');
+
         $query = $this->getEntityManager()
-            ->createQuery('SELECT count(p) as total, SUM(p.isAvailable) as nbAvailable FROM FrontBundle:Availability p '.
-                ' WHERE p.event = :event_id')
+            ->createQuery(' SELECT p '.
+                          ' FROM FrontBundle:Availability p '.
+                          ' WHERE p.event = :event_id')
             ->setParameter('event_id', $event)
         ;
         try {
-            return $query->getSingleResult();
+            $res = [
+                'count' => 0,
+                'available' => 0,
+                'not_available' => 0,
+            ];
+            $results = $query->getResult();
+            foreach ($results as $result) /* @var $result Availability */
+            {
+                $res['count']++;
+                if ($result->getIsAvailable() == 1)
+                    $res['available']++;
+                else
+                    $res['not_available']++;
+            }
+            return $res;
         } catch (NoResultException $e) {
             return null;
         }

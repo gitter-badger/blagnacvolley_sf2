@@ -14,7 +14,7 @@ class NewsController extends Controller
         $query = $repository->createQueryBuilder('n')
             ->where('n.enabled = :enabled')
             ->setParameter('enabled', true)
-            ->orderBy('n.createdAt')
+            ->orderBy('n.createdAt', 'DESC')
             ->getQuery();
 
         $news = $query->getResult();
