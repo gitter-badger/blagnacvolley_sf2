@@ -21,7 +21,12 @@ class CalendarController extends Controller
         $isAllowedToEdit = false;
         if ($user instanceof User) {
             $res = array();
-            foreach ($this->getDoctrine()->getRepository('FrontBundle:Team')->findAllByUserId($user->getId()) as $team)
+            if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
+                $teams = $this->getDoctrine()->getRepository('FrontBundle:Team')->findAllAsArray();
+            else
+                $teams = $this->getDoctrine()->getRepository('FrontBundle:Team')->findAllByUserId($user->getId());
+
+            foreach ($teams as $team)
             {
                 $res[] = array(
                     'key' => $team['id'],
@@ -81,18 +86,18 @@ class CalendarController extends Controller
             switch ($event->getType()) {
                 case Events::TYPE_CLOSED:
                     $res[$i]["readonly"] = true;
-                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> Fermé : </strong> " . $event->getText() . "</div>";
+                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><div class=\"img-event ". $event->getType() ."\" ></div> <strong> Fermé : </strong> " . $event->getText() . "</div>";
                 break;
                 case Events::TYPE_VOLLEYSCHOOL_ADULT:
                 case Events::TYPE_VOLLEYSCHOOL_YOUTH:
                 case Events::TYPE_FREE_PLAY:
                     $res[$i]["readonly"] = true;
-                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> ".$this->get('translator')->trans('constants.events.type.'.$event->getType())." : </strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
+                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><div class=\"img-event ". $event->getType() ."\" ></div> <strong> ".$this->get('translator')->trans('constants.events.type.'.$event->getType())." : </strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
                 break;
                 case Events::TYPE_TRAINING:
                 case Events::TYPE_MATCH:
                     $res[$i]["readonly"] = $this->getDoctrine()->getRepository('FrontBundle:Events')->isReadonly($event, $user);
-                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><img src=\"" . $event->getImageFromType() . "\"> <strong> " . $event->getTeam()->getName() . "</strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
+                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><div class=\"img-event ". $event->getType() ."\" ></div> <strong> " . $event->getTeam()->getName() . "</strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
                 break;
             }
 

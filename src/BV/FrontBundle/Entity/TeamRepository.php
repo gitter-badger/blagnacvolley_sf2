@@ -45,6 +45,20 @@ class TeamRepository extends EntityRepository
         return $res;
     }
 
+    /**
+     * @return array
+     */
+    public function findAllAsArray()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT p.id, p.name FROM FrontBundle:Team p');
+        try {
+            return $query->getArrayResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
     public function findAllGroupedByType()
     {
         $res = [

@@ -29,9 +29,10 @@ services:
         arguments:
             - ~
             - BV\FrontBundle\Entity\Vacations
-            - ~
+            - AdminBundle:Vacations
         calls:
             - [ setTranslationDomain, [FrontBundle] ]
+            - [ setTemplate, [edit, AdminBundle:Vacation:edit.html.twig]]
     sonata.admin.team:
         class: BV\AdminBundle\Admin\TeamAdmin
         tags:

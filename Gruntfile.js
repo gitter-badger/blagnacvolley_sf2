@@ -26,6 +26,9 @@ module.exports = function(grunt) {
       javascript: { files: [ { src: 'lib/redactor/locale/fr.js',              dest: 'web/js/redactor/redactor/locale/fr.js' }, { src: 'lib/redactor/filemanager.js', dest: 'web/js/redactor/redactor/filemanager.js' } ] },
       images:     { files: [ { cwd: 'web/vendor/dropzone/downloads/images/',  src: '**/*', dest: 'web/images/', expand: true } ] },
 
+      // FrontBundle
+      imagesFront:  { files: [ { cwd: 'src/BV/FrontBundle/Resources/public/images/',      src: '**/*', dest: 'web/images/', expand: true } ] },
+
       // AdminBundle
       imagesAdmin:  { files: [{  cwd: 'src/BV/AdminBundle/Resources/public/images/',       src: '**/*', dest: 'web/images/',    expand: true } ] },
       assets:       { files: [{  cwd: 'src/BV/AdminBundle/Resources/public/assets/',       src: '**/*', dest: 'web/assets/',    expand: true } ] }

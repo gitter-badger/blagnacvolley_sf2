@@ -10,14 +10,17 @@ use BV\FrontBundle\Entity\Events;
 
 class VacationAdmin extends Admin
 {
+    protected $class = 'BV\FrontBundle\Entity\Events';
+    protected $subject = 'BV\FrontBundle\Entity\Events';
+
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('start_date', 'datetime')
-            ->add('end_date', 'datetime')
-            ->add('text', 'text')
-            ->add('type', 'bv_events_type')
+            ->add('start_date', 'sonata_type_date_picker', array('required' => true, 'format' => 'dd/MM/yyyy hh:mm', 'attr' => [ 'class' => 'form-control' ]))
+            ->add('end_date', 'sonata_type_date_picker', array('required' => true, 'format' => 'dd/MM/yyyy hh:mm', 'attr' => [ 'class' => 'form-control' ]))
+            ->add('text', 'text', array('required' => true, 'attr' => [ 'class' => 'form-control' ]))
+            ->add('type', 'hidden', array('required' => true, 'data' => Events::TYPE_CLOSED))
         ;
     }
 

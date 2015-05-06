@@ -20,7 +20,7 @@
     "font-awesome": "*",
     "bootstrap-3-datepicker": "~1.3.0",
     "dropzone": "~3.10.2",
-    "scheduler": "~4.1.0",
+    "scheduler": "*",
     "momentjs": "*",
     "redactor": "*",
     "awesome-bootstrap-checkbox": "~0.2.2",

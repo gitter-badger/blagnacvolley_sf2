@@ -142,7 +142,7 @@
         // Initializes Lightbox
         scheduler.config.lightbox.sections=[
             { name:"team", height:40, map_to:"team", type:"select", options:alert_opts_teams},
-            { name:"type", height:58, options:alert_opts_types, map_to:"type", type:"radio", vertical:false, default_value:'TRAINING'},
+            { name:"type", height:58, map_to:"team", type:"select", options:alert_opts_types, default_value:'TRAINING'},
             { name:"description", height:200, map_to:"text", type:"textarea" , focus:true},
             { name:"time", height:72, type:"time", map_to:"auto", default_value:{'start':{'h':'20', 'm':'30'}, 'end':{'h':'23', 'm':'00'}}}
         ];
@@ -158,13 +158,13 @@
             date_start.locale('fr')
             var date_end = moment(ev.end_date);
             date_end.locale('fr')
-            return '<h1><strong>' + ev.type_name + '</strong> / ' + ev.team_name + ' ( ' + date_start.format("HH:mm") + ' à ' + date_end.format("HH:mm") + ')</h1>';
+            return '<h1><strong>' + ev.type_name + '</strong> ' + ( ev.team_name != undefined ? ' / ' + ev.team_name : '' ) + ' ( ' + date_start.format("HH:mm") + ' à ' + date_end.format("HH:mm") + ')</h1>';
         };
 
         scheduler.attachEvent("onTemplatesReady", function(){
             scheduler.templates.event_class = function(start,end,ev){ return "bv_event bv_event_"+ev.type; };
             scheduler.templates.event_bar_date = function(start,end,ev){ return ""; };
-            scheduler.templates.event_text = function(start,end,event){ return ""; }
+            scheduler.templates.event_text = function(start,end,event){ return ""; };
             scheduler.templates.event_bar_text = function(start,end,event){
                 // Load data from server
                 if (event.event_bar_text)
@@ -178,23 +178,11 @@
                 alert_opts_teams.forEach(function(e){if (e.key == event.team) { team_lbl = e.label }});
 
                 return      '<div class="relative">' +
-                            '   <img src="' + img_paths_json[event.type] + '"> ' +
+                            '   <span class="img-event ' + event.type + '"></span> ' +
                             '   <strong>' + team_lbl + '</strong> (' + scheduler.templates.event_date(start) + ' à ' + scheduler.templates.event_date(end) + ')' +
                             '</div>';
             };
         });
-
-        /***
-         * CUSTOM LIGHTBOX
-         * */
-
-//        scheduler.showLightbox = function(id){
-//            var ev = scheduler.getEvent(id);
-//            scheduler.startLightbox(id, document.getElementById("custom_lightbox") );
-//        }
-        /***
-         * END CUSTOM LIGHTBOX
-         * */
 
         scheduler.init('scheduler_here', new Date(),"month");
         scheduler.setCurrentView(scheduler._date, scheduler._mode);

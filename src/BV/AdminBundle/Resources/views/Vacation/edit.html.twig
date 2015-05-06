@@ -1,0 +1,23 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
+{% endblock stylesheets %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/sonatacore/vendor/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+
+{% endblock scripts %}
+
+{% block form %}
+
+    {{ parent() }}
+
+{% endblock form %}
+
+{% block list_filters %}
+
+{% endblock list_filters %}
