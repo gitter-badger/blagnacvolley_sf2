@@ -2,21 +2,20 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
-    <link rel="stylesheet" href="/vendor/scheduler/codebase/dhtmlxscheduler.css" >
-    <link rel="stylesheet" href="/vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" >
+    <link rel="stylesheet" href="{{ asset('vendor/scheduler/codebase/dhtmlxscheduler.css') }}" >
+    <link rel="stylesheet" href="{{ asset('vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" >
 {% endblock stylesheets %}
 
-{% block javascripts %}
+{% block scripts %}
     {{ parent() }}
-
     <script type="text/javascript" src="/vendor/momentjs/min/moment.min.js"></script>
     <script type="text/javascript" src="/vendor/momentjs/min/locales.min.js"></script>
-
     <script type="text/javascript" src="/vendor/scheduler/codebase/dhtmlxscheduler.js"></script>
     <script type="text/javascript" src="/vendor/scheduler/codebase/ext/dhtmlxscheduler_editors.js"></script>
     <script type="text/javascript" src="/vendor/scheduler/codebase/locale/locale_fr.js"></script>
-{% endblock javascripts %}
+{% endblock scripts %}
+
+{% block sonata_page_content_header %}{% endblock sonata_page_content_header %}
 
 {% block list_table %}
 
@@ -129,7 +128,7 @@
                     alert_opts_teams.forEach(function(e){if (e.key == event.team) { team_lbl = e.label }});
 
                     return      '<div class="relative">' +
-                            '   <img src="' + img_paths_json[event.type] + '"> ' +
+                            '   <span class="img-event ' + event.type + '"></span> ' +
                             '   <strong>' + team_lbl + '</strong> (' + scheduler.templates.event_date(start) + ' à ' + scheduler.templates.event_date(end) + ')' +
                             '</div>';
                 };

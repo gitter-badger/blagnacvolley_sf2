@@ -4,7 +4,7 @@
 
 {% block head_style %}
     {{ parent() }}
-    <link rel="stylesheet" href="/vendor/scheduler/codebase/dhtmlxscheduler.css" >
+    <link rel="stylesheet" href="{{ asset('vendor/scheduler/codebase/dhtmlxscheduler.css') }}" >
 {% endblock %}
 
 {% block head_script %}
@@ -29,56 +29,6 @@
         <div class="dhx_cal_header"></div>
         <div class="dhx_cal_data"></div>
     </div>
-
-    {#<div id="custom_lightbox" style="display:none;">#}
-        {#<div class="panel panel-default">#}
-            {#<div class="panel-heading"><h1><strong>Entraînement</strong> / Masculin 1 ( 20:30 à 23:00)</h1></div>#}
-            {#<div class="panel-body">#}
-                {#<div class="form-horizontal">#}
-                    {#<div class="form-group">#}
-                        {#<label for="custom_lightbox_team" class="col-sm-2 control-label">Equipe</label>#}
-                        {#<div class="col-sm-10">#}
-                            {#<select class="form-control" style="width:100%;" id="custom_lightbox_team">#}
-                                {#<option value="70">Masculin 1</option>#}
-                            {#</select>#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="dhx_cal_light dhx_cal_light_wide" style="visibility: visible; height: 469px; display: block; top: 250px; left: 582px;">#}
-            {##}
-            {#<div class="dhx_cal_larea" style="height: 379px;">#}
-                {#<div class="dhx_wrap_section">#}
-                    {#<div id="area_1415019392107" class="dhx_cal_lsection">Type</div>#}
-                    {#<div class="dhx_cal_ltext dhx_cal_radio" style="height:58px;">#}
-                        {#<input id="custom_lightbox_type_training" type="radio" name="type" value="TRAINING" checked="checked"><label for="1415019392108"> Entraînement</label>#}
-                        {#<input id="custom_lightbox_type_match" type="radio" name="type" value="MATCH"><label for="1415019392109"> Match</label>#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="dhx_wrap_section">#}
-                    {#<div id="area_1415019392110" class="dhx_cal_lsection">Description</div>#}
-                    {#<div class="dhx_cal_ltext" style="height:200px;">#}
-                        {#<textarea></textarea>#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="dhx_wrap_section">#}
-                    {#<div id="area_1415019392111" class="dhx_cal_lsection">Période</div>#}
-                    {#<div style="height:30px;padding-top:0px;font-size:inherit;" class="dhx_section_time">#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-            {#<div class="dhx_btn_set dhx_left_btn_set dhx_save_btn_set">#}
-                {#<input type="button" value="Enregistrer" onclick="save_form()">#}
-            {#</div>#}
-            {#<div class="dhx_btn_set dhx_left_btn_set dhx_cancel_btn_set">#}
-                {#<input type="button" value="Annuler" onclick="close_form()">#}
-            {#</div>#}
-            {#<div class="dhx_btn_set dhx_right_btn_set dhx_delete_btn_set" style="float:right;">#}
-                {#<input type="button" value="Effacer" onclick="delete_event()">#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
 
     <script type="text/javascript">
     //<![CDATA[
@@ -155,9 +105,9 @@
 
             // Edition
             var date_start = moment(ev.start_date);
-            date_start.locale('fr')
+            date_start.locale('fr');
             var date_end = moment(ev.end_date);
-            date_end.locale('fr')
+            date_end.locale('fr');
             return '<h1><strong>' + ev.type_name + '</strong> ' + ( ev.team_name != undefined ? ' / ' + ev.team_name : '' ) + ' ( ' + date_start.format("HH:mm") + ' à ' + date_end.format("HH:mm") + ')</h1>';
         };
 

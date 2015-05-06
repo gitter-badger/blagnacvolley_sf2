@@ -2,3 +2,34 @@
 @import "../../../FrontBundle/Resources/public/less/01_mixins.less";
 @import "../../../FrontBundle/Resources/public/less/02_global.less";
 
+/*
+ * CALENDAR
+ */
+.dhx_cal_container { background-color: @color-grey-2 !important; }
+.dhx_cal_event_clear, .dhx_cal_event_line {
+  &.bv_event { height: 20px; line-height: 20px; color: #FFF; .border-radiuses(4px);
+    &.bv_event_TRAINING { background-color: #3498db; }
+    &.bv_event_MATCH { background-color: #27AE60; }
+    &.bv_event_VOLLEYSCHOOL_ADULT { background-color: #9b59b6; }
+    &.bv_event_VOLLEYSCHOOL_YOUTH { background-color: #e67e22; }
+    &.bv_event_CLOSED { background-color: #34495e; }
+    img { max-width:16px; }
+  }
+}
+
+// Skin lightbox
+.dhx_cal_light {
+  .dhx_title {
+    h1 { padding: 0; margin: 0; border: 0; line-height: 35px; }
+  }
+}
+
+.img-event {
+  &.TRAINING            { background: url("@{image-path}/icon/training_20px.png") center bottom no-repeat;  width: 18px; height: 18px; float: left;   background-size: 100%; margin-right: 5px;}
+  &.MATCH               { background: url("@{image-path}/icon/championship_match_20px.png") center bottom no-repeat; width: 18px; height: 18px; float: left;   background-size: 100%; margin-right: 5px;}
+  &.CLOSED              { background: url("@{image-path}/icon/championship_match_20px.png") center bottom no-repeat; width: 18px; height: 18px; float: left;   background-size: 100%; margin-right: 5px;}
+  &.FREEPLAY            { background: url("@{image-path}/icon/wilson.png") center bottom no-repeat; width: 18px; height: 18px; float: left;   background-size: 100%; margin-right: 5px;}
+  &.VOLLEYSCHOOL_ADULT  { background: url("@{image-path}/icon/mikasa.png") center bottom no-repeat; width: 18px; height: 18px; float: left;   background-size: 100%; margin-right: 5px;}
+  &.VOLLEYSCHOOL_YOUTH  { background: url("@{image-path}/icon/molten.png") center bottom no-repeat; width: 18px; height: 18px; float: left;   background-size: 100%; margin-right: 5px;}
+}
+
