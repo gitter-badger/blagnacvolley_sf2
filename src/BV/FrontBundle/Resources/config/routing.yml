@@ -16,5 +16,5 @@ front_static:
     resource: "@FrontBundle/Resources/config/routing/static.yml"
 
 front_homepage:
-    path:     /hello/{name}
+    path:     /hello
     defaults: { _controller: FrontBundle:Default:index }

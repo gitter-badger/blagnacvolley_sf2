@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Email
  *
  * @ORM\Table(name="bv_email")
- * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\EmailRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\Repository\EmailRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Email

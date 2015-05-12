@@ -13,7 +13,31 @@ use Tools\LogBundle\Entity\SystemLog;
 
 class NotificationAdmin extends Admin
 {
-    // Fields to be shown on create/edit forms
+//    public function createQuery($context = 'list')
+//    {
+//        $query = parent::createQuery($context);
+//        $query->setSortOrder('is_read');
+//        return $query;
+//    }
+
+    /**
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     */
+    function __construct($code, $class, $baseControllerName)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+
+        if (!$this->hasRequest()) {
+            $this->datagridValues = array(
+                '_page' => 1,
+                '_sort_order' => 'ASC', // sort direction
+                '_sort_by' => 'isRead' // field name
+            );
+        }
+    }
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper

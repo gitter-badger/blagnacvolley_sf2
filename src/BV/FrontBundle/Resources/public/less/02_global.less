@@ -1,11 +1,5 @@
 @import "00_config.less";
 
-@font-face { .fontface(interstateregular, interstate_thin-webfont); }
-@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500);
-
-h1 { padding-bottom: 15px; text-transform: Uppercase; font-family: Interstate, Arial, sans-serif; color: #0183B8; font-size:20px; }
-h2 { font-size: 18px; }
-
 .lh30 {line-height: 30px !important;}
 .ml0 {margin-left:0;}
 .ml10 {margin-left:10px;}
@@ -30,7 +24,6 @@ ul.flash-messages { padding:0;
 }
 
 // Colors
-
 .color-text-peter-river   {color:            @color-peter-river   !important;}
 .color-back-peter-river   {background-color: @color-peter-river   !important;}
 .color-text-belize-hole   {color:            @color-belize-hole   !important;}
@@ -70,47 +63,10 @@ ul.flash-messages { padding:0;
 .color-text-asbestos      {color:            @color-asbestos      !important;}
 .color-back-asbestos      {background-color: @color-asbestos      !important;}
 
-// Color notifications
-.notification-link { font-size: 12px; }
-.color-notification {
-  &.color-100 { .color-text-emerald; }
-//  &.color-200 { .color-text-nephritis; }
-  &.color-200 { .color-text-pomegranate; }
-}
-
-// Popover skin
-.popover { position: absolute; top: 0; left: 0; z-index: 1010; display: none; max-width: 600px; padding: 1px; text-align: left; white-space: normal; background-color: #ffffff; border: 1px solid #ccc; border: 1px solid rgba(0, 0, 0, 0.2); -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); -webkit-background-clip: padding-box; -moz-background-clip: padding; background-clip: padding-box;
-  .popover-title i { font-weight: bold; .color-text-belize-hole; }
-  .popover-content {
-    ul { padding:10px;margin-bottom: 0;
-      li { list-style: none;font-size: 12px; }
-    }
-  }
-}
-
 .well { .box-shadow(inset 0px -3px 0px 0px @color-grey-3); .border-radius(5); background-image:none; border:0;
   &.warning { .box-shadow(inset 0px -3px 0px 0px @color-carrot); }
   &.success { .box-shadow(inset 0px -3px 0px 0px @color-emerald); }
   &.danger  { .box-shadow(inset 0px -3px 0px 0px @color-pumpkin); }
   p {margin-bottom:0; }
 }
-.panel { border:0; .border-radius(0);
-  &>.panel-heading { font-family: 'Ubuntu',sans-serif; text-transform: uppercase; text-align: center; font-size: 1.1em; background-image:none; .border-radius(0); }
-  &.panel-primary > .panel-heading { background-color: @color-peter-river; }
-  &.panel-warning > .panel-heading { background-color: @color-carrot; color:#FFF; }
-  &.panel-danger > .panel-heading { background-color: @color-pumpkin; color:#FFF; }
-}
-.btn { font-family: "Ubuntu", sans-serif; text-transform: uppercase; border-width: 0; .border-radius(5); background-image:none;
-  &.btn-success { background-color: @color-emerald; ;.box-shadow(inset 0px -3px 0px 0px @color-nephritis);
-    &:hover { background-color: lighten(@color-emerald, 10%); ;.box-shadow(inset 0px -3px 0px 0px @color-nephritis); }
-  }
-  &.btn-primary { background-color: @color-peter-river; ;.box-shadow(inset 0px -3px 0px 0px @color-belize-hole);
-    &:hover { background-color: lighten(@color-peter-river, 10%); ;.box-shadow(inset 0px -3px 0px 0px @color-belize-hole); }
-  }
-  &.btn-warning { background-color: @color-carrot; ;.box-shadow(inset 0px -3px 0px 0px @color-pumpkin);
-    &:hover { background-color: lighten(@color-carrot, 10%); ;.box-shadow(inset 0px -3px 0px 0px @color-pumpkin); }
-  }
-}
 
-.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th { background-color: @color-grey; }
-.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th { background-color: @color-grey-2; }

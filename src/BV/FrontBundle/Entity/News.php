@@ -8,11 +8,23 @@ use Doctrine\ORM\Mapping as ORM;
  * News
  *
  * @ORM\Table(name="bv_news")
- * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\NewsRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\Repository\NewsRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class News
 {
+    /*******************************************************************************************************************
+     *
+     *  Constants
+     *
+     */
+
+    /*******************************************************************************************************************
+     *
+     *  Attributes
+     *
+     */
+
     /**
      * @var integer
      *
@@ -86,6 +98,25 @@ class News
      */
     private $eventsId;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist", "remove"}, inversedBy="news")
+     * @ORM\JoinColumn(name="author", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $author;
+
+    /*******************************************************************************************************************
+     *
+     *  Custom functions
+     *
+     */
+
+    /*******************************************************************************************************************
+     *
+     *  Auto-generated functions : php app/console doctrine:generate:entities FrontBundle:News
+     *
+     */
 
     /**
      * Get id
@@ -360,5 +391,29 @@ class News
     public function getEventsId()
     {
         return $this->eventsId;
+    }
+
+    /**
+     * Set author
+     *
+     * @param User $author
+     *
+     * @return News
+     */
+    public function setAuthor(User $author = null)
+    {
+        $this->author = $author;
+    
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }

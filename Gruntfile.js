@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         },
         files: {
           // target.css file: source.less file
-          "web/css/styles.css": "src/BV/FrontBundle/Resources/public/less/styles.less",
+          "web/css/styles_front.css": "src/BV/FrontBundle/Resources/public/less/styles.less",
           "web/css/progress.css": "src/BV/FrontBundle/Resources/public/less/progress.less",
           "web/css/bootstrap.css": "web/vendor/bootstrap/less/bootstrap.less",
 
@@ -28,10 +28,11 @@ module.exports = function(grunt) {
 
       // FrontBundle
       imagesFront:  { files: [ { cwd: 'src/BV/FrontBundle/Resources/public/images/',      src: '**/*', dest: 'web/images/', expand: true } ] },
+      assetsFront:  { files: [{  cwd: 'src/BV/FrontBundle/Resources/public/assets/',       src: '**/*', dest: 'web/assets/',    expand: true } ] },
 
       // AdminBundle
       imagesAdmin:  { files: [{  cwd: 'src/BV/AdminBundle/Resources/public/images/',       src: '**/*', dest: 'web/images/',    expand: true } ] },
-      assets:       { files: [{  cwd: 'src/BV/AdminBundle/Resources/public/assets/',       src: '**/*', dest: 'web/assets/',    expand: true } ] }
+      assetsAdmin:  { files: [{  cwd: 'src/BV/AdminBundle/Resources/public/assets/',       src: '**/*', dest: 'web/assets/',    expand: true } ] }
     },
     watch: {
       styles: {

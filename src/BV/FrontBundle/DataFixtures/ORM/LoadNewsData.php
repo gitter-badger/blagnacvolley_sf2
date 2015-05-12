@@ -11,6 +11,8 @@ class LoadNewsData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
+        $user_admin = $this->getReference('user_admin');
+
         $post = new News();
         $post->setTitle('Recherche entraîneur');
 
@@ -22,6 +24,7 @@ class LoadNewsData extends AbstractFixture implements OrderedFixtureInterface
         $post->setContent($content);
         $post->setContentFormatter('richhtml');
         $post->setEnabled(true);
+        $post->setAuthor($user_admin);
 
         $eventsVSA = $this->getReference('eventsVSA');
         $newsVS = new News();
@@ -32,6 +35,7 @@ class LoadNewsData extends AbstractFixture implements OrderedFixtureInterface
         $newsVS->setContentFormatter('richhtml');
         $newsVS->setEnabled(true);
         $newsVS->setEventsId($eventsVSA);
+        $newsVS->setAuthor($user_admin);
 
         $manager->persist($post);
         $manager->persist($newsVS);

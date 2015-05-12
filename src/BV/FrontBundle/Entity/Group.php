@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Group
  *
  * @ORM\Table(name="bv_group")
- * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\GroupRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\Repository\GroupRepository")
  */
 class Group extends BaseGroup
 {

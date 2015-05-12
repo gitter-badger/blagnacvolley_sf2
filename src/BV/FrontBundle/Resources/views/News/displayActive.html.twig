@@ -1,14 +1,16 @@
-<div class="news">
+<div class="recent-news margin-bottom-10">
     {% for post in news %}
-        <div class="post well">
-            <h2 class="post-title mt0">{{ post.title }}</h2>
-            <span class="post-title"><i>{{ post.createdAt | localizeddate('full', 'none', app.request.locale )|capitalize}} {{ post.createdAt | date('H:i')}}</i></span>
-            <p>{{ post.content | raw }}</p>
-            {% if post.eventsId is not null %}
-            <div class="event-type">
+        <h3 class="color-text-peter-river">{{ post.title }}</h3>
+        <p>{{ post.content | raw }}</p>
+        {% if post.eventsId is not null %}
+            <p class="event-type">
                 Si vous voulez vous inscrire, ou changer votre participation au prochain évènement {{ ( 'constants.events.type.' ~ post.eventsId.type )|trans }} qui aura lieu le {{ post.eventsId.startDate|date('d/m/Y') }} à {{ post.eventsId.startDate|date('H:i') }}, cliquez sur le lien suivant : <a href="{{ path('fos_user_profile_show') }}">Ma participation</a>
-            </div>
-            {% endif %}
-        </div>
+            </p>
+        {% endif %}
+        <ul class="blog-info">
+            <li><i class="fa fa-user"></i> Par {{ post.author.firstname }}</li>
+            <li><i class="fa fa-calendar"></i> {{ post.createdAt | localizeddate('full', 'none', app.request.locale )|capitalize}} {{ post.createdAt | date('H:i')}}</li>
+        </ul>
+        <hr class="blog-post-sep">
     {% endfor %}
 </div>

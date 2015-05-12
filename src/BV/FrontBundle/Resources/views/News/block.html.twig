@@ -4,9 +4,6 @@
     {% set unavailable = events[type]['availabilities']['not_available'] %}
     {% set available = events[type]['availabilities']['available'] %}
     <div class="panel panel-primary">
-        <div class="panel-heading text-center">
-            {{ title }}
-        </div>
         <div class="panel-body">
             <p class="text-center">{{ event.startDate| localizeddate('full', 'none', app.request.locale )|capitalize }} {{ event.startDate|date('H:i') }} / {{ event.endDate|date('H:i') }}</p>
             <table class="table">
@@ -61,9 +58,6 @@
     </div>
 {% else %}
     <div class="panel panel-primary">
-        <div class="panel-heading text-center">
-            {{ title }}
-        </div>
         <div class="panel-body">
             Pas de date définie
         </div>

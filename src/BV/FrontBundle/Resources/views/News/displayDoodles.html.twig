@@ -1,11 +1,32 @@
-{% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT') %}
-{% set title = ('volleyschool.' ~ type)|trans() %}
-{{ include ( 'FrontBundle:News:block.html.twig', { title: title, type: type, events: events, user: user, nb: nb } , with_context = false  ) }}
+<div class="row service-box margin-bottom-40">
+    <div class="col-md-4 col-sm-4">
+        <div class="service-box-heading">
+            <em><i class="fa fa-location-arrow blue"></i></em>
+            <span>Ecole de Volley Adultes</span>
+        </div>
+        {% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT') %}
+        {% set title = ('volleyschool.' ~ type)|trans() %}
+        {{ include ( 'FrontBundle:News:block.html.twig', { title: title, type: type, events: events, user: user, nb: nb } , with_context = false  ) }}
+    </div>
+    <div class="col-md-4 col-sm-4">
+        <div class="service-box-heading">
+            <em><i class="fa fa-check red"></i></em>
+            <span>Ecole de Volley Jeunes</span>
+        </div>
+        {% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH') %}
+        {% set title = ('volleyschool.' ~ type)|trans() %}
+        {{ include ( 'FrontBundle:News:block.html.twig', { title: title, type: type, events: events, user: user, nb: nb } , with_context = false  ) }}
 
-{% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH') %}
-{% set title = ('volleyschool.' ~ type)|trans() %}
-{{ include ( 'FrontBundle:News:block.html.twig', { title: title, type: type, events: events, user: user, nb: nb } , with_context = false  ) }}
+    </div>
+    <div class="col-md-4 col-sm-4">
+        <div class="service-box-heading">
+            <em><i class="fa fa-compress green"></i></em>
+            <span>Jeu Libre</span>
+        </div>
+        {% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY') %}
+        {% set title = ('jeulibre.' ~ type)|trans() %}
+        {{ include ( 'FrontBundle:News:block.html.twig', { title: title, type: type, events: events, user: user, nb: nb } , with_context = false  ) }}
+    </div>
+</div>
 
-{% set type = constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY') %}
-{% set title = ('jeulibre.' ~ type)|trans() %}
-{{ include ( 'FrontBundle:News:block.html.twig', { title: title, type: type, events: events, user: user, nb: nb } , with_context = false  ) }}
+

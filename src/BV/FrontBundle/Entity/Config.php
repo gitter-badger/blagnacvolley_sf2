@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Config
  *
  * @ORM\Table(name="bv_config")
- * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\ConfigRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\Repository\ConfigRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Config

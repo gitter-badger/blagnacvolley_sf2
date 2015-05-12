@@ -11,13 +11,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Team
  *
  * @ORM\Table(name="bv_team")
- * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\TeamRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\Repository\TeamRepository")
  */
 class Team
 {
+    /*******************************************************************************************************************
+     *
+     *  Constants
+     *
+     */
+
     const TYPE_FEM = 'Feminin';
     const TYPE_MSC = 'Masculin';
     const TYPE_MIX = 'Mixte';
+
+    /*******************************************************************************************************************
+     *
+     *  Attributes
+     *
+     */
 
     /**
      * @var integer
@@ -93,12 +105,24 @@ class Team
      */
     private $membersMix;
 
+    /*******************************************************************************************************************
+     *
+     *  Custom functions
+     *
+     */
+
     public function __construct()
     {
         $this->membersFem = new ArrayCollection();
         $this->membersMsc = new ArrayCollection();
         $this->membersMix = new ArrayCollection();
     }
+
+    /*******************************************************************************************************************
+     *
+     *  Auto-generated functions : php app/console doctrine:generate:entities FrontBundle:Team
+     *
+     */
 
     /**
      * Get id

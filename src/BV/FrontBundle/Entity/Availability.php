@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Availability
  *
  * @ORM\Table(name="bv_availability")
- * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\AvailabilityRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\Repository\AvailabilityRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Availability

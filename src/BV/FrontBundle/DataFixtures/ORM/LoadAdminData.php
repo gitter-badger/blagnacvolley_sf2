@@ -35,7 +35,7 @@ class LoadAdminData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($userAdmin);
         $manager->flush();
 
-        $manager->flush();
+        $this->addReference('user_admin', $userAdmin);
     }
 
     public function getOrder()

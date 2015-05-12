@@ -10,10 +10,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="bv_user")
- * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\Repository\UserRepository")
  */
 class User extends EntityUser
 {
+    /*******************************************************************************************************************
+     *
+     *  Constants
+     *
+     */
+
     const FACTURATION_GROUP_TYPE_YOUTH = 1;
     const FACTURATION_GROUP_TYPE_STUDENT = 2;
     const FACTURATION_GROUP_TYPE_EMPLOYEE = 3;
@@ -61,6 +67,12 @@ class User extends EntityUser
     const CATEGORY_TYPE_JUNIOR      = 'CATEGORY_TYPE_JUNIOR';
     const CATEGORY_TYPE_ESPOIR      = 'CATEGORY_TYPE_ESPOIR';
     const CATEGORY_TYPE_SENIOR      = 'CATEGORY_TYPE_SENIOR';
+
+    /*******************************************************************************************************************
+     *
+     *  Attributes
+     *
+     */
 
     /**
      * @var integer
@@ -382,6 +394,19 @@ class User extends EntityUser
      */
     protected $isFreeplay;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\News", mappedBy="author", cascade={"persist"})
+     */
+    private $news;
+
+    /*******************************************************************************************************************
+     *
+     *  Custom functions
+     *
+     */
+
     public function __construct()
     {
         parent::__construct();
@@ -393,7 +418,14 @@ class User extends EntityUser
         $this->isVolleySchoolYouth = false;
         $this->isFreeplay = false;
         $this->status = static::STATUS_ACTIVE_NOT_LICENSED;
+        $this->news = new ArrayCollection();
     }
+
+    /*******************************************************************************************************************
+     *
+     *  Auto-generated functions : php app/console doctrine:generate:entities FrontBundle:User
+     *
+     */
 
     /**
      * Get id
@@ -1592,5 +1624,39 @@ class User extends EntityUser
     public function isAllowedToRenew()
     {
         return ( $this->getStatus() == self::STATUS_ACTIVE_NOT_LICENSED && ( $this->getAge() > 18 || ( $this->getAge() <= 18 && $this->getParentalAdvisory() != null )) );
+    }
+
+    /**
+     * Add news
+     *
+     * @param \BV\FrontBundle\Entity\News $news
+     *
+     * @return User
+     */
+    public function addNews(\BV\FrontBundle\Entity\News $news)
+    {
+        $this->news[] = $news;
+    
+        return $this;
+    }
+
+    /**
+     * Remove news
+     *
+     * @param \BV\FrontBundle\Entity\News $news
+     */
+    public function removeNews(\BV\FrontBundle\Entity\News $news)
+    {
+        $this->news->removeElement($news);
+    }
+
+    /**
+     * Get news
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNews()
+    {
+        return $this->news;
     }
 }

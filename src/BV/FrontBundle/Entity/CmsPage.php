@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CmsPage
  *
  * @ORM\Table(name="bv_cms_page")
- * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\CmsPageRepository")
+ * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\Repository\CmsPageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class CmsPage
