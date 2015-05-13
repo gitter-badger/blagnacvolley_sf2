@@ -15,6 +15,7 @@ class Events
 {
     const TYPE_TRAINING = 'TRAINING';
     const TYPE_MATCH = 'MATCH';
+    const TYPE_CUP = 'CUP';
     const TYPE_VOLLEYSCHOOL_ADULT = 'VOLLEYSCHOOL_ADULT';
     const TYPE_VOLLEYSCHOOL_YOUTH = 'VOLLEYSCHOOL_YOUTH';
     const TYPE_FREE_PLAY = 'FREE_PLAY';
@@ -224,10 +225,25 @@ class Events
         return array(
             self::TYPE_TRAINING             => 'constants.events.type.'.self::TYPE_TRAINING,
             self::TYPE_MATCH                => 'constants.events.type.'.self::TYPE_MATCH,
+            self::TYPE_CUP                  => 'constants.events.type.'.self::TYPE_CUP,
+        );
+    }
+
+    /**
+     * Returns the level list
+     *
+     * @return array
+     */
+    public static function getEventsTypeForAdmin()
+    {
+        return array(
+            self::TYPE_TRAINING             => 'constants.events.type.'.self::TYPE_TRAINING,
+            self::TYPE_MATCH                => 'constants.events.type.'.self::TYPE_MATCH,
             self::TYPE_VOLLEYSCHOOL_ADULT   => 'constants.events.type.'.self::TYPE_VOLLEYSCHOOL_ADULT,
             self::TYPE_VOLLEYSCHOOL_YOUTH   => 'constants.events.type.'.self::TYPE_VOLLEYSCHOOL_YOUTH,
             self::TYPE_FREE_PLAY            => 'constants.events.type.'.self::TYPE_FREE_PLAY,
             self::TYPE_CLOSED               => 'constants.events.type.'.self::TYPE_CLOSED,
+            self::TYPE_CUP                  => 'constants.events.type.'.self::TYPE_CUP,
         );
     }
 

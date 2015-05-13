@@ -144,6 +144,7 @@ constants:
     type:
       TRAINING: Entraînement
       MATCH: Match
+      CUP: Coupe
       VOLLEYSCHOOL_ADULT: Ecole de Volley Adultes
       VOLLEYSCHOOL_YOUTH: Ecole de Volley Jeunes
       CLOSED: Fermeture

@@ -63,10 +63,9 @@ ul.flash-messages { padding:0;
 .color-text-asbestos      {color:            @color-asbestos      !important;}
 .color-back-asbestos      {background-color: @color-asbestos      !important;}
 
-.well { .box-shadow(inset 0px -3px 0px 0px @color-grey-3); .border-radius(5); background-image:none; border:0;
-  &.warning { .box-shadow(inset 0px -3px 0px 0px @color-carrot); }
-  &.success { .box-shadow(inset 0px -3px 0px 0px @color-emerald); }
-  &.danger  { .box-shadow(inset 0px -3px 0px 0px @color-pumpkin); }
-  p {margin-bottom:0; }
+.flashes .well {
+  &.warning { background-color: @color-carrot; }
+  &.success { background-color: @color-emerald; }
+  &.danger  { background-color: @color-pumpkin; }
+  &.error   { background-color: @color-red; color:@color-clouds; }
 }
-
