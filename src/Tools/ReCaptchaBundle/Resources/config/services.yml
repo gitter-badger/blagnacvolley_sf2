@@ -1,0 +1,4 @@
+services:
+    tool_recaptcha:
+        class:     Tools\ReCaptchaBundle\Services\ReCaptcha
+        arguments: ["@service_container", "%re_captcha.secret%", "%re_captcha.url%"]

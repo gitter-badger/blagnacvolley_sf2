@@ -34,7 +34,9 @@ class AppKernel extends Kernel
 
             new BV\FrontBundle\FrontBundle(),
             new BV\AdminBundle\AdminBundle(),
+
             new Tools\LogBundle\ToolsLogBundle(),
+            new Tools\ReCaptchaBundle\ReCaptchaBundle(),
 
         );
 

@@ -105,6 +105,11 @@ genemu_form:
             code:                 ~
         configs:              []
 
+re_captcha:
+    url:  'https://www.google.com/recaptcha/api/siteverify'
+    secret: '6LeTHfwSAAAAAHl-UnCNJw-OJVv2wYy-37XXxI8N'
+    public_key:  '6LeTHfwSAAAAAET_S2v5iO5QkYZrSqJbP1ZPHnTJ'
+
 front:
     profile:
         pictures_path: /uploads/picture
