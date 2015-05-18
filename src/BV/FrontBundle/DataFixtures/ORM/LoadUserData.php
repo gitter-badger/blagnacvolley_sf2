@@ -115,21 +115,66 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user1->setIsVolleySchoolAdult(true);
         $user1->setIsVolleySchoolYouth(false);
         $user1->setIsFreeplay(true);
+        
+        // Patrick
+        $user_patrick = new User();
+        $user_patrick->setFirstname('Patrick');
+        $user_patrick->setLastname('BERUE');
+        $user_patrick->setLevel(User::LEVEL_EXC_C);
+        $user_patrick->setPoste(User::POSTE_CENTRAL);
+        $user_patrick->setAddress('14 impasse de Cornaudric , 31240 l\'Union');
+        $date = new \DateTime('2014-09-30');
+        $user_patrick->setDatePayment($date);
+        $date = new \DateTime('2014-01-01');
+        $user_patrick->setDateShirtDelivered($date);
+        $date = new \DateTime('1983-04-21');
+        $user_patrick->setDob($date);
+        $user_patrick->setFeeAmount('55');
+        $user_patrick->setFemTeam(null);
+        $user_patrick->setMscTeam(null);
+        $user_patrick->setMixTeam(null);
+        $user_patrick->setGender(User::GENDER_MALE);
+        $user_patrick->setGeoLat('43.662233');
+        $user_patrick->setGeoLng('1.476035');
+        $user_patrick->setPicture('/images/defaults/default_male.png');
+        $user_patrick->setShirtSize('L');
+        $user_patrick->setIsRequiredBill(false);
+        $user_patrick->setIsLookingForTeam(false);
+        $user_patrick->setStatus(USER::STATUS_ACTIVE_LICENSED);
+        $user_patrick->setLicenseNumber('132132151');
+        // base User implementation
+        $user_patrick->setUsername('pattoche');
+        $user_patrick->setPlainPassword('pass4bv');
+        $user_patrick->setEmail('patrick.berue@gmail.com');
+        $user_patrick->setEnabled(true);
+        $user_patrick->setIsVolleySchoolAdult(false);
+        $user_patrick->setIsVolleySchoolYouth(true);
+        $user_patrick->setIsFreeplay(false);
+        $user_patrick->setDeskRole(User::DESK_ROLE_PRESIDENT);
+        $user_patrick->setJoinedDeskAt(new \DateTime('2004-01-01'));
 
         /* @var $teamMsc1 Team */
         $teamMsc1 = $this->getReference('teamMsc1');
 
         $user_yann->setMscTeam($teamMsc1);
         $teamMsc1->setCaptain($user_yann);
-
         $user_seb->setMscTeam($teamMsc1);
         $teamMsc1->setSubCaptain($user_seb);
 
+        /* @var $teamMix1 Team */
+        $teamMix1 = $this->getReference('teamMix1');
+        $teamMix1->setCaptain($user1);
         $user1->setMscTeam($teamMsc1);
+
+        /* @var $teamMsc2 Team */
+        $teamMsc2 = $this->getReference('teamMsc2');
+        $user_patrick->setMscTeam($teamMsc2);
+        $teamMsc2->setCaptain($user_patrick);
 
         $manager->persist($user_yann);
         $manager->persist($user_seb);
         $manager->persist($user1);
+        $manager->persist($user_patrick);
 
         $this->addReference('user_yann', $user_yann);
         $this->addReference('user_seb', $user_seb);

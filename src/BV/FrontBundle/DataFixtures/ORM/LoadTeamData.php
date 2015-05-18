@@ -19,6 +19,12 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
         $teamMsc1->setSlot('Mardi 20:30 -> 23:00');
         $teamMsc1->setType(Team::TYPE_MSC);
 
+        $teamMsc2 = new Team();
+        $teamMsc2->setName('Masculin 2');
+        $teamMsc2->setLevel(User::LEVEL_EXC_C);
+        $teamMsc2->setSlot('Mardi 20:30 -> 23:00');
+        $teamMsc2->setType(Team::TYPE_MSC);
+
         $teamMix1 = new Team();
         $teamMix1->setName('Mixte 1');
         $teamMix1->setLevel(User::LEVEL_HON_A);
@@ -32,11 +38,13 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
         $teamFem1->setType(Team::TYPE_FEM);
 
         $manager->persist($teamMsc1);
+        $manager->persist($teamMsc2);
         $manager->persist($teamMix1);
         $manager->persist($teamFem1);
         $manager->flush();
 
         $this->addReference('teamMsc1', $teamMsc1);
+        $this->addReference('teamMsc2', $teamMsc2);
         $this->addReference('teamMix1', $teamMix1);
         $this->addReference('teamFem1', $teamFem1);
     }

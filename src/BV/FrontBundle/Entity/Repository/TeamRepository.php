@@ -2,6 +2,8 @@
 
 namespace BV\FrontBundle\Entity\Repository;
 
+use BV\FrontBundle\Entity\Team;
+use BV\FrontBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
@@ -70,7 +72,7 @@ class TeamRepository extends EntityRepository
         ];
         $query = $this->getEntityManager()
             ->createQuery(' SELECT p.id, p.name, p.level FROM FrontBundle:Team p '.
-                          ' WHERE p.type = :type '
+                ' WHERE p.type = :type '
             )
             ->setParameter('type', Team::TYPE_MSC)
         ;
@@ -89,5 +91,23 @@ class TeamRepository extends EntityRepository
             $res[Team::TYPE_MIX][$val['id']] = $val['name'].' | '.$val['level'];
 
         return $res;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getCapitaines()
+    {
+        $deskMembers = $this->getEntityManager()->getRepository('FrontBundle:User')->getDeskUsers();
+        $query = $this->getEntityManager()->createQuery(' SELECT t FROM FrontBundle:Team t '.
+            ' WHERE t.captain IS NOT NULL '.
+            ' AND t.captain NOT IN (:captains) '
+        )->setParameter('captains', $deskMembers);
+
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 }

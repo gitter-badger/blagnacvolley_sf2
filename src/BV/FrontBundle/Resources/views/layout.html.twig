@@ -64,12 +64,22 @@ License: You must have a valid license purchased only from themeforest (the abov
         <link href="{{ asset('css/styles_front.css') }}" rel="stylesheet">
     {% endblock head_style %}
 
-    <script src="../../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
 </head>
 <!-- Head END -->
 
 <!-- Body BEGIN -->
-<body class="corporate">
+<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
+<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
+<!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle -->
+<!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar -->
+<!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
+<!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
+<!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
+<body class="corporate page-header-fixed-mobile page-footer-fixed-mobile page-footer-fixed">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -217,105 +227,85 @@ License: You must have a valid license purchased only from themeforest (the abov
         {% block content_div_end %} </div> {% endblock content_div_end %}
     </div>
 {% endblock container %}
+</div>
 
-<!-- BEGIN PRE-FOOTER -->
-<div class="pre-footer">
-    <div class="container">
-        <div class="row">
-            <!-- BEGIN BOTTOM ABOUT BLOCK -->
-            <div class="col-md-4 col-sm-6 pre-footer-col">
-                <h2>About us</h2>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam sit nonummy nibh euismod tincidunt ut laoreet dolore magna aliquarm erat sit volutpat.</p>
+<div class="footer-ctn">
+    <!-- BEGIN PRE-FOOTER -->
+    <div class="pre-footer">
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN BOTTOM ABOUT BLOCK -->
+                <div class="col-md-4 col-sm-6 pre-footer-col">
+                    <h2>A propos de nous</h2>
+                    <p>Blagnac Volley Ball, association active depuis plus de {{ ("now"|date('Y') - 2004) }} ans, vous accueille au gymnase Guillaumet toute l'année.</p>
+                </div>
+                <!-- END BOTTOM ABOUT BLOCK -->
 
-                <div class="photo-stream">
-                    <h2>Photos Stream</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/people/img5-small.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/works/img1.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/people/img4-large.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/works/img6.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/works/img3.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/people/img2-large.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/works/img2.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/works/img5.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/people/img5-small.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/works/img1.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/people/img4-large.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/works/img6.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/works/img3.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/people/img2-large.jpg"></a></li>
-                        <li><a href="javascript:;"><img alt="" src="../../assets/frontend/pages/img/works/img2.jpg"></a></li>
+                <!-- BEGIN BOTTOM CONTACTS -->
+                <div class="col-md-4 col-sm-6 pre-footer-col">
+                    <h2>Notre adresse</h2>
+                    <address class="margin-bottom-40">
+                        Gymnase GUILLAUMET<br>
+                        20, chemin Bélisaire<br>
+                        31700 Blagnac<br>
+                        Email: <a href="mailto:info@blagnacvolley.fr">info@blagnacvolley.fr</a><br>
+                    </address>
+                </div>
+                <!-- END BOTTOM CONTACTS -->
+
+                <!-- BEGIN TWITTER BLOCK -->
+                <div class="col-md-4 col-sm-6 pre-footer-col">
+                    <div class="photo-stream">
+                        <h2>Bureau & Capitaines</h2>
+                        <ul class="list-unstyled">
+                            {% for user in getBureau() %}
+                                <li data-toggle="tooltip" data-placement="top" title="{{ user.firstname }} {{ user.lastname }} : {{ user.deskRole }}">
+                                    <img alt="" src="{{ user.picture|apply_filter('img_100_100') }}">
+                                </li>
+                            {% endfor %}
+                            {% for team in getCapitaines() %}
+                                <li data-toggle="tooltip" data-placement="top" title="{{ team.captain.firstname }} {{ team.captain.lastname }} : Capitaine {{ team.name }}">
+                                    <img alt="" src="{{ team.captain.picture|apply_filter('img_100_100') }}">
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <!-- END TWITTER BLOCK -->
+            </div>
+        </div>
+    </div>
+    <!-- END PRE-FOOTER -->
+
+    <!-- BEGIN FOOTER -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN COPYRIGHT -->
+                <div class="col-md-6 col-sm-6 padding-top-10">
+                    Distribué sous licence <a href="http://www.gnu.org/copyleft/gpl.html">GNU GPL</a>.
+                </div>
+                <!-- END COPYRIGHT -->
+                <!-- BEGIN PAYMENTS -->
+                <div class="col-md-6 col-sm-6">
+                    <ul class="social-footer list-unstyled list-inline pull-right">
+                        {#<li><a href="javascript:;"><i class="fa fa-facebook"></i></a></li>#}
+                        {#<li><a href="javascript:;"><i class="fa fa-google-plus"></i></a></li>#}
+                        {#<li><a href="javascript:;"><i class="fa fa-dribbble"></i></a></li>#}
+                        {#<li><a href="javascript:;"><i class="fa fa-linkedin"></i></a></li>#}
+                        {#<li><a href="javascript:;"><i class="fa fa-twitter"></i></a></li>#}
+                        {#<li><a href="javascript:;"><i class="fa fa-skype"></i></a></li>#}
+                        <li><a href="https://github.com/ylastapis/blagnacvolley_sf2" data-toggle="tooltip" data-placement="top" title="Contribuer sur GitHub"><i class="fa fa-github"></i></a></li>
+                        {#<li><a href="javascript:;"><i class="fa fa-youtube"></i></a></li>#}
+                        {#<li><a href="javascript:;"><i class="fa fa-dropbox"></i></a></li>#}
                     </ul>
                 </div>
+                <!-- END PAYMENTS -->
             </div>
-            <!-- END BOTTOM ABOUT BLOCK -->
-
-            <!-- BEGIN BOTTOM CONTACTS -->
-            <div class="col-md-4 col-sm-6 pre-footer-col">
-                <h2>Our Contacts</h2>
-                <address class="margin-bottom-40">
-                    35, Lorem Lis Street, Park Ave<br>
-                    California, US<br>
-                    Phone: 300 323 3456<br>
-                    Fax: 300 323 1456<br>
-                    Email: <a href="mailto:info@metronic.com">info@metronic.com</a><br>
-                    Skype: <a href="skype:metronic">metronic</a>
-                </address>
-
-                <div class="pre-footer-subscribe-box pre-footer-subscribe-box-vertical">
-                    <h2>Newsletter</h2>
-                    <p>Subscribe to our newsletter and stay up to date with the latest news and deals!</p>
-                    <form action="#">
-                        <div class="input-group">
-                            <input type="text" placeholder="youremail@mail.com" class="form-control">
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">Subscribe</button>
-                  </span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- END BOTTOM CONTACTS -->
-
-            <!-- BEGIN TWITTER BLOCK -->
-            <div class="col-md-4 col-sm-6 pre-footer-col">
-                <h2 class="margin-bottom-0">Latest Tweets</h2>
-                <a class="twitter-timeline" href="https://twitter.com/twitterapi" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Loading tweets by @keenthemes...</a>
-            </div>
-            <!-- END TWITTER BLOCK -->
         </div>
     </div>
+    <!-- END FOOTER -->
 </div>
-<!-- END PRE-FOOTER -->
-
-<!-- BEGIN FOOTER -->
-<div class="footer">
-    <div class="container">
-        <div class="row">
-            <!-- BEGIN COPYRIGHT -->
-            <div class="col-md-6 col-sm-6 padding-top-10">
-                2014 © Metronic Shop UI. ALL Rights Reserved. <a href="javascript:;">Privacy Policy</a> | <a href="javascript:;">Terms of Service</a>
-            </div>
-            <!-- END COPYRIGHT -->
-            <!-- BEGIN PAYMENTS -->
-            <div class="col-md-6 col-sm-6">
-                <ul class="social-footer list-unstyled list-inline pull-right">
-                    <li><a href="javascript:;"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="javascript:;"><i class="fa fa-google-plus"></i></a></li>
-                    <li><a href="javascript:;"><i class="fa fa-dribbble"></i></a></li>
-                    <li><a href="javascript:;"><i class="fa fa-linkedin"></i></a></li>
-                    <li><a href="javascript:;"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="javascript:;"><i class="fa fa-skype"></i></a></li>
-                    <li><a href="javascript:;"><i class="fa fa-github"></i></a></li>
-                    <li><a href="javascript:;"><i class="fa fa-youtube"></i></a></li>
-                    <li><a href="javascript:;"><i class="fa fa-dropbox"></i></a></li>
-                </ul>
-            </div>
-            <!-- END PAYMENTS -->
-        </div>
-    </div>
-</div>
-<!-- END FOOTER -->
 
 <!-- Load javascripts at bottom, this will reduce page load time -->
 <!-- BEGIN CORE PLUGINS (REQUIRED FOR ALL PAGES) -->
@@ -324,7 +314,6 @@ License: You must have a valid license purchased only from themeforest (the abov
 <![endif]-->
 {% block head_script %}
     <script src="../../assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-    <script src="../../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../../assets/frontend/layout/scripts/back-to-top.js" type="text/javascript"></script>
     <!-- END CORE PLUGINS -->
 
@@ -347,6 +336,8 @@ License: You must have a valid license purchased only from themeforest (the abov
             Layout.init();
             Layout.initOWL();
             Layout.initTwitter();
+
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 {% endblock head_script %}

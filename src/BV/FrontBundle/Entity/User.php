@@ -68,6 +68,10 @@ class User extends EntityUser
     const CATEGORY_TYPE_ESPOIR      = 'CATEGORY_TYPE_ESPOIR';
     const CATEGORY_TYPE_SENIOR      = 'CATEGORY_TYPE_SENIOR';
 
+    const DESK_ROLE_PRESIDENT = 'PRESIDENT';
+    const DESK_ROLE_SECRETAIRE = 'SECRETAIRE';
+    const DESK_ROLE_TRESORIER = 'TRESORIER';
+
     /*******************************************************************************************************************
      *
      *  Attributes
@@ -401,6 +405,20 @@ class User extends EntityUser
      */
     private $news;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="desk_role", type="string", length=255, nullable=true)
+     */
+    protected $deskRole = null;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="joined_desk_at", type="datetime", nullable=true)
+     */
+    protected $joinedDeskAt = null;
+
     /*******************************************************************************************************************
      *
      *  Custom functions
@@ -419,6 +437,14 @@ class User extends EntityUser
         $this->isFreeplay = false;
         $this->status = static::STATUS_ACTIVE_NOT_LICENSED;
         $this->news = new ArrayCollection();
+    }
+
+    /**
+     * @return array
+     */
+    public static function getDeskRoles()
+    {
+        return [ self::DESK_ROLE_PRESIDENT, self::DESK_ROLE_SECRETAIRE, self::DESK_ROLE_TRESORIER ];
     }
 
     /*******************************************************************************************************************
@@ -1658,5 +1684,53 @@ class User extends EntityUser
     public function getNews()
     {
         return $this->news;
+    }
+
+    /**
+     * Set deskRole
+     *
+     * @param string $deskRole
+     *
+     * @return User
+     */
+    public function setDeskRole($deskRole)
+    {
+        $this->deskRole = $deskRole;
+    
+        return $this;
+    }
+
+    /**
+     * Get deskRole
+     *
+     * @return string
+     */
+    public function getDeskRole()
+    {
+        return $this->deskRole;
+    }
+
+    /**
+     * Set joinedDeskAt
+     *
+     * @param \DateTime $joinedDeskAt
+     *
+     * @return User
+     */
+    public function setJoinedDeskAt($joinedDeskAt)
+    {
+        $this->joinedDeskAt = $joinedDeskAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get joinedDeskAt
+     *
+     * @return \DateTime
+     */
+    public function getJoinedDeskAt()
+    {
+        return $this->joinedDeskAt;
     }
 }

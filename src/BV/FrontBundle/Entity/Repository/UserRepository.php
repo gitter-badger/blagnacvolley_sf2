@@ -42,7 +42,7 @@ class UserRepository extends EntityRepository
 
             // Current User is Captain or Subcaptain of this Team
             if  (   $event->getTeam()->getCaptain() == $user ||
-                    $event->getTeam()->getSubCaptain() == $user  )
+                $event->getTeam()->getSubCaptain() == $user  )
             {
                 // Only for Team, can only create two forecast reservations
                 if ($event->getType() == Events::TYPE_TRAINING) {
@@ -193,5 +193,22 @@ class UserRepository extends EntityRepository
         }
 
         return $results;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getDeskUsers()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('     SELECT p FROM FrontBundle:User p '.
+                '   WHERE p.deskRole IS NOT NULL '
+            );
+
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 }
