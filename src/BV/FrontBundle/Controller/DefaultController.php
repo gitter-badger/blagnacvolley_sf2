@@ -184,6 +184,11 @@ class DefaultController extends Controller
         ));
     }
 
+    public function bureauAction()
+    {
+        return $this->render('FrontBundle:Bureau:bureau.html.twig');
+    }
+
     public function jeuLibreEditAction(Request $request)
     {
         /* @var User $user */

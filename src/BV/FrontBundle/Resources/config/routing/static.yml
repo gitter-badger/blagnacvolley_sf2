@@ -10,6 +10,9 @@ bv_static_volley_school_edit:
 bv_static_jeu_libre:
     path:     /jeulibre
     defaults: { _controller: FrontBundle:Default:jeuLibre }
+bv_static_bureau:
+    path:     /bureau
+    defaults: { _controller: FrontBundle:Default:bureau }
 bv_static_jeu_libre_edit:
     path:     /jeulibre/edit
     defaults: { _controller: FrontBundle:Default:jeuLibreEdit }

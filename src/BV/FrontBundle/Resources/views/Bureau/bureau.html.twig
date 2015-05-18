@@ -1,0 +1,25 @@
+{% extends "FrontBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Membres du Bureau {% endblock %}
+
+{% block content_row %}
+    <h1>Membres du Bureau</h1>
+
+    <div class="row front-team">
+        <ul class="list-unstyled">
+            {% for user in getBureau() %}
+            <li class="col-md-4">
+                <div class="thumbnail">
+                    <img alt="" src="{{ user.picture|apply_filter('img_200_200') }}">
+                    <h3>
+                        <strong>{{ user.firstname }} {{ user.lastname }}</strong>
+                        <small>{{ user.deskRole }} depuis le {{ user.joinedDeskAt|date('d/m/Y') }}</small>
+                    </h3>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem...</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock content_row %}
