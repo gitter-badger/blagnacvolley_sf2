@@ -18,7 +18,7 @@ class StaticAdmin extends Admin
             ->add('description')
             ->add('content', 'textarea', array(
                 'attr' => array(
-                    'class' => 'redactor',
+                    'class' => 'ckeditor',
                 ),
             ))
         ;

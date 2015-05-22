@@ -50,6 +50,7 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
         $cmsPageS->setCreatedAt(new \DateTime());
         $cmsPageS->setUpdatedAt(null);
         $cmsPageS->setDescription("Horaires");
+        $cmsPageS->setContent(file_get_contents(dirname(__FILE__).'/data/schedule.html'));
 
         // Addresses
         $cmsPageA = new CmsPage();

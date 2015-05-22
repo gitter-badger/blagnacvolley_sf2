@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - {{ 'schedule.welcome'|trans() }} {% endblock %}
 
 {% block content_row %}
-    <h1>{{ 'schedule.welcome'|trans() }} {% if allowed %} <a class="btn btn-primary btn-sm pull-right" href="{{ path('bv_static_schedule_edit') }}">{{ 'schedule.edit'|trans() }}</a> {% endif %} </h1>
+    <h1>{{ 'schedule.welcome'|trans() }}</h1>
 
     {{ content|raw }}
 
