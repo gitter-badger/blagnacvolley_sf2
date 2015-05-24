@@ -54,54 +54,46 @@ class CalendarController extends Controller
 
     public function getEventsAction(Request $request)
     {
-//        /* @var $user User */
-//        $user = $this->container->get('security.context')->getToken()->getUser();
-//
-//        $events = $this->getDoctrine()->getRepository('FrontBundle:Events')->findAll();
-//        $res = array();
-//        $i=0;
-//
-//        foreach($events as $event) {
-//            $res[$i] = array(
-//                "id" => $event->getSchedulerId(),
-//                "text" => $event->getText(),
-//                "start_date" => $event->getStartDate()->format('Y-m-d H:i'),
-//                "end_date" => $event->getEndDate()->format('Y-m-d H:i'),
-//                "type" => $event->getType(),
-//                "type_name" => $this->get('translator')->trans('constants.events.type.'.$event->getType()),
-//                "image" => $event->getImageFromType(),
-//            );
-//
-//            if ($event->getTeam() instanceof Team) {
-//                $res[$i]["team"] = $event->getTeam()->getId();
-//                $res[$i]["team_name"] = $event->getTeam()->getName();
-//            }
-//
-//            switch ($event->getType()) {
-//                case Events::TYPE_CLOSED:
-//                    $res[$i]["readonly"] = true;
-//                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><div class=\"img-event ". $event->getType() ."\" ></div> <strong> Fermé : </strong> " . $event->getText() . "</div>";
-//                break;
-//                case Events::TYPE_VOLLEYSCHOOL_ADULT:
-//                case Events::TYPE_VOLLEYSCHOOL_YOUTH:
-//                case Events::TYPE_FREE_PLAY:
-//                    $res[$i]["readonly"] = true;
-//                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><div class=\"img-event ". $event->getType() ."\" ></div> <strong> ".$this->get('translator')->trans('constants.events.type.'.$event->getType())." : </strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
-//                break;
-//                case Events::TYPE_TRAINING:
-//                case Events::TYPE_MATCH:
-//                    $res[$i]["readonly"] = $this->getDoctrine()->getRepository('FrontBundle:Events')->isReadonly($event, $user);
-//                    $res[$i]["event_bar_text"] = "<div class=\"relative\"><div class=\"img-event ". $event->getType() ."\" ></div> <strong> " . $event->getTeam()->getName() . "</strong> (" . $event->getStartDate()->format('H:i') . " à " . $event->getEndDate()->format('H:i') . ")</div>";
-//                break;
-//            }
-//
-//            $i++;
-//        }
-//
-//        $response = new Response(json_encode($res));
-//        $response->headers->set('Content-Type', 'application/json');
-//
-//        return $response;
+        $events = $this->container->get('doctrine')->getRepository('FrontBundle:Events')->findAll();
+        $res = [];
+        foreach ($events as $event) /* @var $event Events */
+        {
+            $title = '';
+            switch ($event->getType())
+            {
+                case Events::TYPE_CLOSED:
+                    $title = 'Fermé';
+                break;
+                case Events::TYPE_TRAINING:
+                    $title = $event->getTeam()->getName();
+                break;
+                case Events::TYPE_MATCH:
+                    $title = $event->getTeam()->getName();
+                break;
+                case Events::TYPE_CUP:
+                    $title = $event->getTeam()->getName();
+                break;
+                case Events::TYPE_VOLLEYSCHOOL_ADULT:
+                    $title = 'Ecole de Volley Adultes';
+                break;
+                case Events::TYPE_VOLLEYSCHOOL_YOUTH:
+                    $title = 'Ecole de Volley Jeunes';
+                break;
+                case Events::TYPE_FREE_PLAY:
+                    $title = 'Jeu libre';
+                break;
+            }
+            $res[] = [
+                'title' => $title,
+                'start' => $event->getStartDate()->format('Y-m-d'),
+                'end'   => $event->getEndDate()->format('Y-m-d'),
+                'type'  => $event->getType(),
+                'className' => 'bv_event_'.$event->getType(),
+            ];
+        }
+        $response = new Response(json_encode($res));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
@@ -143,9 +135,10 @@ class CalendarController extends Controller
             $d = new \DateTime($date);
             $d->setTime($split[0], $split[1]);
 
-            $event->setEndDate(new \DateTime($date));
+            $event->setEndDate($d);
             $event->setType($typeId);
             $event->setTeam($team);
+            $event->setText($details);
             $messages = $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToInsert($user, $event);
             $messages = array_merge($messages, $this->getDoctrine()->getRepository('FrontBundle:Events')->isValidForInsert($event));
 
@@ -159,7 +152,7 @@ class CalendarController extends Controller
             }
             else
             {
-                $this->container->get('session')->getFlashBag()->add('success', implode('<br/>', $messages));
+                $this->container->get('session')->getFlashBag()->add('error', implode('<br/>', $messages));
             }
         }
 

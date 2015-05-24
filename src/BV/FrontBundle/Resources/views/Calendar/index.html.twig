@@ -26,7 +26,35 @@
             $('#calendar').fullCalendar({
                 weekends: false, // will hide Saturdays and Sundays
                 weekNumbers: true,
-                lang: 'fr'
+                lang: 'fr',
+                eventSources: [
+
+                    {
+                        url: '{{ path('bv_calendar_getEvents') }}',
+                        type: 'POST',
+                        data: {
+                            custom_param1: 'something',
+                            custom_param2: 'somethingelse'
+                        },
+                        error: function() {
+                            alert('there was an error while fetching events!');
+                        }
+                    }
+
+                    // any other sources...
+
+                ]
+
+//                        events: [
+//                            {
+//                                title: 'Event1',
+//                                start: '2015-05-24'
+//                            },
+//                            {
+//                                title: 'Event2',
+//                                start: '2015-05-25'
+//                            }
+//                        ]
                 {% if is_allowed_to_edit == true%}
                 ,dayClick: function(date, jsEvent, view) {
                     $('#date-creation').val(date.format());

@@ -13,13 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Events
 {
-    const TYPE_TRAINING = 'TRAINING';
-    const TYPE_MATCH = 'MATCH';
-    const TYPE_CUP = 'CUP';
-    const TYPE_VOLLEYSCHOOL_ADULT = 'VOLLEYSCHOOL_ADULT';
-    const TYPE_VOLLEYSCHOOL_YOUTH = 'VOLLEYSCHOOL_YOUTH';
-    const TYPE_FREE_PLAY = 'FREE_PLAY';
-    const TYPE_CLOSED = 'CLOSED';
+    const TYPE_TRAINING             = 'TRAINING';
+    const TYPE_MATCH                = 'MATCH';
+    const TYPE_CUP                  = 'CUP';
+    const TYPE_VOLLEYSCHOOL_ADULT   = 'VOLLEYSCHOOL_ADULT';
+    const TYPE_VOLLEYSCHOOL_YOUTH   = 'VOLLEYSCHOOL_YOUTH';
+    const TYPE_FREE_PLAY            = 'FREE_PLAY';
+    const TYPE_CLOSED               = 'CLOSED';
 
     /**
      * @var integer
