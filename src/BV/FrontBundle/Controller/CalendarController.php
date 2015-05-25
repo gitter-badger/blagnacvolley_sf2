@@ -59,33 +59,43 @@ class CalendarController extends Controller
         foreach ($events as $event) /* @var $event Events */
         {
             $title = '';
+            $start = '';
             switch ($event->getType())
             {
                 case Events::TYPE_CLOSED:
                     $title = 'Fermé';
+                    $start = $event->getStartDate()->format('Y-m-d');
                 break;
                 case Events::TYPE_TRAINING:
                     $title = $event->getTeam()->getName();
+                    $start = $event->getStartDate()->format('Y-m-d H:i');
                 break;
                 case Events::TYPE_MATCH:
                     $title = $event->getTeam()->getName();
+                    $start = $event->getStartDate()->format('Y-m-d H:i');
                 break;
                 case Events::TYPE_CUP:
                     $title = $event->getTeam()->getName();
+                    $start = $event->getStartDate()->format('Y-m-d H:i');
                 break;
                 case Events::TYPE_VOLLEYSCHOOL_ADULT:
                     $title = 'Ecole de Volley Adultes';
+                    $start = $event->getStartDate()->format('Y-m-d H:i');
                 break;
                 case Events::TYPE_VOLLEYSCHOOL_YOUTH:
                     $title = 'Ecole de Volley Jeunes';
+                    $start = $event->getStartDate()->format('Y-m-d H:i');
                 break;
                 case Events::TYPE_FREE_PLAY:
                     $title = 'Jeu libre';
+                    $start = $event->getStartDate()->format('Y-m-d H:i');
                 break;
             }
             $res[] = [
+                'id'    => $event->getId(),
+                'details' => $event->getText(),
                 'title' => $title,
-                'start' => $event->getStartDate()->format('Y-m-d'),
+                'start' => $start,
                 'end'   => $event->getEndDate()->format('Y-m-d'),
                 'type'  => $event->getType(),
                 'className' => 'bv_event_'.$event->getType(),

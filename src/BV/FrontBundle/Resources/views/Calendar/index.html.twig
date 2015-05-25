@@ -28,33 +28,28 @@
                 weekNumbers: true,
                 lang: 'fr',
                 eventSources: [
-
                     {
                         url: '{{ path('bv_calendar_getEvents') }}',
                         type: 'POST',
-                        data: {
-                            custom_param1: 'something',
-                            custom_param2: 'somethingelse'
-                        },
+                        data: {},
                         error: function() {
                             alert('there was an error while fetching events!');
                         }
                     }
-
-                    // any other sources...
-
-                ]
-
-//                        events: [
-//                            {
-//                                title: 'Event1',
-//                                start: '2015-05-24'
-//                            },
-//                            {
-//                                title: 'Event2',
-//                                start: '2015-05-25'
-//                            }
-//                        ]
+                ],
+                eventRender: function(event, element, view) {
+                    return  ' <a class="fc-day-grid-event fc-event fc-start fc-end bv_event_'+event.type+'">'+
+                            '    <div class="fc-content bvpopover" data-toggle="popover" title="'+event.title+'" data-content="'+event.details+'">'+
+                            '       <span class="fc-time">'+(event.start.format('H:m') != '0:0' ? event.start.format('H:m') : '')+'</span> <span class="fc-title">'+event.title+'</span>' +
+                            '    </div>' +
+                            ' </a>';
+                },
+                eventAfterAllRender: function(){
+                    $('.bvpopover').popover({
+                        trigger: 'hover',
+                        placement: 'top'
+                    });
+                }
                 {% if is_allowed_to_edit == true%}
                 ,dayClick: function(date, jsEvent, view) {
                     $('#date-creation').val(date.format());
@@ -80,6 +75,23 @@
             });
 
         });
+
+        $('#type').change(function(){
+            switch ($('#type').val()) {
+                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_CLOSED') }}':
+                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT') }}':
+                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH') }}':
+                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY') }}':
+                    $('#fgteam').hide();
+                    break;
+                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_TRAINING') }}':
+                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_MATCH') }}':
+                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_CUP') }}':
+                    $('#fgteam').show();
+                    break
+            }
+        });
+
         //]]>
     </script>
 {% endblock %}
@@ -97,21 +109,21 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="team" class="col-sm-2 control-label">Equipe</label>
-                            <div class="col-sm-10">
-                                <select id="team" name="team" class="form-control">
-                                    {% for k,i in alert_opts_teams_json %}
-                                    <option value="{{ k }}">{{ i }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="type" class="col-sm-2 control-label">Type</label>
                             <div class="col-sm-10">
                                 <select id="type" name="type" class="form-control">
                                     {% for k,i in alert_opts_types_json %}
                                         <option value="{{ i }}">{{ ('constants.events.type.' ~ i)|trans }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="fgteam">
+                            <label for="team" class="col-sm-2 control-label">Equipe</label>
+                            <div class="col-sm-10">
+                                <select id="team" name="team" class="form-control">
+                                    {% for k,i in alert_opts_teams_json %}
+                                    <option value="{{ k }}">{{ i }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
