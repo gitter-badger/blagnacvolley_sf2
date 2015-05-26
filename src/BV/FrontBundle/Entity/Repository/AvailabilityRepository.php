@@ -4,6 +4,7 @@ namespace BV\FrontBundle\Entity\Repository;
 
 use BV\FrontBundle\Entity\Availability;
 use BV\FrontBundle\Entity\Events;
+use BV\FrontBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 

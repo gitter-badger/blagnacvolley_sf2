@@ -25,14 +25,14 @@
 
 <div class="col-sm-2">
     <div class="panel panel-{{ class }}">
-        <div class="panel-heading" style="border:0;font-size: 0.9em;">
+        <div class="panel-heading text-center" style="border:0;font-size: 0.9em;">
             {{ ('constants.user.status.' ~ user.status) |trans()}}
         </div>
         <div class="panel-body p0">
-            <img src="{{ user.picture |apply_filter('img_160_160') }}" class="" style="margin: 0 auto;display: block;" />
+            <img src="{{ user.picture |apply_filter('img_160_160') }}" class="img-thumbnail" style="margin: 0 auto;display: block;" />
         </div>
         <div class="panel-footer">
-            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block">Modifier</a>
+            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block">Modifier</a><br/>
             {% if user.isAllowedToRenew() %}
                 <a href="{{ path('bv_user_profile_renew_license') }}" class="btn btn-success btn-sm btn-block">Renouveler</a>
             {% endif %}
@@ -246,7 +246,7 @@
                         }
                         google.maps.event.addDomListener(window, 'load', initializeGmaps);
                     </script>
-                    <div id="map-canvas" style="height:300px;width:366px;"/>
+                    <div id="map-canvas" style="height:300px;width:409px;"/>
                 </div>
             </div>
         </div>

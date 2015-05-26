@@ -34,7 +34,7 @@
         {% if team.getCaptain %}
             <div class="relative">
                 <img src="{{ team.getCaptain.picture| apply_filter('img_200_200') }}" class="img-thumbnail img-responsive" style="max-height: 150px;max-width: 150px;margin: 0 auto;display: block;" />
-                <label class="label label-success">{{ 'team.show.captain'|trans() }}</label>
+                <label class="label label-success btn-block">{{ 'team.show.captain'|trans() }}</label>
             </div>
             <div class="text-center">
                 {{ team.getCaptain.firstname }} {{ team.getCaptain.lastname }}
@@ -43,7 +43,7 @@
         {% else %}
             <div class="relative">
                 <img src="{{ asset('images/defaults/default.png')| apply_filter('img_200_200') }}" class="img-circle" style="max-height: 150px;max-width: 150px;margin: 0 auto;display: block;" />
-                <label class="label label-success">{{ 'team.show.captain'|trans() }}</label>
+                <label class="label label-success btn-block">{{ 'team.show.captain'|trans() }}</label>
             </div>
             <br/>
 
@@ -55,7 +55,7 @@
         {% if team.getSubCaptain %}
             <div class="relative">
                 <img src="{{ team.getSubCaptain.picture| apply_filter('img_200_200') }}" class="img-thumbnail" style="max-height: 150px;max-width: 150px;margin: 0 auto;display: block;" />
-                <label class="label label-primary">{{ 'team.show.subcaptain'|trans() }}</label>
+                <label class="label label-primary btn-block">{{ 'team.show.subcaptain'|trans() }}</label>
             </div>
             <div class="text-center">
                 {{ team.getSubCaptain.firstname }} {{ team.getSubCaptain.lastname }}
@@ -64,7 +64,7 @@
         {% else %}
             <div class="relative">
                 <img src="{{ asset('images/defaults/default.png')| apply_filter('img_200_200') }}" class="img-circle" style="max-height: 150px;max-width: 150px;margin: 0 auto;display: block;" />
-                <label class="label label-primary">{{ 'team.show.subcaptain'|trans() }}</label>
+                <label class="label label-primary btn-block">{{ 'team.show.subcaptain'|trans() }}</label>
             </div>
             <br/>
 
