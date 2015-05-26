@@ -1,176 +1,149 @@
 {% form_theme form 'FrontBundle:Form:fields.html.twig' %}
 
 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register form-horizontal row" role="form">
-    <div class="col-sm-6">
+    <fieldset class="col-lg-12">
+        <legend>Vos informations personelles</legend>
         <div class="form-group">
-            <div class="col-sm-4">
-                {{ form_label(form.pictureFile) }}
-            </div>
-            <div class="col-sm-8">
-                <div class="row">
-                    {{ form_errors(form.pictureFile) }}
-                    {{ form_widget(form.pictureFile) }}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <div class="col-sm-4">
+            <div class="col-lg-4 text-right">
                 {{ form_label(form.gender) }}
             </div>
-            <div class="col-sm-8">
+            <div class="col-lg-8">
                 {{ form_errors(form.gender) }}
                 {{ form_widget(form.gender) }}
             </div>
         </div>
-    </div>
-    <div class="col-sm-6">
         <div class="form-group">
-            <div class="col-sm-4">
-                {{ form_label(form.username) }}
-            </div>
-            <div class="col-sm-8">
-                {{ form_errors(form.username) }}
-                {{ form_widget(form.username) }}
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <div class="col-sm-4">
-                {{ form_label(form.email) }}
-            </div>
-            <div class="col-sm-8">
-                {{ form_errors(form.email) }}
-                {{ form_widget(form.email) }}
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <div class="col-sm-4">
-                {{ form_label(form.plainPassword.first) }}
-            </div>
-            <div class="col-sm-8">
-                {{ form_errors(form.plainPassword.first) }}
-                {{ form_widget(form.plainPassword.first) }}
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <div class="col-sm-4">
-                {{ form_label(form.plainPassword.second) }}
-            </div>
-            <div class="col-sm-8">
-                {{ form_errors(form.plainPassword.second) }}
-                {{ form_widget(form.plainPassword.second) }}
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <div class="col-sm-4">
+            <div class="col-lg-4 text-right">
                 {{ form_label(form.firstname) }}
             </div>
-            <div class="col-sm-8">
+            <div class="col-lg-8">
                 {{ form_errors(form.firstname) }}
                 {{ form_widget(form.firstname) }}
             </div>
         </div>
-    </div>
-    <div class="col-sm-6">
         <div class="form-group">
-            <div class="col-sm-4">
+            <div class="col-lg-4 text-right">
                 {{ form_label(form.lastname) }}
             </div>
-            <div class="col-sm-8">
+            <div class="col-lg-8">
                 {{ form_errors(form.lastname) }}
                 {{ form_widget(form.lastname) }}
             </div>
         </div>
-    </div>
-    <div class="col-sm-6">
         <div class="form-group">
-            <div class="col-sm-4">
+            <div class="col-lg-4 text-right">
+                {{ form_label(form.email) }}
+            </div>
+            <div class="col-lg-8">
+                {{ form_errors(form.email) }}
+                {{ form_widget(form.email) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-4 text-right">
+                {{ form_label(form.pictureFile) }}
+            </div>
+            <div class="col-lg-8">
+                {{ form_errors(form.pictureFile) }}
+                {{ form_widget(form.pictureFile) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-4 text-right">
                 {{ form_label(form.phone) }}
             </div>
-            <div class="col-sm-8">
+            <div class="col-lg-8">
                 {{ form_errors(form.phone) }}
                 {{ form_widget(form.phone) }}
             </div>
         </div>
-    </div>
-    <div class="col-sm-6">
         <div class="form-group">
-            <div class="col-sm-4">
-                {{ form_label(form.phonePro) }}
-            </div>
-            <div class="col-sm-8">
-                {{ form_errors(form.phonePro) }}
-                {{ form_widget(form.phonePro) }}
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <div class="col-sm-4">
-                {{ form_label(form.level) }}
-            </div>
-            <div class="col-sm-8">
-                {{ form_errors(form.level) }}
-                {{ form_widget(form.level) }}
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <div class="col-sm-4">
+            <div class="col-lg-4 text-right">
                 {{ form_label(form.address) }}
             </div>
-            <div class="col-sm-8">
+            <div class="col-lg-8">
                 {{ form_errors(form.address) }}
                 {{ form_widget(form.address) }}
             </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <hr/>
-    <div class="col-sm-6">
         <div class="form-group">
-            <div class="col-sm-4">
+            <div class="col-lg-4 text-right">
                 {{ form_label(form.dob) }}
             </div>
-            <div class="col-sm-8">
+            <div class="col-lg-8">
                 {{ form_errors(form.dob) }}
                 {{ form_widget(form.dob) }}
             </div>
         </div>
-    </div>
-
-    <div class="div-disclaimer" style="display:none">
-        <div class="col-sm-6">
+        <div class="div-disclaimer" style="display:none">
             <div class="form-group">
-                <div class="col-sm-4">
+                <div class="col-lg-4 text-right">
                     {{ form_label(form.parentalAdvisoryFile) }}
                 </div>
-                <div class="col-sm-8">
-                    <div class="row">
-                        {{ form_errors(form.parentalAdvisoryFile) }}
-                        {{ form_widget(form.parentalAdvisoryFile) }}
-                    </div>
+                <div class="col-lg-8">
+                    {{ form_errors(form.parentalAdvisoryFile) }}
+                    {{ form_widget(form.parentalAdvisoryFile) }}
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12 well">
-            <div class="form-group">
-                <div class="col-sm-10">
-                    Vous avez moins de 18 ans, vous devez donc faire remplir une attestation parentale pour finaliser votre inscription, que vous trouverez <a target="_blank" href="{{ asset('media/defaults/attestation_parentale.pdf') }}">ici</a>. Vous pourrez créer votre compte, mais il ne sera validé par l'administrateur qu'une fois cette attestation validée. Vous pouvez la joindre à votre inscription dès maintenant, l'associer à votre compte dans la section "Mon Compte", ou la faire passer auprès d'un responsable du club.
-                </div>
+            <div class="col-lg-12 well">
+                <p class="text-justify">Vous avez moins de 18 ans, vous devez donc faire remplir une attestation parentale pour finaliser votre inscription, que vous trouverez <a target="_blank" href="{{ asset('media/defaults/attestation_parentale.pdf') }}">ici</a>. Vous pourrez créer votre compte, mais il ne sera validé par l'administrateur qu'une fois cette attestation validée. Vous pouvez la joindre à votre inscription dès maintenant, l'associer à votre compte dans la section "Mon Compte", ou la faire passer auprès d'un responsable du club.</p>
             </div>
         </div>
-    </div>
+    </fieldset>
+
+    <fieldset class="col-lg-12">
+        <legend>Vos informations de connexion</legend>
+        <div class="form-group">
+            <div class="col-lg-4 text-right">
+                {{ form_label(form.username) }}
+            </div>
+            <div class="col-lg-8">
+                {{ form_errors(form.username) }}
+                {{ form_widget(form.username) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-4 text-right">
+                {{ form_label(form.plainPassword.first) }}
+            </div>
+            <div class="col-lg-8">
+                {{ form_errors(form.plainPassword.first) }}
+                {{ form_widget(form.plainPassword.first) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-4 text-right">
+                {{ form_label(form.plainPassword.second) }}
+            </div>
+            <div class="col-lg-8">
+                {{ form_errors(form.plainPassword.second) }}
+                {{ form_widget(form.plainPassword.second) }}
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="col-lg-12">
+        <legend>Informations facultatives</legend>
+        <div class="form-group">
+            <div class="col-lg-4 text-right">
+                {{ form_label(form.phonePro) }}
+            </div>
+            <div class="col-lg-8">
+                {{ form_errors(form.phonePro) }}
+                {{ form_widget(form.phonePro) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-4 text-right">
+                {{ form_label(form.level) }}
+            </div>
+            <div class="col-lg-8">
+                {{ form_errors(form.level) }}
+                {{ form_widget(form.level) }}
+            </div>
+        </div>
+    </fieldset>
+
     <script type="text/javascript">
     //<![CDATA[
             $('#fos_user_registration_form_dob').change(function(e){
@@ -188,10 +161,10 @@
     //]]>
     </script>
 
-    <div class="col-sm-12">
+    <div class="col-lg-12">
         <div class="form-group">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-10">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-10">
                 <input class="btn btn-success" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
             </div>
         </div>

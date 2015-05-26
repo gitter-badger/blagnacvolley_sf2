@@ -2,6 +2,7 @@
 
 namespace BV\FrontBundle\Controller;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,14 @@ class RegistrationController extends BaseController
         $formHandler = $this->container->get('fos_user.registration.form.handler');
         $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
 
-        $process = $formHandler->process($confirmationEnabled);
+        $process = false;
+        try {
+            $process = $formHandler->process($confirmationEnabled);
+        }
+        catch (Exception $e)
+        {
+            $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
+        }
         if ($process) {
             $user = $form->getData();
 

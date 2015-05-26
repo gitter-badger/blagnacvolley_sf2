@@ -73,8 +73,10 @@
             </div>
             <div class="clearfix"></div>
         {% else %}
-            <div class="col-sm-12">
-                <input type="file" {{ block('widget_attributes') }}>
+            <div class="row">
+                <div class="col-sm-12">
+                    <input type="file" {{ block('widget_attributes') }}>
+                </div>
             </div>
             <div class="clearfix"></div>
         {% endif %}
