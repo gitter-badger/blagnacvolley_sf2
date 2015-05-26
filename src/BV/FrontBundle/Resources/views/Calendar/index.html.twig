@@ -20,6 +20,9 @@
     <script type="text/javascript">
         //<![CDATA[
 
+        var userId = '{{ user_id }}';
+        var isAdmin = '{{ is_admin }}';
+
         $(document).ready(function() {
             ComponentsPickers.init();
 
@@ -49,22 +52,24 @@
                         trigger: 'hover',
                         placement: 'top'
                     });
-                },
-                eventClick: function(calEvent, jsEvent, view) {
-
-                    $('#edit-type option[value="'+calEvent.type+'"]').attr('selected', true);
-                    if (calEvent.team != null)
-                        $('#edit-team option[value="'+calEvent.team+'"]').attr('selected', true);
-                    $('#edit-start-date').val(calEvent.start.format('HH:mm'));
-                    $('#edit-end-date').val(calEvent.end.format('HH:mm'));
-                    $('#edit-details').val(calEvent.details);
-                    $('#event-id').val(calEvent.id);
-                    $('#date-edition').val(calEvent.start.format('YYYY-MM-DD'));
-
-                    $('#modal-edition').modal();
                 }
                 {% if is_allowed_to_edit == true%}
-                ,dayClick: function(date, jsEvent, view) {
+                ,eventClick: function(calEvent, jsEvent, view) {
+                    if (isAdmin || userId == calEvent.captain || userId == calEvent.subcaptain)
+                    {
+                        $('#edit-type option[value="'+calEvent.type+'"]').attr('selected', true);
+                        if (calEvent.team != null)
+                            $('#edit-team option[value="'+calEvent.team+'"]').attr('selected', true);
+                        $('#edit-start-date').val(calEvent.start.format('HH:mm'));
+                        $('#edit-end-date').val(calEvent.end.format('HH:mm'));
+                        $('#edit-details').val(calEvent.details);
+                        $('#event-id').val(calEvent.id);
+                        $('#date-edition').val(calEvent.start.format('YYYY-MM-DD'));
+
+                        $('#modal-edition').modal();
+                    }
+                },
+                dayClick: function(date, jsEvent, view) {
                     $('#date-creation').val(date.format());
                     $('#modal-creation').modal();
                 }
@@ -116,6 +121,7 @@
 {% endblock %}
 
 {% block content_row %}
+
     <div id="calendar"></div>
 
     <div class="modal fade" id="modal-creation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10100;">

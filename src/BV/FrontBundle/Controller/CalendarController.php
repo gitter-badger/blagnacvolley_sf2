@@ -44,11 +44,13 @@ class CalendarController extends Controller
         }
 
         return $this->render('FrontBundle:Calendar:index.html.twig', array(
+            'user_id' => ($user instanceof User ? $user->getId() : null),
             'form' => $form->createView(),
             'alert_opts_teams_json' => $alertOptsTeamsJson,
             'alert_opts_types_json' => $types,
             'img_paths_json' => json_encode(Events::getImagePaths()),
-            'is_allowed_to_edit' => $isAllowedToEdit
+            'is_allowed_to_edit' => $isAllowedToEdit,
+            'is_admin' => ($user instanceof User ? $user->isSuperAdmin() : false)
         ));
     }
 
@@ -99,7 +101,9 @@ class CalendarController extends Controller
                 'end'   => $event->getEndDate()->format('Y-m-d H:i'),
                 'type'  => $event->getType(),
                 'className' => 'bv_event_'.$event->getType(),
-                'team' => ($event->getTeam() != null ? $event->getTeam()->getId() : null)
+                'team' => ($event->getTeam() != null ? $event->getTeam()->getId() : null),
+                'captain' => ($event->getTeam() != null && $event->getTeam()->getCaptain() != null ? $event->getTeam()->getCaptain()->getId() : null),
+                'subcaptain' => ($event->getTeam() != null && $event->getTeam()->getSubCaptain() != null ? $event->getTeam()->getSubCaptain()->getId() : null),
             ];
         }
         $response = new Response(json_encode($res));
