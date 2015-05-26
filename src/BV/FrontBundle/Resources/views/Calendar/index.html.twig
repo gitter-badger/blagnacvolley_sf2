@@ -49,11 +49,24 @@
                         trigger: 'hover',
                         placement: 'top'
                     });
+                },
+                eventClick: function(calEvent, jsEvent, view) {
+
+                    $('#edit-type option[value="'+calEvent.type+'"]').attr('selected', true);
+                    if (calEvent.team != null)
+                        $('#edit-team option[value="'+calEvent.team+'"]').attr('selected', true);
+                    $('#edit-start-date').val(calEvent.start.format('HH:mm'));
+                    $('#edit-end-date').val(calEvent.end.format('HH:mm'));
+                    $('#edit-details').val(calEvent.details);
+                    $('#event-id').val(calEvent.id);
+                    $('#date-edition').val(calEvent.start.format('YYYY-MM-DD'));
+
+                    $('#modal-edition').modal();
                 }
                 {% if is_allowed_to_edit == true%}
                 ,dayClick: function(date, jsEvent, view) {
                     $('#date-creation').val(date.format());
-                    $('#myModal').modal()
+                    $('#modal-creation').modal();
                 }
                 {% endif %}
             });
@@ -92,6 +105,12 @@
             }
         });
 
+        function deleteClicked(eventId)
+        {
+            $('#delete-event-id').val($('#event-id').val());
+            $('#modal-delete').modal('show');
+        }
+
         //]]>
     </script>
 {% endblock %}
@@ -99,8 +118,8 @@
 {% block content_row %}
     <div id="calendar"></div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="modal-creation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10100;">
+        <div class="modal-dialog" style="z-index: 10101;">
             <div class="modal-content">
                 <form method="post" enctype="multipart/form-data" action="{{ path('bv_calendar_saveEvents') }}" class="form-horizontal">
                     <div class="modal-header">
@@ -160,6 +179,97 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                         <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-edition" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"style="z-index: 10110;">
+        <div class="modal-dialog" style="z-index: 10111;">
+            <div class="modal-content">
+                <form method="post" enctype="multipart/form-data" action="{{ path('bv_calendar_saveEvents') }}" class="form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modifier un évènement</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="edit-type" class="col-sm-2 control-label">Type</label>
+                            <div class="col-sm-10">
+                                <select id="edit-type" name="type" class="form-control">
+                                    {% for k,i in alert_opts_types_json %}
+                                        <option value="{{ i }}">{{ ('constants.events.type.' ~ i)|trans }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="fgteam">
+                            <label for="edit-team" class="col-sm-2 control-label">Equipe</label>
+                            <div class="col-sm-10">
+                                <select id="edit-team" name="team" class="form-control">
+                                    {% for k,i in alert_opts_teams_json %}
+                                        <option value="{{ k }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-start-date" class="col-sm-2 control-label">Début</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="edit-start-date" name="start-date">
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <label for="edit-end-date" class="col-sm-2 control-label">Fin</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="edit-end-date" name="end-date">
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-details" class="col-sm-2 control-label">Détails</label>
+                            <div class="col-sm-10">
+                                <textarea name="details" id="edit-details" class="form-control" style="height:200px;resize: none;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="action" value="update" />
+                    <input type="hidden" name="event-id" id="event-id" value="" />
+                    <input type="hidden" name="date" id="date-edition" value="" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                        <a class="btn btn-danger" href="javascript:;" onclick="deleteClicked();">Supprimer</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"style="z-index: 10120;">
+        <div class="modal-dialog" style="z-index: 10121;">
+            <div class="modal-content">
+                <form method="post" enctype="multipart/form-data" action="{{ path('bv_calendar_deleteEvents') }}" class="form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Supprimer un évènement</h4>
+                    </div>
+                    <div class="modal-body">
+                        Vous êtes sur le point de supprimer cet évènement, etes-vous sûr de vouloir faire celà ?
+                    </div>
+                    <input type="hidden" name="action" value="delete" />
+                    <input type="hidden" name="event-id" id="delete-event-id" value="" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
                     </div>
                 </form>
             </div>

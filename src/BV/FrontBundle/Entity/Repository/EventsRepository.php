@@ -63,7 +63,9 @@ class EventsRepository extends EntityRepository
 
     public function isValidForUpdate(Events $event)
     {
-        return $this->isValidForInsert($event);
+        $messages = array();
+
+        return $messages;
     }
 
     public function findEventsByTypeAfter($type, \Datetime $date)
@@ -107,10 +109,16 @@ class EventsRepository extends EntityRepository
 
     public function findEventsForDate(\Datetime $date)
     {
+        $startDate = clone $date;
+        $startDate->setTime(0,0,0);
+        $endDate = clone $date;
+        $endDate->setTime(23,59,59);
         $query = $this->getEntityManager()
             ->createQuery(' SELECT p FROM FrontBundle:Events p '.
-                ' WHERE p.startDate = :date')
-            ->setParameter('date', $date->format('Y-m-d H:i'));
+                ' WHERE p.startDate >= :dateStart' .
+                ' AND p.startDate <= :dateEnd' )
+            ->setParameter('dateStart', $startDate->format('Y-m-d H:i'))
+            ->setParameter('dateEnd', $endDate->format('Y-m-d H:i'));
         try {
             return $query->getResult();
         } catch (NoResultException $e) {

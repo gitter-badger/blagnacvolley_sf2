@@ -7,4 +7,6 @@ bv_calendar_getEvents:
 bv_calendar_saveEvents:
     defaults: { _controller: "FrontBundle:Calendar:saveEvents" }
     path:     /calendar/saveEvents
-
+bv_calendar_deleteEvents:
+    defaults: { _controller: "FrontBundle:Calendar:deleteEvents" }
+    path:     /calendar/deleteEvents

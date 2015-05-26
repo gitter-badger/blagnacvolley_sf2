@@ -96,9 +96,10 @@ class CalendarController extends Controller
                 'details' => $event->getText(),
                 'title' => $title,
                 'start' => $start,
-                'end'   => $event->getEndDate()->format('Y-m-d'),
+                'end'   => $event->getEndDate()->format('Y-m-d H:i'),
                 'type'  => $event->getType(),
                 'className' => 'bv_event_'.$event->getType(),
+                'team' => ($event->getTeam() != null ? $event->getTeam()->getId() : null)
             ];
         }
         $response = new Response(json_encode($res));
@@ -110,10 +111,10 @@ class CalendarController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function saveEventsAction(Request $request) {
+    public function saveEventsAction(Request $request)
+    {
         /* @var $user User */
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $res = ['success' => false];
 
         $teamId = $request->get('team');
         $typeId = $request->get('type');
@@ -166,6 +167,65 @@ class CalendarController extends Controller
             }
         }
 
+        // Update
+        if ($action == "update") {
+            $eventId = $request->get('event-id');
+            $event = $this->container->get('doctrine')->getRepository('FrontBundle:Events')->find($eventId);
+
+            $date = $request->get('date');
+            $split = explode(':',$startDate);
+            $d = new \DateTime($date);
+            $d->setTime($split[0], $split[1]);
+            $event->setStartDate($d);
+
+            $date = $request->get('date');
+            $split = explode(':',$endDate);
+            $d = new \DateTime($date);
+            $d->setTime($split[0], $split[1]);
+
+            $event->setEndDate($d);
+            $event->setType($typeId);
+            $event->setTeam($team);
+            $event->setText($details);
+            $messages = $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToUpdate($user, $event);
+            $messages = array_merge($messages, $this->getDoctrine()->getRepository('FrontBundle:Events')->isValidForUpdate($event));
+
+            if (count($messages) == 0)
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($event);
+                $em->flush();
+
+                $this->container->get('session')->getFlashBag()->add('success', 'Evènement sauvegardé avec succès.');
+            }
+            else
+            {
+                $this->container->get('session')->getFlashBag()->add('error', implode('<br/>', $messages));
+            }
+        }
+
+        return $this->redirect($this->generateUrl('bv_calendar_index'));
+    }
+
+    public function deleteEventsAction(Request $request)
+    {
+        /* @var $user User */
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $eventId = $request->get('event-id');
+        $event = $this->container->get('doctrine')->getRepository('FrontBundle:Events')->find($eventId);
+        $messages = $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToDelete($user, $event);
+        if (count($messages) == 0)
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($event);
+            $em->flush();
+
+            $this->container->get('session')->getFlashBag()->add('success', 'Evènement supprimé avec succès.');
+        }
+        else
+        {
+            $this->container->get('session')->getFlashBag()->add('error', implode('<br/>', $messages));
+        }
         return $this->redirect($this->generateUrl('bv_calendar_index'));
     }
 }
