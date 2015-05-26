@@ -98,7 +98,7 @@ class ProfileController extends Controller
 
     public function updateRequestAction(Request $request)
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->container->get('security.context')->getToken()->getUser(); /* @var $user User */
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
@@ -121,7 +121,10 @@ class ProfileController extends Controller
             'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
             array(
                 'form' => $form->createView(),
-                'user' => $user
+                'user' => $user,
+                'isRequiredCertif' => ($user->getCertif() == null),
+                'isRequiredAttestation' => ($user->getAttestation() == null),
+                'isRequiredParentalAdvisory' => ($user->getAge() <= 18 && $user->getParentalAdvisory() == null),
             )
         );
     }
