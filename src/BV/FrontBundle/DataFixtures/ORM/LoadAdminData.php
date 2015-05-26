@@ -25,7 +25,7 @@ class LoadAdminData extends AbstractFixture implements OrderedFixtureInterface
         $userAdmin->setDob(new \DateTime('2004-03-30'));
         // gymnase guillaumet
         $userAdmin->setAddress('20 Chemin de Belisaire, 31700 Blagnac');
-        $userAdmin->setPicture('EMPTY');
+        $userAdmin->setPicture('/images/admin/user_default.png');
         $userAdmin->setGeoLat('43.6334661');
         $userAdmin->setGeoLng('1.3874611');
         $userAdmin->setIsVolleySchoolAdult(false);

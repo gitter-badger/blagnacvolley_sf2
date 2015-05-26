@@ -102,3 +102,8 @@ services:
         class: BV\AdminBundle\Form\Field\TextConfirm
         tags:
             - { name: form.type, alias: text_confirm }
+    bv.admin.getNotifications:
+        class: BV\AdminBundle\Twig\Notifications
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
