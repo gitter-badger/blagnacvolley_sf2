@@ -10,7 +10,6 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\UserBundle\Model\UserInterface;
 
 use FOS\UserBundle\Model\UserManagerInterface;
 
@@ -124,6 +123,8 @@ class UserAdmin extends Admin
         $em = $this->container->get('doctrine')->getEntityManager();
         $choices = $em->getRepository('FrontBundle:Team')->findAllGroupedByType();
 
+//        print_r($choices[Team::TYPE_MSC]);
+//        die;
         /*
          * $groups
          * $roles (array)
@@ -177,34 +178,14 @@ class UserAdmin extends Admin
                     ->end()
                     ->with('Teams')
                         ->add('level', 'bv_user_level', array( 'required' => false, 'attr' => ['class' => 'form-control']))
-                        ->add('mscTeam', 'choice', array('choices' => $choices[Team::TYPE_MSC], 'required' => false, 'attr' => ['class' => 'form-control']))
-                        ->add('femTeam', 'choice', array('choices' => $choices[Team::TYPE_FEM], 'required' => false, 'attr' => ['class' => 'form-control']))
-                        ->add('mixTeam', 'choice', array('choices' => $choices[Team::TYPE_MIX], 'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('mscTeam', 'choice', array('choices' => $choices[Team::TYPE_MSC], 'data' => ($user->getMscTeam() != null ? $user->getMscTeam()->getId() : null), 'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('femTeam', 'choice', array('choices' => $choices[Team::TYPE_FEM], 'data' => ($user->getFemTeam() != null ? $user->getFemTeam()->getId() : null), 'required' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('mixTeam', 'choice', array('choices' => $choices[Team::TYPE_MIX], 'data' => ($user->getMixTeam() != null ? $user->getMixTeam()->getId() : null), 'required' => false, 'attr' => ['class' => 'form-control']))
                         ->add('isLookingForTeam', null, array('label' => 'Recherche une équipe', 'required' => false))
                     ->end()
                 ->end()
             ;
         }
-
-//        if ($this->getSubject() && !$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
-//            $formMapper
-//                ->tab('Management')
-//                ->with('Management')
-////                    ->add('realRoles', 'sonata_security_roles', array(
-////                        'label'    => 'form.label_roles',
-////                        'expanded' => true,
-////                        'multiple' => true,
-////                        'required' => false
-////                    ))
-//                    ->add('locked', null, array('required' => false))
-//                    ->add('expired', null, array('required' => false))
-//                    ->add('enabled', null, array('required' => false))
-//                    ->add('credentialsExpired', null, array('required' => false))
-//                ->end()
-//                ->end()
-//            ;
-//        }
-
     }
 
     /**
