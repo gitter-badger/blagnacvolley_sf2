@@ -39,11 +39,7 @@ class ContactType extends AbstractType
                 ),
                 'label'  => 'Message',
             ))
-//            ->add('captcha', 'genemu_recaptcha', array(
-//                    'mapped' => false,
-//                )
-//            )
-            ->add('save', 'submit', array( 'label'  => 'Envoyer le message', 'attr' => ['class' => 'form-control']));
+            ->add('save', 'submit', array( 'label'  => 'Envoyer le message', 'attr' => ['class' => 'btn btn-primary btn-block']));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

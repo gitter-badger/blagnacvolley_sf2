@@ -1,4 +1,4 @@
 missing-input-secret:   Le paramètre secret est manquant.
 invalid-input-secret:   Le paramètre secret est invalide.
-missing-input-response: Le paramètre de réponse est manquant.
-invalid-input-response: Le paramètre de réponse est invalide.
+missing-input-response: Vous n'avez pas validé le Captcha
+invalid-input-response: Le Captcha est invalide
