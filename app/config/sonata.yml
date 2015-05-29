@@ -7,6 +7,21 @@ sonata_admin:
     templates:
         layout: AdminBundle::layout.html.twig
         edit: SonataAdminBundle:CRUD:edit.html.twig
+    dashboard:
+        groups:
+            sonata_user:
+                label:  'Utilisateurs'
+                icon:   '<i class="fa fa-users"></i>'
+            Content:
+                label:  'Contenu'
+                icon:   '<i class="fa fa-folder"></i>'
+            Calendrier:
+                label:  'Calendrier'
+                icon:   '<i class="fa fa-calendar"></i>'
+            Paramètres:
+                label:    'Paramètres'
+                icon:    '<i class="fa fa-cogs"></i>'
+
 
 sonata_user:
     manager_type: orm
