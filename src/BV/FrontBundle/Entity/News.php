@@ -112,6 +112,23 @@ class News
      *
      */
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->setCreatedAt(new \DateTime);
+        $this->setUpdatedAt(new \DateTime);
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->setUpdatedAt(new \DateTime);
+    }
+
     /*******************************************************************************************************************
      *
      *  Auto-generated functions : php app/console doctrine:generate:entities FrontBundle:News
@@ -311,22 +328,6 @@ class News
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function prePersist()
-    {
-        $this->setCreatedAt(new \DateTime);
-        $this->setUpdatedAt(new \DateTime);
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        $this->setUpdatedAt(new \DateTime);
     }
 
     public function __toString()

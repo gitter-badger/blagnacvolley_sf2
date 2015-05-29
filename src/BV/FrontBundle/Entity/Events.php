@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="events")
  * @ORM\Entity(repositoryClass="BV\FrontBundle\Entity\Repository\EventsRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Events
 {
@@ -84,6 +85,52 @@ class Events
      * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="event")
      */
     protected $availability;
+
+    /*******************************************************************************************************************
+     *
+     *  Custom functions
+     *
+     */
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if ($this->getType() != self::TYPE_CLOSED)
+            return;
+
+        $startDate = clone $this->getStartDate();
+        $startDate->setTime(0,0,0);
+        $endDate = clone $this->getEndDate();
+        $endDate->setTime(23,59,59);
+
+        $this->setStartDate($startDate);
+        $this->setEndDate($endDate);
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        if ($this->getType() != self::TYPE_CLOSED)
+            return;
+
+        $startDate = clone $this->getStartDate();
+        $startDate->setTime(0,0,0);
+        $endDate = clone $this->getEndDate();
+        $endDate->setTime(23,59,59);
+
+        $this->setStartDate($startDate);
+        $this->setEndDate($endDate);
+    }
+
+    /*******************************************************************************************************************
+     *
+     *  Auto-generated functions : php app/console doctrine:generate:entities FrontBundle:Events
+     *
+     */
 
     /**
      * Get id
