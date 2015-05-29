@@ -58,8 +58,20 @@ class UserRepository extends EntityRepository
                 }
 
                 // Check that there is not already 3 teams this night
-                if (count($this->getEntityManager()->getRepository('FrontBundle:Events')->findEventsForDate($event->getStartDate())) == 3) {
+                $events = $this->getEntityManager()->getRepository('FrontBundle:Events')->findEventsForDate($event->getStartDate());
+                if (count($events) == 3) {
                     $messages[] = "Vous ne pouvez réserver ce créneau, il y a déjà trois équipes présentes.";
+                }
+
+                // Check that there is no vacations this day
+                $events = $this->getEntityManager()->getRepository('FrontBundle:Events')->findClosedEventsIncludingDate($event->getStartDate());
+                foreach ($events as $e) /* @var $e Events */
+                {
+                    if ($e->getType() == Events::TYPE_CLOSED)
+                    {
+                        $messages[] = "Vous ne pouvez réserver ce créneau, le gymnase sera fermé !";
+                        break;
+                    }
                 }
 
             } else {

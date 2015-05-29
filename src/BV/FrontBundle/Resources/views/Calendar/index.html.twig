@@ -12,6 +12,7 @@
 {% block head_script %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('assets/global/plugins/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/moment-range/lib/moment-range.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('vendor/bootstrap/js/modal.js') }}"></script>
     <script src="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.min.js') }}" type="text/javascript"></script>
     <script src='{{ asset('assets/global/plugins/fullcalendar/lang/fr.js') }}'></script>
@@ -70,8 +71,18 @@
                     }
                 },
                 dayClick: function(date, jsEvent, view) {
-                    $('#date-creation').val(date.format());
-                    $('#modal-creation').modal();
+                    var dayEvents = $('#calendar').fullCalendar( 'clientEvents', function(event){
+                        if (event.type !== '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_CLOSED') }}')
+                            return false;
+
+                        var range = moment().range(event.start, event.end);
+                        return range.contains(date);
+                    });
+                    if (dayEvents.length == 0)
+                    {
+                        $('#date-creation').val(date.format());
+                        $('#modal-creation').modal();
+                    }
                 }
                 {% endif %}
             });

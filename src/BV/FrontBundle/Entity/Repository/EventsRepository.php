@@ -3,6 +3,7 @@
 namespace BV\FrontBundle\Entity\Repository;
 
 use BV\FrontBundle\Entity\Events;
+use BV\FrontBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
@@ -119,6 +120,21 @@ class EventsRepository extends EntityRepository
                 ' AND p.startDate <= :dateEnd' )
             ->setParameter('dateStart', $startDate->format('Y-m-d H:i'))
             ->setParameter('dateEnd', $endDate->format('Y-m-d H:i'));
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findClosedEventsIncludingDate(\Datetime $date)
+    {
+        $date->setTime(0,0,0);
+        $query = $this->getEntityManager()
+            ->createQuery(' SELECT p FROM FrontBundle:Events p '.
+                ' WHERE p.startDate <= :date' .
+                ' AND p.endDate >= :date' )
+            ->setParameter('date', $date->format('Y-m-d H:i'));
         try {
             return $query->getResult();
         } catch (NoResultException $e) {
