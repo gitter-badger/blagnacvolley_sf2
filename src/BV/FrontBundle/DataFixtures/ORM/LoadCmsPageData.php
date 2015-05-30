@@ -60,12 +60,20 @@ class LoadCmsPageData extends AbstractFixture implements OrderedFixtureInterface
         $cmsPageA->setUpdatedAt(null);
         $cmsPageA->setDescription("Adresses");
 
+        $cmsPageOptionalInsurance = new CmsPage();
+        $cmsPageOptionalInsurance->setContent('Vous avez la possibilité de souscrire une assurance optionelle.');
+        $cmsPageOptionalInsurance->setName(CmsPage::STATIC_PAGE_OPTIONAL_INSURANCE);
+        $cmsPageOptionalInsurance->setCreatedAt(new \DateTime());
+        $cmsPageOptionalInsurance->setUpdatedAt(null);
+        $cmsPageOptionalInsurance->setDescription("Assurance Optionelle");
+
         $manager->persist($cmsPageVS);
         $manager->persist($cmsPageVSA);
         $manager->persist($cmsPageVSY);
         $manager->persist($cmsPageFG);
         $manager->persist($cmsPageS);
         $manager->persist($cmsPageA);
+        $manager->persist($cmsPageOptionalInsurance);
 
         $manager->flush();
     }

@@ -419,6 +419,13 @@ class User extends EntityUser
      */
     protected $joinedDeskAt = null;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_subscribed_insurance", type="boolean", options={"default": false})
+     */
+    protected $isSubscribedInsurance;
+
     /*******************************************************************************************************************
      *
      *  Custom functions
@@ -1732,5 +1739,29 @@ class User extends EntityUser
     public function getJoinedDeskAt()
     {
         return $this->joinedDeskAt;
+    }
+
+    /**
+     * Set isSubscribedInsurance
+     *
+     * @param boolean $isSubscribedInsurance
+     *
+     * @return User
+     */
+    public function setIsSubscribedInsurance($isSubscribedInsurance)
+    {
+        $this->isSubscribedInsurance = $isSubscribedInsurance;
+
+        return $this;
+    }
+
+    /**
+     * Get isSubscribedInsurance
+     *
+     * @return boolean
+     */
+    public function getIsSubscribedInsurance()
+    {
+        return $this->isSubscribedInsurance;
     }
 }

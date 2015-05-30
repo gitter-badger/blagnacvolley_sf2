@@ -18,7 +18,7 @@ class RegistrationFormType extends AbstractType
             ->add('gender', 'sonata_user_gender', array('empty_value' => 'Choisissez une valeur','required' => true,'label'=>'Genre', 'attr' => array('class' => 'form-control')))
             ->add('firstname', 'text', array('label'=>'Prénom',))
             ->add('lastname', 'text', array('label'=>'Nom', ))
-            ->add('level', 'bv_user_level', array('empty_value' => 'Choisissez une valeur','required' => true,'label'=>'Niveau de jeu', 'attr' => array('class' => 'form-control')))
+            ->add('level', 'bv_user_level', array('empty_value' => 'Choisissez une valeur','required' => false, 'label'=>'Niveau de jeu', 'attr' => array('class' => 'form-control')))
             ->add('dob', 'datePicker', array( 'label'=>'Date de naissance', ))
             ->add('address', 'autocomplete', array( 'label'=>'Adresse',))
             ->add("geo_lat","hidden")
@@ -29,6 +29,7 @@ class RegistrationFormType extends AbstractType
             ->add('phonePro', 'text', array( 'label'=>'Tel Pro.', 'required' => false))
             ->add('pictureFile', 'file', array('label'=>'Photo',))
             ->add('parentalAdvisoryFile', 'file', array('label'=>'Attestation parentale', 'required' => false))
+            ->add('isSubscribedInsurance', 'checkbox', array('label'=>'Assurance Optionelle', 'required' => false, 'attr' => ['class' => 'mt10']))
         ;
     }
 

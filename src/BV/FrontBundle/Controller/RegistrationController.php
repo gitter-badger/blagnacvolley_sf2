@@ -2,6 +2,7 @@
 
 namespace BV\FrontBundle\Controller;
 
+use BV\FrontBundle\Entity\CmsPage;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
@@ -51,6 +52,7 @@ class RegistrationController extends BaseController
 
         return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.'.$this->getEngine(), array(
             'form' => $form->createView(),
+            'optional_insurance' => $this->container->get('doctrine')->getRepository('FrontBundle:CmsPage')->findSingleByName(CmsPage::STATIC_PAGE_OPTIONAL_INSURANCE)
         ));
     }
 }

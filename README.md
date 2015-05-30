@@ -67,6 +67,12 @@ xdebug.remote_host=localhost
 xdebug.remote_port=9000
 ```
 
+## Install PHP_FILEINFO
+
+```
+extension=php_fileinfo.dll
+```
+
 # Finalize Installation setup
 Run all following commands to download required libraries, install assets, generate css files, copy images...
 
