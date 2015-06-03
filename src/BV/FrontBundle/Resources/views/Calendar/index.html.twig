@@ -103,23 +103,23 @@
                 defaultTime: '23:00'
             });
 
+            $('#type').change(function(){
+                switch ($('#type').val()) {
+                    case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_CLOSED') }}':
+                    case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT') }}':
+                    case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH') }}':
+                    case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY') }}':
+                        $('#fgteam').hide();
+                        break;
+                    case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_TRAINING') }}':
+                    case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_MATCH') }}':
+                    case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_CUP') }}':
+                        $('#fgteam').show();
+                        break
+                }
+            });
         });
 
-        $('#type').change(function(){
-            switch ($('#type').val()) {
-                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_CLOSED') }}':
-                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT') }}':
-                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH') }}':
-                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY') }}':
-                    $('#fgteam').hide();
-                    break;
-                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_TRAINING') }}':
-                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_MATCH') }}':
-                case '{{ constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_CUP') }}':
-                    $('#fgteam').show();
-                    break
-            }
-        });
 
         function deleteClicked(eventId)
         {

@@ -4,6 +4,7 @@ namespace BV\AdminBundle\Admin;
 
 use BV\FrontBundle\Entity\Team;
 use BV\FrontBundle\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -120,7 +121,7 @@ class UserAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $user = $this->getSubject(); /* @var $user User */
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getEntityManager(); /* @var $em EntityManager */
         $choices = $em->getRepository('FrontBundle:Team')->findAllGroupedByType();
 
 //        print_r($choices[Team::TYPE_MSC]);
@@ -134,9 +135,6 @@ class UserAdmin extends Admin
                 ->with('Informations de Connexion')
                     ->add('username', 'text', array('help' => 'Note: Le nom utilisateur doit être unique car utilisé pour se connecter.'))
                     ->add('email', 'text', array('help' => 'Note: Le mail doit être unique car utilisé pour les notifications.'))
-                    ->add('plainPassword', 'text', array(
-                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId()))
-                    ))
                 ->end()
                 ->with('Informations utilisateur')
                     ->add('gender', 'sonata_user_gender', array('required' => true, 'attr' => ['class' => 'form-control']))
@@ -148,6 +146,7 @@ class UserAdmin extends Admin
                     ->add('geo_lng', 'hidden')
                     ->add('phone', null, array('required' => false))
                     ->add('phonePro', null, array('label' => 'Téléphone pro.', 'required' => false))
+                    ->add('level', 'bv_user_level', array( 'required' => false, 'attr' => ['class' => 'form-control']))
                 ->end()
             ->end()
             ->tab('Fichiers associés')
@@ -176,12 +175,30 @@ class UserAdmin extends Admin
                         ->add('shirtSize')
                         ->add('dateShirtDelivered', 'sonata_type_datetime_picker', array('required' => false))
                     ->end()
-                    ->with('Teams')
-                        ->add('level', 'bv_user_level', array( 'required' => false, 'attr' => ['class' => 'form-control']))
-                        ->add('mscTeam', 'choice', array('choices' => $choices[Team::TYPE_MSC], 'data' => ($user->getMscTeam() != null ? $user->getMscTeam()->getId() : null), 'required' => false, 'attr' => ['class' => 'form-control']))
-                        ->add('femTeam', 'choice', array('choices' => $choices[Team::TYPE_FEM], 'data' => ($user->getFemTeam() != null ? $user->getFemTeam()->getId() : null), 'required' => false, 'attr' => ['class' => 'form-control']))
-                        ->add('mixTeam', 'choice', array('choices' => $choices[Team::TYPE_MIX], 'data' => ($user->getMixTeam() != null ? $user->getMixTeam()->getId() : null), 'required' => false, 'attr' => ['class' => 'form-control']))
+                ->end()
+            ;
+            $qbMsc = $em->createQueryBuilder()
+                ->add('select', 't')
+                ->from('FrontBundle:Team', 't')
+                ->where('t.type = \''.Team::TYPE_MSC.'\'')
+            ;
+            $qbMix = $em->createQueryBuilder()
+                ->add('select', 't')
+                ->from('FrontBundle:Team', 't')
+                ->where('t.type = \''.Team::TYPE_MIX.'\'')
+            ;
+            $qbFem = $em->createQueryBuilder()
+                ->add('select', 't')
+                ->from('FrontBundle:Team', 't')
+                ->where('t.type = \''.Team::TYPE_FEM.'\'')
+            ;
+            $formMapper
+                ->tab('Equipes')
+                    ->with('Equipes')
                         ->add('isLookingForTeam', null, array('label' => 'Recherche une équipe', 'required' => false))
+                        ->add('mscTeam', 'sonata_type_model', array('query' => $qbMsc, 'btn_add' => false, 'required' => false, 'expanded' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('mixTeam', 'sonata_type_model', array('query' => $qbMix, 'btn_add' => false, 'required' => false, 'expanded' => false, 'attr' => ['class' => 'form-control']))
+                        ->add('femTeam', 'sonata_type_model', array('query' => $qbFem, 'btn_add' => false, 'required' => false, 'expanded' => false, 'attr' => ['class' => 'form-control']))
                     ->end()
                 ->end()
             ;

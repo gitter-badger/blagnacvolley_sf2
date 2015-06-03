@@ -286,6 +286,39 @@ class Team
         return $this->slot;
     }
 
+    public function setMembersFem($membersFem)
+    {
+        if (count($membersFem) > 0) {
+            foreach ($membersFem as $i) {
+                $this->addMembersFem($i);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setMembersMix($membersMix)
+    {
+        if (count($membersMix) > 0) {
+            foreach ($membersMix as $i) {
+                $this->addMembersMix($i);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setMembersMsc($membersMsc)
+    {
+        if (count($membersMsc) > 0) {
+            foreach ($membersMsc as $i) {
+                $this->addMembersMsc($i);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return ArrayCollection
      */
