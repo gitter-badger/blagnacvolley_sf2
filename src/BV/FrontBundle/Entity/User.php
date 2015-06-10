@@ -1656,7 +1656,7 @@ class User extends EntityUser
 
     public function isAllowedToRenew()
     {
-        return ( $this->getStatus() == self::STATUS_ACTIVE_NOT_LICENSED && ( $this->getAge() > 18 || ( $this->getAge() <= 18 && $this->getParentalAdvisory() != null )) );
+        return ( $this->getStatus() == self::STATUS_ACTIVE_NOT_LICENSED && $this->getCertif() != null && ( $this->getAge() > 18 || ( $this->getAge() <= 18 && $this->getParentalAdvisory() != null )) );
     }
 
     /**

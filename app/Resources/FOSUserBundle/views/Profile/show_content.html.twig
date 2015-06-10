@@ -29,139 +29,196 @@
             {{ ('constants.user.status.' ~ user.status) |trans()}}
         </div>
         <div class="panel-body p0">
-            <img src="{{ user.picture |apply_filter('img_160_160') }}" class="img-thumbnail" style="margin: 0 auto;display: block;" />
+            <div class="img-thumbnail">
+                <div class="" style="background: url('{{ user.picture |apply_filter('img_160_160') }}'); margin: 0 auto; width: 146px; height: 146px;"></div>
+            </div>
         </div>
         <div class="panel-footer">
-            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block">Modifier</a><br/>
+            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-sm btn-block">Modifier</a>
             {% if user.isAllowedToRenew() %}
-                <a href="{{ path('bv_user_profile_renew_license') }}" class="btn btn-success btn-sm btn-block">Renouveler</a>
+                <a href="{{ path('bv_user_profile_renew_license') }}" class="mt10 ml0 btn btn-success btn-sm btn-block">Renouveler</a>
             {% endif %}
         </div>
     </div>
 </div>
 <div class="col-sm-10">
     <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Groupes accessibles
+        <div class="col-sm-12">
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-users"></i>Groupes accessibles
+                    </div>
                 </div>
-                <table class="table table-condensed">
-                    <tbody>
-                    <tr>
-                        <th class="lh30">Ecole de volley Adultes</th>
-                        <td>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="lead">Ecole de volley Adultes</p>
+                        </div>
+                        <div class="col-sm-4">
                             {% if (user.isVolleySchoolAdult) == true %}
                                 <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT')} ) }}" class="btn btn-warning btn-sm btn-block" >Quitter</a>
                             {% else %}
                                 <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_ADULT')} ) }}"  class="btn btn-success btn-sm btn-block"  >S'inscrire</a>
                             {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="lh30">Ecole de volley Jeunes</th>
-                        <td>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">Ecole de volley Jeunes</p>
+                        </div>
+                        <div class="col-sm-4">
                             {% if (user.isVolleySchoolYouth) == true %}
                                 <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH')} ) }}" class="btn btn-warning btn-sm btn-block" >Quitter</a>
                             {% else %}
                                 <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_VOLLEYSCHOOL_YOUTH')} ) }}"  class="btn btn-success btn-sm btn-block"  >S'inscrire</a>
                             {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="lh30">Jeu libre</th>
-                        <td>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">Jeu libre</p>
+                        </div>
+                        <div class="col-sm-4">
                             {% if (user.isFreeplay) == true %}
                                 <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY')} ) }}" class="btn btn-warning btn-sm btn-block" >Quitter</a>
                             {% else %}
                                 <a href="{{ path('bv_user_toggle_group', {'type': constant('\\BV\\FrontBundle\\Entity\\Events::TYPE_FREE_PLAY')} ) }}"  class="btn btn-success btn-sm btn-block"  >S'inscrire</a>
                             {% endif %}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ 'profile.show.connexion_data.title'|trans()}}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
-                <table class="table table-hover table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
-                        <td>{{ user.username }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ 'profile.show.club_data.title'|trans()}}
+
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i> {{ 'profile.show.connexion_data.title'|trans()}}
+                    </div>
                 </div>
-                <table class="table table-hover table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.level'|trans() }}</th>
-                        <td>{{ ('constants.user.level.' ~ user.level) |trans()}}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.mscteam'|trans() }}</th>
-                        <td>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.username }}
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.email }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-file-o"></i> {{ 'profile.show.club_data.title'|trans()}}
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.club_data.level'|trans() }}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.level != '' ? (('constants.user.level.' ~ user.level) |trans()) : ''}}
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.club_data.mscteam'|trans() }}</p>
+                        </div>
+                        <div class="col-sm-8">
                             {% if user.getMscTeam %}
                                 <a href="{{ path('team_show', {'id': user.getMscTeam.getId })  }}">{{ user.getMscTeam.name }}</a>
                             {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.mixteam'|trans() }}</th>
-                        <td>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.club_data.mixteam'|trans() }}</p>
+                        </div>
+                        <div class="col-sm-8">
                             {% if user.getMixTeam %}
                                 <a href="{{ path('team_show', {'id': user.getMixTeam.getId })  }}">{{ user.getMixTeam.name }}</a>
                             {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.femteam'|trans() }}</th>
-                        <td>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.club_data.femteam'|trans() }}</p>
+                        </div>
+                        <div class="col-sm-8">
                             {% if user.getFemTeam %}
                                 <a href="{{ path('team_show', {'id': user.getFemTeam.getId })  }}">{{ user.getFemTeam.name }}</a>
                             {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.shirt_size'|trans() }}</th>
-                        <td>{{ user.shirtSize }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.club_data.license'|trans() }}</th>
-                        <td>{{ user.licenseNumber }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ 'profile.show.address_data.title'|trans()}}
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.club_data.shirt_size'|trans() }}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.shirtSize }}
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.club_data.license'|trans() }}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.licenseNumber }}
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
-                <table class="table table-hover table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.gender'|trans()}}</th>
-                        <td>{{ ('constants.user.gender.' ~ user.gender) |trans()}}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.dob'|trans()}}</th>
-                        <td>{{ user.dob|date('d/m/Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.category'|trans()}}</th>
-                        <td>
+            </div>
+
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-map-marker"></i> {{ 'profile.show.address_data.title'|trans()}}
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.address_data.gender'|trans()}}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ ('constants.user.gender.' ~ user.gender) |trans()}}
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ user.dob|date('d/m/Y') }}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.email }}
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.address_data.category'|trans()}}</p>
+                        </div>
+                        <div class="col-sm-8">
                             {{ user.getAge() }} ans
                             <a rel="popover" href="javascript:void(0);">
                                 ({{ ('constants.user.category.' ~ user.getCategory())|trans() }})
@@ -212,44 +269,59 @@
                                     });
                                 });
                             </script>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.address'|trans()}}</th>
-                        <td>{{ user.address }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'profile.show.address_data.phone'|trans()}}</th>
-                        <td>{{ user.phone }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="panel-footer">
-                    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-                    <script type="text/javascript">
-                        function initializeGmaps() {
-                            var mapOptions = { center: new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }}),zoom: 16 };
-                            var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-                            var myLatlng = new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }});
-                            var marker = new google.maps.Marker({
-                                position: myLatlng,
-                                draggable:false,
-                                map: map,
-                                title:"{{ user.username }}"
-                            });
-                            var infowindow = new google.maps.InfoWindow({
-                                content: "{{ user.username }}"
-                            });
-                            google.maps.event.addListener(marker, 'click', function() {
-                                infowindow.open(map,marker);
-                            });
-                        }
-                        google.maps.event.addDomListener(window, 'load', initializeGmaps);
-                    </script>
-                    <div id="map-canvas" style="height:300px;width:409px;"/>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.address_data.phone'|trans()}}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.phone }}
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.address_data.address'|trans()}}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.address }}
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-12">
+                            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+                            <script type="text/javascript">
+                                function initializeGmaps() {
+                                    var mapOptions = { center: new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }}),zoom: 16 };
+                                    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                                    var myLatlng = new google.maps.LatLng({{ user.geoLat }}, {{ user.geoLng }});
+                                    var marker = new google.maps.Marker({
+                                        position: myLatlng,
+                                        draggable:false,
+                                        map: map,
+                                        title:"{{ user.username }}"
+                                    });
+                                    var infowindow = new google.maps.InfoWindow({
+                                        content: "{{ user.username }}"
+                                    });
+                                    google.maps.event.addListener(marker, 'click', function() {
+                                        infowindow.open(map,marker);
+                                    });
+                                }
+                                google.maps.event.addDomListener(window, 'load', initializeGmaps);
+                            </script>
+                            <div id="map-canvas" style="height:300px;width:100%;"></div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 </div>
