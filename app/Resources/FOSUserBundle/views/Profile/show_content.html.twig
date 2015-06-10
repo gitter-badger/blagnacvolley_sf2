@@ -1,4 +1,5 @@
 <div class="fos_user_user_show">
+
 {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
     <div class="col-sm-12">
         <div class="well well-sm warning">{{ 'profile.show.not_licensed'|trans()|raw }}</div>
