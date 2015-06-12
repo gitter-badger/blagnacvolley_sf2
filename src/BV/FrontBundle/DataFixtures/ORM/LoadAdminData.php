@@ -31,6 +31,7 @@ class LoadAdminData extends AbstractFixture implements OrderedFixtureInterface
         $userAdmin->setIsVolleySchoolAdult(false);
         $userAdmin->setIsVolleySchoolYouth(false);
         $userAdmin->setIsFreeplay(false);
+        $userAdmin->setIsSubscribedInsurance(false);
 
         $manager->persist($userAdmin);
         $manager->flush();

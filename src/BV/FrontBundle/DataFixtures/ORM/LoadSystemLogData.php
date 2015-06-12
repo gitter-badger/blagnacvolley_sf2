@@ -14,45 +14,34 @@ class LoadSystemLogData extends AbstractFixture implements OrderedFixtureInterfa
     {
         /* @var $user_yann User */
         $user_yann = $this->getReference('user_yann');
-        $user_seb = $this->getReference('user_seb');
-        $user_1 = $this->getReference('user_1');
 
         $syslog1 = new SystemLog(SystemLog::NOTICE);
         $syslog1->setIsRead(false);
         $syslog1->setUser($user_yann);
         $syslog1->setType(SystemLog::TYPE_USER_CREATED);
 
-        $syslog2 = new SystemLog(SystemLog::NOTICE);
-        $syslog2->setIsRead(false);
-        $syslog1->setUser($user_seb);
-        $syslog2->setType(SystemLog::TYPE_USER_CREATED);
-
-        $syslog3 = new SystemLog(SystemLog::REQUIRE_ACTION);
-        $syslog3->setIsRead(false);
-        $syslog1->setUser($user_yann);
-        $syslog3->setType(SystemLog::TYPE_USER_NEW_SEASON);
-
-        $syslog4 = new SystemLog(SystemLog::NOTICE);
-        $syslog4->setIsRead(true);
-        $syslog4->setContent('PREVIOUS USER');
-        $syslog4->setType(SystemLog::TYPE_USER_CREATED);
-
-        $syslog5 = new SystemLog(SystemLog::NOTICE);
-        $syslog5->setIsRead(true);
-        $syslog5->setContent('ANOTHER PREVIOUS USER');
-        $syslog5->setType(SystemLog::TYPE_USER_CREATED);
-
-        $syslog6 = new SystemLog(SystemLog::NOTICE);
-        $syslog6->setIsRead(false);
-        $syslog6->setUser($user_1);
-        $syslog6->setType(SystemLog::TYPE_USER_NEW_CERTIF);
-
         $manager->persist($syslog1);
+
+        $syslog2 = new SystemLog(SystemLog::REQUIRE_ACTION);
+        $syslog2->setIsRead(false);
+        $syslog2->setUser($user_yann);
+        $syslog2->setType(SystemLog::TYPE_USER_WAITING_VALIDATION);
+
         $manager->persist($syslog2);
+
+        $syslog3 = new SystemLog(SystemLog::NOTICE);
+        $syslog3->setIsRead(false);
+        $syslog3->setUser($user_yann);
+        $syslog3->setType(SystemLog::TYPE_USER_ACCOUNT_DELETED);
+
         $manager->persist($syslog3);
+
+        $syslog4 = new SystemLog(SystemLog::REQUIRE_ACTION);
+        $syslog4->setIsRead(false);
+        $syslog4->setUser($user_yann);
+        $syslog4->setType(SystemLog::TYPE_USER_INFORMATIONS_CHANGED);
+
         $manager->persist($syslog4);
-        $manager->persist($syslog5);
-        $manager->persist($syslog6);
 
         $manager->flush();
     }

@@ -45,16 +45,12 @@
                                                 <span class="label label-sm label-icon {% if (notif.level == constant('\\Tools\\LogBundle\\Entity\\SystemLog::NOTICE')) %} label-success {% else %} label-danger {% endif %}">
                                                     {% if (notif.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_CREATED')) %}
                                                         <i class="fa fa-plus"></i>
-                                                    {% elseif (notif.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_CERTIF')) %}
-                                                        <i class="fa fa-file"></i>
-                                                    {% elseif (notif.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_ATTESTATION')) %}
-                                                        <i class="fa fa-file"></i>
-                                                    {% elseif (notif.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_PARENTAL_ADVISORY')) %}
-                                                        <i class="fa fa-file"></i>
-                                                    {% elseif (notif.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_SEASON')) %}
+                                                    {% elseif (notif.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_WAITING_VALIDATION')) %}
                                                         <i class="fa fa-refresh"></i>
-                                                    {% elseif (notif.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_LICENSE_RENEWAL')) %}
-                                                        <i class="fa fa-euro"></i>
+                                                    {% elseif (notif.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_ACCOUNT_DELETED')) %}
+                                                        <i class="fa fa-user-times"></i>
+                                                    {% elseif (notif.type == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_INFORMATIONS_CHANGED')) %}
+                                                        <i class="fa fa-info"></i>
                                                     {% endif %}
                                                 </span>
                                                 {{ ('constants.types.' ~ notif.type)|trans }}

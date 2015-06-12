@@ -85,7 +85,7 @@ class ProfileController extends Controller
                 $request->getSession()->getFlashBag()->add('success', 'Modifications sauvegardées avec succès' );
 
                 // Send notification to Admin to validate the account
-                $this->container->get('tools.logbundle.logger')->addWarning(SystemLog::TYPE_USER_LICENSE_RENEWAL, $user);
+                $this->container->get('tools.logbundle.logger')->addWarning(SystemLog::TYPE_USER_WAITING_VALIDATION, $user);
             }
             catch (DBALException $e) {
                 $request->getSession()->getFlashBag()->add('error', 'Cet email est déjà utilisé sur la plateforme' );

@@ -1,0 +1,15 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_flat_field.html.twig' %}
+
+{% block field %}
+    {% set valueId = value %}
+    {% spaceless %}
+
+        {% if object.user.id %}
+            <a href="{{ path('admin_bv_front_user_edit', {id: object.user.id }) }}">
+                <i class="fa fa-user"></i>
+                {{ value }}
+            </a>
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock %}

@@ -37,7 +37,7 @@
         {% endif %}
 
         {% set val = 'constants.levels.' ~ value %}
-        {{ val|trans({}) }}
+        <span class="label label-success">{{ val|trans({}) }}</span>
 
     {% endspaceless %}
 {% endblock %}

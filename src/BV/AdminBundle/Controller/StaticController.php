@@ -93,7 +93,7 @@ class StaticController extends Controller
             return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
         }
 
-        if ($object->getType() == SystemLog::TYPE_USER_LICENSE_RENEWAL)
+        if ($object->getType() == SystemLog::TYPE_USER_WAITING_VALIDATION)
         {
             if (!$user->isAllowedToRenew() == null) {
                 $this->addFlash('sonata_flash_error', 'Cet utilisateur n\'est pas dans les conditions de renouvellement de licence');

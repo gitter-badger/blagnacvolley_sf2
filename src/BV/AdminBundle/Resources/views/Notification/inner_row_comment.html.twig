@@ -11,7 +11,7 @@
     </td>
 
     <td class="sonata-ba-list-field sonata-ba-list-field-string">
-        {{ object.content }}
+        {{ object|render_list_element(admin.list['user']) }}
     </td>
 
     <td class="sonata-ba-list-field sonata-ba-list-field-datetime">

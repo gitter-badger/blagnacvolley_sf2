@@ -46,6 +46,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_yann->setIsVolleySchoolAdult(true);
         $user_yann->setIsVolleySchoolYouth(false);
         $user_yann->setIsFreeplay(false);
+        $user_yann->setIsSubscribedInsurance(false);
 
         $user_seb = new User();
         $user_seb->setFirstname('Sébastien');
@@ -80,6 +81,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_seb->setIsVolleySchoolAdult(false);
         $user_seb->setIsVolleySchoolYouth(true);
         $user_seb->setIsFreeplay(false);
+        $user_seb->setIsSubscribedInsurance(false);
 
         $user1 = new User();
         $user1->setFirstname('Jean-Yves');
@@ -115,6 +117,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user1->setIsVolleySchoolAdult(true);
         $user1->setIsVolleySchoolYouth(false);
         $user1->setIsFreeplay(true);
+        $user1->setIsSubscribedInsurance(false);
         
         // Patrick
         $user_patrick = new User();
@@ -152,6 +155,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_patrick->setIsFreeplay(false);
         $user_patrick->setDeskRole(User::DESK_ROLE_PRESIDENT);
         $user_patrick->setJoinedDeskAt(new \DateTime('2004-01-01'));
+        $user_patrick->setIsSubscribedInsurance(false);
 
         /* @var $teamMsc1 Team */
         $teamMsc1 = $this->getReference('teamMsc1');

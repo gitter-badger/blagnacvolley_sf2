@@ -38,32 +38,32 @@
 
         {{ ('constants.types.' ~ value)|trans({}) }}
 
-        {% if object.user != null %}
-            <br/>{{ object.user.firstname }} {{ object.user.lastname }}
-            {% if object.user.certif != null %}
-                <br/><a href="{{ object.user.certif }}" target="_blank" class="fa fa-file"></a> Certificat médical
-            {% else %}
-                <br/>Pas de certificat médical
-            {% endif %}
-            {% if object.user.attestation != null %}
-                <br/><a href="{{ object.user.attestation }}" target="_blank" class="fa fa-file"></a> Attestation pôle Emploi
-            {% else %}
-                <br/>Pas d'Attestation pôle Emploi
-            {% endif %}
-            {% if object.user.parentalAdvisory != null %}
-                <br/><a href="{{ object.user.parentalAdvisory }}" target="_blank" class="fa fa-file"></a> Autorisation parentale
-            {% else %}
-                <br/>Pas d'Autorisation parentale
-            {% endif %}
-        {% endif %}
+        {#{% if object.user != null %}#}
+            {#<br/>{{ object.user.firstname }} {{ object.user.lastname }}#}
+            {#{% if object.user.certif != null %}#}
+                {#<br/><a href="{{ object.user.certif }}" target="_blank" class="fa fa-file"></a> Certificat médical#}
+            {#{% else %}#}
+                {#<br/>Pas de certificat médical#}
+            {#{% endif %}#}
+            {#{% if object.user.attestation != null %}#}
+                {#<br/><a href="{{ object.user.attestation }}" target="_blank" class="fa fa-file"></a> Attestation pôle Emploi#}
+            {#{% else %}#}
+                {#<br/>Pas d'Attestation pôle Emploi#}
+            {#{% endif %}#}
+            {#{% if object.user.parentalAdvisory != null %}#}
+                {#<br/><a href="{{ object.user.parentalAdvisory }}" target="_blank" class="fa fa-file"></a> Autorisation parentale#}
+            {#{% else %}#}
+                {#<br/>Pas d'Autorisation parentale#}
+            {#{% endif %}#}
+        {#{% endif %}#}
 
-        {% if (valueId == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_CERTIF')) %}
-            <a href="{{ object.user.certif }}" target="_blank" class="fa fa-file"></a>
-        {% endif %}
+        {#{% if (valueId == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_CERTIF')) %}#}
+            {#<a href="{{ object.user.certif }}" target="_blank" class="fa fa-file"></a>#}
+        {#{% endif %}#}
 
-        {% if (valueId == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_ATTESTATION')) %}
-            <a href="{{ object.user.attestation }}" target="_blank" class="fa fa-file"></a>
-        {% endif %}
+        {#{% if (valueId == constant('\\Tools\\LogBundle\\Entity\\SystemLog::TYPE_USER_NEW_ATTESTATION')) %}#}
+            {#<a href="{{ object.user.attestation }}" target="_blank" class="fa fa-file"></a>#}
+        {#{% endif %}#}
 
     {% endspaceless %}
 {% endblock %}

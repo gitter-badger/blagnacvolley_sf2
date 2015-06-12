@@ -18,11 +18,9 @@ class SystemLog
     const REQUIRE_ACTION = 200;
 
     const TYPE_USER_CREATED = 100;
-    const TYPE_USER_NEW_SEASON = 110;
-    const TYPE_USER_NEW_CERTIF = 120;
-    const TYPE_USER_NEW_ATTESTATION = 130;
-    const TYPE_USER_NEW_PARENTAL_ADVISORY = 140;
-    const TYPE_USER_LICENSE_RENEWAL = 150;
+    const TYPE_USER_WAITING_VALIDATION = 110;
+    const TYPE_USER_ACCOUNT_DELETED = 120;
+    const TYPE_USER_INFORMATIONS_CHANGED = 130;
 
     protected static $levels = array(
         self::NOTICE            => 'NOTICE',
@@ -30,12 +28,10 @@ class SystemLog
     );
 
     protected static $types = array(
-        self::TYPE_USER_CREATED     => 'TYPE_USER_CREATED',
-        self::TYPE_USER_NEW_SEASON  => 'TYPE_USER_NEW_SEASON',
-        self::TYPE_USER_NEW_CERTIF  => 'TYPE_USER_NEW_CERTIF',
-        self::TYPE_USER_NEW_ATTESTATION  => 'TYPE_USER_NEW_ATTESTATION',
-        self::TYPE_USER_NEW_PARENTAL_ADVISORY=> 'TYPE_USER_NEW_PARENTAL_ADVISORY',
-        self::TYPE_USER_LICENSE_RENEWAL=> 'TYPE_USER_LICENSE_RENEWAL',
+        self::TYPE_USER_CREATED                 => self::TYPE_USER_CREATED             ,
+        self::TYPE_USER_WAITING_VALIDATION      => self::TYPE_USER_WAITING_VALIDATION  ,
+        self::TYPE_USER_ACCOUNT_DELETED         => self::TYPE_USER_ACCOUNT_DELETED     ,
+        self::TYPE_USER_INFORMATIONS_CHANGED    => self::TYPE_USER_INFORMATIONS_CHANGED,
     );
 
     /**

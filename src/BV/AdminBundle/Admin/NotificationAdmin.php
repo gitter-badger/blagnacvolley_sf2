@@ -65,7 +65,7 @@ class NotificationAdmin extends Admin
         $listMapper
             ->add('level',  'choice', array ('choices' => SystemLog::getLevels(), 'template' => 'AdminBundle:Notification:Fields/level_field.html.twig') )
             ->add('type',  'choice', array ('choices' => SystemLog::getTypes(), 'template' => 'AdminBundle:Notification:Fields/type_field.html.twig') )
-            ->add('content', 'string', array('template' => 'AdminBundle:Notification:Fields/content_field.html.twig'))
+            ->add('user', 'sonata_type_model', array ('template' => 'AdminBundle:Notification:Fields/user_field.html.twig') )
             ->add('created','datetime',array('format' => 'd M Y H:i'))
             ->add('isRead', 'boolean', array('template' => 'AdminBundle:Notification:Fields/boolean_field.html.twig') )
             ->add('_action', 'actions', array(
