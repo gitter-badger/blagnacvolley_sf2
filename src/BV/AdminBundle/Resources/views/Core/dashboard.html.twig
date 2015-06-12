@@ -129,61 +129,61 @@
             </div>
         </div>
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-comments"></i>Notifications
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="table-scrollable">
-                        <table class="table table-striped table-bordered table-advance table-hover">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <i class="fa fa-fw fa-user"></i> Type
-                                </th>
-                                <th class="hidden-xs">
-                                    <i class="fa fa-fw fa-calendar"></i> Date
-                                </th>
-                                <th>
-                                    <i class="fa fa-check"></i> Is Read
-                                </th>
-                                <th>
-                                    <i class="fa fa-check"></i> Level
-                                </th>
-                                <th style="width: 1px;"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for notif in notifications %}
-                                <tr>
-                                    <td>
-                                        <span class="label label-sm label-success">{{ ( 'constants.types.' ~ notif.type)|trans }} </span>
-                                        {% if notif.user is not null %}
-                                            <i class="fa fa-fw fa-user"></i> {{ notif.user.firstname }} {{ notif.user.lastname }}
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {{ notif.created|date('d/m/Y H:i') }}
-                                    </td>
-                                    <td>
-                                        {{ notif.isRead }}
-                                    </td>
-                                    <td>{{ ( 'constants.levels.' ~ notif.level)|trans }}</td>
-                                    <td>
-                                        <button class="btn default btn-xs green-stripe pull-right">
-                                            Marquer comme lu </button>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {#<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">#}
+            {#<div class="portlet">#}
+                {#<div class="portlet-title">#}
+                    {#<div class="caption">#}
+                        {#<i class="fa fa-comments"></i>Notifications#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="portlet-body">#}
+                    {#<div class="table-scrollable">#}
+                        {#<table class="table table-striped table-bordered table-advance table-hover">#}
+                            {#<thead>#}
+                            {#<tr>#}
+                                {#<th>#}
+                                    {#<i class="fa fa-fw fa-user"></i> Type#}
+                                {#</th>#}
+                                {#<th class="hidden-xs">#}
+                                    {#<i class="fa fa-fw fa-calendar"></i> Date#}
+                                {#</th>#}
+                                {#<th>#}
+                                    {#<i class="fa fa-check"></i> Is Read#}
+                                {#</th>#}
+                                {#<th>#}
+                                    {#<i class="fa fa-check"></i> Level#}
+                                {#</th>#}
+                                {#<th style="width: 1px;"></th>#}
+                            {#</tr>#}
+                            {#</thead>#}
+                            {#<tbody>#}
+                            {#{% for notif in notifications %}#}
+                                {#<tr>#}
+                                    {#<td>#}
+                                        {#<span class="label label-sm label-success">{{ ( 'constants.types.' ~ notif.type)|trans }} </span>#}
+                                        {#{% if notif.user is not null %}#}
+                                            {#<i class="fa fa-fw fa-user"></i> {{ notif.user.firstname }} {{ notif.user.lastname }}#}
+                                        {#{% endif %}#}
+                                    {#</td>#}
+                                    {#<td>#}
+                                        {#{{ notif.created|date('d/m/Y H:i') }}#}
+                                    {#</td>#}
+                                    {#<td>#}
+                                        {#{{ notif.isRead }}#}
+                                    {#</td>#}
+                                    {#<td>{{ ( 'constants.levels.' ~ notif.level)|trans }}</td>#}
+                                    {#<td>#}
+                                        {#<button class="btn default btn-xs green-stripe pull-right">#}
+                                            {#Marquer comme lu </button>#}
+                                    {#</td>#}
+                                {#</tr>#}
+                            {#{% endfor %}#}
+                            {#</tbody>#}
+                        {#</table>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
     </div>
 
 {% endblock %}
