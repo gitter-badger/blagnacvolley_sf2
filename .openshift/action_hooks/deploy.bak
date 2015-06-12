@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# load custom env
+for VAR in `ls ~/.env/user_vars`; do
+    declare "$VAR=`cat ~/.env/user_vars/$VAR`"
+    export $VAR
+done
+
+### DIRECTORIES ###
+LINKED_DIRS="vendor node_modules web/vendor"
+
+for DIR in $LINKED_DIRS; do
+    # check data dir
+    if [ ! -d "$OPENSHIFT_DATA_DIR/$DIR" ]; then
+        mkdir -p $OPENSHIFT_DATA_DIR/$DIR
+        chmod -R 0777 $OPENSHIFT_DATA_DIR/$DIR
+    fi
+    # check symlink
+    if [ ! -d "$OPENSHIFT_REPO_DIR/$DIR" ]; then
+        ln -s $OPENSHIFT_DATA_DIR/$DIR $OPENSHIFT_REPO_DIR/$DIR
+    fi
+done
+
+(
+    cd $OPENSHIFT_REPO_DIR
+
+    ### NODE ###
+    # Dependencies
+    npm install
+    # Front libraries
+    HOME=$OPENSHIFT_DATA_DIR bower install
+    # Compile Less files
+    grunt build
+
+    ### COMPOSER ###
+    unset GIT_DIR
+    php $OPENSHIFT_DATA_DIR/composer.phar install --no-dev --no-progress --optimize-autoloader
+
+    ### SYMFONY ###
+    ENV=${BV_ENV:-test}
+    SF_OPTS="--env=$ENV --no-debug --no-interaction"
+    # Database
+    php app/console doctrine:migrations:migrate $SF_OPTS
+    php app/console doctrine:fixtures:load $SF_OPTS
+    # Cache
+    php app/console cache:clear $SF_OPTS
+    # Hack controller
+    if [ "${ENV}" == "test" ]; then
+        rm -f web/app.php
+        mv web/app_test.php web/app.php
+    fi
+)
