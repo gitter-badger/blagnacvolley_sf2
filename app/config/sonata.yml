@@ -21,7 +21,9 @@ sonata_admin:
             Paramètres:
                 label:    'Paramètres'
                 icon:    '<i class="fa fa-cogs"></i>'
-
+            Tasks:
+                label:    'Tâches'
+                icon:    '<i class="fa fa-exclamation-triangle"></i>'
 
 sonata_user:
     manager_type: orm
