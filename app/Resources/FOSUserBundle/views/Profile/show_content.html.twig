@@ -207,10 +207,19 @@
                         <div class="clearfix"></div>
 
                         <div class="col-sm-4">
-                            <p class="lead">{{ user.dob|date('d/m/Y') }}</p>
+                            <p class="lead">{{ 'profile.show.address_data.mail'|trans()}}</p>
                         </div>
                         <div class="col-sm-8">
                             {{ user.email }}
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-4">
+                            <p class="lead">{{ 'profile.show.address_data.dob'|trans()}}</p>
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.dob|date('d/m/Y') }}
                         </div>
 
                         <div class="clearfix"></div>

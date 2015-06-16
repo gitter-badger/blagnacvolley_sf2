@@ -1,8 +1,6 @@
 <div class="fos_user_user_edit">
     <h1>{{ 'profile.edit.title'|trans() }}</h1>
 
-    <div class="well well-sm">{{ 'profile.edit.message'|trans() }}</div>
-
     <form autocomplete="off" action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit form-horizontal row-fluid" role="form">
 
         <div class="form-group">
@@ -73,8 +71,10 @@
         {{ form_widget(form._token) }}
 
     </form>
+    <br/>
     <hr/>
     <br/>
+    <div class="well well-sm">{{ 'profile.edit.message'|trans() }}</div>
 
     <div class="col-sm-12">
         <form action="{{ path('bv_user_update_informations_request') }}" method="POST" class="form-horizontal row-fluid" role="form">
