@@ -25,14 +25,11 @@ services:
     sonata.admin.tasks:
         class: BV\AdminBundle\Admin\TasksAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Tasks", label: "Tâches" }
+            - { name: sonata.admin, manager_type: orm, group: "Tasks", label: "Nouvelle saison" }
         arguments:
             - ~
-            - BV\FrontBundle\Entity\Vacations
+            - ~
             - AdminBundle:Tasks
-        calls:
-            - [ setTranslationDomain, [AdminBundle] ]
-            - [ setTemplate, [edit, AdminBundle:Tasks:edit.html. twig]]
     sonata.admin.team:
         class: BV\AdminBundle\Admin\TeamAdmin
         tags:

@@ -7,6 +7,7 @@ use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -40,5 +41,80 @@ class DefaultController extends Controller
 
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
+    }
+
+    public function newSeasonResetUserAction(Request $request)
+    {
+        $result = ['success' => false];
+
+        if($request->isXmlHttpRequest())
+        {
+            /* @var User $user */
+            $user = $this->container->get('security.context')->getToken()->getUser();
+
+            if (!is_object($user) || !$user instanceof User) {
+                $result['error'] = true;
+                $result['message'] = 'Vous devez vous authentifier pour pouvoir continuer.';
+                $response = new Response(json_encode($result));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+            }
+
+            if (!$user->isSuperAdmin()) {
+                $result['error'] = true;
+                $result['message'] = 'Vous devez ëtre admin pour effectuer cela.';
+                $response = new Response(json_encode($result));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+            }
+
+            $id = $request->get('id');
+
+            $userRetrieved = $this->container->get('doctrine')->getRepository('FrontBundle:User')->find($id);
+            if ($userRetrieved instanceof User && $userRetrieved->getStatus() != User::STATUS_INACTIVE)
+            {
+                $userRetrieved->setStatus(User::STATUS_ACTIVE_NOT_LICENSED);
+
+                if ($userRetrieved->getCertif() != null)
+                {
+                    $this->container->get('bv_cache')->deleteFileFromUploadDir($userRetrieved->getId(), User::IMAGE_TYPE_CERTIF);
+                    $this->container->get('bv_cache')->deleteFilesFromCache($userRetrieved->getId(), User::IMAGE_TYPE_CERTIF);
+                    $userRetrieved->setCertif(null);
+                    $userRetrieved->setDateCertif(null);
+                }
+
+                if ($userRetrieved->getAttestation() != null)
+                {
+                    $this->container->get('bv_cache')->deleteFileFromUploadDir($userRetrieved->getId(), User::IMAGE_TYPE_ATTESTATION);
+                    $this->container->get('bv_cache')->deleteFilesFromCache($userRetrieved->getId(), User::IMAGE_TYPE_ATTESTATION);
+                    $userRetrieved->setAttestation(null);
+                    $userRetrieved->setDateAttestation(null);
+                }
+
+                if ($userRetrieved->getParentalAdvisory() != null)
+                {
+                    $this->container->get('bv_cache')->deleteFileFromUploadDir($userRetrieved->getId(), User::IMAGE_TYPE_PARENTAL_ADV);
+                    $this->container->get('bv_cache')->deleteFilesFromCache($userRetrieved->getId(), User::IMAGE_TYPE_PARENTAL_ADV);
+                    $userRetrieved->setParentalAdvisory(null);
+                    $userRetrieved->setDateParentalAdvisory(null);
+                }
+
+                $em = $this->container->get('doctrine')->getManager();
+                $em->persist($userRetrieved);
+                $em->flush();
+
+                // YLSTODO Implement email sending
+
+                $result = ['success' => true, 'user' => [
+                    'id' => $userRetrieved->getId(),
+                    'name' => $userRetrieved->getFirstname().' '.$userRetrieved->getLastname(),
+                    'status' => $userRetrieved->getStatus()
+                ]];
+            }
+        }
+
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }

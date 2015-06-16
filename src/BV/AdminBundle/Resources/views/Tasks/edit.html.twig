@@ -1,19 +1,107 @@
-{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+{% extends '@Admin/layout.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock stylesheets %}
+{% block page_title %}
+    Nouvelle saison
+{% endblock page_title %}
 
-{% block scripts %}
-    {{ parent() }}
-{% endblock scripts %}
+{% block sonata_page_content_header %}
+    <div class="well">
+        Attention, vous êtes sur le point de réinitialiser la liste des utilisateurs pour la nouvelle saison. Cliquer sur le bouton valider aura les conséquences suivantes :
+        <br>
+        <br>
+        <ul>
+            <li>Réinitialiser le statut de tous les utilisateurs à "Non Licencié"</li>
+            <li>Supprimer tous les certificats médicaux associés.</li>
+            <li>Supprimer toutes les attestations pôle emploi.</li>
+            <li>Supprimer toutes les autorisations parentales.</li>
+        </ul>
+        <br>
+        Les utilisateurs reçevront tous un email leur précisant qu'ils doivent renouveller leur licence pour la nouvelle saison.
+        <br><br>
+        Si vous êtes d'accord pout créer une nouvelle saison, entrez en respectant la casse <strong>"Nouvelle Saison"</strong> dans le champ suivant, puis cliquer sur le bouton pour "Réinitialiser". Aucune autre confirmation ne sera demandée.
+    </div>
+    <div class="horizontal-form">
+        <div class="row">
+            <div class="form-group col-lg-8">
+                <input id="input-check" type="text" placeholder="Entrez Nouvelle Saison dans ce champ" data-check="Nouvelle Saison" class="form-control">
+            </div>
+            <div class="form-group col-lg-offset-2 col-lg-2">
+                <input id="submit-check" type="button" class="btn btn-block btn-danger hidden" value="Réinitialiser">
+            </div>
+        </div>
+        <table id="users" class="table table-condensed table-tasks">
+            <thead>
+            <tr>
+                <th>Utilisateur</th>
+                <th>Statut</th>
+                <th>Certificat médical</th>
+                <th>Attestation PE</th>
+                <th>Attestation Parentale</th>
+            </tr>
+            </thead>
+            <tbody id="body-results">
+            {% for user in users %}
+                <tr id="tr-user-{{ user.id }}" data-id="{{ user.id }}">
+                    <td>{{ user.firstname }} {{ user.lastname }}</td>
+                    <td>
+                        {% set val = 'constants.user.status.' ~ user.status %}
+                        {% set class = 'label-danger' %}
+                        {% if user.status == constant('\\BV\\FrontBundle\\Entity\\User::STATUS_ACTIVE_LICENSED') %}
+                            {% set class = 'label-success' %}
+                        {% endif %}
+                        {% if user.status == constant('\\BV\\FrontBundle\\Entity\\User::STATUS_ACTIVE_NOT_LICENSED') %}
+                            {% set class = 'label-warning' %}
+                        {% endif %}
 
-{% block form %}
+                        <span class="label {{ class }}">{{ val|trans({}, 'BVUserBundle') }}</span>
+                    </td>
+                    <td>{{ user.certif }}</td>
+                    <td>{{ user.attestation }}</td>
+                    <td>{{ user.parentalAdvisory }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    {{ parent() }}
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function(){
+            $("#input-check").keyup(function(){
+                if ($(this).val() == $(this).data('check')) {
+                    $('#submit-check').removeClass('hidden');
+                } else {
+                    $('#submit-check').addClass('hidden');
+                }
+            });
 
-{% endblock form %}
+            $("#submit-check").click(function(){
+                $("#submit-check").attr('disabled', true);
 
-{% block list_filters %}
+                $('.table-tasks tbody tr').each(function(elt){
+                    $.ajax({
+                        type:   "POST",
+                        url:    "{{ path('bv_admin_new_season_reset_user') }}",
+                        data:   { id: $(this).data('id') }
+                    })
+                    .done(function(data ) {
+                        if (typeof(data) == "object") {
+                            if (data.success == true) {
+                                $('.table-tasks #tr-user-'+data.user.id).replaceWith('<tr class="ok" id="tr-user-'+data.user.id+'" data-id="'+data.user.id+'"><td>'+data.user.name+'</td><td><span class="label label-warning">Actif non licencié</span></td><td></td><td></td><td></td></tr>');
+                            }
+                        }
+                    })
+                    .fail(function() {
 
-{% endblock list_filters %}
+                    })
+                    .always(function() {
+
+                    });
+                });
+            });
+        });
+
+
+        //]]>
+    </script>
+{% endblock sonata_page_content_header %}

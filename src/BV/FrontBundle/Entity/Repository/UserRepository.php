@@ -265,4 +265,19 @@ class UserRepository extends EntityRepository
             return null;
         }
     }
+
+    public function findAllActive()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(' SELECT p FROM FrontBundle:User p'.
+                          ' WHERE p.status <> :status'
+            )->setParameter('status', User::STATUS_INACTIVE)
+        ;
+
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }

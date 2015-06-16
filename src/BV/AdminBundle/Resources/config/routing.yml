@@ -18,3 +18,7 @@ bv_delete_file:
 sonata_admin_dashboard:
      pattern:  /admin/dashboard
      defaults: { _controller: AdminBundle:Custom:dashboard }
+
+bv_admin_new_season_reset_user:
+     pattern:  /admin/new_season_reset_user
+     defaults: { _controller: AdminBundle:Default:newSeasonResetUser }
