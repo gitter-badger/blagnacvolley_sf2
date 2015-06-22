@@ -442,6 +442,7 @@ class User extends EntityUser
         $this->isVolleySchoolAdult = false;
         $this->isVolleySchoolYouth = false;
         $this->isFreeplay = false;
+        $this->isSubscribedInsurance = false;
         $this->status = static::STATUS_ACTIVE_NOT_LICENSED;
         $this->news = new ArrayCollection();
     }

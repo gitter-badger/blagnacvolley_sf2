@@ -4,7 +4,7 @@
     {% set valueId = value %}
     {% spaceless %}
 
-        {% if object.user.id %}
+        {% if object.user != null %}
             <a href="{{ path('admin_bv_front_user_edit', {id: object.user.id }) }}">
                 <i class="fa fa-user"></i>
                 {{ value }}

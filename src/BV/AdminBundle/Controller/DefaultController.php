@@ -99,11 +99,13 @@ class DefaultController extends Controller
                     $userRetrieved->setDateParentalAdvisory(null);
                 }
 
-                $em = $this->container->get('doctrine')->getManager();
-                $em->persist($userRetrieved);
-                $em->flush();
+//                $em = $this->container->get('doctrine')->getManager();
+//                $em->persist($userRetrieved);
+//                $em->flush();
 
-                // YLSTODO Implement email sending
+                $this->container->get('bv_mailer')->sendNewSeason(
+                    $userRetrieved
+                );
 
                 $result = ['success' => true, 'user' => [
                     'id' => $userRetrieved->getId(),

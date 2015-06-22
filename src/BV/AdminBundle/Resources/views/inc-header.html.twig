@@ -39,7 +39,7 @@
                             <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
                                 {% for notif in notifications %}
                                     <li>
-                                        <a href="{{ path('admin_bv_front_user_edit', {id: notif.user.id}) }}">
+                                        <a {% if notif.user != null %} href="{{ path('admin_bv_front_user_edit', {id: notif.user.id}) }}" {% else %} href="javascript:;" {% endif %}>
                                             <span class="time">{{ notif.created|date('d/m/Y H:i')}}</span>
                                             <span class="details">
                                                 <span class="label label-sm label-icon {% if (notif.level == constant('\\Tools\\LogBundle\\Entity\\SystemLog::NOTICE')) %} label-success {% else %} label-danger {% endif %}">

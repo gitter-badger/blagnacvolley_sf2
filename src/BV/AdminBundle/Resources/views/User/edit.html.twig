@@ -13,7 +13,7 @@
 
 {% block page_title %}
     {% if admin.id(object) is not null %}
-        {{ "title_edit"|trans({'%name%': admin.toString(object)|truncate(15) }, 'SonataAdminBundle') }}
+        {{ "title_edit"|trans({'%name%': admin.toString(object)|truncate(30) }, 'SonataAdminBundle') }}
     {% else %}
         Créer <small>un nouvel utilisateur</small>
     {% endif %}
@@ -44,7 +44,7 @@
         </div>
 
         {% if object.status != constant('\\BV\\FrontBundle\\Entity\\User::STATUS_INACTIVE') %}
-            <button type="button" class="btn btn-sm btn-warning pull-right navbar-btn" data-toggle="modal" data-target="#modalDeactivate">D&eacute;sactiver</button>
+            <button type="button" class="btn btn-sm btn-warning pull-right navbar-btn mr10" data-toggle="modal" data-target="#modalDeactivate">D&eacute;sactiver</button>
 
             <!-- Modal Deactivate -->
             <div class="modal fade" id="modalDeactivate" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
@@ -72,6 +72,10 @@
 {% endblock page_title_actions %}
 
 {% block sonata_page_content_header %}
+    <div class="well">
+        Cet utilisateur est en status : <strong>{{ object.status|trans }}</strong>
+    </div>
+
     {% if admin.id(object) is null %}
         <div class="well container-fluid">
             Attention, un mot de passe généré aléatoirement sera envoyé par email à la création du compte.
@@ -81,12 +85,32 @@
     {% if object.status == constant('\\BV\\FrontBundle\\Entity\\User::STATUS_ACTIVE_WAITING_VALIDATION') %}
     <div class="well container-fluid">
         <div class="row">
-                <span class="col-sm-8">
-                    Cet utilisateur a effectu&eacute; une demande de licence. Une fois les documents valid&eacute;s et la cotisation pay&eacute;e, cliquer sur Valider, l'utilisateur sera pr&eacute;venu par email. Sinon cliquer sur Refuser. Vous pourrez alors pr&eacute;ciser le motif. Un email sera envoy&eacute; &agrave; cet utilisateur.
+                <span class="col-sm-9 text-justify">
+                    Cet utilisateur a effectu&eacute; une demande de licence. Une fois les documents valid&eacute;s, la cotisation pay&eacute;e et la demande &eacute;ffectu&eacute;e aupr&egrave;s de la FSGT, cliquer sur Valider, l'utilisateur sera pr&eacute;venu par email. Sinon cliquer sur Refuser. Vous pourrez alors pr&eacute;ciser le motif. Un email sera envoy&eacute; &agrave; cet utilisateur.
                 </span>
-                <span class="col-sm-4">
-                    <a href="{{ path('admin_bv_front_user_reactivate', { id: object.id }) }}" class="pull-right btn btn-sm btn-success mt8">Valider la demande</a>
-                    <button type="button" class="pull-right btn btn-sm btn-primary mt8 mr5">Refuser la demande</button>
+                <span class="col-sm-3">
+                    <a href="{{ path('admin_bv_front_user_reactivate', { id: object.id }) }}" class="pull-right btn btn-block btn-sm btn-success mt8">Valider la demande</a>
+                    <span class="clearfix"></span>
+                    <button type="button"  data-toggle="modal" data-target="#modalRefuseValidation" class="pull-right btn btn-block btn-sm btn-primary mt8 mt10">Refuser la demande</button>
+
+                    <!-- Modal Refuse -->
+                    <div class="modal fade" id="modalRefuseValidation" tabindex="-1" role="dialog" aria-labelledby="modalRefuseValidation" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="modalDelete">Refuser la validation</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Vous &ecirc;tes sur le point de refuser la validation d'une demande de license.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                    <a href="{{ path('admin_bv_front_user_deactivate', { id: object.id }) }}" class="btn btn-warning">D&eacute;sactiver</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </span>
             <div class="clearfix"></div>
         </div>

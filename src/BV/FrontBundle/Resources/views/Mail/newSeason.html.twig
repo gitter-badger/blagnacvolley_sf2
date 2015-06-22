@@ -1,0 +1,16 @@
+{% extends "FrontBundle:Mail:layout.html.twig" %}
+
+{% block title_content %}
+    [BlagnacVolley] l'admininistrateur du site vient de renouveller la saison.
+{% endblock title_content %}
+
+{% block mail_content %}
+
+    Bonjour {{ user.firstname }} {{ user.lastname }}<br/><br/>
+
+    Nous vous informons que l'administrateur du site a procédé au renouvellement de la saison.
+    De fait, le certificat médical, l'attestation parentale et l'attestation pôle emploi ont été supprimés.
+
+    Au plaisir de vous voir pour la prochaine saison !
+
+{% endblock mail_content %}

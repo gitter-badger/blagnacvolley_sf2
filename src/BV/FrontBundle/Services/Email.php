@@ -136,4 +136,21 @@ class Email
 
         $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
     }
+
+
+    /**
+     * Send message to user when the Admin user launch the "new season" process
+     *
+     * @param User $user
+     */
+    public function sendNewSeason(User $user)
+    {
+        $subject = "[BlagnacVolley] l'admininistrateur du site vient de renouveller la saison.";
+        $template = 'FrontBundle:Mail:newSeason.html.twig';
+        $body = $this->templating->render($template, array(
+            'user'      => $user,
+        ));
+
+        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
+    }
 }
