@@ -41,7 +41,10 @@
         "sonata-project/block-bundle": "*",
         "sonata-project/doctrine-orm-admin-bundle": "*",
         "sonata-project/notification-bundle": "*",
-        "symfony/intl": "^2.6"
+        "symfony/intl": "^2.6",
+
+        "coresphere/console-bundle": "dev-master"
+
     },
     "require-dev": {
     },

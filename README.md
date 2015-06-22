@@ -100,22 +100,19 @@ Open regedit.
 Search for an AutoRun key inside HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor or HKEY_CURRENT_USER\Software\Microsoft\Command Processor.
 Check if it contains any path to non-existent file, if it's the case, just remove them.
 
-# Serveur de Test :
+# Adresses serveurs :
+
+
+Serveur de Test :
 
 ```
-test.blagnacvolley.fr --> http://test-blagnacvolley.rhcloud.com/
+Aucun
 ```
 
 Serveur de Prod :
 
 ```
-blagnacvolley.fr --> http://prod-blagnacvolley.rhcloud.com/
+blagnacvolley.fr --> http://cluster011.ovh.net/~blagnacvuj/
 ```
 
 Configure local parameters: go to http://hostname/config.php
-
-# Deployment
-
-```
-git push test
-```
