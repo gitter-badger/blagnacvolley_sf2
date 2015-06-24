@@ -50,7 +50,7 @@ class NewsAdminController extends Controller
                     if ($this->get('request')->request->get($uniqid) != null)
                     {
                         $params = $this->get('request')->request->get($uniqid);
-                        if (  $params['level'] != null && $params['start_date'] != null && $params['end_date'] != null && array_key_exists($params['level'], Events::getEventsType())) {
+                        if (  $params['level'] != null && $params['start_date'] != null && $params['end_date'] != null ) {
                             $level = $params['level'];
                             $startDate = new \DateTime($params['start_date']);
                             $endDate = new \DateTime($params['end_date']);
@@ -170,7 +170,7 @@ class NewsAdminController extends Controller
                         if (array_key_exists('level', $params) && array_key_exists('start_date', $params) && array_key_exists('end_date', $params)) {
 
                             // An optional event is associated to this news
-                            if ( $params['level'] != null && $params['start_date'] != null && $params['end_date'] != null && array_key_exists($params['level'], Events::getEventsType())) {
+                            if ( $params['level'] != null && $params['start_date'] != null && $params['end_date'] != null ) {
                                 $level = $params['level'];
                                 $startDate = \DateTime::createFromFormat('d/m/Y G:i', $params['start_date']);
                                 $endDate = \DateTime::createFromFormat('d/m/Y G:i', $params['end_date']);
