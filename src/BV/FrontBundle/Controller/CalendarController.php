@@ -139,21 +139,21 @@ class CalendarController extends Controller
         if ($action == "inserted") {
             $event = new Events();
 
-            $date = $request->get('date');
             $split = explode(':',$startDate);
-            $d = new \DateTime($date);
-            $d->setTime($split[0], $split[1]);
-            $event->setStartDate($d);
+            $dStart = new \DateTime($request->get('date'));
+            $dStart->setTime($split[0], $split[1]);
 
-            $date = $request->get('date');
             $split = explode(':',$endDate);
-            $d = new \DateTime($date);
-            $d->setTime($split[0], $split[1]);
+            $dEnd = new \DateTime($request->get('date'));
+            $dEnd->setTime($split[0], $split[1]);
 
-            $event->setEndDate($d);
+            $event->setStartDate($dStart);
+            $event->setEndDate($dEnd);
             $event->setType($typeId);
             $event->setTeam($team);
             $event->setText($details);
+
+
             $messages = $this->getDoctrine()->getRepository('FrontBundle:User')->isAllowedToInsert($user, $event);
             $messages = array_merge($messages, $this->getDoctrine()->getRepository('FrontBundle:Events')->isValidForInsert($event));
 
@@ -167,7 +167,7 @@ class CalendarController extends Controller
             }
             else
             {
-                $this->container->get('session')->getFlashBag()->add('error', implode('<br/>', $messages));
+                $this->container->get('session')->getFlashBag()->add('error', implode("\n", $messages));
             }
         }
 
@@ -204,7 +204,7 @@ class CalendarController extends Controller
             }
             else
             {
-                $this->container->get('session')->getFlashBag()->add('error', implode('<br/>', $messages));
+                $this->container->get('session')->getFlashBag()->add('error', implode("\n", $messages));
             }
         }
 
@@ -228,7 +228,7 @@ class CalendarController extends Controller
         }
         else
         {
-            $this->container->get('session')->getFlashBag()->add('error', implode('<br/>', $messages));
+            $this->container->get('session')->getFlashBag()->add('error', implode("\n", $messages));
         }
         return $this->redirect($this->generateUrl('bv_calendar_index'));
     }

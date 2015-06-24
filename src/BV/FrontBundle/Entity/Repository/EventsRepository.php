@@ -56,7 +56,7 @@ class EventsRepository extends EntityRepository
     {
         $messages = array();
         $now = new \DateTime();
-        if ($now > $event->getStartDate() || $now > $event->getEndDate())
+        if ($now > $event->getEndDate())
             $messages[] = "Vous ne pouvez pas ajouter des évènements à une date passée";
 
         return $messages;
@@ -127,8 +127,9 @@ class EventsRepository extends EntityRepository
         }
     }
 
-    public function findClosedEventsIncludingDate(\Datetime $date)
+    public function findClosedEventsIncludingDate(\Datetime $d)
     {
+        $date = clone $d;
         $date->setTime(0,0,0);
         $query = $this->getEntityManager()
             ->createQuery(' SELECT p FROM FrontBundle:Events p '.
