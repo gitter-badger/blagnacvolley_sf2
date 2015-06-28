@@ -3,6 +3,7 @@
 namespace BV\FrontBundle\Controller;
 
 
+use BV\FrontBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use BV\FrontBundle\Entity\Team;
@@ -20,6 +21,8 @@ class TeamController extends Controller
      */
     public function indexAction()
     {
+        /* @var User $user */
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
         $entities = array();
@@ -29,6 +32,7 @@ class TeamController extends Controller
 
         return $this->render('FrontBundle:Team:index.html.twig', array(
             'entities' => $entities,
+            'allowed_to_view' => ( $user instanceof User && $user->getStatus() == User::STATUS_ACTIVE_LICENSED)
         ));
     }
 
@@ -38,6 +42,15 @@ class TeamController extends Controller
      */
     public function showAction($id)
     {
+        /* @var User $user */
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $allowed = ( $user instanceof User && $user->getStatus() == User::STATUS_ACTIVE_LICENSED);
+
+        if (!$allowed) {
+            $this->container->get('session')->getFlashBag()->add('error', 'Vous n\'êtes pas autorisé à faire cela');
+            return $this->redirect($this->generateUrl('teams'));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FrontBundle:Team')->find($id);

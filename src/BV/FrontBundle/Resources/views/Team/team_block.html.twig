@@ -3,7 +3,11 @@
     <tr>
         <td>{{ entity.type }}</td>
         <td>
-            <a href="{{ path('team_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+            {% if allowed_to_view %}
+                <a href="{{ path('team_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+            {% else %}
+                {{ entity.name }}
+            {% endif %}
         </td>
         <td>{{ level | trans }}</td>
         <td>{{ entity.slot }}</td>
