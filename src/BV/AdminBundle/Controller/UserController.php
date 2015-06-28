@@ -39,6 +39,7 @@ class UserController extends CRUDController
     {
         $id = $request->get('id');
         $user = $this->getDoctrine()->getRepository('FrontBundle:User')->find($id);
+
         if ($user != null)
         {
             $user->setEnabled(true);
@@ -69,7 +70,7 @@ class UserController extends CRUDController
             $em->persist($user);
             $em->flush();
             $this->container->get('bv_mailer')->sendLicenseRenewalValidated($user);
-            $this->container->get('session')->getFlashBag()->add('success', 'Utilisateur '.$user->getFirstname().' '.$user->getLastname().' correctement mis à jour. Il peut maintenant avoir accès aux fonctionnalités restreintes du site.');
+            $this->container->get('session')->getFlashBag()->add('success', 'Utilisateur '.$user->getFirstname().' '.$user->getLastname().' correctement mis à jour.');
         }
 
         $referer = $request->headers->get('referer');
@@ -87,14 +88,52 @@ class UserController extends CRUDController
         $message = $request->get('message');
 
         $user = $this->getDoctrine()->getRepository('FrontBundle:User')->find($id);
-        if ($user != null)
+
+        if ($user == null)
         {
-            $user->setStatus(User::STATUS_ACTIVE_WAITING_LICENSE);
+            $this->container->get('session')->getFlashBag()->add('error', 'Utilisateur inconnu');
+        }
+
+        if ($message == null)
+        {
+            $this->container->get('session')->getFlashBag()->add('error', 'Un message est requis');
+        }
+
+        if ($user != null && $message != null)
+        {
+            $user->setStatus(User::STATUS_ACTIVE_NOT_LICENSED);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
             $this->container->get('bv_mailer')->sendLicenseRenewalRefused($user, $message);
             $this->container->get('session')->getFlashBag()->add('success', 'Utilisateur '.$user->getFirstname().' '.$user->getLastname().' correctement mis à jour. Il a été notifié du refus de dossier.');
+        }
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function validateLicenseAction(Request $request)
+    {
+        $id = $request->get('id');
+        $user = $this->getDoctrine()->getRepository('FrontBundle:User')->find($id);
+
+        if ($user->getLicenseNumber() == '')
+        {
+            $this->container->get('session')->getFlashBag()->add('error', 'Vous n\'avez pas saisi le numéro de license');
+        }
+
+        if ($user != null && $user->getLicenseNumber() != '')
+        {
+            $user->setStatus(User::STATUS_ACTIVE_LICENSED);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->container->get('session')->getFlashBag()->add('success', 'Utilisateur '.$user->getFirstname().' '.$user->getLastname().' correctement mis à jour. Il peut maintenant avoir accès aux fonctionnalités restreintes du site.');
         }
 
         $referer = $request->headers->get('referer');

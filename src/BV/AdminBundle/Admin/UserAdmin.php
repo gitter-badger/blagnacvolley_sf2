@@ -30,6 +30,7 @@ class UserAdmin extends Admin
         $collection->add('reactivate', '{id}/reactivate');
         $collection->add('validate_renewal', '{id}/validate_renewal');
         $collection->add('refuse_renewal', '{id}/refuse_renewal');
+        $collection->add('validate_license', '{id}/validate_license');
     }
     /**
      * {@inheritdoc}
