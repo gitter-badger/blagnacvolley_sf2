@@ -101,7 +101,7 @@ class News
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist", "remove"}, inversedBy="news")
+     * @ORM\ManyToOne(targetEntity="BV\FrontBundle\Entity\User", cascade={"persist"}, inversedBy="news")
      * @ORM\JoinColumn(name="author", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $author;
