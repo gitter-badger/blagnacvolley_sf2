@@ -60,6 +60,36 @@
         {% endif %}
 
         <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="row-fluid">
+                    {{ form_errors(form.isLookingForMscTeam) }}
+                    {{ form_widget(form.isLookingForMscTeam) }}
+                    {{ form_label(form.isLookingForMscTeam) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="row-fluid">
+                    {{ form_errors(form.isLookingForMixTeam) }}
+                    {{ form_widget(form.isLookingForMixTeam) }}
+                    {{ form_label( form.isLookingForMixTeam) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="row-fluid">
+                    {{ form_errors(form.isLookingForFemTeam) }}
+                    {{ form_widget(form.isLookingForFemTeam) }}
+                    {{ form_label( form.isLookingForFemTeam) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-sm-2">
 
             </div>

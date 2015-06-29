@@ -1,17 +1,17 @@
 <div class="fos_user_user_show">
 {% if user.status == constant('STATUS_ACTIVE_NOT_LICENSED', user) %}
     <div class="col-sm-12">
-        <div class="well well-sm warning">{{ 'profile.show.not_licensed'|trans()|raw }}</div>
+        <div class="text-justify well well-sm warning">{{ 'profile.show.not_licensed'|trans()|raw }}</div>
     </div>
 {% endif %}
 {% if user.status == constant('STATUS_ACTIVE_WAITING_VALIDATION', user) %}
     <div class="col-sm-12">
-        <div class="well well-sm warning">{{ 'profile.show.waiting_validation'|trans()|raw }}</div>
+        <div class="text-justify well well-sm warning">{{ 'profile.show.waiting_validation'|trans()|raw }}</div>
     </div>
 {% endif %}
 {% if user.status == constant('STATUS_ACTIVE_WAITING_LICENSE', user) %}
     <div class="col-sm-12">
-        <div class="well well-sm warning">{{ 'profile.show.waiting_license'|trans()|raw }}</div>
+        <div class="text-justify well well-sm warning">{{ 'profile.show.waiting_license'|trans()|raw }}</div>
     </div>
 {% endif %}
 
@@ -135,6 +135,8 @@
 
                         <div class="clearfix"></div>
 
+                        {% if user.getGender == constant('\\BV\\FrontBundle\\Entity\\User::GENDER_MALE') %}
+
                         <div class="col-sm-4">
                             <p class="lead">{{ 'profile.show.club_data.mscteam'|trans() }}</p>
                         </div>
@@ -145,6 +147,8 @@
                         </div>
 
                         <div class="clearfix"></div>
+
+                        {% endif %}
 
                         <div class="col-sm-4">
                             <p class="lead">{{ 'profile.show.club_data.mixteam'|trans() }}</p>
@@ -157,6 +161,8 @@
 
                         <div class="clearfix"></div>
 
+                        {% if user.getGender == constant('\\BV\\FrontBundle\\Entity\\User::GENDER_FEMALE') %}
+
                         <div class="col-sm-4">
                             <p class="lead">{{ 'profile.show.club_data.femteam'|trans() }}</p>
                         </div>
@@ -167,6 +173,8 @@
                         </div>
 
                         <div class="clearfix"></div>
+
+                        {% endif %}
 
                         <div class="col-sm-4">
                             <p class="lead">{{ 'profile.show.club_data.shirt_size'|trans() }}</p>
@@ -185,6 +193,36 @@
                         </div>
 
                         <div class="clearfix"></div>
+
+                        {% if user.isLookingForMscTeam == 1 %}
+
+                        <div class="col-sm-offset-4 col-sm-8">
+                            Vous cherchez actuellement une équipe masculine
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        {% endif %}
+
+                        {% if user.isLookingForMixTeam == 1 %}
+
+                            <div class="col-sm-offset-4 col-sm-8">
+                                Vous cherchez actuellement une équipe mixte
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                        {% endif %}
+
+                        {% if user.isLookingForFemTeam == 1 %}
+
+                            <div class="col-sm-offset-4 col-sm-8">
+                                Vous cherchez actuellement une équipe féminine
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -270,9 +270,23 @@ class User extends EntityUser
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_looking_for_team", type="boolean", options={"default": false})
+     * @ORM\Column(name="is_looking_for_msc_team", type="boolean", nullable=false, options={"default": false})
      */
-    protected $isLookingForTeam;
+    protected $isLookingForMscTeam = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_looking_for_mix_team", type="boolean", nullable=false, options={"default": false})
+     */
+    protected $isLookingForMixTeam = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_looking_for_fem_team", type="boolean", nullable=false, options={"default": false})
+     */
+    protected $isLookingForFemTeam = false;
 
     /**
      * @var string
@@ -438,7 +452,9 @@ class User extends EntityUser
 
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->isRequiredBill = false;
-        $this->isLookingForTeam = false;
+        $this->isLookingForMscTeam = false;
+        $this->isLookingForMixTeam = false;
+        $this->isLookingForFemTeam = false;
         $this->isVolleySchoolAdult = false;
         $this->isVolleySchoolYouth = false;
         $this->isFreeplay = false;
@@ -689,29 +705,6 @@ class User extends EntityUser
     public function getMixTeam()
     {
         return $this->mixTeam;
-    }
-
-    /**
-     * Set isLookingForTeam
-     *
-     * @param boolean $isLookingForTeam
-     * @return User
-     */
-    public function setIsLookingForTeam($isLookingForTeam)
-    {
-        $this->isLookingForTeam = $isLookingForTeam;
-
-        return $this;
-    }
-
-    /**
-     * Get isLookingForTeam
-     *
-     * @return boolean
-     */
-    public function getIsLookingForTeam()
-    {
-        return $this->isLookingForTeam;
     }
 
     /**
@@ -1764,5 +1757,77 @@ class User extends EntityUser
     public function getIsSubscribedInsurance()
     {
         return $this->isSubscribedInsurance;
+    }
+
+    /**
+     * Set isLookingForMscTeam
+     *
+     * @param boolean $isLookingForMscTeam
+     *
+     * @return User
+     */
+    public function setIsLookingForMscTeam($isLookingForMscTeam)
+    {
+        $this->isLookingForMscTeam = $isLookingForMscTeam;
+
+        return $this;
+    }
+
+    /**
+     * Get isLookingForMscTeam
+     *
+     * @return boolean
+     */
+    public function getIsLookingForMscTeam()
+    {
+        return $this->isLookingForMscTeam;
+    }
+
+    /**
+     * Set isLookingForMixTeam
+     *
+     * @param boolean $isLookingForMixTeam
+     *
+     * @return User
+     */
+    public function setIsLookingForMixTeam($isLookingForMixTeam)
+    {
+        $this->isLookingForMixTeam = $isLookingForMixTeam;
+
+        return $this;
+    }
+
+    /**
+     * Get isLookingForMixTeam
+     *
+     * @return boolean
+     */
+    public function getIsLookingForMixTeam()
+    {
+        return $this->isLookingForMixTeam;
+    }
+
+    /**
+     * Set isLookingForFemTeam
+     *
+     * @param boolean $isLookingForFemTeam
+     *
+     * @return User
+     */
+    public function setIsLookingForFemTeam($isLookingForFemTeam)
+    {
+        $this->isLookingForFemTeam = $isLookingForFemTeam;
+
+        return $this;
+    }
+
+    /**
+     * Get isLookingForFemTeam
+     *
+     * @return boolean
+     */
+    public function getIsLookingForFemTeam()
+    {
+        return $this->isLookingForFemTeam;
     }
 }

@@ -15,9 +15,12 @@ class ProfileFormType extends AbstractType
         $builder
             ->remove('username')
             ->remove('current_password')
-            ->add('certifFile', 'file', array('label'=>'Certificat médical',))
+            ->add('certifFile', 'file', array('label'=>'Certificat médical','required' => false))
             ->add('attestationFile', 'file', array('label'=>'Attestation pôle emploi','required' => false))
             ->add('parentalAdvisoryFile', 'file', array('label'=>'Autorisation parentale','required' => false))
+            ->add('isLookingForMscTeam', 'checkbox', array('label'=>'Cherche une équipe masculine','required' => false))
+            ->add('isLookingForMixTeam', 'checkbox', array('label'=>'Cherche une équipe mixte','required' => false))
+            ->add('isLookingForFemTeam', 'checkbox', array('label'=>'Cherche une équipe féminine','required' => false))
         ;
     }
 

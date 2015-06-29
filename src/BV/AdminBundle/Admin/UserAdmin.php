@@ -196,7 +196,9 @@ class UserAdmin extends Admin
             $formMapper
                 ->tab('Equipes')
                     ->with('Equipes')
-                        ->add('isLookingForTeam', null, array('label' => 'Recherche une équipe', 'required' => false))
+                        ->add('isLookingForMscTeam', null, array('label' => 'Recherche une équipe Masculine', 'required' => false))
+                        ->add('isLookingForMixTeam', null, array('label' => 'Recherche une équipe Mixe', 'required' => false))
+                        ->add('isLookingForFemTeam', null, array('label' => 'Recherche une équipe Féminine', 'required' => false))
                         ->add('mscTeam', 'sonata_type_model', array('query' => $qbMsc, 'btn_add' => false, 'required' => false, 'expanded' => false, 'attr' => ['class' => 'form-control']))
                         ->add('mixTeam', 'sonata_type_model', array('query' => $qbMix, 'btn_add' => false, 'required' => false, 'expanded' => false, 'attr' => ['class' => 'form-control']))
                         ->add('femTeam', 'sonata_type_model', array('query' => $qbFem, 'btn_add' => false, 'required' => false, 'expanded' => false, 'attr' => ['class' => 'form-control']))
