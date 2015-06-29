@@ -23,6 +23,8 @@ class NewsAdminController extends Controller
         }
 
         $object = $this->admin->getNewInstance(); /* @var $object News */
+        /* @var User $user */
+        $user = $this->container->get('security.context')->getToken()->getUser();
 
         $this->admin->setSubject($object);
 
@@ -52,8 +54,8 @@ class NewsAdminController extends Controller
                         $params = $this->get('request')->request->get($uniqid);
                         if (  $params['level'] != null && $params['start_date'] != null && $params['end_date'] != null ) {
                             $level = $params['level'];
-                            $startDate = new \DateTime($params['start_date']);
-                            $endDate = new \DateTime($params['end_date']);
+                            $startDate = \DateTime::createFromFormat('d/m/Y G:i', $params['start_date']);
+                            $endDate = \DateTime::createFromFormat('d/m/Y G:i', $params['end_date']);
                             if ($startDate < $endDate) {
                                 throw new ModelManagerException('Dates invalides');
                             }
@@ -73,6 +75,7 @@ class NewsAdminController extends Controller
                     // END - CUSTOM YLS
                     // ================
 
+                    $object->setAuthor($user);
                     $object = $this->admin->create($object);
 
                     if ($this->isXmlHttpRequest()) {
