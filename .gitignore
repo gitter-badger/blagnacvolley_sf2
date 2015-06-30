@@ -17,3 +17,5 @@
 node_modules
 /web/vendor/*
 web/media/cache
+/app/config/parameters.yml
+/app/config/parameters*.yml.dist
