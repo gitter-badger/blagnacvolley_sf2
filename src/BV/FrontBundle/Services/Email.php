@@ -153,4 +153,20 @@ class Email
 
         $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
     }
+
+    /**
+     * Send message to user when the Admin user creates the new account
+     *
+     * @param User $user
+     */
+    public function sendNewAccount(User $user)
+    {
+        $subject = "[BlagnacVolley] l'admininistrateur du site vient de vous créer un compte.";
+        $template = 'FrontBundle:Mail:newAccount.html.twig';
+        $body = $this->templating->render($template, array(
+            'user'      => $user,
+        ));
+
+        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
+    }
 }

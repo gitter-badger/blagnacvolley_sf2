@@ -133,19 +133,24 @@ class UserAdmin extends Admin
          */
         $formMapper
             ->tab('Informations personelles')
-                ->with('Informations de Connexion')
-                    ->add('username', 'text', array('help' => 'Note: Le nom utilisateur doit être unique car utilisé pour se connecter.'))
-                    ->add('email', 'text', array('help' => 'Note: Le mail doit être unique car utilisé pour les notifications.'))
-                ->end()
                 ->with('Informations utilisateur')
+
                     ->add('gender', 'sonata_user_gender', array('required' => true, 'attr' => ['class' => 'form-control']))
                     ->add('firstname', null, array('required' => true))
                     ->add('lastname', null, array('required' => true))
-                    ->add('dob', 'sonata_type_date_picker', array('required' => true, 'format' => 'dd/MM/yyyy'))
+                    ->add('email', 'text', array('help' => 'Note: Le mail doit être unique car utilisé pour les notifications.'))
+                    ->add('phone', null, array('required' => false))
                     ->add('address', 'autocomplete', array('required' => true,))
+                    ->add('dob', 'sonata_type_date_picker', array('required' => true, 'format' => 'dd/MM/yyyy'))
                     ->add('geo_lat', 'hidden')
                     ->add('geo_lng', 'hidden')
-                    ->add('phone', null, array('required' => false))
+                ->end()
+                ->with('Informations de connexion')
+                    ->add('username', 'text', array('help' => 'Note: Le nom utilisateur doit être unique car utilisé pour se connecter.'))
+                ->end()
+            ->end()
+            ->tab('Fichiers associés')
+                ->with('Club')
                     ->add('phonePro', null, array('label' => 'Téléphone pro.', 'required' => false))
                     ->add('level', 'bv_user_level', array( 'required' => false, 'attr' => ['class' => 'form-control']))
                 ->end()
@@ -214,7 +219,7 @@ class UserAdmin extends Admin
     public function preUpdate($user)
     {
 //        $this->getUserManager()->updateCanonicalFields($user);
-//        $this->getUserManager()->updatePassword($user);
+        $this->getUserManager()->updatePassword($user);
         $this->getUserManager()->updateUser($user);
     }
 
@@ -232,5 +237,16 @@ class UserAdmin extends Admin
     public function getUserManager()
     {
         return $this->userManager;
+    }
+
+    public function create($object)
+    {
+        $this->prePersist($object);
+        $this->getUserManager()->createUser($object);
+        $this->postPersist($object);
+        $this->createObjectSecurity($object);
+        $this->getUserManager()->updateUser($object);
+
+        return $object;
     }
 }

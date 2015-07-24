@@ -1,0 +1,17 @@
+{% extends "FrontBundle:Mail:layout.html.twig" %}
+
+{% block title_content %}
+    [BlagnacVolley] l'admininistrateur du site vient de vous créer un compte.
+{% endblock title_content %}
+
+{% block mail_content %}
+
+    Bonjour {{ user.firstname }} {{ user.lastname }}<br/><br/>
+
+    Nous vous informons que l'administrateur du site vient de créer votre compte.<br/>
+    Voici vos informations de connection :<br/><br/>
+
+    Identifiant  : <strong>{{ user.username }}</strong><br/>
+    Mot de passe : <strong>{{ user.plainPassword }}</strong><br/>
+
+{% endblock mail_content %}

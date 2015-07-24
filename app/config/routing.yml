@@ -25,3 +25,7 @@ contactPost:
 _imagine:
     resource: .
     type:     imagine
+
+_console:
+    resource: "@CoreSphereConsoleBundle/Resources/config/routing.yml"
+    prefix: /_console
