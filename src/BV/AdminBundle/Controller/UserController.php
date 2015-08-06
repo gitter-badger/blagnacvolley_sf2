@@ -130,7 +130,7 @@ class UserController extends CRUDController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->container->get('bv_mailer')->sendAccountDeactivated($user);
+                $this->container->get('bv_mailer')->sendAccountDeactivated($user);
             $this->container->get('session')->getFlashBag()->add('success', 'Utilisateur '.$user->getFirstname().' '.$user->getLastname().' désactivé avec succès');
         }
 

@@ -8,7 +8,9 @@
             </p>
         {% endif %}
         <ul class="blog-info">
-            <li><i class="fa fa-user"></i> Par {{ post.author.firstname }}</li>
+            {% if post.author != '' %}
+                <li><i class="fa fa-user"></i> Par {{ post.author.firstname }}</li>
+            {% endif %}
             <li><i class="fa fa-calendar"></i> {{ post.createdAt | localizeddate('full', 'none', app.request.locale )|capitalize}} {{ post.createdAt | date('H:i')}}</li>
         </ul>
         <hr class="blog-post-sep">
