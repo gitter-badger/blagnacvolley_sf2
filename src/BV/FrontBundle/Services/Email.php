@@ -159,12 +159,14 @@ class Email
      *
      * @param User $user
      */
-    public function sendNewAccount(User $user)
+    public function sendNewAccount(User $user, $plainPassword)
     {
         $subject = "[BlagnacVolley] l'admininistrateur du site vient de vous créer un compte.";
         $template = 'FrontBundle:Mail:newAccount.html.twig';
+        $user->setPlainPassword($plainPassword);
         $body = $this->templating->render($template, array(
             'user'      => $user,
+            'plainPassword' => $plainPassword
         ));
 
         $this->sendMessage($user->getEmail(), $this->from, $subject, $body);

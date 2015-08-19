@@ -42,6 +42,7 @@ class UserController extends CRUDController
         $userManager->updatePassword($object);
         $object->setPlainPassword(substr($tokenGenerator->generateToken(), 0, 8));
         $form->setData($object);
+        $errorMessage = '';
 
         if ($this->getRestMethod()== 'POST') {
             $form->submit($this->get('request'));
@@ -56,6 +57,9 @@ class UserController extends CRUDController
                 }
 
                 try {
+                    if ($object->getGeoLat() === null || $object->getGeoLng() === null)
+                        throw new ModelManagerException('Les coordonnées géographiques (remplies lors de la sélection de l\'adresse) n\'ont pas été générées correctement. Veuillez sélectionner une adresse valide dans la liste proposée.');
+
                     $object = $this->admin->create($object);
 
                     if ($this->isXmlHttpRequest()) {
@@ -78,8 +82,8 @@ class UserController extends CRUDController
                     return $this->redirectTo($object);
 
                 } catch (ModelManagerException $e) {
+                    $errorMessage = $e->getMessage();
                     $this->logModelManagerException($e);
-
                     $isFormValid = false;
                 }
             }
@@ -89,6 +93,8 @@ class UserController extends CRUDController
                 if (!$this->isXmlHttpRequest()) {
                     $this->addFlash(
                         'sonata_flash_error',
+                        $errorMessage != '' ?
+                        $errorMessage :
                         $this->admin->trans(
                             'flash_create_error',
                             array('%name%' => $this->escapeHtml($this->admin->toString($object))),
