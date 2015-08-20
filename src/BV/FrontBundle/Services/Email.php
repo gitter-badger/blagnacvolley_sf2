@@ -163,7 +163,6 @@ class Email
     {
         $subject = "[BlagnacVolley] l'admininistrateur du site vient de vous créer un compte.";
         $template = 'FrontBundle:Mail:newAccount.html.twig';
-        $user->setPlainPassword($plainPassword);
         $body = $this->templating->render($template, array(
             'user'      => $user,
             'plainPassword' => $plainPassword

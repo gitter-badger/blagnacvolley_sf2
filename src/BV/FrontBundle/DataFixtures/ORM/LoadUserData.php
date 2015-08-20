@@ -32,7 +32,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_yann->setGender(User::GENDER_MALE);
         $user_yann->setGeoLat('43.587638');
         $user_yann->setGeoLng('1.448412');
-        $user_yann->setPicture('/images/defaults/default_male.png');
+        $user_yann->setPicture('/images/defaults/default_male.jpg');
         $user_yann->setShirtSize('L');
         $user_yann->setIsRequiredBill(false);
         $user_yann->setStatus(USER::STATUS_ACTIVE_LICENSED);
@@ -66,7 +66,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_seb->setGender(User::GENDER_MALE);
         $user_seb->setGeoLat('43.662233');
         $user_seb->setGeoLng('1.476035');
-        $user_seb->setPicture('/images/defaults/default_male.png');
+        $user_seb->setPicture('/images/defaults/default_male.jpg');
         $user_seb->setShirtSize('L');
         $user_seb->setIsRequiredBill(false);
         $user_seb->setStatus(USER::STATUS_ACTIVE_LICENSED);
@@ -100,7 +100,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user1->setGender(User::GENDER_MALE);
         $user1->setGeoLat('43.662233');
         $user1->setGeoLng('1.476035');
-        $user1->setPicture('/images/defaults/default_male.png');
+        $user1->setPicture('/images/defaults/default_male.jpg');
         $user1->setCertif('/uploads/certif/pichon.png');
         $user1->setShirtSize('L');
         $user1->setIsRequiredBill(false);
@@ -136,7 +136,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user_patrick->setGender(User::GENDER_MALE);
         $user_patrick->setGeoLat('43.662233');
         $user_patrick->setGeoLng('1.476035');
-        $user_patrick->setPicture('/images/defaults/default_male.png');
+        $user_patrick->setPicture('/images/defaults/default_male.jpg');
         $user_patrick->setShirtSize('L');
         $user_patrick->setIsRequiredBill(false);
         $user_patrick->setStatus(USER::STATUS_ACTIVE_LICENSED);

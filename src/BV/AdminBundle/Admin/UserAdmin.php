@@ -156,7 +156,7 @@ class UserAdmin extends Admin
             ->end()
             ->tab('Fichiers associés')
                 ->with('Club')
-                    ->add('pictureFile', 'file',            array('label' => 'Photo du joueur', 'required' => true, 'image_type' => User::IMAGE_TYPE_PICTURE))
+                    ->add('pictureFile', 'file',            array('label' => 'Photo du joueur', 'required' => false, 'image_type' => User::IMAGE_TYPE_PICTURE))
                     ->add('certifFile', 'file',             array('label' => 'Certificat médical', 'required' => false, 'image_type' => User::IMAGE_TYPE_CERTIF))
                     ->add('attestationFile', 'file',        array('label' => 'Attestation pôle emploi', 'required' => false, 'image_type' => User::IMAGE_TYPE_ATTESTATION))
                     ->add('parentalAdvisoryFile', 'file',   array('label' => 'Accord parental', 'required' => false, 'image_type' => User::IMAGE_TYPE_PARENTAL_ADV))

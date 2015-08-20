@@ -57,8 +57,18 @@ class UserController extends CRUDController
                 }
 
                 try {
+                    // Check that coordinates are valid
                     if ($object->getGeoLat() === null || $object->getGeoLng() === null)
                         throw new ModelManagerException('Les coordonnées géographiques (remplies lors de la sélection de l\'adresse) n\'ont pas été générées correctement. Veuillez sélectionner une adresse valide dans la liste proposée.');
+
+                    // Check that picture is filled
+                    if ($object->getPictureFile() === null)
+                        throw new ModelManagerException('La photo du joueur est requise.');
+
+                    // Check that parental advisory is filled
+                    $now = new \DateTime();
+                    if ($now->diff($object->getDob())->format('%y') < 18)
+                        throw new ModelManagerException('L\'attestation parentale est requise pour les mineurs.');
 
                     $object = $this->admin->create($object);
 

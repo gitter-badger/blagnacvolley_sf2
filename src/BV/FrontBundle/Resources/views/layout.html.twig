@@ -301,12 +301,12 @@ License: You must have a valid license purchased only from themeforest (the abov
                         <ul class="list-unstyled">
                             {% for user in getBureau() %}
                                 <li data-toggle="tooltip" data-placement="top" title="{{ user.firstname }} {{ user.lastname }} : {{ user.deskRole }}">
-                                    <img alt="" src="{{ user.picture|apply_filter('img_100_100') }}">
+                                    <img alt="" src="{{ asset(user.picture|apply_filter('img_100_100')) }}">
                                 </li>
                             {% endfor %}
                             {% for team in getCapitaines() %}
                                 <li data-toggle="tooltip" data-placement="top" title="{{ team.captain.firstname }} {{ team.captain.lastname }} : Capitaine {{ team.name }}">
-                                    <img alt="" src="{{ team.captain.picture|apply_filter('img_100_100') }}">
+                                    <img alt="" src="{{ asset(team.captain.picture|apply_filter('img_100_100')) }}">
                                 </li>
                             {% endfor %}
                         </ul>

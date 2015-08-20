@@ -1830,4 +1830,37 @@ class User extends EntityUser
     {
         return $this->isLookingForFemTeam;
     }
+
+    /**
+     * @return File
+     */
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
+    }
+
+    /**
+     * @return File
+     */
+    public function getParentalAdvisoryFile()
+    {
+        return $this->parentalAdvisoryFile;
+    }
+
+    /**
+     * @return File
+     */
+    public function getAttestationFile()
+    {
+        return $this->attestationFile;
+    }
+
+    /**
+     * @return File
+     */
+    public function getCertifFile()
+    {
+        return $this->certifFile;
+    }
+
 }

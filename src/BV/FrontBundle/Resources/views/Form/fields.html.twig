@@ -56,16 +56,20 @@
                 <div class="col-sm-1">
                     <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ image_url }}">
                         {% if image_url|split('.')|last|lower != 'pdf' %}
-                            <img class="img-thumbnail" src="{{ asset(image_url)|apply_filter('img_50_50') }}"/>
+                            <img class="img-thumbnail" src="{{ image_url|apply_filter('img_50_50') }}"/>
                         {% else %}
-                            <i class="img-thumbnail fa fa-file-text-o color-text-belize-hole" style="font-size: 50px; padding-left: 7px; width: 59px; height: 59px;"></i>
+                            <i class="img-thumbnail fa fa-file-text-o color-text-belize-hole" style="font-size: 33px; padding-left: 7px; width: 59px; vertical-align: middle; height: 59px; display: table-cell; text-align: center;"></i>
                         {% endif %}
                     </a>
                 </div>
-                <div class="col-sm-11 mt10">
-                    <input type="file" {{ block('widget_attributes') }} value="E:\www\blagnacvolley_sf2\web\uploads\attestation\42.jpeg">
-                </div>
-                {% if image_type != constant('\\BV\\FrontBundle\\Entity\\User::IMAGE_TYPE_PICTURE') %}
+                {% if image_type == constant('\\BV\\FrontBundle\\Entity\\User::IMAGE_TYPE_PICTURE') %}
+                    <div class="col-sm-11 mt10">
+                        <input type="file" {{ block('widget_attributes') }} >
+                    </div>
+                {% else %}
+                    <div class="col-sm-10 mt10">
+                        <input type="file" {{ block('widget_attributes') }} >
+                    </div>
                     <div class="col-sm-1 mt10">
                         <a href="{{ path('bv_delete_file', { 'id': user_id, 'type': image_type }) }}" class="btn btn-danger">Supprimer</a>
                     </div>
