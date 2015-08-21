@@ -387,7 +387,7 @@ class User extends EntityUser
     protected $phonePro;
 
     /**
-     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="BV\FrontBundle\Entity\Availability", mappedBy="user", cascade={"remove"})
      */
     protected $availability;
 
