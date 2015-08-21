@@ -37,7 +37,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-danger">Supprimer</button>
+                        <a href="{{ path('admin_bv_front_user_delete', { id: object.id }) }}" type="button" class="btn btn-danger">Supprimer</a>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                 </div>
             </div>
         {% else %}
-                <a href="{{ path('admin_bv_front_user_reactivate', { id: object.id }) }}" class="btn btn-sm btn-success pull-right mt8 mr20">R&eacute;activer</a>
+                <a href="{{ path('admin_bv_front_user_reactivate', { id: object.id }) }}" class="btn btn-sm btn-success pull-right navbar-btn mr10">R&eacute;activer</a>
         {% endif %}
     {% endif %}
 {% endblock page_title_actions %}

@@ -22,7 +22,7 @@ class Email
         $this->doctrine = $doctrine;
     }
 
-    protected function sendMessage($from, $to, $subject, $body) {
+    protected function sendMessage($to, $from, $subject, $body) {
         $message = \Swift_Message::newInstance()
             ->setFrom($from, $from)
             ->setTo($to)
