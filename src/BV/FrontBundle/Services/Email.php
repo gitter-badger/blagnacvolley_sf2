@@ -170,4 +170,20 @@ class Email
 
         $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
     }
+
+    /**
+     * Send message to user when the Admin user creates the new account
+     *
+     * @param User $user
+     */
+    public function sendNewAccountFront(User $user)
+    {
+        $subject = "[BlagnacVolley] Vous venez de créer un compte sur BlagnacVolley.fr";
+        $template = 'FrontBundle:Mail:newAccountFront.html.twig';
+        $body = $this->templating->render($template, array(
+            'user'      => $user
+        ));
+
+        $this->sendMessage($user->getEmail(), $this->from, $subject, $body);
+    }
 }

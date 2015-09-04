@@ -41,6 +41,7 @@ class RegistrationController extends BaseController
             $url = $this->container->get('router')->generate($route);
             $response = new RedirectResponse($url);
 
+            $this->container->get('bv_mailer')->sendNewAccountFront($user);
             $this->container->get('tools.logbundle.logger')->addNotice(SystemLog::TYPE_USER_CREATED, $user);
 
             if ($authUser) {

@@ -1,0 +1,17 @@
+{% extends "FrontBundle:Mail:layout.html.twig" %}
+
+{% block title_content %}
+    [BlagnacVolley] Vous venez de créer un compte sur BlagnacVolley.fr.
+{% endblock title_content %}
+
+{% block mail_content %}
+
+    Bonjour {{ user.firstname }} {{ user.lastname }}<br/><br/>
+
+    Bienvenue sur <a href="www.blagnacvolley.fr" target="_blank">BlagnacVolley.fr</a>
+    Voici vos informations de connection :<br/><br/>
+
+    Identifiant  : <strong>{{ user.username }}</strong><br/>
+    Mot de passe : Celui que vous avez défini lors de la création du compte. Si vous ne vous en souvenez-plus, vous pouvez passer par le formulaire de renouvellement de mot de passe <a href="www.blagnacvolley.fr/resetting/request">ici</a>.
+
+{% endblock mail_content %}
