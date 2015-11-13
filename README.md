@@ -1,6 +1,8 @@
 blagnacvolley_sf2
 =================
 
+[![Join the chat at https://gitter.im/ylastapis/blagnacvolley_sf2](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ylastapis/blagnacvolley_sf2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Symfony 2 Website for Blagnac Volley.
 
 # New Installation
